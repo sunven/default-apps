@@ -13,11 +13,12 @@ type Association struct {
 }
 
 type AppCopy struct {
-	Path        string `json:"path"`
-	DisplayPath string `json:"displayPath"`
-	Name        string `json:"name"`
-	Version     string `json:"version"`
-	BundleID    string `json:"bundleID"`
+	Path          string `json:"path"`
+	DisplayPath   string `json:"displayPath"`
+	Name          string `json:"name"`
+	Version       string `json:"version"`
+	BundleID      string `json:"bundleID"`
+	MetadataError string `json:"metadataError,omitempty"`
 }
 
 type QueryError struct {

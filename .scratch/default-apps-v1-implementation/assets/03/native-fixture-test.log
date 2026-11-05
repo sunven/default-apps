@@ -1,0 +1,29 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/go.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000000.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000001.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000002.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000003.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000004.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000005.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000006.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000007.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000008.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000009.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000010.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000011.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000012.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000013.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000041.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000042.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000043.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000044.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000045.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000046.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1409713905/000047.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+=== RUN   TestNativeDiscoveryReadsRealPlistsCopiesAliasesAndLocalFailures
+    scan_darwin_test.go:84: actual Foundation plist scan: apps=3, issues=8, duration=18ms, same-name distinct copies=2, bundle-helper and links excluded
+--- PASS: TestNativeDiscoveryReadsRealPlistsCopiesAliasesAndLocalFailures (0.03s)
+PASS
+ok  	github.com/sunven/default-apps/internal/native	3.294s

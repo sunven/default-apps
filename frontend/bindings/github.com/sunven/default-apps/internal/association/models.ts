@@ -7,6 +7,7 @@ export interface AppCopy {
     "name": string;
     "version": string;
     "bundleID": string;
+    "metadataError"?: string;
 }
 
 export interface Association {

@@ -1,0 +1,6 @@
+=== RUN   TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorting
+    service_test.go:95: published snapshot mutated after final sorting: /private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorti2537526616/001/01.app
+--- FAIL: TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorting (0.00s)
+FAIL
+FAIL	github.com/sunven/default-apps/internal/discovery	0.077s
+FAIL

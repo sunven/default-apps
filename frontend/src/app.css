@@ -73,3 +73,30 @@ h2 { font-size: 14px; font-weight: 600; }
 .sources li { overflow-wrap: anywhere; }
 .empty-workspace { padding: 28px; }
 .empty-workspace p { margin-top: 12px; color: #606875; }
+
+.view-navigation { gap: 2px; }
+.view-navigation button { padding: 6px 4px; white-space: nowrap; }
+.app-list-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-heading { padding: 22px 28px 16px; border-bottom: 1px solid #e8ebef; }
+.app-heading > p { font-size: 12px; color: #606875; margin-top: 5px; overflow-wrap: anywhere; }
+.declaration-heading { display: flex; justify-content: space-between; gap: 12px; padding: 14px 28px 8px; }
+.declaration-heading > span { font-size: 12px; color: #606875; }
+.declaration-list { flex: 0 1 220px; min-height: 80px; overflow-y: auto; padding: 0 18px 8px; }
+.declaration-row { display:flex; justify-content:space-between; align-items:center; gap:12px; width:100%; text-align:left; border:0; padding:9px 10px; background:transparent; }
+.declaration-row[aria-pressed="true"] { background:#edf0f3; }
+.declaration-row > span:first-child { min-width:0; }
+.declaration-row strong { font-weight:500; font-size:14px; }
+.declaration-row > span:first-child > span { display:block; color:#606875; font-size:12px; overflow-wrap:anywhere; }
+.declared-default { font-size:12px; max-width:34%; text-align:right; color:#434c58; }
+.declaration-list:focus-visible { outline:2px solid #1266bf;outline-offset:-3px; }
+.app-heading ~ .page-heading { padding:14px 28px; border-top:1px solid #e8ebef; }
+.query-content { flex:1; }
+.copy-select { margin-top:8px; font-size:12px; }
+.scan-status { padding:0 8px 8px; font-size:12px; color:#606875; }
+.scan-issues { flex:none; max-height:180px; overflow:auto; font-size:12px; padding:8px; background:#fff5e6; border-radius:6px; color:#835006; }
+.scan-issues summary { cursor:pointer; }
+.scan-issues ul { padding-left:16px; }
+.scan-issues li { overflow-wrap:anywhere; margin:8px 0; }
+.rescan { margin-top:8px; }
+.inspected-copy { padding:16px 28px; background:#f0f3f6; max-height:235px; overflow:auto; }
+.empty-workspace h1 { font-size:20px; }

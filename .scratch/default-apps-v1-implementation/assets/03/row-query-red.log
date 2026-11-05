@@ -1,0 +1,135 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/03/frontend
+
+ ❯ src/App.test.tsx (13 tests | 1 failed) 1310ms
+   × a declaration row reports a failed default query without turning it into no default 1016ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > a declaration row reports a failed default query without turning it into no default
+TestingLibraryElementError: Unable to find an element with the text: 查询连接失败. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-label[39m=[32m"声明关联列表"[39m
+  [33mclass[39m=[32m"declaration-list"[39m
+  [33mrole[39m=[32m"region"[39m
+  [33mtabindex[39m=[32m"0"[39m
+[36m>[39m
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"declaration-row"[39m
+    [33mdata-association-id[39m=[32m"file:com.adobe.pdf"[39m
+  [36m>[39m
+    [36m<span>[39m
+      [36m<strong>[39m
+        [0mPDF 文稿[0m
+      [36m</strong>[39m
+      [36m<span>[39m
+        [0mcom.adobe.pdf[0m
+        [0m [0m
+        [0m.pdf[0m
+      [36m</span>[39m
+    [36m</span>[39m
+    [36m<span[39m
+      [33mclass[39m=[32m"declared-default"[39m
+    [36m>[39m
+      [0mReader[0m
+    [36m</span>[39m
+  [36m</button>[39m
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mclass[39m=[32m"declaration-row"[39m
+    [33mdata-association-id[39m=[32m"file:public.jpeg"[39m
+  [36m>[39m
+    [36m<span>[39m
+      [36m<strong>[39m
+        [0mJPEG[0m
+      [36m</strong>[39m
+      [36m<span>[39m
+        [0mpublic.jpeg[0m
+        [0m [0m
+        [0m.pdf[0m
+      [36m</span>[39m
+    [36m</span>[39m
+    [36m<span[39m
+      [33mclass[39m=[32m"declared-default"[39m
+    [36m>[39m
+      [0m尚未查询[0m
+    [36m</span>[39m
+  [36m</button>[39m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-label[39m=[32m"声明关联列表"[39m
+  [33mclass[39m=[32m"declaration-list"[39m
+  [33mrole[39m=[32m"region"[39m
+  [33mtabindex[39m=[32m"0"[39m
+[36m>[39m
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"declaration-row"[39m
+    [33mdata-association-id[39m=[32m"file:com.adobe.pdf"[39m
+  [36m>[39m
+    [36m<span>[39m
+      [36m<strong>[39m
+        [0mPDF 文稿[0m
+      [36m</strong>[39m
+      [36m<span>[39m
+        [0mcom.adobe.pdf[0m
+        [0m [0m
+        [0m.pdf[0m
+      [36m</span>[39m
+    [36m</span>[39m
+    [36m<span[39m
+      [33mclass[39m=[32m"declared-default"[39m
+    [36m>[39m
+      [0mReader[0m
+    [36m</span>[39m
+  [36m</button>[39m
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mclass[39m=[32m"declaration-row"[39m
+    [33mdata-association-id[39m=[32m"file:public.jpeg"[39m
+  [36m>[39m
+    [36m<span>[39m
+      [36m<strong>[39m
+        [0mJPEG[0m
+      [36m</strong>[39m
+      [36m<span>[39m
+        [0mpublic.jpeg[0m
+        [0m [0m
+        [0m.pdf[0m
+      [36m</span>[39m
+    [36m</span>[39m
+    [36m<span[39m
+      [33mclass[39m=[32m"declared-default"[39m
+    [36m>[39m
+      [0m尚未查询[0m
+    [36m</span>[39m
+  [36m</button>[39m
+[36m</div>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/App.test.tsx:216:28
+    214|  render(<App />)
+    215|  const rows=await screen.findByRole('region',{name:'声明关联列表'})
+    216|  expect(await within(rows).findByText('查询连接失败')).toBeVisible()
+       |                            ^
+    217|  expect(within(rows).queryByText('无默认应用')).not.toBeInTheDocument()
+    218| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  00:11:33
+   Duration  1.88s (tests 75%, environment 18%, setup 4%, transform 2%, import 1%)
+

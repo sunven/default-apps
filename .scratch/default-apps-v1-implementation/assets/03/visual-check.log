@@ -1,0 +1,26 @@
+TASTESKILL · INSPECT   .scratch/default-apps-v1-implementation/assets/03/preview-window.html
+
+MEASURED (first viewport listed)
+  hero headline   "Preview"  1 words · 1 line(s) · 24px (1.7vw) · -apple-system 600 · tracking -0.02em · leading 1.25
+  @1280px          1 line(s) · 24px
+  @1000px          1 line(s) · 24px
+  typefaces       -apple-system 100%
+  sizes in use    12 / 13 / 14 / 16 / 24 px   body 12px / 1.5
+  colour          page #f5f6f8 · sections #ffffff · button #ffffff
+  page            1 screens · 1274 words · 0 images · hero media none
+  headings        0 · longest 0 line(s) · median - words
+
+WARN — fix, or be able to defend
+  [tiny-text] @1440px (+1280, 1000)  77% of the text is under 13px.
+      → Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .scratch/default-apps-v1-implementation/assets/03/visual/desktop-1440-fold.jpg
+                  .scratch/default-apps-v1-implementation/assets/03/visual/desktop-1440-page-01.jpg
+  desktop 1280px  .scratch/default-apps-v1-implementation/assets/03/visual/desktop-1280-fold.jpg
+                  .scratch/default-apps-v1-implementation/assets/03/visual/desktop-1280-page-01.jpg
+  tablet 1000px   .scratch/default-apps-v1-implementation/assets/03/visual/tablet-fold.jpg
+                  .scratch/default-apps-v1-implementation/assets/03/visual/tablet-page-01.jpg
+
+report: .scratch/default-apps-v1-implementation/assets/03/visual/report.json
+RESULT: 0 FAIL, 1 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.

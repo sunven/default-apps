@@ -1,0 +1,118 @@
+{
+  "scale": {
+    "apps": 92,
+    "associations": 615,
+    "unresolved": 39,
+    "issues": [
+      {
+        "message": "文稿声明缺少角色，保留可解析关联",
+        "origin": "CFBundleDocumentTypes[0]",
+        "path": "/Applications/企业微信.app"
+      },
+      {
+        "message": "文稿声明缺少角色，保留可解析关联",
+        "origin": "CFBundleDocumentTypes[1]",
+        "path": "/Applications/企业微信.app"
+      }
+    ],
+    "durationMS": 174
+  },
+  "progress": {
+    "acceptedMS": 40,
+    "acceptedScanning": true,
+    "apps": 92,
+    "durationMS": 117,
+    "maxTimerGap": 150,
+    "timerTicks": 5,
+    "updates": [
+      {
+        "apps": 0,
+        "scanning": true,
+        "version": 14
+      },
+      {
+        "apps": 10,
+        "scanning": true,
+        "version": 15
+      },
+      {
+        "apps": 20,
+        "scanning": true,
+        "version": 16
+      },
+      {
+        "apps": 30,
+        "scanning": true,
+        "version": 17
+      },
+      {
+        "apps": 40,
+        "scanning": true,
+        "version": 18
+      },
+      {
+        "apps": 50,
+        "scanning": true,
+        "version": 19
+      },
+      {
+        "apps": 60,
+        "scanning": true,
+        "version": 20
+      },
+      {
+        "apps": 70,
+        "scanning": true,
+        "version": 21
+      },
+      {
+        "apps": 80,
+        "scanning": true,
+        "version": 22
+      },
+      {
+        "apps": 90,
+        "scanning": true,
+        "version": 23
+      },
+      {
+        "apps": 92,
+        "scanning": false,
+        "version": 24
+      }
+    ]
+  },
+  "minimum": {
+    "height": 700,
+    "overflow": 0,
+    "panes": [
+      {
+        "client": 395,
+        "scroll": 7918,
+        "selector": ".association-list"
+      },
+      {
+        "client": 220,
+        "scroll": 3143,
+        "selector": ".declaration-list"
+      },
+      {
+        "client": 227,
+        "scroll": 1846,
+        "selector": ".query-content"
+      }
+    ],
+    "width": 1001
+  },
+  "safari": {
+    "bundleID": "com.apple.Safari",
+    "displayPath": "/Applications/Safari.app",
+    "name": "Safari",
+    "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+    "version": "27.2"
+  },
+  "previewAssociations": 55,
+  "outsideCopySelected": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+  "commonQueryIndependentMatches": 21,
+  "noHelpers": true
+}
