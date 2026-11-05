@@ -1,0 +1,1430 @@
+{
+  "file:com.adobe.pdf": {
+    "association": {
+      "key": "com.adobe.pdf",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.apple.iBooksX",
+          "displayPath": "/System/Applications/Books.app",
+          "name": "Books",
+          "path": "/System/Applications/Books.app",
+          "version": "9.0"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.747346Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.747345Z",
+      "stale": false
+    },
+    "version": 2
+  },
+  "file:public.plain-text": {
+    "association": {
+      "key": "public.plain-text",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.apple.dt.Instruments",
+          "displayPath": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "name": "Instruments",
+          "path": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.apple.ScriptEditor2",
+          "displayPath": "/System/Applications/Utilities/Script Editor.app",
+          "name": "Script Editor",
+          "path": "/System/Applications/Utilities/Script Editor.app",
+          "version": "2.11"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.76189Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.TextEdit",
+        "displayPath": "/System/Applications/TextEdit.app",
+        "name": "TextEdit",
+        "path": "/System/Applications/TextEdit.app",
+        "version": "1.21"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.761886Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.rtf": {
+    "association": {
+      "key": "public.rtf",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.766753Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.TextEdit",
+        "displayPath": "/System/Applications/TextEdit.app",
+        "name": "TextEdit",
+        "path": "/System/Applications/TextEdit.app",
+        "version": "1.21"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.766752Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.microsoft.ppt.export.rtf": {
+    "association": {
+      "key": "com.microsoft.ppt.export.rtf",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.771239Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.TextEdit",
+        "displayPath": "/System/Applications/TextEdit.app",
+        "name": "TextEdit",
+        "path": "/System/Applications/TextEdit.app",
+        "version": "1.21"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.771238Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:net.daringfireball.markdown": {
+    "association": {
+      "key": "net.daringfireball.markdown",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.stablyai.orca",
+          "displayPath": "/Applications/Orca.app",
+          "name": "Orca",
+          "path": "/Applications/Orca.app",
+          "version": "1.4.246"
+        },
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.apple.dt.Instruments",
+          "displayPath": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "name": "Instruments",
+          "path": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.775925Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.tencent.workbuddy.mac",
+        "displayPath": "/Applications/WorkBuddy.app",
+        "name": "WorkBuddy",
+        "path": "/Applications/WorkBuddy.app",
+        "version": "5.9.3"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.775923Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.jpeg": {
+    "association": {
+      "key": "public.jpeg",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.783695Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.783694Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.microsoft.ppt.export.ext.jpg": {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.jpg",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.788116Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Safari",
+        "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "name": "Safari",
+        "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "version": "27.2"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.788114Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.png": {
+    "association": {
+      "key": "public.png",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.79247Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.792469Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.microsoft.ppt.export.ext.png": {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.png",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.796536Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Safari",
+        "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "name": "Safari",
+        "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "version": "27.2"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.796534Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.compuserve.gif": {
+    "association": {
+      "key": "com.compuserve.gif",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.800418Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.800418Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.tiff": {
+    "association": {
+      "key": "public.tiff",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.804447Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.804446Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.canon.tif-raw-image": {
+    "association": {
+      "key": "com.canon.tif-raw-image",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.808523Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Safari",
+        "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "name": "Safari",
+        "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "version": "27.2"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.808522Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:com.microsoft.ppt.export.ext.tiff": {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.tiff",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.QuickTimePlayerX",
+          "displayPath": "/System/Applications/QuickTime Player.app",
+          "name": "QuickTime Player",
+          "path": "/System/Applications/QuickTime Player.app",
+          "version": "10.5"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.812376Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Safari",
+        "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "name": "Safari",
+        "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "version": "27.2"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.812374Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.heic": {
+    "association": {
+      "key": "public.heic",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        {
+          "bundleID": "com.apple.ColorSyncUtility",
+          "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "name": "ColorSync Utility",
+          "path": "/System/Applications/Utilities/ColorSync Utility.app",
+          "version": "12.2.0"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.816454Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.816453Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.svg-image": {
+    "association": {
+      "key": "public.svg-image",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.820575Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.820574Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.html": {
+    "association": {
+      "key": "public.html",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        },
+        {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.825024Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.825023Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "file:public.json": {
+    "association": {
+      "key": "public.json",
+      "kind": "file"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        },
+        {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.829091Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.dt.Xcode",
+        "displayPath": "/Applications/Xcode.app",
+        "name": "Xcode",
+        "path": "/Applications/Xcode.app",
+        "version": "27.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.829091Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "scheme:http": {
+    "association": {
+      "key": "http",
+      "kind": "scheme"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.833644Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.833644Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "scheme:https": {
+    "association": {
+      "key": "https",
+      "kind": "scheme"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        {
+          "bundleID": "com.google.chrome.for.testing",
+          "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "name": "Google Chrome for Testing",
+          "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+          "version": "153.0.8010.12"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.837428Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.837427Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "scheme:mailto": {
+    "association": {
+      "key": "mailto",
+      "kind": "scheme"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.mail",
+          "displayPath": "/System/Applications/Mail.app",
+          "name": "Mail",
+          "path": "/System/Applications/Mail.app",
+          "version": "16.0"
+        },
+        {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.849715Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.mail",
+        "displayPath": "/System/Applications/Mail.app",
+        "name": "Mail",
+        "path": "/System/Applications/Mail.app",
+        "version": "16.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.849714Z",
+      "stale": false
+    },
+    "version": 1
+  },
+  "scheme:webcal": {
+    "association": {
+      "key": "webcal",
+      "kind": "scheme"
+    },
+    "candidates": {
+      "apps": [
+        {
+          "bundleID": "com.apple.iCal",
+          "displayPath": "/System/Applications/Calendar.app",
+          "name": "Calendar",
+          "path": "/System/Applications/Calendar.app",
+          "version": "27.0"
+        }
+      ],
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.856609Z",
+      "stale": false
+    },
+    "default": {
+      "app": {
+        "bundleID": "com.apple.iCal",
+        "displayPath": "/System/Applications/Calendar.app",
+        "name": "Calendar",
+        "path": "/System/Applications/Calendar.app",
+        "version": "27.0"
+      },
+      "error": null,
+      "known": true,
+      "observedAt": "2026-11-05T15:15:34.856608Z",
+      "stale": false
+    },
+    "version": 1
+  }
+}

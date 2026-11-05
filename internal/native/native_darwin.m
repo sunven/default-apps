@@ -27,22 +27,52 @@ static NSDictionary *applicationCopy(NSURL *url) {
              @"bundleID": bundle.bundleIdentifier ?: @""};
 }
 
+char *default_apps_resolve_extension(const char *extension) {
+    @autoreleasepool {
+        if (!NSThread.isMainThread) return encode(@{@"error": @"原生解析未在主线程调度"});
+        @try {
+            NSMutableArray *types = [NSMutableArray array];
+            for (UTType *type in [UTType typesWithTag:@(extension) tagClass:UTTagClassFilenameExtension conformingToType:nil]) {
+                [types addObject:@{@"identifier": type.identifier, @"name": type.localizedDescription ?: type.identifier,
+                  @"extensions": type.tags[UTTagClassFilenameExtension] ?: @[], @"mimeTypes": type.tags[UTTagClassMIMEType] ?: @[],
+                  @"declared": @(type.isDeclared), @"dynamic": @(type.isDynamic)}];
+            }
+            return encode(@{@"types": types});
+        } @catch (NSException *exception) {
+            return encode(@{@"error": exception.reason ?: @"文件类型解析失败"});
+        }
+    }
+}
+
 char *default_apps_query(const char *kind, const char *key, int candidates) {
     @autoreleasepool {
         if (!NSThread.isMainThread) return encode(@{@"error": @"原生查询未在主线程调度"});
         @try {
-            if (strcmp(kind, "file") != 0) return encode(@{@"error": @"尚不支持此关联种类"});
-            UTType *type = [UTType typeWithIdentifier:@(key)];
-            if (!type) return encode(@{@"error": @"系统无法解析此文件类型"});
+            UTType *type = nil;
+            NSURL *schemeURL = nil;
+            if (strcmp(kind, "file") == 0) {
+                type = [UTType typeWithIdentifier:@(key)];
+                if (!type || type.isDynamic || !type.isDeclared) return encode(@{@"error": @"系统无法解析此文件类型"});
+            } else if (strcmp(kind, "scheme") == 0) {
+                NSString *scheme = @(key);
+                NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:@"^[A-Za-z][A-Za-z0-9+.-]*$" options:0 error:nil];
+                if ([pattern numberOfMatchesInString:scheme options:0 range:NSMakeRange(0, scheme.length)] != 1)
+                    return encode(@{@"error": @"URL 协议名称无效"});
+                schemeURL = [NSURL URLWithString:[scheme stringByAppendingString:@":catalog-readonly"]];
+                if (!schemeURL || schemeURL.isFileURL) return encode(@{@"error": @"此协议不能用于链接关联查询"});
+            } else {
+                return encode(@{@"error": @"未知关联种类"});
+            }
             NSWorkspace *workspace = NSWorkspace.sharedWorkspace;
             if (candidates) {
                 NSMutableArray *apps = [NSMutableArray array];
-                for (NSURL *url in [workspace URLsForApplicationsToOpenContentType:type]) {
+                NSArray<NSURL *> *urls = type ? [workspace URLsForApplicationsToOpenContentType:type] : [workspace URLsForApplicationsToOpenURL:schemeURL];
+                for (NSURL *url in urls) {
                     [apps addObject:applicationCopy(url)];
                 }
                 return encode(@{@"apps": apps});
             }
-            NSURL *url = [workspace URLForApplicationToOpenContentType:type];
+            NSURL *url = type ? [workspace URLForApplicationToOpenContentType:type] : [workspace URLForApplicationToOpenURL:schemeURL];
             return encode(@{@"app": url ? applicationCopy(url) : (id)NSNull.null});
         } @catch (NSException *exception) {
             return encode(@{@"error": exception.reason ?: @"系统查询失败"});

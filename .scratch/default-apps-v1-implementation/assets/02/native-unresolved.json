@@ -1,0 +1,26 @@
+[
+  {
+    "association": {
+      "key": "",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [
+      "dyn.age80k3pgqf4027dbsb2hgppzr3z06551r20xeqbwg22xcqbz"
+    ],
+    "extensions": [],
+    "id": "unresolved:extension:defaultapps-unknown-20261105",
+    "mimeTypes": [],
+    "name": "Read-only diagnostic",
+    "resolved": false,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "manual",
+        "label": "Read-only diagnostic",
+        "normalizedInput": "defaultapps-unknown-20261105",
+        "rawInput": "defaultapps-unknown-20261105"
+      }
+    ],
+    "unresolvedReason": "系统返回的类型未声明或为动态类型"
+  }
+]
