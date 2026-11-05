@@ -4,15 +4,15 @@
         <key>CFBundlePackageType</key>
             <string>APPL</string>
         <key>CFBundleName</key>
-            <string>My Product</string>
+            <string>Default Apps</string>
         <key>CFBundleExecutable</key>
             <string>default-apps</string>
         <key>CFBundleIdentifier</key>
-            <string>com.example.defaultapps</string>
+            <string>io.github.sunven.default-apps</string>
         <key>CFBundleVersion</key>
             <string>0.1.0</string>
         <key>CFBundleGetInfoString</key>
-            <string>This is a comment</string>
+            <string>查看与管理 macOS 文件类型和 URL 协议的默认应用</string>
         <key>CFBundleShortVersionString</key>
             <string>0.1.0</string>
         <key>CFBundleIconFile</key>
@@ -20,11 +20,11 @@
         <key>CFBundleIconName</key>
             <string>appicon</string>
         <key>LSMinimumSystemVersion</key>
-            <string>12.0.0</string>
+            <string>13.0.0</string>
         <key>NSHighResolutionCapable</key>
             <string>true</string>
         <key>NSHumanReadableCopyright</key>
-            <string>© 2026, My Company</string>
+            <string>© 2026, sunven</string>
         <key>NSAppTransportSecurity</key>
         <dict>
             <key>NSAllowsLocalNetworking</key>

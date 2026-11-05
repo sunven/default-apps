@@ -1,0 +1,24 @@
+{
+  "default-apps.app": {
+    "plist": {
+      "CFBundleName": "Default Apps",
+      "CFBundleIdentifier": "io.github.sunven.default-apps",
+      "CFBundleExecutable": "default-apps",
+      "CFBundleGetInfoString": "查看与管理 macOS 文件类型和 URL 协议的默认应用",
+      "LSMinimumSystemVersion": "13.0.0"
+    },
+    "codesign": "Executable=/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/01/bin/default-apps.app/Contents/MacOS/default-apps\nIdentifier=io.github.sunven.default-apps\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=18102 flags=0x2(adhoc) hashes=559+3 location=embedded\nSignature=adhoc\nInfo.plist entries=12\nTeamIdentifier=not set\nSealed Resources version=2 rules=13 files=1\nInternal requirements count=0 size=12\nTotal signatures=1\nChosen signature=1\n",
+    "machO": "bin/default-apps.app/Contents/MacOS/default-apps:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 13.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27037.1\n"
+  },
+  "default-apps.dev.app": {
+    "plist": {
+      "CFBundleName": "Default Apps",
+      "CFBundleIdentifier": "io.github.sunven.default-apps",
+      "CFBundleExecutable": "default-apps",
+      "CFBundleGetInfoString": "查看与管理 macOS 文件类型和 URL 协议的默认应用",
+      "LSMinimumSystemVersion": "13.0.0"
+    },
+    "codesign": "Executable=/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/01/bin/default-apps.dev.app/Contents/MacOS/default-apps\nIdentifier=io.github.sunven.default-apps\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=28950 flags=0x2(adhoc) hashes=898+3 location=embedded\nSignature=adhoc\nInfo.plist entries=13\nTeamIdentifier=not set\nSealed Resources version=2 rules=13 files=1\nInternal requirements count=0 size=12\nTotal signatures=1\nChosen signature=1\n",
+    "machO": "bin/default-apps.dev.app/Contents/MacOS/default-apps:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 13.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27037.1\n"
+  }
+}

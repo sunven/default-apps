@@ -37,6 +37,7 @@ tasks:
   dev:
     summary: Runs the application in development mode
     cmds:
+      - sh scripts/check-versions.sh
       - wails3 dev -config ./build/config.yml -port {{.VITE_PORT}}
 
   install:msix:tools:

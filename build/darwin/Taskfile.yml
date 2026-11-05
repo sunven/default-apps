@@ -11,6 +11,7 @@ tasks:
   build:
     summary: Builds the application
     cmds:
+      - sh scripts/check-versions.sh
       # The experimental CGO-free backend (-tags purego, or WAILS_PUREGO=1) needs
       # no C toolchain, so it builds natively on every host; cgo builds
       # cross-compile through Docker.
@@ -54,9 +55,9 @@ tasks:
       GOOS: darwin
       CGO_ENABLED: '{{if (has "purego" (splitList "," (.EXTRA_TAGS | default "")))}}0{{else}}1{{end}}'
       GOARCH: '{{.ARCH | default ARCH}}'
-      CGO_CFLAGS: "-mmacosx-version-min=12.0"
-      CGO_LDFLAGS: "-mmacosx-version-min=12.0"
-      MACOSX_DEPLOYMENT_TARGET: "12.0"
+      CGO_CFLAGS: "-mmacosx-version-min=13.0"
+      CGO_LDFLAGS: "-mmacosx-version-min=13.0"
+      MACOSX_DEPLOYMENT_TARGET: "13.0"
 
   build:docker:
     summary: Cross-compiles for macOS using Docker (for Linux/Windows hosts)

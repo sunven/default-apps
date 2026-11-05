@@ -1,121 +1,64 @@
-import { useState, useEffect, useRef } from 'react'
-import {Events, WML} from "@wailsio/runtime";
-import {GreetService} from "../bindings/changeme";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Query } from '../bindings/github.com/sunven/default-apps/internal/association/service'
+import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 
-// Show the actual Wails version this project was generated against.
-const wailsVersion = "v3.1.0";
+const pdf = { kind: 'file', key: 'com.adobe.pdf' }
 
-function App() {
-  const [name, setName] = useState<string>('');
-  const [time, setTime] = useState<string>('Listening for Time event...');
-
-  const titleNameRef = useRef<HTMLSpanElement | null>(null);
-  const toastRef = useRef<HTMLDivElement | null>(null);
-  const resultRef = useRef<HTMLSpanElement | null>(null);
-  const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  // Crossfade the framework word in the heading ("Wails + React") to the name
-  // the user entered ("Wails + <name>"): the old word fades out while the new one
-  // fades in over the same spot.
-  const swapTitleName = (name: string) => {
-    const titleNameElement = titleNameRef.current;
-    if (!titleNameElement) {
-      return;
-    }
-    const current = titleNameElement.querySelector('.title-name-text:not(.is-outgoing)');
-    if (!current || current.textContent === name) {
-      return;
-    }
-    const incoming = document.createElement('span');
-    incoming.className = 'title-name-text is-entering';
-    incoming.textContent = name;
-    current.classList.add('is-outgoing');
-    titleNameElement.appendChild(incoming);
-    // Force a reflow so the transitions run from the starting state.
-    void incoming.offsetWidth;
-    incoming.classList.remove('is-entering');
-    current.classList.add('is-leaving');
-    current.addEventListener('transitionend', () => current.remove(), {once: true});
-  };
-
-  // Pop the toast with the message Go returned, then auto-dismiss it.
-  const showToast = (message: string) => {
-    if (resultRef.current) {
-      resultRef.current.innerText = message;
-    }
-    if (toastRef.current) {
-      toastRef.current.classList.add('is-visible');
-    }
-    clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => {
-      if (toastRef.current) {
-        toastRef.current.classList.remove('is-visible');
-      }
-    }, 4000);
-  };
-
-  const doGreet = () => {
-    let n = name || 'anonymous';
-    swapTitleName(n);
-    GreetService.Greet(n).then(showToast).catch(console.error);
-  };
-
-  useEffect(() => {
-    Events.On('time', (timeValue: any) => {
-      // On a narrow screen the full RFC1123 stamp is too wide for the footer, so
-      // show just the clock time there (matching the CSS breakpoint).
-      const full = timeValue.data;
-      const compact = (full.match(/\d{1,2}:\d{2}:\d{2}/) || [full])[0];
-      setTime(window.matchMedia('(max-width: 640px)').matches ? compact : full);
-    });
-    // Reload WML so it picks up the wml tags
-    WML.Reload();
-  }, []);
-
-  return (
-    <>
-      <main className="container">
-        <header className="brand">
-          <a className="brand-mark" data-wml-openURL="https://v3.wails.io" aria-label="Wails website">
-            <img src="/wails.png" className="brand-logo" alt="Wails logo"/>
-          </a>
-          <a className="brand-badge" data-wml-openURL="https://reactjs.org" aria-label="React">
-            <img src="/react.svg" alt="React logo"/>
-          </a>
-        </header>
-
-        <h1 className="title"><span className="title-accent">Wails +</span> <span className="title-name" ref={titleNameRef}><span className="title-name-text">React</span></span></h1>
-        <p className="subtitle">Build beautiful cross-platform apps with Go and React.</p>
-
-        <div className="greet">
-          <div className="input-box">
-            <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <input aria-label="input" className="input" value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Your name" autoComplete="off"/>
-            <button aria-label="greet-btn" className="btn" onClick={doGreet}>Greet
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-        </div>
-      </main>
-
-      <hr className="footer-divider"/>
-      <footer className="footer">
-        <span className="footer-version"><span>{wailsVersion}</span></span>
-        <span className="footer-time">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span>{time}</span>
-        </span>
-        <a className="footer-docs" data-wml-openURL="https://v3.wails.io" aria-label="Wails documentation">Docs
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </footer>
-
-      <div className="toast" ref={toastRef} role="status" aria-live="polite">
-        <span className="toast-label">From Go</span>
-        <span aria-label="result" className="toast-msg" ref={resultRef}></span>
-      </div>
-    </>
-  )
+function ApplicationCopy({ app }: { app: AppCopy }) {
+ return <div className="application-copy">
+  <div className="copy-heading"><strong>{app.name || app.path.split('/').pop()}</strong><span>版本 {app.version || '未知'}</span></div>
+  <p className="copy-path">{app.displayPath || app.path}</p>
+  {app.displayPath && app.displayPath !== app.path ? <p className="copy-path">实际位置：{app.path}</p> : null}
+  <p className="copy-bundle">{app.bundleID || 'Bundle ID 未提供'}</p>
+ </div>
 }
 
-export default App
+export default function App() {
+ const [result, setResult] = useState<QueryResult | null>(null)
+ const [loading, setLoading] = useState(true)
+ const [transportError, setTransportError] = useState<string | null>(null)
+ const requestVersion = useRef(0)
+ const refresh = useCallback(async () => {
+  const version = ++requestVersion.current
+  setLoading(true)
+  setTransportError(null)
+  try {
+   const value = await Query(pdf)
+   if (version === requestVersion.current) setResult(value)
+  } catch (error) {
+   if (version === requestVersion.current) setTransportError(error instanceof Error ? error.message : String(error))
+  } finally {
+   if (version === requestVersion.current) setLoading(false)
+  }
+ }, [])
+ useEffect(() => {
+  void refresh()
+  return () => { ++requestVersion.current }
+ }, [refresh])
+ return <div className="app-shell">
+  <aside className="sidebar">
+   <div className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3" /></svg><span>Default Apps</span></div>
+   <p className="nav-label">文件类型</p>
+   <div className="selected-association"><strong>PDF 文稿</strong><span>.pdf</span></div>
+   <p className="sidebar-note">查看这台 Mac 的默认应用与系统候选。</p>
+  </aside>
+  <main className="workspace">
+   <header className="page-heading"><div><h1>PDF 文稿</h1><p>.pdf <span aria-hidden="true">·</span> com.adobe.pdf</p></div><button onClick={() => void refresh()} disabled={loading}>{loading ? '正在查询…' : '重新查询'}</button></header>
+   <div className="query-content" role="region" aria-label="PDF 查询结果" tabIndex={0} aria-busy={loading}>
+    {transportError ? <p role="alert" className="query-error">查询连接失败{result ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
+    <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
+     {result?.default.error ? <div className="query-error" role="status"><p>{result.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{result.default.error.message}</p></div> : null}
+     {result?.default.app ? <ApplicationCopy app={result.default.app} /> : <p>{result?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
+     {result?.default.known ? <p className="freshness">最后有效查询：{new Date(result.default.observedAt).toLocaleString()}</p> : null}
+    </section>
+    <section aria-labelledby="candidates-heading"><div className="section-heading"><h2 id="candidates-heading">系统候选应用</h2>{result?.candidates.known ? <span>{result.candidates.apps?.length ?? 0} 个应用副本</span> : null}</div>
+     {result?.candidates.error ? <div className="query-error" role="status"><p>{result.candidates.known ? '候选应用待更新 · 保留最后有效观察' : '候选应用查询失败'}</p><p>{result.candidates.error.message}</p></div> : null}
+     {!result?.candidates.known ? <p>{loading ? '正在读取系统候选…' : '尚无有效候选观察'}</p> : null}
+     {result?.candidates.known && !result.candidates.apps?.length ? <p>系统未返回候选应用</p> : null}
+     {result?.candidates.known ? <p className="freshness">最后有效查询：{new Date(result.candidates.observedAt).toLocaleString()}</p> : null}
+     <ul className="candidate-list">{result?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} /></li>)}</ul>
+    </section>
+   </div>
+  </main>
+ </div>
+}

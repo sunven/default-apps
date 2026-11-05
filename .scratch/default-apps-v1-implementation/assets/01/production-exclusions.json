@@ -1,0 +1,10 @@
+{
+  "demoMarkersAbsent": true,
+  "setterSelectorAbsent": true,
+  "legacyIconAssetAbsent": true,
+  "frontendFiles": [
+    "frontend/dist/index.html",
+    "frontend/dist/assets/index-DMWOC5n7.css",
+    "frontend/dist/assets/index-DLdk_tRY.js"
+  ]
+}
