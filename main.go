@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/sunven/default-apps/internal/association"
+	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/native"
 	"github.com/wailsapp/wails/v3/pkg/application"
 	"github.com/wailsapp/wails/v3/pkg/events"
@@ -17,7 +18,7 @@ func main() {
 	app := application.New(application.Options{
 		Name:        "Default Apps",
 		Description: "查看与管理 macOS 文件类型和 URL 协议的默认应用",
-		Services:    []application.Service{application.NewService(association.NewService(native.Adapter{}))},
+		Services:    []application.Service{application.NewService(association.NewService(native.Adapter{})), application.NewService(catalog.NewService(native.Adapter{}))},
 		Assets:      application.AssetOptions{Handler: application.AssetFileServerFS(assets)},
 		Mac:         application.MacOptions{ApplicationShouldTerminateAfterLastWindowClosed: true},
 	})

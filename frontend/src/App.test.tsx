@@ -2,17 +2,21 @@ import { act, render, screen, within } from '@testing-library/react'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { Query } from '../bindings/github.com/sunven/default-apps/internal/association/service'
 import type { QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
+import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import App from './App'
 import userEvent from '@testing-library/user-event'
 
 vi.mock('../bindings/github.com/sunven/default-apps/internal/association/service', () => ({ Query: vi.fn() }))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({ List: vi.fn() }))
+const pdfEntry: Entry = {id:'file:com.adobe.pdf',association:{kind:'file',key:'com.adobe.pdf'},name:'PDF 文稿',extensions:['pdf'],mimeTypes:['application/pdf'],sources:[{kind:'common',inputKind:'extension',rawInput:'pdf',normalizedInput:'pdf',label:'PDF 文稿'}],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]}
 const observedAt = '2026-11-05T10:00:00Z'
 const observation: QueryResult = {
  association: {kind: 'file', key: 'com.adobe.pdf'}, version: 1,
  default: {known: true, app: {path: '/Volumes/Archive/Reader.app', displayPath: '/Volumes/Archive/Reader.app', name: 'Reader', version: '2.0', bundleID: 'test.reader'}, observedAt, stale: false, error: null},
  candidates: {known: true, apps: [{path: '/Applications/Preview.app', displayPath: '/Applications/Preview.app', name: '预览', version: '11.0', bundleID: 'com.apple.Preview'}], observedAt, stale: false, error: null},
 }
-beforeEach(() => vi.resetAllMocks())
+beforeEach(() => { vi.resetAllMocks(); vi.mocked(List).mockResolvedValue([pdfEntry]) })
 
 test('shows the PDF current default and independently returned candidate copies', async () => {
  vi.mocked(Query).mockResolvedValue(observation)
@@ -67,7 +71,7 @@ test('shows loading without inventing an empty default, then retains data during
  const pending = new Promise<QueryResult>(resolve => { complete=resolve })
  vi.mocked(Query).mockReturnValueOnce(pending as ReturnType<typeof Query>)
  render(<App />)
- expect(screen.getByText('正在读取系统默认…')).toBeVisible()
+ expect(await screen.findByText('正在读取系统默认…')).toBeVisible()
  expect(screen.getByText('正在读取系统候选…')).toBeVisible()
  expect(screen.getByRole('button',{name:'正在查询…'})).toBeDisabled()
  await act(async () => complete(observation))
@@ -84,8 +88,67 @@ test('keyboard users can focus the scrollable results after the refresh control'
  vi.mocked(Query).mockResolvedValue(observation)
  render(<App />)
  await screen.findByText('Reader')
- await userEvent.tab()
+ screen.getByRole('button',{name:'重新查询'}).focus()
  expect(screen.getByRole('button',{name:'重新查询'})).toHaveFocus()
  await userEvent.tab()
- expect(screen.getByRole('region',{name:'PDF 查询结果'})).toHaveFocus()
+ expect(screen.getByRole('region',{name:'PDF 文稿 查询结果'})).toHaveFocus()
+})
+
+
+test('browses ambiguous file identities and separate HTTP and HTTPS associations', async () => {
+ const jpeg = {...pdfEntry,id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG',extensions:['jpg','jpeg']}
+ const exported = {...jpeg,id:'file:com.example.export.jpg',association:{kind:'file',key:'com.example.export.jpg'},name:'JPEG export',extensions:['jpg']}
+ const http = {...pdfEntry,id:'scheme:http',association:{kind:'scheme',key:'http'},name:'http',extensions:[],mimeTypes:[]}
+ const https = {...http,id:'scheme:https',association:{kind:'scheme',key:'https'},name:'https'}
+ vi.mocked(List).mockResolvedValue([pdfEntry,jpeg,exported,http,https])
+ vi.mocked(Query).mockImplementation(association => Promise.resolve({...observation,association,default:{...observation.default,app:{...observation.default.app!,name:association.key}}}) as ReturnType<typeof Query>)
+ render(<App />)
+ await userEvent.click(await screen.findByRole('button',{name:/JPEG public.jpeg/}))
+ expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('public.jpeg')).toBeVisible()
+ expect(screen.getByRole('button',{name:/JPEG export com.example.export.jpg/})).toBeVisible()
+ expect(screen.getByRole('region',{name:'关联来源'})).toHaveTextContent('常用项')
+ await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
+ await userEvent.click(screen.getByRole('button',{name:'https https'}))
+ expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('https')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'http http'}))
+ expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('http')).toBeVisible()
+ expect(Query).toHaveBeenCalledWith({kind:'scheme',key:'http'})
+ expect(Query).toHaveBeenCalledWith({kind:'scheme',key:'https'})
+})
+
+
+test('unresolved inputs explain the file identification path without querying a fabricated type', async () => {
+ vi.mocked(List).mockResolvedValue([{...pdfEntry,id:'unresolved:extension:odd',association:{kind:'file',key:''},name:'Unknown',resolved:false,unresolvedReason:'系统仅返回动态类型',diagnosticIdentifiers:['dyn.example']}])
+ render(<App />)
+ expect(await screen.findByText('系统仅返回动态类型')).toBeVisible()
+ expect(screen.getByText(/选择文件识别类型/)).toBeVisible()
+ expect(screen.queryByText('系统未返回默认应用')).not.toBeInTheDocument()
+ expect(Query).not.toHaveBeenCalled()
+ expect(screen.getByRole('button',{name:'重新解析'})).toBeEnabled()
+})
+
+test('catalog failure has a retry and an empty protocol view hides previous details', async () => {
+ vi.mocked(List).mockRejectedValueOnce(new Error('连接中断')).mockResolvedValueOnce([pdfEntry])
+ vi.mocked(Query).mockResolvedValue(observation)
+ render(<App />)
+ expect(await screen.findByText('关联目录暂时不可用')).toBeVisible()
+ expect(screen.queryByText('系统未返回默认应用')).not.toBeInTheDocument()
+ await userEvent.click(screen.getByRole('button',{name:'重试加载目录'}))
+ expect(await screen.findByText('Reader')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
+ expect(screen.getByText('此入口暂无关联')).toBeVisible()
+ expect(screen.queryByText('Reader')).not.toBeInTheDocument()
+})
+
+test('returning to a type after a transport failure keeps that types own last observation', async () => {
+ const jpeg = {...pdfEntry,id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG'}
+ vi.mocked(List).mockResolvedValue([pdfEntry,jpeg])
+ vi.mocked(Query).mockResolvedValueOnce(observation).mockResolvedValueOnce({...observation,association:jpeg.association,default:{...observation.default,app:null}}).mockRejectedValueOnce(new Error('连接已断开'))
+ render(<App />)
+ await screen.findByText('Reader')
+ await userEvent.click(screen.getByRole('button',{name:'JPEG public.jpeg'}))
+ expect(await screen.findByText('系统未返回默认应用')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'}))
+ expect(await screen.findByRole('alert')).toHaveTextContent('显示最后有效观察')
+ expect(screen.getByText('Reader')).toBeVisible()
 })

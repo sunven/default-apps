@@ -18,10 +18,40 @@ import (
 	"unsafe"
 
 	"github.com/sunven/default-apps/internal/association"
+	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
 type Adapter struct{}
+
+func (Adapter) ResolveExtension(ctx context.Context, extension string) ([]catalog.ResolvedType, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+	return application.InvokeSyncWithResultAndError(func() ([]catalog.ResolvedType, error) {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
+		value := C.CString(extension)
+		defer C.free(unsafe.Pointer(value))
+		data := C.default_apps_resolve_extension(value)
+		if data == nil {
+			return nil, errors.New("无法读取文件类型解析结果")
+		}
+		defer C.free(unsafe.Pointer(data))
+		var response struct {
+			Types []catalog.ResolvedType `json:"types"`
+			Error string                 `json:"error"`
+		}
+		if err := json.Unmarshal([]byte(C.GoString(data)), &response); err != nil {
+			return nil, err
+		}
+		if response.Error != "" {
+			return nil, errors.New(response.Error)
+		}
+		return response.Types, nil
+	})
+}
 
 func (Adapter) CurrentDefault(ctx context.Context, a association.Association) (*association.AppCopy, error) {
 	result, err := query(ctx, a, false)

@@ -1,0 +1,151 @@
+{
+  "allIndependentQueriesMatch": true,
+  "interactions": [
+    {
+      "association": "file:com.adobe.pdf",
+      "currentPath": "/Applications/Google Chrome.app",
+      "candidateCount": 8,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.plain-text",
+      "currentPath": "/System/Applications/TextEdit.app",
+      "candidateCount": 10,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.rtf",
+      "currentPath": "/System/Applications/TextEdit.app",
+      "candidateCount": 6,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.microsoft.ppt.export.rtf",
+      "currentPath": "/System/Applications/TextEdit.app",
+      "candidateCount": 6,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:net.daringfireball.markdown",
+      "currentPath": "/Applications/WorkBuddy.app",
+      "candidateCount": 8,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.jpeg",
+      "currentPath": "/System/Applications/Preview.app",
+      "candidateCount": 7,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.microsoft.ppt.export.ext.jpg",
+      "currentPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "candidateCount": 7,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.png",
+      "currentPath": "/System/Applications/Preview.app",
+      "candidateCount": 7,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.microsoft.ppt.export.ext.png",
+      "currentPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "candidateCount": 7,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.compuserve.gif",
+      "currentPath": "/System/Applications/Preview.app",
+      "candidateCount": 6,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.tiff",
+      "currentPath": "/System/Applications/Preview.app",
+      "candidateCount": 5,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.canon.tif-raw-image",
+      "currentPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "candidateCount": 4,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:com.microsoft.ppt.export.ext.tiff",
+      "currentPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "candidateCount": 5,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.heic",
+      "currentPath": "/System/Applications/Preview.app",
+      "candidateCount": 4,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.svg-image",
+      "currentPath": "/Applications/Google Chrome.app",
+      "candidateCount": 8,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.html",
+      "currentPath": "/Applications/Google Chrome.app",
+      "candidateCount": 8,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "file:public.json",
+      "currentPath": "/Applications/Xcode.app",
+      "candidateCount": 5,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "scheme:http",
+      "currentPath": "/Applications/Google Chrome.app",
+      "candidateCount": 3,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "scheme:https",
+      "currentPath": "/Applications/Google Chrome.app",
+      "candidateCount": 3,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "scheme:mailto",
+      "currentPath": "/System/Applications/Mail.app",
+      "candidateCount": 2,
+      "selectedThroughReact": true
+    },
+    {
+      "association": "scheme:webcal",
+      "currentPath": "/System/Applications/Calendar.app",
+      "candidateCount": 1,
+      "selectedThroughReact": true
+    }
+  ],
+  "minimum": {
+    "catalog": {
+      "client": 472,
+      "scroll": 472
+    },
+    "details": {
+      "client": 518,
+      "scroll": 518
+    },
+    "height": 700,
+    "overflow": 0,
+    "width": 1001
+  },
+  "titlebarHeight": 31,
+  "refreshEnabledAfterQuery": true,
+  "readOnly": true,
+  "automationBuildTags": [
+    "production",
+    "mcp"
+  ]
+}

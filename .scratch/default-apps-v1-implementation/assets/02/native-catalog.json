@@ -1,0 +1,569 @@
+[
+  {
+    "association": {
+      "key": "com.adobe.pdf",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "pdf"
+    ],
+    "id": "file:com.adobe.pdf",
+    "mimeTypes": [
+      "application/pdf"
+    ],
+    "name": "PDF document",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "PDF 文稿",
+        "normalizedInput": "pdf",
+        "rawInput": "pdf"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.plain-text",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "txt",
+      "text"
+    ],
+    "id": "file:public.plain-text",
+    "mimeTypes": [
+      "text/plain"
+    ],
+    "name": "text",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "纯文本",
+        "normalizedInput": "txt",
+        "rawInput": "txt"
+      },
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "纯文本",
+        "normalizedInput": "text",
+        "rawInput": "text"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.rtf",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "rtf"
+    ],
+    "id": "file:public.rtf",
+    "mimeTypes": [
+      "text/rtf"
+    ],
+    "name": "rich text (RTF)",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "RTF 文稿",
+        "normalizedInput": "rtf",
+        "rawInput": "rtf"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.microsoft.ppt.export.rtf",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "rtf"
+    ],
+    "id": "file:com.microsoft.ppt.export.rtf",
+    "mimeTypes": [],
+    "name": "Rich Text Format",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "RTF 文稿",
+        "normalizedInput": "rtf",
+        "rawInput": "rtf"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "net.daringfireball.markdown",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "md",
+      "markdown"
+    ],
+    "id": "file:net.daringfireball.markdown",
+    "mimeTypes": [
+      "text/markdown"
+    ],
+    "name": "Markdown",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "Markdown",
+        "normalizedInput": "md",
+        "rawInput": "md"
+      },
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "Markdown",
+        "normalizedInput": "markdown",
+        "rawInput": "markdown"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.jpeg",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "jpe"
+    ],
+    "id": "file:public.jpeg",
+    "mimeTypes": [
+      "image/jpeg",
+      "image/jpg"
+    ],
+    "name": "JPEG image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "JPEG 图像",
+        "normalizedInput": "jpg",
+        "rawInput": "jpg"
+      },
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "JPEG 图像",
+        "normalizedInput": "jpeg",
+        "rawInput": "jpeg"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.jpg",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "jpg"
+    ],
+    "id": "file:com.microsoft.ppt.export.ext.jpg",
+    "mimeTypes": [],
+    "name": "JPEG",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "JPEG 图像",
+        "normalizedInput": "jpg",
+        "rawInput": "jpg"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.png",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "png"
+    ],
+    "id": "file:public.png",
+    "mimeTypes": [
+      "image/png"
+    ],
+    "name": "PNG image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "PNG 图像",
+        "normalizedInput": "png",
+        "rawInput": "png"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.png",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "png"
+    ],
+    "id": "file:com.microsoft.ppt.export.ext.png",
+    "mimeTypes": [],
+    "name": "PNG",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "PNG 图像",
+        "normalizedInput": "png",
+        "rawInput": "png"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.compuserve.gif",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "gif"
+    ],
+    "id": "file:com.compuserve.gif",
+    "mimeTypes": [
+      "image/gif"
+    ],
+    "name": "GIF image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "GIF 图像",
+        "normalizedInput": "gif",
+        "rawInput": "gif"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.tiff",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "tif",
+      "tiff"
+    ],
+    "id": "file:public.tiff",
+    "mimeTypes": [
+      "image/tiff"
+    ],
+    "name": "TIFF image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "TIFF 图像",
+        "normalizedInput": "tif",
+        "rawInput": "tif"
+      },
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "TIFF 图像",
+        "normalizedInput": "tiff",
+        "rawInput": "tiff"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.canon.tif-raw-image",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "tif"
+    ],
+    "id": "file:com.canon.tif-raw-image",
+    "mimeTypes": [
+      "image/x-canon-tif"
+    ],
+    "name": "Canon TIF raw image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "TIFF 图像",
+        "normalizedInput": "tif",
+        "rawInput": "tif"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "com.microsoft.ppt.export.ext.tiff",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "tiff"
+    ],
+    "id": "file:com.microsoft.ppt.export.ext.tiff",
+    "mimeTypes": [],
+    "name": "TIFF",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "TIFF 图像",
+        "normalizedInput": "tiff",
+        "rawInput": "tiff"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.heic",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "heic"
+    ],
+    "id": "file:public.heic",
+    "mimeTypes": [
+      "image/heic"
+    ],
+    "name": "HEIF Image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "HEIC 图像",
+        "normalizedInput": "heic",
+        "rawInput": "heic"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.svg-image",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "svg",
+      "svgz"
+    ],
+    "id": "file:public.svg-image",
+    "mimeTypes": [
+      "image/svg+xml"
+    ],
+    "name": "SVG image",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "SVG 图像",
+        "normalizedInput": "svg",
+        "rawInput": "svg"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.html",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "html",
+      "htm",
+      "shtml",
+      "shtm"
+    ],
+    "id": "file:public.html",
+    "mimeTypes": [
+      "text/html"
+    ],
+    "name": "HTML text",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "HTML 网页",
+        "normalizedInput": "html",
+        "rawInput": "html"
+      },
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "HTML 网页",
+        "normalizedInput": "htm",
+        "rawInput": "htm"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "public.json",
+      "kind": "file"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [
+      "json"
+    ],
+    "id": "file:public.json",
+    "mimeTypes": [
+      "application/json"
+    ],
+    "name": "JSON",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "extension",
+        "kind": "common",
+        "label": "JSON 数据",
+        "normalizedInput": "json",
+        "rawInput": "json"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "http",
+      "kind": "scheme"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [],
+    "id": "scheme:http",
+    "mimeTypes": [],
+    "name": "http",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "scheme",
+        "kind": "common",
+        "label": "http",
+        "normalizedInput": "http",
+        "rawInput": "http"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "https",
+      "kind": "scheme"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [],
+    "id": "scheme:https",
+    "mimeTypes": [],
+    "name": "https",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "scheme",
+        "kind": "common",
+        "label": "https",
+        "normalizedInput": "https",
+        "rawInput": "https"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "mailto",
+      "kind": "scheme"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [],
+    "id": "scheme:mailto",
+    "mimeTypes": [],
+    "name": "mailto",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "scheme",
+        "kind": "common",
+        "label": "mailto",
+        "normalizedInput": "mailto",
+        "rawInput": "mailto"
+      }
+    ],
+    "unresolvedReason": ""
+  },
+  {
+    "association": {
+      "key": "webcal",
+      "kind": "scheme"
+    },
+    "diagnosticIdentifiers": [],
+    "extensions": [],
+    "id": "scheme:webcal",
+    "mimeTypes": [],
+    "name": "webcal",
+    "resolved": true,
+    "sources": [
+      {
+        "inputKind": "scheme",
+        "kind": "common",
+        "label": "webcal",
+        "normalizedInput": "webcal",
+        "rawInput": "webcal"
+      }
+    ],
+    "unresolvedReason": ""
+  }
+]

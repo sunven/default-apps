@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "content": [
+      {
+        "text": "{\n  \"catalog\": {\n    \"client\": 472,\n    \"scroll\": 1468\n  },\n  \"details\": {\n    \"client\": 577,\n    \"scroll\": 1171\n  },\n  \"height\": 700,\n  \"overflow\": 0,\n  \"width\": 1001\n}",
+        "type": "text"
+      }
+    ],
+    "isError": false
+  }
+}

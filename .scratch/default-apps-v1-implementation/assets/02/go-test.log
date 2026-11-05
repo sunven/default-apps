@@ -1,0 +1,7 @@
+?   	github.com/sunven/default-apps	[no test files]
+?   	github.com/sunven/default-apps/build/android/scripts/deps	[no test files]
+?   	github.com/sunven/default-apps/build/ios	[no test files]
+?   	github.com/sunven/default-apps/build/ios/scripts/deps	[no test files]
+ok  	github.com/sunven/default-apps/internal/association	(cached)
+ok  	github.com/sunven/default-apps/internal/catalog	1.500s
+?   	github.com/sunven/default-apps/internal/native	[no test files]
