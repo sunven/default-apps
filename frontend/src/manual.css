@@ -19,3 +19,7 @@
 .manual-picked {display:grid;gap:7px;font-size:12px;line-height:1.6;padding-top:12px}
 .manual-picked strong {font-weight:550}
 .manual-storage-warning {font-size:12px;color:#9c351f;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Shared dialog presentation; ticket 04 uses the same rules. */
+.detail-dialog{width:700px;max-width:calc(100vw - 80px);max-height:calc(100vh - 64px);padding:0;border:1px solid #d2d5db;border-radius:10px;background:#fff;color:#20242a;box-shadow:0 18px 60px #0003;overflow:hidden}.detail-dialog[open]{display:flex;flex-direction:column}.detail-dialog::backdrop{background:#15192240}.dialog-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;border-bottom:1px solid #e8ebef;flex:none}.dialog-heading>div{min-width:0}.dialog-heading h2{font-size:18px;overflow-wrap:anywhere}.dialog-heading p{font-size:12px;color:#606875;overflow-wrap:anywhere;margin-top:4px}.dialog-heading button{flex:none}.dialog-body{overflow:auto;min-height:0;padding:18px 22px;overscroll-behavior:contain}
+.header-actions {margin:12px 0;display:flex;flex-wrap:wrap;gap:8px}

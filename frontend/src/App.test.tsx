@@ -13,6 +13,7 @@ import userEvent from '@testing-library/user-event'
 vi.mock('../bindings/github.com/sunven/default-apps/internal/association/service', () => ({ Query: vi.fn() }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({ List: vi.fn() }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({ GetSnapshot:vi.fn(), StartScan:vi.fn() }))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))
 vi.mock('@wailsio/runtime', () => ({ Events:{On:vi.fn(() => () => {})} }))
 const emptySnapshot: Snapshot = {version:1,scanning:false,apps:[],entries:[],issues:[],roots:[],startedAt:'',completedAt:'',durationMS:0}
 const pdfEntry: Entry = {id:'file:com.adobe.pdf',association:{kind:'file',key:'com.adobe.pdf'},name:'PDF 文稿',extensions:['pdf'],mimeTypes:['application/pdf'],sources:[{kind:'common',inputKind:'extension',rawInput:'pdf',normalizedInput:'pdf',label:'PDF 文稿'}],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]}

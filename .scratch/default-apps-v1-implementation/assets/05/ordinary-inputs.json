@@ -15,7 +15,7 @@
 		"."
 	],
 	"Stale": true,
-	"StaleReason": "stale dependency: github.com/wailsapp/wails/v3/internal/assetserver",
+	"StaleReason": "stale dependency: github.com/sunven/default-apps/internal/native",
 	"GoFiles": [
 		"configuration.go",
 		"main.go",
@@ -33,8 +33,8 @@
 		"all:frontend/dist"
 	],
 	"EmbedFiles": [
-		"frontend/dist/assets/index-CQcnyyx9.js",
-		"frontend/dist/assets/index-uDFQReDs.css",
+		"frontend/dist/assets/index-BQ04iLfz.js",
+		"frontend/dist/assets/index-UOZd3CKS.css",
 		"frontend/dist/index.html"
 	],
 	"Imports": [

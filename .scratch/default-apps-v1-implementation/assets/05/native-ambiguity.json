@@ -1,0 +1,21 @@
+{
+  "matches": [
+    "JPEG image\npublic.jpeg\n.jpg · .jpeg · .jpe",
+    "JPEG\ncom.microsoft.ppt.export.ext.jpg\n.jpg"
+  ],
+  "saved": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "extension",
+          "value": "jpg",
+          "label": "jpg",
+          "source": "manual"
+        },
+        "selectedID": "file:public.jpeg"
+      }
+    ],
+    "applications": []
+  }
+}

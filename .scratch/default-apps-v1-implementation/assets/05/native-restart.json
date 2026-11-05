@@ -1,0 +1,292 @@
+{
+  "previousPID": 47448,
+  "newPID": 47638,
+  "config": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "extension",
+          "value": "jpg",
+          "label": "jpg",
+          "source": "manual"
+        },
+        "selectedID": "file:public.jpeg"
+      },
+      {
+        "input": {
+          "kind": "scheme",
+          "value": " Manual+05: ",
+          "label": "Manual+05:",
+          "source": "manual"
+        },
+        "selectedID": "scheme:manual+05"
+      }
+    ],
+    "applications": []
+  },
+  "restoredEntries": {
+    "file:public.jpeg": {
+      "association": {
+        "key": "public.jpeg",
+        "kind": "file"
+      },
+      "diagnosticIdentifiers": [],
+      "extensions": [
+        "jpeg",
+        "jpg",
+        "jpe"
+      ],
+      "id": "file:public.jpeg",
+      "mimeTypes": [
+        "image/jpeg",
+        "image/jpg"
+      ],
+      "name": "JPEG image",
+      "resolved": true,
+      "sources": [
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "JPEG 图像",
+          "normalizedInput": "jpg",
+          "rawInput": "jpg"
+        },
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "JPEG 图像",
+          "normalizedInput": "jpeg",
+          "rawInput": "jpeg"
+        },
+        {
+          "appPath": "/Applications/Google Chrome.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "Google Chrome",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[4]",
+          "rawInput": "public.jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "jpg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "jpg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "jpeg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "mime",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "image/jpeg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "image/jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/WorkBuddy.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "WorkBuddy Document",
+          "normalizedInput": "jpg",
+          "origin": "CFBundleDocumentTypes[35]",
+          "rank": "Alternate",
+          "rawInput": "jpg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/WorkBuddy.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "WorkBuddy Document",
+          "normalizedInput": "jpeg",
+          "origin": "CFBundleDocumentTypes[36]",
+          "rank": "Alternate",
+          "rawInput": "jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Applications/Preview.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "Preview",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[6]",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/QuickTime Player.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "QuickTime Player",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[17]",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "JPEG Image",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[3]",
+          "rank": "Alternate",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "inputKind": "extension",
+          "kind": "manual",
+          "label": "jpg",
+          "normalizedInput": "jpg",
+          "rawInput": "jpg"
+        }
+      ],
+      "unresolvedReason": ""
+    },
+    "scheme:manual+05": {
+      "association": {
+        "key": "manual+05",
+        "kind": "scheme"
+      },
+      "diagnosticIdentifiers": [],
+      "extensions": [],
+      "id": "scheme:manual+05",
+      "mimeTypes": [],
+      "name": "manual+05",
+      "resolved": true,
+      "sources": [
+        {
+          "inputKind": "scheme",
+          "kind": "manual",
+          "label": "Manual+05:",
+          "normalizedInput": "manual+05",
+          "rawInput": " Manual+05: "
+        }
+      ],
+      "unresolvedReason": ""
+    }
+  },
+  "queries": {
+    "file:public.jpeg": {
+      "association": {
+        "key": "public.jpeg",
+        "kind": "file"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Preview",
+            "displayPath": "/System/Applications/Preview.app",
+            "name": "Preview",
+            "path": "/System/Applications/Preview.app",
+            "version": "11.0"
+          },
+          {
+            "bundleID": "com.apple.QuickTimePlayerX",
+            "displayPath": "/System/Applications/QuickTime Player.app",
+            "name": "QuickTime Player",
+            "path": "/System/Applications/QuickTime Player.app",
+            "version": "10.5"
+          },
+          {
+            "bundleID": "com.apple.ColorSyncUtility",
+            "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+            "name": "ColorSync Utility",
+            "path": "/System/Applications/Utilities/ColorSync Utility.app",
+            "version": "12.2.0"
+          },
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          },
+          {
+            "bundleID": "com.google.chrome.for.testing",
+            "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "name": "Google Chrome for Testing",
+            "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "version": "153.0.8010.12"
+          },
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          },
+          {
+            "bundleID": "com.tencent.workbuddy.mac",
+            "displayPath": "/Applications/WorkBuddy.app",
+            "name": "WorkBuddy",
+            "path": "/Applications/WorkBuddy.app",
+            "version": "5.9.3"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-05T18:03:19.692737Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-05T18:03:19.692735Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    "scheme:manual+05": {
+      "association": {
+        "key": "manual+05",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-05T18:03:19.697062Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-05T18:03:19.697061Z",
+        "stale": false
+      },
+      "version": 2
+    }
+  },
+  "ui": "manual+05\n\nmanual+05\n\n重新查询\n当前默认应用\n\n系统未返回默认应用\n\n最后有效查询：2026/11/6 02:03:19\n\n系统候选应用\n0 个应用副本\n\n系统未返回候选应用\n\n最后有效查询：2026/11/6 02:03:19\n\n选择其他应用…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。\n\n关联来源\n手动添加 · Manual+05: · Manual+05:"
+}
