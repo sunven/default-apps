@@ -330,3 +330,26 @@ func TestCorruptManualConfigurationReportsIssueWhileCommonCatalogRemainsUsable(t
 		t.Fatal("discovery overwrote corrupt config")
 	}
 }
+
+func TestManualApplicationWithUnreadableMetadataIsUnavailable(t *testing.T) {
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Applications = []association.AppCopy{{Path: "/Outside/Broken.app", Name: "Saved Copy"}}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	adapter := unreadableManualSystem{}
+	service := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, store)
+	service.StartScan()
+	snapshot := finished(t, service)
+	if len(snapshot.Apps) != 1 || !snapshot.Apps[0].Unavailable || snapshot.Apps[0].App.Path != "/Outside/Broken.app" || snapshot.Apps[0].App.MetadataError != "unreadable plist" {
+		t.Fatalf("unreadable saved copy presented as usable: %#v", snapshot.Apps)
+	}
+}
+
+type unreadableManualSystem struct{ system }
+
+func (unreadableManualSystem) ReadApplication(_ context.Context, path string) (discovery.Bundle, error) {
+	return discovery.Bundle{App: association.AppCopy{Path: path, MetadataError: "unreadable plist"}}, nil
+}

@@ -172,13 +172,22 @@ func (s *Service) scan() {
 					for i := range state.Apps {
 						if state.Apps[i].App.Path == saved.Path {
 							state.Apps[i].Manual = true
+							if state.Apps[i].App.MetadataError != "" {
+								state.Apps[i].Unavailable = true
+								state.Apps[i].AssociationIDs = []string{}
+								state.Apps[i].Declarations = []Declaration{}
+								state.Apps[i].Definitions = []TypeDefinition{}
+							}
 						}
 					}
 					continue
 				}
 				bundle, readErr := s.system.ReadApplication(ctx, saved.Path)
-				if readErr != nil || bundle.App.Path != saved.Path {
+				if readErr != nil || bundle.App.Path != saved.Path || bundle.App.MetadataError != "" {
 					message := "原位置已指向另一应用副本，请重新选择"
+					if bundle.App.MetadataError != "" {
+						message = bundle.App.MetadataError
+					}
 					if readErr != nil {
 						message = readErr.Error()
 					}

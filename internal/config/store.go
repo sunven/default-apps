@@ -25,7 +25,7 @@ type Document struct {
 	Version      int                   `json:"version"`
 	Associations []ManualAssociation   `json:"associations"`
 	Applications []association.AppCopy `json:"applications"`
-	// Pending belongs to the change coordinator. Manual updates preserve it verbatim.
+	// Pending belongs to the change coordinator. Manual updates preserve its data.
 	Pending json.RawMessage `json:"pending,omitempty"`
 }
 type Repository interface {
