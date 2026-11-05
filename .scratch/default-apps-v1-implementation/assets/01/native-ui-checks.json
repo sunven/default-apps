@@ -1,0 +1,40 @@
+{
+  "initial": {
+    "height": 800,
+    "overflow": 0,
+    "text": "Default Apps\n\n文件类型\n\nPDF 文稿\n.pdf\n\n查看这台 Mac 的默认应用与系统候选。\n\nPDF 文稿\n\n.pdf · com.adobe.pdf\n\n重新查询\n当前默认应用\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\n最后有效查询：2026/11/5 22:07:18\n\n系统候选应用\n8 个应用副本\n\n最后有效查询：2026/11/5 22:07:18\n\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\nWPS Office\n版本 12.1.26046\n\n/Applications/wpsoffice.app\n\ncom.kingsoft.wpsoffice.mac\n\nPreview\n版本 11.0\n\n/System/Applications/Preview.app\n\ncom.apple.Preview\n\nColorSync Utility\n版本 12.2.0\n\n/System/Applications/Utilities/ColorSync Utility.app\n\ncom.apple.ColorSyncUtility\n\nBooks\n版本 9.0\n\n/System/Applications/Books.app\n\ncom.apple.iBooksX\n\nGoogle Chrome for Testing\n版本 153.0.8010.12\n\n/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app\n\ncom.google.chrome.for.testing\n\nWorkBuddy\n版本 5.9.3\n\n/Applications/WorkBuddy.app\n\ncom.tencent.workbuddy.mac\n\nSafari\n版本 27.2\n\n/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app\n\ncom.apple.Safari",
+    "width": 1180
+  },
+  "outerWindow": {
+    "focused": true,
+    "fullscreen": false,
+    "height": 831,
+    "id": 1,
+    "maximised": false,
+    "minimised": false,
+    "name": "main",
+    "visible": true,
+    "width": 1179,
+    "x": 370,
+    "y": 109,
+    "zoom": 1
+  },
+  "titlebarHeight": 31,
+  "minimumContent": {
+    "contentHeight": 700,
+    "height": 700,
+    "overflow": 0,
+    "width": 1001
+  },
+  "refresh": {
+    "button": "重新查询",
+    "disabled": false,
+    "text": "Default Apps\n\n文件类型\n\nPDF 文稿\n.pdf\n\n查看这台 Mac 的默认应用与系统候选。\n\nPDF 文稿\n\n.pdf · com.adobe.pdf\n\n重新查询\n当前默认应用\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\n最后有效查询：2026/11/5 22:08:07\n\n系统候选应用\n8 个应用副本\n\n最后有效查询：2026/11/5 22:08:07\n\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\nWPS Office\n版本 12.1.26046\n\n/Applications/wpsoffice.app\n\ncom.kingsoft.wpsoffice.mac\n\nPreview\n版本 11.0\n\n/System/Applications/Preview.app\n\ncom.apple.Preview\n\nColorSync Utility\n版本 12.2.0\n\n/System/Applications/Utilities/ColorSync Utility.app\n\ncom.apple.ColorSyncUtility\n\nBooks\n版本 9.0\n\n/System/Applications/Books.app\n\ncom.apple.iBooksX\n\nGoogle Chrome for Testing\n版本 153.0.8010.12\n\n/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app\n\ncom.google.chrome.for.testing\n\nWorkBuddy\n版本 5.9.3\n\n/Applications/WorkBuddy.app\n\ncom.tencent.workbuddy.mac\n\nSafari\n版本 27.2\n\n/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app\n\ncom.apple.Safari"
+  },
+  "independentQueryMatches": true,
+  "setterAvailable": false,
+  "automationBuildTags": [
+    "production",
+    "mcp"
+  ]
+}

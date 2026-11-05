@@ -1,59 +1,40 @@
-# Welcome to Your New Wails3 Project!
+# Default Apps
 
-Congratulations on generating your Wails3 application! This README will guide you through the next steps to get your project up and running.
+macOS 默认应用工具。当前实现支持只读查看 PDF 的系统默认应用与候选应用，按实际应用包路径区分副本，显示名称、版本、完整路径及 bundle ID。重新查询失败时保留最后有效观察。正式产品尚未接通原生修改接口。
 
-## Getting Started
+产品依据见 [spec.md](spec.md)，实施进度见 [实施工单](.scratch/default-apps-v1-implementation/spec.md)。
 
-1. Navigate to your project directory in the terminal.
+## 本机构建
 
-2. To run your application in development mode, use the following command:
+固定 Go **1.27.3**、Wails CLI／Go 模块／前端 runtime **3.1.0**，保留 React 18。安装 Go 和 Wails 后，在项目根目录运行：
 
-   ```
-   wails3 dev
-   ```
+```sh
+wails3 task darwin:package
+open bin/default-apps.app
+```
 
-   This will start your application and enable hot-reloading for both frontend and backend changes.
+构建先检查版本，前端使用 `npm ci` 和已提交的锁文件；两种 app 均使用本机 ad-hoc 签名，bundle ID 为 `io.github.sunven.default-apps`。普通应用位于 `bin/default-apps.app`。
 
-3. To build your application for production, use:
+开发应用：
 
-   ```
-   wails3 build
-   ```
+```sh
+wails3 build DEV=true
+wails3 task run
+```
 
-   This will create a production-ready executable in the `build` directory.
+这会创建并启动 `bin/default-apps.dev.app`。需要热重载时运行 `wails3 dev`。开发和普通入口均为正式功能，原型资产留在源码中供查阅，未进入应用入口或打包资源。
 
-## Exploring Wails3 Features
+C 编译、链接、部署目标和两份 plist 的下限均为 macOS 13；这是构建下限。实机验收范围为 **macOS 27.2／Apple Silicon**，未据此承诺全部 13+ 系统或其他架构兼容。
 
-Now that you have your project set up, it's time to explore the features that Wails3 offers:
+## 验证
 
-1. **Check out the examples**: The best way to learn is by example. Visit the `examples` directory in the `v3/examples` directory to see various sample applications.
+```sh
+go test -race ./...
+npm --prefix frontend ci
+npm --prefix frontend run test
+npm --prefix frontend run build
+```
 
-2. **Run an example**: To run any of the examples, navigate to the example's directory and use:
+`internal/association.Service` 管理独立默认／候选观察和错误，通过可替换的 `SystemAdapter` 访问系统；测试在这条边界覆盖空值、错误、路径身份和最后有效观察。React 测试通过生成绑定的边界驱动真实控件。原生 adapter 只在应用壳启动后的绑定调用中进入 Wails 公共主线程调度；Objective-C 在 autorelease pool 内产生 JSON，Go 复制后释放 C 缓冲区。
 
-   ```
-   go run .
-   ```
-
-   Note: Some examples may be under development during the alpha phase.
-
-3. **Explore the documentation**: Visit the [Wails3 documentation](https://v3.wails.io/) for in-depth guides and API references.
-
-4. **Join the community**: Have questions or want to share your progress? Join the [Wails Discord](https://discord.gg/JDdSxwjhGf) or visit the [Wails discussions on GitHub](https://github.com/wailsapp/wails/discussions).
-
-## Project Structure
-
-Take a moment to familiarize yourself with your project structure:
-
-- `frontend/`: Contains your frontend code (HTML, CSS, JavaScript/TypeScript)
-- `main.go`: The entry point of your Go backend
-- `app.go`: Define your application structure and methods here
-- `wails.json`: Configuration file for your Wails project
-
-## Next Steps
-
-1. Modify the frontend in the `frontend/` directory to create your desired UI.
-2. Add backend functionality in `main.go`.
-3. Use `wails3 dev` to see your changes in real-time.
-4. When ready, build your application with `wails3 build`.
-
-Happy coding with Wails3! If you encounter any issues or have questions, don't hesitate to consult the documentation or reach out to the Wails community.
+窗口用实际 NSWindow 样式从内容尺寸计算外框下限，内容区域至少 1000×700，原生标题栏另计。首条正式查询和普通／开发 app 的证据在 [01 验收记录](.scratch/default-apps-v1-implementation/assets/01/README.md)。

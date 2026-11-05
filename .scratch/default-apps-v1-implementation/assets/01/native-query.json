@@ -1,0 +1,84 @@
+{
+  "association": {
+    "key": "com.adobe.pdf",
+    "kind": "file"
+  },
+  "candidates": {
+    "apps": [
+      {
+        "bundleID": "com.google.Chrome",
+        "displayPath": "/Applications/Google Chrome.app",
+        "name": "Google Chrome",
+        "path": "/Applications/Google Chrome.app",
+        "version": "156.0.8078.81"
+      },
+      {
+        "bundleID": "com.kingsoft.wpsoffice.mac",
+        "displayPath": "/Applications/wpsoffice.app",
+        "name": "WPS Office",
+        "path": "/Applications/wpsoffice.app",
+        "version": "12.1.26046"
+      },
+      {
+        "bundleID": "com.apple.Preview",
+        "displayPath": "/System/Applications/Preview.app",
+        "name": "Preview",
+        "path": "/System/Applications/Preview.app",
+        "version": "11.0"
+      },
+      {
+        "bundleID": "com.apple.ColorSyncUtility",
+        "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+        "name": "ColorSync Utility",
+        "path": "/System/Applications/Utilities/ColorSync Utility.app",
+        "version": "12.2.0"
+      },
+      {
+        "bundleID": "com.apple.iBooksX",
+        "displayPath": "/System/Applications/Books.app",
+        "name": "Books",
+        "path": "/System/Applications/Books.app",
+        "version": "9.0"
+      },
+      {
+        "bundleID": "com.google.chrome.for.testing",
+        "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "name": "Google Chrome for Testing",
+        "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "version": "153.0.8010.12"
+      },
+      {
+        "bundleID": "com.tencent.workbuddy.mac",
+        "displayPath": "/Applications/WorkBuddy.app",
+        "name": "WorkBuddy",
+        "path": "/Applications/WorkBuddy.app",
+        "version": "5.9.3"
+      },
+      {
+        "bundleID": "com.apple.Safari",
+        "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "name": "Safari",
+        "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "version": "27.2"
+      }
+    ],
+    "error": null,
+    "known": true,
+    "observedAt": "2026-11-05T14:08:06.880147Z",
+    "stale": false
+  },
+  "default": {
+    "app": {
+      "bundleID": "com.google.Chrome",
+      "displayPath": "/Applications/Google Chrome.app",
+      "name": "Google Chrome",
+      "path": "/Applications/Google Chrome.app",
+      "version": "156.0.8078.81"
+    },
+    "error": null,
+    "known": true,
+    "observedAt": "2026-11-05T14:08:06.880144Z",
+    "stale": false
+  },
+  "version": 2
+}

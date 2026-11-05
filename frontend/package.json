@@ -1,14 +1,14 @@
 {
-  "name": "react-ts-latest",
+  "name": "default-apps",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prototype": "vite --host 127.0.0.1 --port 9245 --open '/?prototype=default-apps&variant=A'",
     "build:dev": "tsc && vite build --minify false --mode development",
     "build": "tsc && vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@wailsio/runtime": "3.1.0",
@@ -16,10 +16,15 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^6.0.0",
+    "jsdom": "31.0.0",
     "typescript": "^5.2.2",
-    "vite": "^8.2.4"
+    "vite": "^8.2.4",
+    "vitest": "5.1.0"
   }
 }
