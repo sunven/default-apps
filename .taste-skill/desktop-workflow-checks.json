@@ -1,0 +1,177 @@
+[
+  {
+    "scenario": "long",
+    "state": {
+      "app": "app-90",
+      "heading": "Xcode",
+      "op": null,
+      "overflow": 0,
+      "query": "",
+      "rows": 168,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "empty",
+    "state": {
+      "app": null,
+      "heading": "没有匹配的应用",
+      "op": null,
+      "overflow": 0,
+      "query": "zzzz-no-match",
+      "rows": 0,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "no-support",
+    "state": {
+      "app": "app-8",
+      "heading": "计算器",
+      "op": null,
+      "overflow": 0,
+      "query": "",
+      "rows": 0,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "copies",
+    "state": {
+      "app": "fixture-copy",
+      "heading": "预览",
+      "op": null,
+      "overflow": 0,
+      "query": "Preview",
+      "rows": 59,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "ambiguous",
+    "state": {
+      "app": "app-57",
+      "heading": "文件类型",
+      "op": null,
+      "overflow": 0,
+      "query": "",
+      "rows": 4,
+      "view": "files"
+    }
+  },
+  {
+    "scenario": "missing",
+    "state": {
+      "app": "app-57",
+      "heading": "预览 · 已消失",
+      "op": null,
+      "overflow": 0,
+      "query": "",
+      "rows": 0,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "pending",
+    "state": {
+      "app": "app-57",
+      "heading": "预览",
+      "op": {
+        "assoc": "file:com.adobe.pdf",
+        "id": 1,
+        "phase": "waiting",
+        "target": "app-57"
+      },
+      "overflow": 0,
+      "query": "",
+      "rows": 58,
+      "view": "apps"
+    }
+  },
+  {
+    "scenario": "recovered",
+    "state": {
+      "app": "app-57",
+      "heading": "预览",
+      "op": {
+        "assoc": "file:com.adobe.pdf",
+        "id": 2,
+        "phase": "recovered",
+        "target": "app-57"
+      },
+      "overflow": 0,
+      "query": "",
+      "rows": 58,
+      "view": "apps"
+    }
+  },
+  {
+    "scrollMode": "a",
+    "geometry": {
+      "headerY": 49,
+      "overflow": 0,
+      "rowsY": 500,
+      "sheetY": 0,
+      "windowY": 8
+    }
+  },
+  {
+    "scrollMode": "b",
+    "geometry": {
+      "headerY": -451,
+      "overflow": 0,
+      "rowsY": 0,
+      "sheetY": 500,
+      "windowY": 8
+    }
+  },
+  {
+    "scrollMode": "c",
+    "geometry": {
+      "headerY": -443,
+      "overflow": 0,
+      "rowsY": 0,
+      "sheetY": 0,
+      "windowY": 500
+    }
+  },
+  {
+    "viewport": [
+      1000,
+      700
+    ],
+    "geometry": {
+      "bodyHeight": 701,
+      "labBottom": 700,
+      "operationHeight": 57.234375,
+      "overflow": 0,
+      "rowHeight": 219,
+      "viewportHeight": 700
+    }
+  },
+  {
+    "viewport": [
+      960,
+      640
+    ],
+    "geometry": {
+      "bodyHeight": 641,
+      "labBottom": 640,
+      "operationHeight": 57.234375,
+      "overflow": 0,
+      "rowHeight": 159,
+      "viewportHeight": 640
+    }
+  },
+  {
+    "finalViewportCheck": {
+      "viewport": [
+        1000,
+        700
+      ],
+      "bodyHeight": 700,
+      "horizontalOverflow": 0,
+      "note": "定位屏幕阅读器状态节点后，额外 1px 文档滚动已消除。"
+    }
+  }
+]

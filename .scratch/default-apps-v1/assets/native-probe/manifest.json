@@ -1,0 +1,11 @@
+{
+  "type": "org.defaultapps.probe.7a9a0204.document",
+  "scheme": "defaultapps-probe-7a9a0204",
+  "token": "7a9a0204",
+  "targets": {
+    "a": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A.app",
+    "b": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate B.app",
+    "copy": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "undeclared": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Undeclared.app"
+  }
+}

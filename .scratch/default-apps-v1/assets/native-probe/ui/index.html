@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Default Apps · 原生行为探针</title>
+  <link rel="stylesheet" href="probe.css">
+</head>
+<body>
+  <header><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 5h10a6 6 0 0 1 6 6v7m-4-4 4 4 4-4M3 11h7M3 17h5"/></svg><strong>Default Apps</strong><span>这台 Mac · 原生探针</span><span id="mode">正在连接 Wails…</span></header>
+  <div class="workspace">
+    <aside aria-label="测试操作">
+      <h2>只读检查</h2>
+      <button id="refresh">读取当前关联</button>
+      <button id="synthetic">延迟回调测试</button>
+      <button id="cancel" disabled>取消 Go 等待</button>
+      <p>延迟测试不调用系统修改接口。</p>
+      <h2>专用测试关联</h2>
+      <label for="kind">关联范围</label>
+      <select id="kind"><option value="type">测试文件类型</option><option value="scheme">测试 URL 协议</option></select>
+      <button data-fixture="a" disabled>设为候选 A</button>
+      <button data-fixture="b" disabled>设为候选 B</button>
+      <button data-fixture="copy" disabled>设为 A 的另一副本</button>
+      <button data-fixture="undeclared" disabled>选择未声明应用</button>
+      <p>仅在授权后启动的测试模式中可用。</p>
+      <h2>PDF 确认测试</h2>
+      <button data-pdf="preview" disabled>PDF 设为预览</button>
+      <button data-pdf="restore" disabled>恢复原 PDF 应用</button>
+      <p>PDF 测试需要单独授权。</p>
+    </aside>
+    <main>
+      <div class="title-row"><div><h1>原生行为记录</h1><p id="finding">当前默认、请求完成和回读结果分别记录。</p></div><output id="heartbeat">主线程：等待检查</output></div>
+      <section aria-labelledby="snapshot-title">
+        <div class="section-heading"><h2 id="snapshot-title">当前默认关联</h2><span id="freshness">尚未读取</span></div>
+        <table><thead><tr><th>类型或协议</th><th>系统当前应用</th></tr></thead><tbody id="snapshot"><tr><td colspan="2">正在读取…</td></tr></tbody></table>
+      </section>
+      <section aria-labelledby="events-title">
+        <div class="section-heading"><h2 id="events-title">请求与回调</h2><span id="event-count">0 条记录</span></div>
+        <pre id="events" aria-label="原始 JSON 记录">尚无记录</pre>
+      </section>
+      <form id="note-form"><label for="note">人工观察</label><div class="note-row"><input id="note" placeholder="例如：系统确认窗口出现，选择了取消" autocomplete="off"><button type="submit">记录观察</button></div></form>
+      <p class="log-path" id="log-path"></p>
+      <output id="result" aria-live="polite"></output>
+    </main>
+  </div>
+  <script type="module" src="probe.js"></script>
+</body>
+</html>

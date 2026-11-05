@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "kind": "type",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "pathMatches": false,
+    "firstReadMs": 6
+  },
+  {
+    "id": 2,
+    "kind": "type",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate B.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate B.app",
+    "pathMatches": true,
+    "firstReadMs": 3
+  },
+  {
+    "id": 3,
+    "kind": "type",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "pathMatches": true,
+    "firstReadMs": 3
+  },
+  {
+    "id": 4,
+    "kind": "type",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Undeclared.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Undeclared.app",
+    "pathMatches": true,
+    "firstReadMs": 6
+  },
+  {
+    "id": 5,
+    "kind": "scheme",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "pathMatches": false,
+    "firstReadMs": 1
+  },
+  {
+    "id": 6,
+    "kind": "scheme",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate B.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate B.app",
+    "pathMatches": true,
+    "firstReadMs": 1
+  },
+  {
+    "id": 7,
+    "kind": "scheme",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Candidate A Copy.app",
+    "pathMatches": true,
+    "firstReadMs": 0
+  },
+  {
+    "id": 8,
+    "kind": "scheme",
+    "requested": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Undeclared.app",
+    "callbackError": null,
+    "callbackMainThread": false,
+    "observed": "/Users/sunven/github/default-apps/.scratch/default-apps-v1/assets/native-probe/out/fixtures/Probe Undeclared.app",
+    "pathMatches": true,
+    "firstReadMs": 3
+  }
+]

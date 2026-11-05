@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Default Apps · 修改交互原型</title>
+<style>
+  /* THROWAWAY: 216px app rail + flexible white sheet; sheet gutters are 24px.
+     Desktop only. All state and simulated system outcomes live in memory. */
+  :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    color: #24262a; background: #f3f4f6; font-size: 14px; line-height: 1.5;
+    --muted: #60636b; --border: #e7e8eb; --blue: #225caa; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-width: 960px; }
+  button, select { font: inherit; color: inherit; }
+  button { cursor: pointer; background: #fff; border: 1px solid #d3d5d9; border-radius: 6px; padding: 6px 11px; min-height: 32px; }
+  button:hover:not(:disabled) { border-color: #60636b; }
+  button:disabled { cursor: default; color: #60636b; background: #f5f6f7; border-color: var(--border); }
+  button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  select { max-width: 100%; border: 1px solid #d3d5d9; border-radius: 6px; min-height: 34px; background: #fff; padding: 5px 8px; }
+  h1, h2, h3, p { margin: 0; }
+  h1 { font-size: 24px; line-height: 1.3; font-weight: 650; letter-spacing: -.025em; }
+  h2 { font-size: 16px; font-weight: 600; }
+  h3 { font-size: 14px; font-weight: 600; }
+  small, .muted { color: var(--muted); }
+  small { font-size: 12px; }
+  strong { font-weight: 600; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 56px; padding: 8px 24px; }
+  .brand { display: flex; align-items: center; gap: 9px; }
+  .brand svg { color: var(--blue); }
+  .brand small { margin-left: 12px; }
+  .mode { display: flex; align-items: center; gap: 4px; }
+  .mode button, .views button { border-color: transparent; background: transparent; }
+  .mode button[aria-pressed="true"], .views button[aria-pressed="true"] { background: #e5e7eb; }
+  .layout { display: grid; grid-template-columns: 216px minmax(0, 1fr); align-items: start; }
+  .sidebar { padding: 14px 16px; position: sticky; top: 8px; }
+  .sidebar h2 { margin: 0 8px 10px; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .app-list { display: flex; flex-direction: column; gap: 3px; }
+  .app-list button { display: flex; flex-direction: column; gap: 3px; text-align: left; padding: 10px 8px; background: transparent; border: 0; }
+  .app-list button[aria-pressed="true"] { background: #e5e7eb; }
+  .app-list button:hover { outline: 1px solid #d3d5d9; outline-offset: -1px; }
+  .sidebar-note { font-size: 12px; color: var(--muted); padding: 18px 8px; }
+  main { background: white; border: 1px solid var(--border); border-radius: 16px; margin: 0 8px 8px 0; padding: 24px; min-width: 0; }
+  .intro p { margin-top: 6px; color: var(--muted); max-width: 940px; }
+  .intro small { display: block; margin-top: 5px; }
+  .heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 16px 0 8px; }
+  .heading p { font-size: 12px; color: var(--muted); margin-top: 3px; overflow-wrap: anywhere; }
+  .views { display: flex; gap: 2px; }
+  .association { display: grid; grid-template-columns: minmax(115px, .7fr) minmax(170px, 1fr) minmax(175px, 1fr) 110px;
+    gap: 16px; align-items: center; border-bottom: 1px solid #eff0f2; padding: 8px 0; min-height: 64px; }
+  .association.selected { background: #f8f9fa; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
+  .association-head { min-height: auto; padding: 0 0 8px; font-size: 12px; color: var(--muted); }
+  .association > div { min-width: 0; }
+  .association small { display: block; overflow-wrap: anywhere; }
+  .identity { border: 0; text-align: left; padding: 0; min-height: 32px; background: none; }
+  .identity small { text-align: left; }
+  .path { overflow-wrap: anywhere; }
+  .status { font-size: 13px; color: var(--blue); }
+  .neutral { color: var(--muted); }
+  .request-detail { margin-top: 10px; padding: 12px; background: #f8f9fa; border-radius: 8px; }
+  .request-detail h3 { margin-bottom: 8px; }
+  .request-detail small { display: block; }
+  dl { display: grid; grid-template-columns: 100px minmax(0,1fr) 100px minmax(0,1fr); gap: 4px 12px; margin: 0; font-size: 13px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  .notice { margin-top: 10px; padding: 8px 12px; background: #edf3fc; color: #224f87; border-radius: 6px; font-size: 13px; }
+  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .primary { color: white; background: #24262a; border-color: #24262a; }
+  .primary:hover:not(:disabled) { background: #3c3f45; }
+  .batch-bar { margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .batch-bar p { font-size: 13px; color: var(--muted); }
+  .lab { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .lab h2 { margin-bottom: 8px; }
+  .lab p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .control-label { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .lab .actions + .actions { margin-top: 8px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+  .tabs button { background: none; border-color: transparent; }
+  .tabs button[aria-selected="true"] { background: #e5e7eb; }
+  .steps { display: flex; flex-wrap: wrap; gap: 6px; }
+  .steps button { font-size: 13px; }
+  .steps button.done { color: var(--muted); background: #f8f9fa; }
+  .guide-note { margin-top: 10px; font-size: 13px; color: var(--blue); }
+  details { margin-top: 16px; color: var(--muted); font-size: 13px; }
+  summary { cursor: pointer; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f8f9fa; color: #24262a; border-radius: 6px; padding: 12px; font: 13px/1.6 ui-monospace, monospace; max-height: 340px; overflow: auto; }
+  .exit-box { margin-top: 12px; padding: 16px; border: 1px solid #d3d5d9; border-radius: 8px; }
+  .exit-box p { margin: 6px 0 12px; font-size: 13px; }
+  @media (max-width: 1100px) { main { padding: 20px; } .association { gap: 10px; grid-template-columns: 110px minmax(155px,1fr) minmax(155px,1fr) 102px; } dl { grid-template-columns: 88px minmax(0,1fr) 88px minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<header class="toolbar">
+  <div class="brand"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 3h9l5 5v13H4V3Z M13 3v5h5 M8 13h12m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><strong>Default Apps</strong><small>修改交互原型 · 仅模拟</small></div>
+  <div class="mode" role="group" aria-label="比较修改方式">
+    <button data-mode="immediate">逐项立即修改 · 已选</button><button data-mode="staged">暂存后应用 · 回看</button><button id="reset">重置示例</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar"><h2>示例应用副本</h2><div id="apps" class="app-list"></div><p class="sidebar-note">先选应用，再修改它的关联项。路径与版本均为示例。首版已选择逐项立即修改；另一方式留作回看，切换会重置演示。</p></aside>
+  <main>
+    <div class="intro"><h1>修改何时算完成？</h1><p>首版已选逐项立即修改、手动改回、持续等待。这里保留其他方案，供回看系统结果与实际默认的关系。</p><small>所有按钮仅改变内存示例，不连接 Wails 或 macOS。停止等待、暂存批量与恢复按钮仅供比较；拒绝、部分失败与退出结果在此模拟。</small></div>
+    <div class="heading"><div><h2 id="app-title"></h2><p id="app-path"></p></div><nav class="views" aria-label="关联项浏览"><button data-view="apps">应用</button><button data-view="types">文件类型</button><button data-view="schemes">URL 协议</button></nav></div>
+    <div class="association association-head" aria-hidden="true"><span>关联项</span><span>当前回读</span><span>修改状态</span><span>操作</span></div>
+    <div id="rows"></div>
+    <div id="batch-bar" class="batch-bar"></div>
+    <div id="request-detail" class="request-detail"></div>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <div id="exit-box"></div>
+    <section class="lab" aria-labelledby="play-title"><h2 id="play-title">自由操作</h2><p id="play-note"></p>
+      <div class="actions"><label class="control-label">模拟系统结果<select id="outcome"><option value="chosen">成功，实际为所选副本</option><option value="copy">成功，实际为另一副本</option><option value="old">成功，实际仍为旧默认</option><option value="refused">系统拒绝（模拟错误）</option></select></label><button id="callback">送达系统结果</button><button id="readback">重新回读</button><button id="stop-wait">停止等待</button></div>
+      <div class="actions"><button id="restore">尝试恢复修改前应用</button><button id="uninstall">模拟卸载修改前应用</button><button id="exit">模拟退出</button><button id="relaunch">模拟重新打开</button><button id="after-exit">模拟退出后系统完成</button></div>
+    </section>
+    <section class="lab" aria-labelledby="guide-title"><h2 id="guide-title">情景演练</h2><div id="tabs" class="tabs" role="tablist" aria-label="情景"></div><div id="walkthrough" role="tabpanel"></div></section>
+    <details id="state-details"><summary>完整状态与事件记录（原型诊断）</summary><pre id="state-json"></pre></details>
+  </main>
+</div>
+<noscript>请在浏览器中启用 JavaScript 后打开本原型。</noscript>
+
+<script>
+/* Portable pure model. No DOM, timers, network, storage or native calls.
+   `system` is an explicitly simulated OS, not a product service contract.
+   V1 permits one submitted change at a time. Staging, restoration and stopping
+   the UI wait remain historical comparison actions, not product features. */
+const ChangeModel = (() => {
+  const apps = {
+    chrome: { name: "Google Chrome", version: "131.0 · 示例", path: "/Applications/Google Chrome.app", bundleID: "com.google.Chrome", supports: ["pdf", "http", "https"] },
+    preview: { name: "预览", version: "11.0 · 示例", path: "/System/Applications/Preview.app", bundleID: "com.apple.Preview", supports: ["pdf", "jpeg"] },
+    previewCopy: { name: "预览 · 副本", version: "11.0 · 示例", path: "/Users/示例/Applications/Preview.app", bundleID: "com.apple.Preview", supports: ["pdf", "jpeg"] },
+    safari: { name: "Safari", version: "18.0 · 示例", path: "/Applications/Safari.app", bundleID: "com.apple.Safari", supports: ["http", "https"] }
+  };
+  const catalog = [
+    { id: "pdf", name: "PDF 文稿", identity: "com.adobe.pdf", hint: ".pdf", kind: "types", initial: "preview" },
+    { id: "jpeg", name: "JPEG 图像", identity: "public.jpeg", hint: ".jpg / .jpeg", kind: "types", initial: "preview" },
+    { id: "http", name: "HTTP 链接", identity: "http", hint: "http", kind: "schemes", initial: "safari" },
+    { id: "https", name: "HTTPS 链接", identity: "https", hint: "https", kind: "schemes", initial: "safari" }
+  ];
+  const openPhases = ["queued", "waiting", "readback", "unknown"];
+  function initial(mode = "immediate") {
+    return { mode, activeApp: "chrome", view: "apps", focused: "pdf", running: true, exitPrompt: false,
+      nextID: 1, notice: mode === "immediate" ? "逐项模式：点击行内按钮就提交该项，随后等待系统结果并回读。" : "暂存模式：行内选择只保存在草稿中，点击「应用」才逐项提交。",
+      installed: Object.keys(apps), events: [],
+      items: Object.fromEntries(catalog.map(c => [c.id, { current: c.initial, freshness: "read", draft: null, request: null, history: [] }])),
+      system: { defaults: Object.fromEntries(catalog.map(c => [c.id, c.initial])), pending: null } };
+  }
+  const pending = s => Object.values(s.items).some(i => i.request && openPhases.includes(i.request.phase));
+  const drafts = s => Object.entries(s.items).filter(([,i]) => i.draft);
+  const visible = s => catalog.filter(c => s.view === "apps" ? apps[s.activeApp].supports.includes(c.id) : c.kind === s.view);
+  const busy = i => i.request && openPhases.includes(i.request.phase);
+  function record(s, text) { s.notice = text; s.events.push({ event: s.events.length + 1, text }); }
+  function pump(s) {
+    if (!s.running || s.system.pending || Object.values(s.items).some(i => i.request?.phase === "readback")) return;
+    const entry = Object.entries(s.items).find(([,i]) => i.request?.phase === "queued");
+    if (!entry) return;
+    const [id, i] = entry, r = i.request;
+    if (!s.installed.includes(r.target)) { r.phase = "failed"; r.callback = "notSubmitted"; r.error = { description: "提交前发现目标应用已卸载" }; pump(s); return; }
+    r.before = i.current; r.phase = "waiting"; r.wait = "active"; i.freshness = "stale"; s.focused = id;
+    s.system.pending = { item: id, requestID: r.id, target: r.target, before: s.system.defaults[id] };
+  }
+  function enqueue(s, id, target, purpose = "change") {
+    const i = s.items[id];
+    if (i.request) i.history.push(i.request);
+    i.draft = null;
+    i.request = { id: s.nextID++, target, before: null, purpose, phase: "queued", callback: "pending", wait: "notStarted", readback: null, late: false, error: null };
+  }
+  function eligible(s, id, target) {
+    return s.running && !s.exitPrompt && !pending(s) && !s.system.pending && s.installed.includes(target) && !busy(s.items[id]) && s.items[id].freshness === "read" && s.items[id].current !== target;
+  }
+  function reduce(state, action) {
+    if (action.type === "RESET") return initial(action.mode ?? state.mode);
+    const s = structuredClone(state), i = s.items[action.item ?? s.focused];
+    const r = i?.request;
+    switch (action.type) {
+      case "APP":
+        if (!apps[action.app]) break;
+        s.activeApp = action.app;
+        if (!visible(s).some(c => c.id === s.focused)) s.focused = visible(s)[0].id;
+        record(s, "已切换应用；既有请求和草稿继续保留。"); return s;
+      case "VIEW":
+        if (!["apps", "types", "schemes"].includes(action.view)) break;
+        s.view = action.view;
+        if (!visible(s).some(c => c.id === s.focused)) s.focused = visible(s)[0].id;
+        record(s, "已切换浏览入口；修改状态按关联项共享。"); return s;
+      case "FOCUS":
+        if (!i) break;
+        s.focused = action.item; record(s, "正在查看该项的请求与回读详情。"); return s;
+      case "CHOOSE": {
+        const target = action.target ?? s.activeApp, id = action.item ?? s.focused;
+        if (!eligible(s, id, target)) break;
+        s.focused = id;
+        if (s.mode === "staged") { i.draft = target; record(s, "选择已暂存，尚未提交系统。"); }
+        else { enqueue(s, id, target); pump(s); record(s, "已提交单项请求，当前默认仍待系统结果与回读确认。"); }
+        return s;
+      }
+      case "CLEAR":
+        if (!s.running || pending(s)) break;
+        for (const item of Object.values(s.items)) item.draft = null;
+        record(s, "已丢弃所有未提交选择。"); return s;
+      case "APPLY":
+        if (s.mode !== "staged" || !s.running || s.exitPrompt || pending(s) || s.system.pending || !drafts(s).length) break;
+        for (const [id, item] of drafts(s)) enqueue(s, id, item.draft);
+        pump(s); record(s, "已开始逐项应用；每项独立确认和回读，不保证一起成功。"); return s;
+      case "STOP_WAIT":
+        if (!s.running || r?.phase !== "waiting" || r.wait !== "active") break;
+        r.wait = "stopped";
+        record(s, "已停止界面等待。请求结果未定，系统仍可能修改；该项保持锁定，队列等待它的最终结果。"); return s;
+      case "CALLBACK": {
+        const p = s.system.pending;
+        if (!s.running || !p || p.item !== (action.item ?? s.focused) || r?.phase !== "waiting") break;
+        r.late = r.wait === "stopped"; r.wait = "finished";
+        if (action.outcome === "refused") {
+          r.callback = "error";
+          r.error = { domain: "DemoAssociationErrorDomain", code: 1, description: "模拟：用户拒绝系统确认。此错误域与代码不是实机 NSError。" };
+        } else {
+          r.callback = "success";
+          s.system.defaults[p.item] = actual(p, action.outcome);
+        }
+        r.phase = "readback"; s.system.pending = null; i.freshness = "stale";
+        record(s, (r.late ? "停止等待后收到晚到结果。" : "系统结果已送达。") + (r.callback === "error" ? "系统报告模拟错误，仍需回读实际默认。" : "现在回读实际默认；返回成功本身不代表所选副本已生效。")); return s;
+      }
+      case "READBACK": {
+        if (!s.running) break;
+        const id = action.item ?? s.focused;
+        i.current = s.system.defaults[id]; i.freshness = "read";
+        if (r) {
+          r.readback = i.current;
+          if (["readback", "unknown", "observedSame", "observedDifferent"].includes(r.phase)) r.phase = r.callback === "unknown" ? (i.current === r.target ? "observedSame" : "observedDifferent") : r.callback === "error" ? "failed" : i.current === r.target ? "matched" : "mismatch";
+        }
+        record(s, r?.phase === "waiting" ? "回读了此刻默认；系统请求仍待决，这次查询不能证明请求结束。" : r?.callback === "error" ? "系统返回模拟错误；回读的实际默认另行保留，可检查后重试。" : r?.callback === "unknown" ? "重新打开后只获得当前默认；无法证明退出期间这项请求的完整结果。" : r?.phase === "matched" ? "回读已确认目标路径；该项完成。" : r?.phase === "mismatch" ? "回读与所选路径不同；显示实际默认，保留差异供用户处理。" : "已刷新当前默认。");
+        pump(s); return s;
+      }
+      case "RESTORE": {
+        const target = r?.before;
+        if (!target || !s.running || pending(s) || s.system.pending || i.freshness !== "read") break;
+        if (!s.installed.includes(target)) { record(s, "无法恢复：修改前的应用副本已卸载。请选择现有应用；不会自动替换为同名副本。"); return s; }
+        if (i.current === target) { record(s, "回读已是修改前应用，无需提交恢复请求。"); return s; }
+        enqueue(s, action.item ?? s.focused, target, "restore"); pump(s);
+        record(s, "恢复作为一项新请求提交，仍需系统确认和回读；不是撤销既有系统操作。"); return s;
+      }
+      case "UNINSTALL":
+        if (!r?.before || !s.running || pending(s)) break;
+        s.installed = s.installed.filter(a => a !== r.before);
+        record(s, "已模拟卸载修改前的应用副本；默认值不会在原型中自动改选。"); return s;
+      case "EXIT":
+        if (!s.running) break;
+        if (pending(s) || drafts(s).length || s.system.pending) { s.exitPrompt = true; record(s, "退出前提示：待决请求可能仍在系统中完成。回看暂存方案时，未提交草稿会丢失。"); }
+        else { s.running = false; record(s, "已模拟退出。"); }
+        return s;
+      case "STAY":
+        if (!s.exitPrompt) break;
+        s.exitPrompt = false; record(s, "已留在应用中，继续查看结果。"); return s;
+      case "CONFIRM_EXIT":
+        if (!s.exitPrompt) break;
+        s.running = false; s.exitPrompt = false;
+        for (const item of Object.values(s.items)) {
+          item.draft = null; item.freshness = "unknown";
+          if (item.request?.phase === "queued") { item.request.phase = "notSubmitted"; item.request.callback = "notSubmitted"; }
+          else if (item.request && ["waiting", "readback"].includes(item.request.phase)) { item.request.phase = "unknown"; item.request.callback = "unknown"; item.request.wait = "lost"; }
+        }
+        record(s, "应用已退出；未提交项已停止。已提交项结果未知，不宣称撤回或恢复成功。"); return s;
+      case "AFTER_EXIT":
+        if (!s.system.pending || s.items[s.system.pending.item].request?.callback !== "unknown") break;
+        if (action.outcome !== "refused") s.system.defaults[s.system.pending.item] = actual(s.system.pending, action.outcome);
+        s.system.pending = null; record(s, "已模拟退出后的旧系统请求完成。产品没有收到此回调；只能通过重新查询观察现状。"); return s;
+      case "RELAUNCH":
+        if (s.running) break;
+        s.running = true;
+        for (const item of Object.values(s.items)) item.freshness = "unknown";
+        record(s, "已模拟重新打开。上次回读仅作原型对照，请重新查询当前默认；没有自动重放写入。"); return s;
+    }
+    record(s, "此操作当前不可执行：请先完成或查询正在处理的请求。未发出新的系统修改。"); return s;
+  }
+  function actual(p, outcome) {
+    if (outcome === "old") return p.before;
+    if (outcome === "copy" && ["preview", "previewCopy"].includes(p.target)) return p.target === "preview" ? "previewCopy" : "preview";
+    return p.target;
+  }
+  return { apps, catalog, initial, reduce, pending, drafts, visible, eligible, busy };
+})();
+</script>
+
+<script>
+/* Thin throwaway DOM shell and walkthroughs; no real system integration. */
+const M = ChangeModel;
+let state = M.initial(), guide = null, stepIndex = 0;
+const scenarios = [
+  { id: "success", name: "单项成功", mode: "immediate", description: "将 PDF 交给 Chrome。留意提交、系统返回成功和实际回读是三个独立时刻。", result: "回读所选路径后才显示已确认；当前默认不在点击提交时提前改写。", steps: [
+    ["设为 Chrome", { type: "CHOOSE", item: "pdf" }], ["系统返回成功", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["回读实际默认", { type: "READBACK", item: "pdf" }] ] },
+  { id: "refusal", name: "系统拒绝", mode: "immediate", description: "模拟拒绝系统确认，回读旧默认后再次尝试。真实取消错误码尚未观察，此处错误仅用于讨论状态。", result: "错误信息与回读默认分别显示；重试是新的请求，不会把失败直接标成已恢复。", steps: [
+    ["提交 PDF 修改", { type: "CHOOSE", item: "pdf" }], ["模拟拒绝确认", { type: "CALLBACK", item: "pdf", outcome: "refused" }], ["回读旧默认", { type: "READBACK", item: "pdf" }], ["再次提交", { type: "CHOOSE", item: "pdf" }], ["这次允许", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["确认回读", { type: "READBACK", item: "pdf" }] ] },
+  { id: "late", name: "停止等待后成功", mode: "immediate", description: "停止界面等待并不撤回系统请求。探针中用户随后允许，晚到回调最终成功。", result: "等待已停止时仍显示结果未定，禁止重复提交；晚到结果回读后可确认完成。", steps: [
+    ["提交 PDF 修改", { type: "CHOOSE", item: "pdf" }], ["停止等待", { type: "STOP_WAIT", item: "pdf" }], ["尝试重复提交（被阻止）", { type: "CHOOSE", item: "pdf" }], ["晚到成功结果", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["回读最终默认", { type: "READBACK", item: "pdf" }] ] },
+  { id: "copy", name: "另一安装副本", mode: "immediate", setup: [{ type: "APP", app: "preview" }], description: "JPEG 的初始默认在本情景设为 Chrome，选择系统预览后回读用户目录中的预览副本。该路径差异在专用探针中实际出现过。", result: "同一 bundle ID 的另一副本仍是路径差异；显示实际位置，不静默视作所选副本成功。", steps: [
+    ["选择系统预览", { type: "CHOOSE", item: "jpeg" }], ["成功但落到另一副本", { type: "CALLBACK", item: "jpeg", outcome: "copy" }], ["比较回读路径", { type: "READBACK", item: "jpeg" }] ] },
+  { id: "batch", name: "批量部分成功", mode: "staged", description: "回看比较方案：暂存 PDF、HTTP、HTTPS，再逐项应用。HTTP 模拟拒绝，HTTPS 继续执行；首版已选择逐项立即修改。", result: "比较方案逐项显示结果，不承诺原子事务或自动回滚。首版不提供暂存与批量设置。", steps: [
+    ["暂存 PDF", { type: "CHOOSE", item: "pdf" }], ["暂存 HTTP", { type: "CHOOSE", item: "http" }], ["暂存 HTTPS", { type: "CHOOSE", item: "https" }], ["应用三项", { type: "APPLY" }],
+    ["PDF 系统成功", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["PDF 回读确认", { type: "READBACK", item: "pdf" }], ["HTTP 模拟拒绝", { type: "CALLBACK", item: "http", outcome: "refused" }], ["HTTP 回读旧值", { type: "READBACK", item: "http" }], ["HTTPS 系统成功", { type: "CALLBACK", item: "https", outcome: "chosen" }], ["HTTPS 回读确认", { type: "READBACK", item: "https" }] ] },
+  { id: "mismatch", name: "回读仍是旧值", mode: "immediate", description: "系统返回成功，查询结果仍是预览。再查一次也不自动变成成功；没有预设必定生效的等待时长。", result: "保留真实回读与请求目标的差异，用户可重新查询或明确再次提交。", steps: [
+    ["提交 PDF 修改", { type: "CHOOSE", item: "pdf" }], ["成功但默认仍旧", { type: "CALLBACK", item: "pdf", outcome: "old" }], ["发现回读差异", { type: "READBACK", item: "pdf" }], ["再次查询", { type: "READBACK", item: "pdf" }] ] },
+  { id: "restore", name: "恢复是一项新修改", mode: "immediate", description: "先把 PDF 改为 Chrome，再尝试恢复修改前的预览；恢复也可能被系统拒绝。", result: "恢复有自己的目标、系统结果与回读。原修改记录保留，不承诺一键撤销系统行为。", steps: [
+    ["提交 Chrome", { type: "CHOOSE", item: "pdf" }], ["系统成功", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["确认 Chrome", { type: "READBACK", item: "pdf" }], ["请求恢复预览", { type: "RESTORE", item: "pdf" }], ["模拟恢复被拒绝", { type: "CALLBACK", item: "pdf", outcome: "refused" }], ["回读仍为 Chrome", { type: "READBACK", item: "pdf" }] ] },
+  { id: "missing", name: "原应用已卸载", mode: "immediate", description: "回看恢复方案：修改成功后卸载原来的预览副本，再尝试恢复。首版已选择查看当前默认并手动改选。", result: "原副本已卸载时无法恢复，需另选存在的应用。首版不提供恢复按钮。", steps: [
+    ["提交 Chrome", { type: "CHOOSE", item: "pdf" }], ["系统成功", { type: "CALLBACK", item: "pdf", outcome: "chosen" }], ["确认 Chrome", { type: "READBACK", item: "pdf" }], ["卸载修改前应用", { type: "UNINSTALL", item: "pdf" }], ["尝试恢复（被阻止）", { type: "RESTORE", item: "pdf" }] ] },
+  { id: "exit", name: "待决时退出", mode: "immediate", description: "在系统请求待决时退出，模拟系统之后完成，再打开并查询。真实待决请求退出后的最终效果尚未验证。", result: "重新打开只确认现有默认，上次系统回调仍未知；不会自动重复写入。这是内存演示，不代表已决定持久化操作记录。", steps: [
+    ["提交 PDF 修改", { type: "CHOOSE", item: "pdf" }], ["请求退出", { type: "EXIT" }], ["留在应用", { type: "STAY" }], ["再次请求退出", { type: "EXIT" }], ["确认退出", { type: "CONFIRM_EXIT" }], ["模拟系统后来成功", { type: "AFTER_EXIT", outcome: "chosen" }], ["模拟重新打开", { type: "RELAUNCH" }], ["查询当前默认", { type: "READBACK", item: "pdf" }] ] }
+];
+const phaseLabels = { queued: "排队 · 尚未提交", waiting: "已提交 · 等待系统", readback: "系统已返回 · 待回读", matched: "回读已确认目标路径", mismatch: "回读与所选路径不同", failed: "修改失败 · 已保留回读", unknown: "退出后结果未知", observedSame: "当前为目标 · 旧请求未知", observedDifferent: "当前与目标不同 · 旧请求未知", notSubmitted: "退出时尚未提交" };
+const waitLabels = { notStarted: "尚未开始", active: "正在等待", stopped: "已停止等待 · 结果未定", finished: "结果已返回", lost: "退出后未继续等待" };
+const callbackLabels = { pending: "未返回", success: "成功", error: "错误（模拟）", unknown: "未知 · 退出期间未收到", notSubmitted: "未提交" };
+const esc = value => String(value ?? "—").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const name = id => id ? M.apps[id]?.name ?? "未解析" : "无默认";
+const path = id => id ? M.apps[id]?.path ?? "未知位置" : "—";
+const button = (id, label, disabled = false, cls = "") => `<button id="${id}" class="${cls}" ${disabled ? "disabled" : ""}>${label}</button>`;
+function dispatch(action) {
+  if (guide) { guide = null; stepIndex = 0; }
+  state = M.reduce(state, action); render();
+}
+function startGuide(id) {
+  guide = scenarios.find(g => g.id === id); stepIndex = 0; state = M.initial(guide.mode);
+  if (id === "copy") { state.items.jpeg.current = "chrome"; state.system.defaults.jpeg = "chrome"; }
+  for (const action of guide.setup ?? []) state = M.reduce(state, action);
+  state.notice = "情景已重置到已知起点，依次点击下方演练按钮。"; render();
+}
+function runStep(index) {
+  if (!guide || index !== stepIndex) return;
+  const action = guide.steps[index][1];
+  if (action.item) state.focused = action.item;
+  state = M.reduce(state, action);
+  stepIndex++; render();
+}
+function render() {
+  const i = state.items[state.focused], r = i.request;
+  document.querySelectorAll("[data-mode]").forEach(el => el.setAttribute("aria-pressed", String(el.dataset.mode === state.mode)));
+  document.querySelectorAll("[data-view]").forEach(el => el.setAttribute("aria-pressed", String(el.dataset.view === state.view)));
+  document.querySelector("#apps").innerHTML = Object.entries(M.apps).map(([id, a]) => `<button data-app="${id}" aria-pressed="${id === state.activeApp}"><strong>${esc(a.name)}</strong><small>${esc(a.version)}${state.installed.includes(id) ? "" : " · 已卸载"}</small></button>`).join("");
+  document.querySelector("#app-title").textContent = state.view === "apps" ? name(state.activeApp) : state.view === "types" ? "文件类型" : "URL 协议";
+  document.querySelector("#app-path").textContent = state.view === "apps" ? path(state.activeApp) : `行内操作目标：${name(state.activeApp)} · ${path(state.activeApp)}`;
+  document.querySelector("#rows").innerHTML = M.visible(state).map(c => {
+    const item = state.items[c.id], req = item.request, unknown = item.freshness === "unknown";
+    const status = item.draft ? `待应用 → ${name(item.draft)}` : req?.phase === "waiting" && req.wait === "stopped" ? "等待已停止 · 结果未定" : req ? phaseLabels[req.phase] : "尚未修改";
+    return `<div class="association ${c.id === state.focused ? "selected" : ""}"><div><button class="identity" data-focus="${c.id}"><strong>${esc(c.name)}</strong><small>${esc(c.hint)}</small></button></div><div><span>${unknown ? "当前默认待查询" : esc(name(item.current))}</span><small class="path">${unknown ? `上次：${esc(name(item.current))}` : esc(path(item.current))}</small>${item.freshness === "stale" ? "<small>提交前回读 · 待更新</small>" : ""}</div><div><span class="status ${!req && !item.draft ? "neutral" : ""}">${esc(status)}</span>${req ? `<small>目标：${esc(name(req.target))}</small>` : ""}${req?.late ? "<small>收到停止等待后的晚到结果</small>" : ""}</div><button data-choose="${c.id}" ${!M.eligible(state, c.id, state.activeApp) ? "disabled" : ""}>${item.current === state.activeApp && item.freshness === "read" ? "当前为此应用" : state.mode === "staged" ? "暂存此应用" : "设为此应用"}</button></div>`;
+  }).join("");
+  const requestCounts = Object.values(state.items).reduce((counts, item) => { if (item.request) counts[item.request.phase] = (counts[item.request.phase] ?? 0) + 1; return counts; }, {});
+  const draftCount = M.drafts(state).length;
+  document.querySelector("#batch-bar").innerHTML = `<p>${state.mode === "staged" ? `${draftCount} 项未提交选择 · ` : ""}${requestCounts.matched ?? 0} 项路径已确认 · ${requestCounts.failed ?? 0} 项失败 · ${requestCounts.mismatch ?? 0} 项差异 · ${requestCounts.queued ?? 0} 项排队${!state.running ? " · 应用已退出（模拟）" : ""}</p>${state.mode === "staged" ? `<div class="actions">${button("clear", "丢弃选择", !draftCount || M.pending(state) || !state.running)}${button("apply", `应用 ${draftCount} 项`, !draftCount || M.pending(state) || !state.running || state.exitPrompt || !!state.system.pending, "primary")}</div>` : ""}`;
+  document.querySelector("#request-detail").innerHTML = `<h3>${esc(M.catalog.find(c => c.id === state.focused).name)} · ${r?.purpose === "restore" ? "恢复请求与回读" : "请求与回读"}</h3><dl><dt>修改前副本</dt><dd>${r?.before ? `${esc(name(r.before))}<small class="path">${esc(path(r.before))}</small>` : r ? "提交时记录" : "尚无请求"}</dd><dt>请求目标</dt><dd>${r ? `${esc(name(r.target))}<small class="path">${esc(path(r.target))}</small>` : i.draft ? `${esc(name(i.draft))}（仅草稿）` : "尚未选择"}</dd><dt>界面等待</dt><dd>${r ? waitLabels[r.wait] : "未开始"}</dd><dt>系统返回</dt><dd>${r ? callbackLabels[r.callback] : "未提交"}</dd><dt>回读结果</dt><dd>${r?.readback ? `${esc(name(r.readback))}<small class="path">${esc(path(r.readback))}</small>` : "尚未回读本次结果"}</dd><dt>查询状态</dt><dd>${({ read: "已查询此刻默认", stale: "显示上次查询 · 待刷新", unknown: "重新打开后待查询" })[i.freshness]}</dd></dl>${r?.error ? `<p style="margin-top:8px;font-size:13px">${esc(r.error.description)}${r.error.domain ? `<small>${esc(r.error.domain)} · code ${r.error.code}</small>` : ""}</p>` : ""}`;
+  document.querySelector("#notice").textContent = state.notice;
+  document.querySelector("#exit-box").innerHTML = state.exitPrompt ? `<div class="exit-box"><h3>退出时还有未完成的操作</h3><p>${draftCount} 项未提交选择会丢失。已提交请求可能在退出后完成，重新打开需查询实际默认。</p><div class="actions">${button("stay", "留在应用", false, "primary")}${button("confirm-exit", "仍然退出（模拟）")}</div></div>` : "";
+  document.querySelector("#play-note").textContent = `点击关联项名称可切换详情；下列按钮作用于「${M.catalog.find(c => c.id === state.focused).name}」。自由操作会结束情景引导。`;
+  document.querySelector("#callback").disabled = !state.running || r?.phase !== "waiting";
+  document.querySelector("#readback").disabled = !state.running || state.exitPrompt;
+  document.querySelector("#stop-wait").disabled = !state.running || r?.phase !== "waiting" || r.wait !== "active";
+  document.querySelector("#restore").disabled = !r?.before || !state.running || M.pending(state) || !!state.system.pending || i.freshness !== "read";
+  document.querySelector("#uninstall").disabled = !r?.before || !state.running || M.pending(state) || !state.installed.includes(r.before);
+  document.querySelector("#exit").disabled = !state.running || state.exitPrompt;
+  document.querySelector("#relaunch").disabled = state.running;
+  document.querySelector("#after-exit").disabled = !state.system.pending || state.items[state.system.pending.item].request?.callback !== "unknown";
+  document.querySelector("#outcome option[value=copy]").disabled = !["preview", "previewCopy"].includes(r?.target ?? state.system.pending?.target);
+  document.querySelector("#tabs").innerHTML = scenarios.map(g => `<button role="tab" id="tab-${g.id}" aria-controls="walkthrough" aria-selected="${g.id === guide?.id}" data-guide="${g.id}">${esc(g.name)}</button>`).join("");
+  const walkthrough = document.querySelector("#walkthrough");
+  if (guide) walkthrough.setAttribute("aria-labelledby", `tab-${guide.id}`); else walkthrough.removeAttribute("aria-labelledby");
+  walkthrough.innerHTML = guide ? `<p>${esc(guide.description)}</p><div class="steps">${guide.steps.map(([label], idx) => `<button data-step="${idx}" class="${idx < stepIndex ? "done" : idx === stepIndex ? "primary" : ""}" ${idx !== stepIndex ? "disabled" : ""}>${idx < stepIndex ? "已完成 · " : ""}${esc(label)}</button>`).join("")}</div><div class="guide-note">${stepIndex === guide.steps.length ? esc(guide.result) : "依次点击当前深色按钮；每一步都会更新上方状态。"}</div><div class="actions" style="margin-top:10px"><button data-guide="${guide.id}">重新开始此情景</button></div>` : "<p>选择情景会重置演示。建议依次查看单项成功、停止等待后成功和批量部分成功，再比较上方两种修改方式。</p>";
+  document.querySelector("#state-json").textContent = JSON.stringify(state, null, 2);
+}
+document.addEventListener("click", event => {
+  const el = event.target.closest("button"); if (!el || el.disabled) return;
+  if (el.dataset.guide) { startGuide(el.dataset.guide); return; }
+  if (el.dataset.step != null) { runStep(Number(el.dataset.step)); return; }
+  if (el.dataset.mode) { dispatch({ type: "RESET", mode: el.dataset.mode }); return; }
+  if (el.dataset.app) { dispatch({ type: "APP", app: el.dataset.app }); return; }
+  if (el.dataset.view) { dispatch({ type: "VIEW", view: el.dataset.view }); return; }
+  if (el.dataset.focus) { dispatch({ type: "FOCUS", item: el.dataset.focus }); return; }
+  if (el.dataset.choose) { dispatch({ type: "CHOOSE", item: el.dataset.choose }); return; }
+  const actions = { reset: "RESET", apply: "APPLY", clear: "CLEAR", callback: "CALLBACK", readback: "READBACK", "stop-wait": "STOP_WAIT", restore: "RESTORE", uninstall: "UNINSTALL", exit: "EXIT", relaunch: "RELAUNCH", "after-exit": "AFTER_EXIT", stay: "STAY", "confirm-exit": "CONFIRM_EXIT" };
+  if (actions[el.id]) dispatch({ type: actions[el.id], outcome: document.querySelector("#outcome").value });
+});
+render();
+</script>
+</body>
+</html>

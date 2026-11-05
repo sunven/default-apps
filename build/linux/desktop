@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=My Product
+Comment=A default-apps application
+# The Exec line includes %u to pass the URL to the application
+Exec=/usr/local/bin/default-apps %u
+Terminal=false
+Type=Application
+Icon=default-apps
+Categories=Utility;
+StartupWMClass=default-apps
+
+ 

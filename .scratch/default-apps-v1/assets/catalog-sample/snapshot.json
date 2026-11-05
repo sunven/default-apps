@@ -1,0 +1,5527 @@
+{
+  "observedAt": "2026-11-05T19:35:52.869361+08:00",
+  "roots": [
+    "/Applications",
+    "/Users/sunven/Applications",
+    "/System/Applications"
+  ],
+  "method": "Read Contents/Info.plist; recurse directories, stop at .app; do not follow directory symlinks. Raw declarations, not UTType resolution or system candidates/defaults. Display names are plist values, not localized Finder names.",
+  "summary": {
+    "appCopies": 92,
+    "withDocumentEntries": 47,
+    "withURLSchemes": 51,
+    "withoutDocumentOrURLDeclarations": 24,
+    "withLegacyExtensionsButNoDocumentUTI": 13,
+    "uniqueRawDocumentUTIs": 422,
+    "uniqueRawExtensions": 191,
+    "uniqueURLSchemes": 157,
+    "duplicateBundleIDs": {},
+    "errors": 0
+  },
+  "apps": [
+    {
+      "name": "Activity Monitor",
+      "version": "10.14",
+      "path": "/System/Applications/Utilities/Activity Monitor.app",
+      "bundle": "com.apple.ActivityMonitor",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "AirPort Utility",
+      "version": "6.3.9",
+      "path": "/System/Applications/Utilities/AirPort Utility.app",
+      "bundle": "com.apple.airport.airportutility",
+      "documentEntries": 2,
+      "utis": [],
+      "extensions": [
+        "basebinary"
+      ],
+      "schemes": [
+        "apconfig",
+        "apupdate"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "App Store",
+      "version": "3.0",
+      "path": "/System/Applications/App Store.app",
+      "bundle": "com.apple.AppStore",
+      "documentEntries": 2,
+      "utis": [
+        "com.apple.appstore.appdownload",
+        "com.apple.package",
+        "public.data"
+      ],
+      "extensions": [
+        "appdownload"
+      ],
+      "schemes": [
+        "itms-apps",
+        "itms-appss",
+        "macappstore",
+        "macappstores"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.appstore.appdownload",
+          "name": "App Store Download",
+          "extensions": [
+            "appdownload"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Apps",
+      "version": "1.0",
+      "path": "/System/Applications/Apps.app",
+      "bundle": "com.apple.apps.launcher",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Audio MIDI Setup",
+      "version": "3.9",
+      "path": "/System/Applications/Utilities/Audio MIDI Setup.app",
+      "bundle": "com.apple.audio.AudioMIDISetup",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Automator",
+      "version": "2.10",
+      "path": "/System/Applications/Automator.app",
+      "bundle": "com.apple.Automator",
+      "documentEntries": 5,
+      "utis": [],
+      "extensions": [
+        "action",
+        "app",
+        "caction",
+        "definition",
+        "workflow"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.cocoa.web-archive",
+          "name": "Web Content",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.RemoteDesktop.computer-object",
+          "name": "Remote Computers",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.object",
+          "name": "Anything",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.cocoa.string",
+          "name": "Text",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.cocoa.attributed-string",
+          "name": "Rich Text",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.cocoa.data",
+          "name": "Data",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.cocoa.url",
+          "name": "URLs",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.cocoa.path",
+          "name": "Files/Folders",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.alias-object",
+          "name": "Files/Folders",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.alias-object.image",
+          "name": "Image files",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.alias-object.movie",
+          "name": "Movie files",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.alias-object.pdf",
+          "name": "PDF files",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.powerpoint.presentation-object",
+          "name": "Powerpoint presentations",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.powerpoint.slide-object",
+          "name": "Powerpoint slides",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.finder.file-or-folder-object",
+          "name": "Finder items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.idvd.item-object",
+          "name": "iDVD items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.idvd.menu-object",
+          "name": "iDVD menus",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.idvd.slideshow-object",
+          "name": "iDVD slideshows",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.iphoto.album-object",
+          "name": "iPhoto albums",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.iphoto.photo-object",
+          "name": "iPhoto photos",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.iphoto.item-object",
+          "name": "iPhoto items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.itunes.item-object",
+          "name": "Music items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.itunes.playlist-object",
+          "name": "Music playlists",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.itunes.source-object",
+          "name": "Music sources",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.itunes.track-object",
+          "name": "Music tracks",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.safari.document-object",
+          "name": "Safari documents",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.textedit.document-object",
+          "name": "TextEdit documents",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.item-object",
+          "name": "Calendar items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.event-object",
+          "name": "Calendar events",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.calendar-object",
+          "name": "Calendar calendars",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.todo-object",
+          "name": "Reminders",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.calendar-store.item",
+          "name": "Calendar items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.calendar-store.event",
+          "name": "Calendar events",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.calendar-store.todo",
+          "name": "Reminders",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.calendar-store.calendar",
+          "name": "Calendar Calendars",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.event-kit.item",
+          "name": "Calendar items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.event-kit.event",
+          "name": "Calendar events",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.event-kit.reminder",
+          "name": "Reminders",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.event-kit.calendar",
+          "name": "Calendar Calendars",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.mail.item-object",
+          "name": "Mail items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.mail.message-object",
+          "name": "Mail messages",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.mail.mailbox-object",
+          "name": "Mail mailboxes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.mail.account-object",
+          "name": "Mail accounts",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.addressbook.item-object",
+          "name": "Contacts items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.addressbook.group-object",
+          "name": "Contacts groups",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.addressbook.person-object",
+          "name": "Contacts people",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.text-object",
+          "name": "Text",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.data-object",
+          "name": "Data",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.applescript.url-object",
+          "name": "URLs",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.spotlight.item",
+          "name": "Spotlight items",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.pubsub.feed",
+          "name": "RSS feeds",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.pubsub.entry",
+          "name": "RSS articles",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.automator-workflow",
+          "name": "Automator Workflow Document",
+          "extensions": [
+            "workflow"
+          ]
+        },
+        {
+          "id": "com.apple.automator-action",
+          "name": "Automator Action",
+          "extensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "com.apple.automator-conversion-action",
+          "name": "Automator Conversion Action",
+          "extensions": [
+            "caction"
+          ]
+        },
+        {
+          "id": "com.apple.automator-type-definition",
+          "name": "Automator Data Type Definition",
+          "extensions": [
+            "definition"
+          ]
+        },
+        {
+          "id": "com.apple.automator.workflow-type.service",
+          "name": "Workflow Service Icon",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.automator.workflow-type.dictation-command",
+          "name": "Dictation Command Icon",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Bluetooth File Exchange",
+      "version": "9.0",
+      "path": "/System/Applications/Utilities/Bluetooth File Exchange.app",
+      "bundle": "com.apple.BluetoothFileExchange",
+      "documentEntries": 1,
+      "utis": [],
+      "extensions": [
+        "*"
+      ],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Books",
+      "version": "9.0",
+      "path": "/System/Applications/Books.app",
+      "bundle": "com.apple.iBooksX",
+      "documentEntries": 18,
+      "utis": [
+        "com.adobe.pdf",
+        "com.apple.coreaudio-format",
+        "com.apple.ibooks",
+        "com.apple.ibooks-container",
+        "com.apple.ibooks-folder",
+        "com.apple.ibooks.epub",
+        "com.apple.m4a-audio",
+        "com.apple.protected-mpeg-4-audio",
+        "com.apple.protected-mpeg-4-audio-b",
+        "com.audible.aa-audiobook",
+        "com.audible.aax-audiobook",
+        "com.digidesign.sd2-audio",
+        "com.microsoft.waveform-audio",
+        "org.idpf.epub-container",
+        "org.idpf.epub-folder",
+        "public.aac-audio",
+        "public.ac3-audio",
+        "public.aifc-audio",
+        "public.aiff-audio",
+        "public.au-audio",
+        "public.folder",
+        "public.mp3",
+        "public.mpeg-4",
+        "public.mpeg-4-audio"
+      ],
+      "extensions": [],
+      "schemes": [
+        "ibooks",
+        "itms-books",
+        "itms-bookss"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.ibooks.epub",
+          "name": "Electronic Publication (EPUB)",
+          "extensions": [
+            "epub"
+          ]
+        },
+        {
+          "id": "org.idpf.epub-container",
+          "name": "Electronic Publication (EPUB)",
+          "extensions": [
+            "epub"
+          ]
+        },
+        {
+          "id": "org.idpf.epub-folder",
+          "name": "Electronic Publication (EPUB)",
+          "extensions": [
+            "epub"
+          ]
+        },
+        {
+          "id": "com.apple.ibooks-container",
+          "name": "Electronic Publication (Apple Books)",
+          "extensions": [
+            "ibooks"
+          ]
+        },
+        {
+          "id": "com.apple.ibooks-folder",
+          "name": "Electronic Publication (Apple Books)",
+          "extensions": [
+            "ibooks"
+          ]
+        },
+        {
+          "id": "com.apple.ibooks",
+          "name": "Electronic Publication (Apple Books)",
+          "extensions": [
+            "ibooks"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Calculator",
+      "version": "12.0",
+      "path": "/System/Applications/Calculator.app",
+      "bundle": "com.apple.calculator",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Calendar",
+      "version": "27.0",
+      "path": "/System/Applications/Calendar.app",
+      "bundle": "com.apple.iCal",
+      "documentEntries": 4,
+      "utis": [
+        "com.apple.ical.ics",
+        "com.apple.ical.vcs"
+      ],
+      "extensions": [
+        "aplmodel",
+        "icbu",
+        "ics",
+        "vcs"
+      ],
+      "schemes": [
+        "ical",
+        "webcal"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.ical.ics.event",
+          "name": "Calendar Event",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.ics.todo",
+          "name": "Reminder Todo",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.ical.ics",
+          "name": "ICS File",
+          "extensions": [
+            "ics"
+          ]
+        },
+        {
+          "id": "com.apple.ical.vcs",
+          "name": "VCS File",
+          "extensions": [
+            "vcs",
+            "vcal"
+          ]
+        },
+        {
+          "id": "com.apple.ical.backup-package",
+          "name": "iCal Backup File",
+          "extensions": [
+            "icbu"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CC Switch",
+      "version": "4.0.24",
+      "path": "/Applications/CC Switch.app",
+      "bundle": "com.ccswitch.desktop",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "ccswitch"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Chess",
+      "version": "3.18",
+      "path": "/System/Applications/Chess.app",
+      "bundle": "com.apple.Chess",
+      "documentEntries": 2,
+      "utis": [
+        "com.apple.chess.game",
+        "com.apple.chess.pgn"
+      ],
+      "extensions": [
+        "game",
+        "pgn"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.chess.game",
+          "name": "Composed document icon for the .game document type",
+          "extensions": [
+            "game"
+          ]
+        },
+        {
+          "id": "com.apple.chess.pgn",
+          "name": "Composed document icon for the .pgn document type",
+          "extensions": [
+            "pgn"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clash Verge",
+      "version": "2.5.10",
+      "path": "/Applications/Clash Verge.app",
+      "bundle": "io.github.clash-verge-rev.clash-verge-rev",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "clash",
+        "clash-verge"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Claude Code URL Handler",
+      "version": "1.0",
+      "path": "/Users/sunven/Applications/Claude Code URL Handler.app",
+      "bundle": "com.anthropic.claude-code-url-handler",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "claude-cli"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Clean Up",
+      "version": "0.1.6",
+      "path": "/Applications/Clean Up.app",
+      "bundle": "com.sunven.package-manager-control-center",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Clock",
+      "version": "1.1",
+      "path": "/System/Applications/Clock.app",
+      "bundle": "com.apple.clock",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "ColorSync Utility",
+      "version": "12.2.0",
+      "path": "/System/Applications/Utilities/ColorSync Utility.app",
+      "bundle": "com.apple.ColorSyncUtility",
+      "documentEntries": 19,
+      "utis": [
+        "com.adobe.pdf",
+        "com.adobe.photoshop-image",
+        "com.apple.pict",
+        "com.compuserve.gif",
+        "com.ilm.openexr-image",
+        "com.microsoft.bmp",
+        "com.sgi.sgi-image",
+        "com.truevision.tga-image",
+        "org.nema.dicom",
+        "org.webmproject.webp",
+        "public.avif",
+        "public.avis",
+        "public.heic",
+        "public.heif",
+        "public.jpeg",
+        "public.jpeg-2000",
+        "public.jpeg-xl",
+        "public.png",
+        "public.tiff"
+      ],
+      "extensions": [
+        "ICC",
+        "ICM",
+        "JPE",
+        "JPEG",
+        "JPG",
+        "PDF",
+        "TIF",
+        "TIFF",
+        "avif",
+        "avifs",
+        "bmp",
+        "cmm",
+        "dcm",
+        "exr",
+        "gif",
+        "heic",
+        "heif",
+        "icc",
+        "icm",
+        "jp2",
+        "jpe",
+        "jpeg",
+        "jpg",
+        "jxl",
+        "pct",
+        "pdf",
+        "pf",
+        "pict",
+        "png",
+        "psd",
+        "sgi",
+        "tga",
+        "tif",
+        "tiff",
+        "webp"
+      ],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Console",
+      "version": "1.1",
+      "path": "/System/Applications/Utilities/Console.app",
+      "bundle": "com.apple.Console",
+      "documentEntries": 16,
+      "utis": [
+        "com.apple.crashreport",
+        "com.apple.gpuRestart",
+        "com.apple.hangreport",
+        "com.apple.ips",
+        "com.apple.json-crash",
+        "com.apple.ktrace",
+        "com.apple.log",
+        "com.apple.logarchive",
+        "com.apple.panicreport",
+        "com.apple.shutdownStall",
+        "com.apple.spinreport",
+        "com.apple.trace",
+        "public.log"
+      ],
+      "extensions": [
+        "asl",
+        "bz2",
+        "diag",
+        "gz"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.logarchive",
+          "name": "Log Archive",
+          "extensions": [
+            "logarchive"
+          ]
+        },
+        {
+          "id": "com.apple.ips",
+          "name": "Analytics Report",
+          "extensions": [
+            "ips"
+          ]
+        },
+        {
+          "id": "com.apple.json-crash",
+          "name": "JSON Crash Report",
+          "extensions": [
+            "json_crash"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "version": "14.0",
+      "path": "/System/Applications/Contacts.app",
+      "bundle": "com.apple.AddressBook",
+      "documentEntries": 8,
+      "utis": [
+        "public.vcard"
+      ],
+      "extensions": [
+        "abbu",
+        "abcdg",
+        "abcdp",
+        "ldi",
+        "ldif",
+        "persistentCardModel"
+      ],
+      "schemes": [
+        "addressbook",
+        "contacts-sensitive"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.addressbook.person",
+          "name": "Contacts Person Data",
+          "extensions": [
+            "abcdp"
+          ]
+        },
+        {
+          "id": "com.apple.addressbook.group",
+          "name": "Contacts Group Data",
+          "extensions": [
+            "abcdg"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DBX",
+      "version": "0.6.51",
+      "path": "/Applications/DBX.app",
+      "bundle": "com.dbx.app",
+      "documentEntries": 2,
+      "utis": [],
+      "extensions": [
+        "db",
+        "duckdb",
+        "sql",
+        "sqlite",
+        "sqlite3"
+      ],
+      "schemes": [
+        "dbx"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Dictionary",
+      "version": "2.3.0",
+      "path": "/System/Applications/Dictionary.app",
+      "bundle": "com.apple.Dictionary",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "dict",
+        "x-dictionary"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Digital Color Meter",
+      "version": "6.12",
+      "path": "/System/Applications/Utilities/Digital Color Meter.app",
+      "bundle": "com.apple.DigitalColorMeter",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Disk Utility",
+      "version": "22.7",
+      "path": "/System/Applications/Utilities/Disk Utility.app",
+      "bundle": "com.apple.DiskUtility",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.Diskutility.diskimage.asif",
+          "name": "ASIF diskimage",
+          "extensions": [
+            "asif"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EnvToggle",
+      "version": "0.0.2",
+      "path": "/Applications/EnvToggle.app",
+      "bundle": "top.llweb.EnvToggle",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "FaceTime",
+      "version": "36",
+      "path": "/System/Applications/FaceTime.app",
+      "bundle": "com.apple.FaceTime",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "facetime",
+        "facetime-group",
+        "facetime-open-link",
+        "system-call-controls"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "fanyifanyi",
+      "version": "0.1.47",
+      "path": "/Applications/fanyifanyi.app",
+      "bundle": "com.fanyifanyi.app",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "FindMy",
+      "version": "5.0",
+      "path": "/System/Applications/FindMy.app",
+      "bundle": "com.apple.findmy",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "findmy",
+        "findmyfriends",
+        "fmf1",
+        "fmip1",
+        "grenada"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Font Book",
+      "version": "11.0",
+      "path": "/System/Applications/Font Book.app",
+      "bundle": "com.apple.FontBook",
+      "documentEntries": 11,
+      "utis": [
+        "com.adobe.postscript-lwfn​-font",
+        "com.apple.cfr-font",
+        "com.apple.font-suitcase",
+        "com.apple.truetype-datafork-suitcase-font",
+        "public.opentype-collection-font",
+        "public.opentype-font",
+        "public.truetype-collection-font",
+        "public.truetype-font"
+      ],
+      "extensions": [
+        "cfr",
+        "dfont",
+        "otc",
+        "otf",
+        "sfont",
+        "ttc",
+        "ttf"
+      ],
+      "schemes": [
+        "fontbook"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.FontBook.DraggableFont",
+          "name": "Font Book Dragged Font",
+          "extensions": []
+        },
+        {
+          "id": "public.truetype-font",
+          "name": "TrueType font",
+          "extensions": [
+            "ttf"
+          ]
+        },
+        {
+          "id": "com.apple.font-suitcase",
+          "name": "Font suitcase",
+          "extensions": [
+            "tfil"
+          ]
+        },
+        {
+          "id": "com.apple.truetype-datafork-suitcase-font",
+          "name": "TrueType data fork font",
+          "extensions": [
+            "dfont"
+          ]
+        },
+        {
+          "id": "public.opentype-font",
+          "name": "PostScript OpenType font",
+          "extensions": [
+            "otf"
+          ]
+        },
+        {
+          "id": "public.truetype-collection-font",
+          "name": "TrueType collection font",
+          "extensions": [
+            "ttc"
+          ]
+        },
+        {
+          "id": "public.opentype-collection-font",
+          "name": "OpenType font collection",
+          "extensions": [
+            "otc"
+          ]
+        },
+        {
+          "id": "com.apple.font-suitcase",
+          "name": "Font suitcase",
+          "extensions": [
+            "ffil"
+          ]
+        },
+        {
+          "id": "com.adobe.postscript-lwfn​-font",
+          "name": "PostScript Type 1 outline font",
+          "extensions": [
+            "lwfn"
+          ]
+        },
+        {
+          "id": "com.apple.font-suitcase",
+          "name": "Font suitcase",
+          "extensions": [
+            "sfnt"
+          ]
+        },
+        {
+          "id": "com.apple.cfr-font",
+          "name": "Composite Font Representation font",
+          "extensions": [
+            "sfont"
+          ]
+        },
+        {
+          "id": "com.apple.cfr-font",
+          "name": "Composite Font Representation font",
+          "extensions": [
+            "cfr"
+          ]
+        },
+        {
+          "id": "com.apple.FontBook.DraggableFont",
+          "name": "Font Book Dragged Font",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Freeform",
+      "version": "5.1",
+      "path": "/System/Applications/Freeform.app",
+      "bundle": "com.apple.freeform",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "com.apple.apps.freeform-edit-in",
+        "freeform"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.freeform.board",
+          "name": null,
+          "extensions": [
+            "board"
+          ]
+        },
+        {
+          "id": "com.apple.freeform.folder",
+          "name": null,
+          "extensions": [
+            "folder"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "version": "1.0",
+      "path": "/System/Applications/Games.app",
+      "bundle": "com.apple.games",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "game-overlay-ui",
+        "games"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Ghostty",
+      "version": "1.4.0",
+      "path": "/Applications/Ghostty.app",
+      "bundle": "com.mitchellh.ghostty",
+      "documentEntries": 3,
+      "utis": [
+        "public.directory",
+        "public.unix-executable"
+      ],
+      "extensions": [
+        "command",
+        "csh",
+        "pl",
+        "sh",
+        "tool",
+        "zsh"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.mitchellh.ghosttySurfaceId",
+          "name": "Ghostty Surface Identifier",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Google Chrome",
+      "version": "156.0.8078.81",
+      "path": "/Applications/Google Chrome.app",
+      "bundle": "com.google.Chrome",
+      "documentEntries": 17,
+      "utis": [
+        "com.adobe.pdf",
+        "com.compuserve.gif",
+        "com.netscape.javascript-source",
+        "org.chromium.extension",
+        "org.chromium.shortcut",
+        "org.ietf.mhtml",
+        "org.webmproject.webm",
+        "org.webmproject.webp",
+        "org.xiph.ogg-audio",
+        "org.xiph.ogv",
+        "public.avif",
+        "public.html",
+        "public.jpeg",
+        "public.png",
+        "public.svg-image",
+        "public.text",
+        "public.xhtml"
+      ],
+      "extensions": [],
+      "schemes": [
+        "file",
+        "google-chrome",
+        "http",
+        "https"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "org.chromium.extension",
+          "name": "Chromium Extension",
+          "extensions": [
+            "crx"
+          ]
+        },
+        {
+          "id": "org.chromium.shortcut",
+          "name": "Chromium Shortcut",
+          "extensions": [
+            "crwebloc"
+          ]
+        },
+        {
+          "id": "com.compuserve.gif",
+          "name": "GIF image",
+          "extensions": [
+            "gif"
+          ]
+        },
+        {
+          "id": "public.html",
+          "name": "HTML text",
+          "extensions": [
+            "html",
+            "htm",
+            "shtml",
+            "shtm"
+          ]
+        },
+        {
+          "id": "public.xhtml",
+          "name": "XHTML",
+          "extensions": [
+            "xhtml",
+            "xhtm",
+            "xht"
+          ]
+        },
+        {
+          "id": "com.netscape.javascript-source",
+          "name": "JavaScript",
+          "extensions": [
+            "js",
+            "jscript",
+            "javascript",
+            "mjs"
+          ]
+        },
+        {
+          "id": "public.jpeg",
+          "name": "JPEG image",
+          "extensions": [
+            "jpeg",
+            "jpg",
+            "jpe"
+          ]
+        },
+        {
+          "id": "org.ietf.mhtml",
+          "name": "MIME HTML document",
+          "extensions": [
+            "mht",
+            "mhtml"
+          ]
+        },
+        {
+          "id": "org.xiph.ogg-audio",
+          "name": "Ogg audio",
+          "extensions": [
+            "ogg",
+            "oga"
+          ]
+        },
+        {
+          "id": "org.xiph.ogv",
+          "name": "Ogg video",
+          "extensions": [
+            "ogm",
+            "ogv"
+          ]
+        },
+        {
+          "id": "public.png",
+          "name": "PNG image",
+          "extensions": [
+            "png"
+          ]
+        },
+        {
+          "id": "public.svg-image",
+          "name": "SVG image",
+          "extensions": [
+            "svg",
+            "svgz"
+          ]
+        },
+        {
+          "id": "public.text",
+          "name": "text",
+          "extensions": []
+        },
+        {
+          "id": "org.webmproject.webm",
+          "name": "WebM media",
+          "extensions": [
+            "webm"
+          ]
+        },
+        {
+          "id": "org.webmproject.webp",
+          "name": "WebP image",
+          "extensions": [
+            "webp"
+          ]
+        },
+        {
+          "id": "com.adobe.pdf",
+          "name": "PDF document",
+          "extensions": [
+            "pdf"
+          ]
+        },
+        {
+          "id": "public.avif",
+          "name": "AV1 Image File Format",
+          "extensions": [
+            "avif"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grapher",
+      "version": "2.8",
+      "path": "/System/Applications/Utilities/Grapher.app",
+      "bundle": "com.apple.grapher",
+      "documentEntries": 1,
+      "utis": [],
+      "extensions": [
+        "gcx"
+      ],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Home",
+      "version": "11.0",
+      "path": "/System/Applications/Home.app",
+      "bundle": "com.apple.Home",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Image Capture",
+      "version": "8.0",
+      "path": "/System/Applications/Image Capture.app",
+      "bundle": "com.apple.Image_Capture",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Image Playground",
+      "version": "1.0",
+      "path": "/System/Applications/Image Playground.app",
+      "bundle": "com.apple.GenerativePlaygroundApp",
+      "documentEntries": 1,
+      "utis": [
+        "public.image"
+      ],
+      "extensions": [],
+      "schemes": [
+        "imageplayground.open",
+        "imageplayground.open-image"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "iNodeClient",
+      "version": "1.0",
+      "path": "/Applications/iNodeClient/iNodeClient.app",
+      "bundle": "H3C.iNodeTray",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "iPhone Mirroring",
+      "version": "2.1",
+      "path": "/System/Applications/iPhone Mirroring.app",
+      "bundle": "com.apple.ScreenContinuity",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Journal",
+      "version": "3.0",
+      "path": "/System/Applications/Journal.app",
+      "bundle": "com.apple.journal",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.journal.archive.document"
+      ],
+      "extensions": [],
+      "schemes": [
+        "moments"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.journal.archive.document",
+          "name": "Journal Archive Document",
+          "extensions": [
+            "journalarchive"
+          ]
+        },
+        {
+          "id": "com.apple.journal.sharing",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.drawing",
+          "name": null,
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Magnifier",
+      "version": "1.0",
+      "path": "/System/Applications/Utilities/Magnifier.app",
+      "bundle": "com.apple.Magnifier",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.magnifier.document"
+      ],
+      "extensions": [
+        "magnifier"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.magnifier.document",
+          "name": "Magnifier Document",
+          "extensions": [
+            "magnifier"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mail",
+      "version": "16.0",
+      "path": "/System/Applications/Mail.app",
+      "bundle": "com.apple.mail",
+      "documentEntries": 7,
+      "utis": [
+        "com.apple.mail.email",
+        "com.apple.mail.emlx",
+        "com.apple.mail.emlx.part",
+        "com.apple.mail.ewsmbox",
+        "com.apple.mail.imapmbox",
+        "com.apple.mail.mbox",
+        "public.item"
+      ],
+      "extensions": [],
+      "schemes": [
+        "mail-pref-pane",
+        "mailto",
+        "message"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.mail.email",
+          "name": "Email Message",
+          "extensions": [
+            "eml"
+          ]
+        },
+        {
+          "id": "com.apple.mail.emlx",
+          "name": "Mail Message",
+          "extensions": [
+            "emlx"
+          ]
+        },
+        {
+          "id": "com.apple.mail.emlx.part",
+          "name": "Mail Message Part",
+          "extensions": [
+            "emlxpart"
+          ]
+        },
+        {
+          "id": "com.apple.mail.mbox",
+          "name": "Mail Mailbox",
+          "extensions": [
+            "mbox"
+          ]
+        },
+        {
+          "id": "com.apple.mail.imapmbox",
+          "name": "Mail Cached IMAP Mailbox",
+          "extensions": [
+            "imapmbox"
+          ]
+        },
+        {
+          "id": "com.apple.mail.ewsmbox",
+          "name": "Mail Cached Exchange Web Services Mailbox",
+          "extensions": [
+            "ewsmbox"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Maps",
+      "version": "3.0",
+      "path": "/System/Applications/Maps.app",
+      "bundle": "com.apple.Maps",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.maps.navtracefile"
+      ],
+      "extensions": [],
+      "schemes": [
+        "map",
+        "mapitem",
+        "maps",
+        "x-maps-ac-auth",
+        "x-maps-bulletin",
+        "x-maps-mapitemhandles",
+        "x-maps-punchinhint"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.maps.directionsrequest",
+          "name": "MKDirectionsRequest",
+          "extensions": [
+            "mkdirectionsrequest"
+          ]
+        },
+        {
+          "id": "com.apple.maps.navtracefile",
+          "name": "TraceFileType",
+          "extensions": [
+            "navtrace"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "version": "26.0",
+      "path": "/System/Applications/Messages.app",
+      "bundle": "com.apple.MobileSMS",
+      "documentEntries": 3,
+      "utis": [
+        "public.audiovisual-content",
+        "public.image",
+        "public.utf8-plain-text"
+      ],
+      "extensions": [],
+      "schemes": [
+        "ichat",
+        "im",
+        "imessage",
+        "itms-messages",
+        "itms-messagess",
+        "messages",
+        "sms",
+        "sms-private"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.messages.CKConversation",
+          "name": null,
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Migration Assistant",
+      "version": "27.2",
+      "path": "/System/Applications/Utilities/Migration Assistant.app",
+      "bundle": "com.apple.MigrateAssistant",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Mission Control",
+      "version": "1.2",
+      "path": "/System/Applications/Mission Control.app",
+      "bundle": "com.apple.exposelauncher",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Music",
+      "version": "1.7.2",
+      "path": "/System/Applications/Music.app",
+      "bundle": "com.apple.Music",
+      "documentEntries": 16,
+      "utis": [
+        "com.apple.Music.cdda",
+        "com.apple.Music.database",
+        "com.apple.Music.itlp",
+        "com.apple.Music.library",
+        "com.apple.Music.m3u-playlist",
+        "com.apple.Music.mp2",
+        "com.apple.Music.pls-playlist",
+        "com.apple.Music.rmp-playlist",
+        "com.apple.Music.visual",
+        "com.apple.iTunes.db",
+        "com.apple.m4a-audio",
+        "com.apple.protected-mpeg-4-audio",
+        "com.microsoft.waveform-audio",
+        "public.aifc-audio",
+        "public.aiff-audio",
+        "public.m3u-playlist",
+        "public.mp2",
+        "public.mp3",
+        "public.mpeg",
+        "public.mpeg-4-audio",
+        "public.pls-playlist"
+      ],
+      "extensions": [
+        "musicdb",
+        "musiclibrary"
+      ],
+      "schemes": [
+        "daap",
+        "itals",
+        "italss",
+        "itls",
+        "itlss",
+        "itms",
+        "itmss",
+        "itsradio",
+        "itunes",
+        "itunesradio",
+        "music",
+        "musics"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.Music.library",
+          "name": "Music Library",
+          "extensions": [
+            "musiclibrary"
+          ]
+        },
+        {
+          "id": "com.apple.Music.database",
+          "name": "Music Database",
+          "extensions": [
+            "musicdb"
+          ]
+        },
+        {
+          "id": "com.apple.Music.cdda",
+          "name": "CD Track",
+          "extensions": [
+            "cdda"
+          ]
+        },
+        {
+          "id": "com.apple.Music.itms",
+          "name": "iTunes Store URL",
+          "extensions": [
+            "itms"
+          ]
+        },
+        {
+          "id": "com.apple.Music.itlp",
+          "name": "iTunes LP",
+          "extensions": [
+            "itlp"
+          ]
+        },
+        {
+          "id": "com.apple.Music.visual",
+          "name": "Visual Plugin",
+          "extensions": [
+            "hvpl"
+          ]
+        },
+        {
+          "id": "com.apple.Music.m3u-playlist",
+          "name": "M3U Playlist",
+          "extensions": [
+            "m3u",
+            "m3u8"
+          ]
+        },
+        {
+          "id": "com.apple.Music.pls-playlist",
+          "name": "PLS Playlist",
+          "extensions": [
+            "pls"
+          ]
+        },
+        {
+          "id": "com.apple.Music.mp2",
+          "name": "MP2 audio",
+          "extensions": [
+            "mp2"
+          ]
+        },
+        {
+          "id": "com.apple.Music.metadata",
+          "name": "Metadata",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.Music.iappurl",
+          "name": "iApp Compatibility",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.Music.rmp-playlist",
+          "name": "RMP Playlist",
+          "extensions": [
+            "rmp"
+          ]
+        },
+        {
+          "id": "com.apple.iTunes.db",
+          "name": "iTunes Database File",
+          "extensions": [
+            "itl"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "version": "12.1",
+      "path": "/System/Applications/News.app",
+      "bundle": "com.apple.news",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "applenews",
+        "applenewss"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Notes",
+      "version": "4.13",
+      "path": "/System/Applications/Notes.app",
+      "bundle": "com.apple.Notes",
+      "documentEntries": 10,
+      "utis": [
+        "com.apple.notes.airdrop.document",
+        "com.apple.notes.archive",
+        "com.apple.notes.note",
+        "com.apple.rtfd",
+        "com.apple.stickies.appexport",
+        "com.evernote.enex",
+        "public.data",
+        "public.directory",
+        "public.html",
+        "public.rtf",
+        "public.text"
+      ],
+      "extensions": [],
+      "schemes": [
+        "applenotes",
+        "notes"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.notes.textattachment",
+          "name": "Notes Text Attachment",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment.mention",
+          "name": "Mentions inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment.hashtag",
+          "name": "Tag inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment.link",
+          "name": "Link inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment.calculateresult",
+          "name": "Calculate result inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment.calculategraphexpression",
+          "name": "Calculate graph expression inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.inlinetextattachment",
+          "name": "Base type of inline attachments of Notes",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.archive",
+          "name": "Notes Archive",
+          "extensions": [
+            "notesarchive"
+          ]
+        },
+        {
+          "id": "com.apple.notes.airdrop.document",
+          "name": "Notes AirDrop Document",
+          "extensions": [
+            "notesairdropdocument"
+          ]
+        },
+        {
+          "id": "com.apple.notes.note",
+          "name": "Note",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.spotlightrecord",
+          "name": "Note",
+          "extensions": [
+            "notesspotlightrecord"
+          ]
+        },
+        {
+          "id": "com.apple.notes.table",
+          "name": "Notes table attachment",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.todo",
+          "name": "Notes todo attachment",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.gallery",
+          "name": "Notes gallery attachment",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.richtext",
+          "name": "Notes rich text pasteboard data",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.notes.sketch",
+          "name": "Notes fullscreen drawing attachment",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.DocumentCamera.scan-archive",
+          "name": null,
+          "extensions": [
+            "appledocumentscanarchive"
+          ]
+        },
+        {
+          "id": "com.apple.paper.doc.pdf",
+          "name": "PDF Document",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.paper.doc.scan",
+          "name": "Scanned Document",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.stickies.appexport",
+          "name": "Stickies Export",
+          "extensions": [
+            "stickiesappexport"
+          ]
+        },
+        {
+          "id": "com.apple.paper",
+          "name": "Apple Paper Document",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.paper.doc",
+          "name": "Apple Paper Document",
+          "extensions": []
+        },
+        {
+          "id": "com.evernote.enex",
+          "name": "Evernote Archive",
+          "extensions": [
+            "enex"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Open It",
+      "version": "0.1.3",
+      "path": "/Applications/Open It.app",
+      "bundle": "com.sunven.open-it",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "OrbStack",
+      "version": "2.2.5",
+      "path": "/Applications/OrbStack.app",
+      "bundle": "dev.kdrag0n.MacVirt",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "orbstack"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Orca",
+      "version": "1.4.246",
+      "path": "/Applications/Orca.app",
+      "bundle": "com.stablyai.orca",
+      "documentEntries": 5,
+      "utis": [],
+      "extensions": [
+        "csv",
+        "markdown",
+        "md",
+        "mdx",
+        "tsv"
+      ],
+      "schemes": [
+        "orca"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Passwords",
+      "version": "3.2",
+      "path": "/System/Applications/Passwords.app",
+      "bundle": "com.apple.Passwords",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "apple-otpauth",
+        "apple-otpauth-migration",
+        "otpauth",
+        "otpauth-migration"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Phone",
+      "version": "1.0",
+      "path": "/System/Applications/Phone.app",
+      "bundle": "com.apple.mobilephone",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "facetime-audio",
+        "mobilephone-recents",
+        "phone-facetime-audio",
+        "phone-tel",
+        "phone-telephony",
+        "phoneapp",
+        "tel",
+        "telephony",
+        "vmshow"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Photo Booth",
+      "version": "13.1",
+      "path": "/System/Applications/Photo Booth.app",
+      "bundle": "com.apple.PhotoBooth",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.photo-booth-library"
+      ],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.photo-booth-library",
+          "name": "Photo Booth Library",
+          "extensions": [
+            "Photo Booth"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Photos",
+      "version": "12.0",
+      "path": "/System/Applications/Photos.app",
+      "bundle": "com.apple.Photos",
+      "documentEntries": 11,
+      "utis": [
+        "com.apple.aperture.library",
+        "com.apple.migratedaplibrary",
+        "com.apple.migratedphotolibrary",
+        "com.apple.photo.library",
+        "com.apple.photos.asset-bundle",
+        "com.apple.photos.library",
+        "com.apple.private.live-photo-bundle"
+      ],
+      "extensions": [
+        "*",
+        "AAE",
+        "SLM",
+        "XMP",
+        "aae",
+        "aplibrary",
+        "migratedaplibrary",
+        "migratedphotolibrary",
+        "photolibrary",
+        "photosasset",
+        "photoslibrary",
+        "pvt",
+        "slm",
+        "xmp"
+      ],
+      "schemes": [
+        "cloudphoto",
+        "photos",
+        "photos-navigation"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.photos.library",
+          "name": "Photos Library",
+          "extensions": [
+            "photoslibrary"
+          ]
+        },
+        {
+          "id": "com.apple.live-photo-bundle",
+          "name": "Live Photo bundle",
+          "extensions": [
+            "pvt"
+          ]
+        },
+        {
+          "id": "com.apple.photos.mediaitem-object",
+          "name": "Photos media item",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.album-object",
+          "name": "Photos album",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.folder-object",
+          "name": "Photos folder",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.item-object",
+          "name": "Photos item",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.asset",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.person",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.socialgroup",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.collection",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.assetcollection",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.utilitycollection",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.object-reference.collectionlist",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects",
+          "name": "",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.slideshow",
+          "name": "Photos Internal Slideshows",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.legacy.keepsake",
+          "name": "Photos Internal Print Products",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.legacy.book",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.legacy.card",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.legacy.calendar",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.projects.legacy.prints",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.photos.asset-bundle",
+          "name": "Photos Asset Bundle",
+          "extensions": [
+            "photosasset"
+          ]
+        },
+        {
+          "id": "com.apple.migratedphotolibrary",
+          "name": "Migrated iPhoto Library",
+          "extensions": [
+            "migratedphotolibrary"
+          ]
+        },
+        {
+          "id": "com.apple.migratedaplibrary",
+          "name": "Migrated Aperture Library",
+          "extensions": [
+            "migratedaplibrary"
+          ]
+        },
+        {
+          "id": "com.apple.photo.library",
+          "name": "Photo Library",
+          "extensions": [
+            "photolibrary"
+          ]
+        },
+        {
+          "id": "com.apple.Aperture.library",
+          "name": "Aperture Library",
+          "extensions": [
+            "aplibrary"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PixPin",
+      "version": "3.6.6.0",
+      "path": "/Applications/PixPin.app",
+      "bundle": "com.depthpicture.PixPin",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "pixpin"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Podcasts",
+      "version": "1.1.0",
+      "path": "/System/Applications/Podcasts.app",
+      "bundle": "com.apple.podcasts",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "itms-podcasts",
+        "pcast",
+        "podcast",
+        "podcasts"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.podcasts.episode",
+          "name": "Episode",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.podcasts.show",
+          "name": "Show",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.podcasts.station",
+          "name": "Station",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Preview",
+      "version": "11.0",
+      "path": "/System/Applications/Preview.app",
+      "bundle": "com.apple.Preview",
+      "documentEntries": 50,
+      "utis": [
+        "com.adobe.illustrator.ai-image",
+        "com.adobe.pdf",
+        "com.adobe.photoshop-image",
+        "com.apple.application-bundle",
+        "com.apple.icns",
+        "com.apple.localized-pdf-bundle",
+        "com.apple.macpaint-image",
+        "com.apple.package",
+        "com.apple.pdf-printer-settings",
+        "com.apple.pict",
+        "com.apple.rjpeg",
+        "com.compuserve.gif",
+        "com.google.webp",
+        "com.ilm.openexr-image",
+        "com.kodak.flashpix-image",
+        "com.microsoft.bmp",
+        "com.microsoft.dds",
+        "com.microsoft.ico",
+        "com.pixar.universal-scene-description",
+        "com.pixar.universal-scene-description-binary",
+        "com.pixar.universal-scene-description-mobile",
+        "com.pixar.universal-scene-description-utf8",
+        "com.sgi.sgi-image",
+        "com.truevision.tga-image",
+        "io.aswf.materialx",
+        "io.aswf.openvdb",
+        "org.khronos.astc",
+        "org.khronos.glb",
+        "org.khronos.gltf",
+        "org.khronos.ktx",
+        "org.khronos.ktx2",
+        "org.webmproject.webp",
+        "public.3d-content",
+        "public.alembic",
+        "public.avci",
+        "public.avcs",
+        "public.avif",
+        "public.camera-raw-image",
+        "public.fax",
+        "public.folder",
+        "public.geometry-definition-format",
+        "public.heic",
+        "public.heics",
+        "public.heif",
+        "public.heifs",
+        "public.jpeg",
+        "public.jpeg-2000",
+        "public.jpeg-xl",
+        "public.mpo-image",
+        "public.ofd",
+        "public.pbm",
+        "public.png",
+        "public.polygon-file-format",
+        "public.pvr",
+        "public.radiance",
+        "public.standard-tesselated-geometry-format",
+        "public.tiff",
+        "public.xbitmap-image"
+      ],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "public.radiance",
+          "name": "Radiance",
+          "extensions": [
+            "pic",
+            "PIC",
+            "hdr",
+            "HDR"
+          ]
+        },
+        {
+          "id": "public.pbm",
+          "name": "Portable Bitmap Format",
+          "extensions": [
+            "pbm",
+            "pgm",
+            "ppm",
+            "pfm"
+          ]
+        },
+        {
+          "id": "public.pvr",
+          "name": "PVRTC Textures",
+          "extensions": [
+            "pvr"
+          ]
+        },
+        {
+          "id": "org.khronos.astc",
+          "name": "ASTC textures",
+          "extensions": [
+            "astc"
+          ]
+        },
+        {
+          "id": "org.khronos.ktx",
+          "name": "KTX textures",
+          "extensions": [
+            "ktx"
+          ]
+        },
+        {
+          "id": "org.khronos.ktx2",
+          "name": "KTX2 textures",
+          "extensions": [
+            "ktx2"
+          ]
+        },
+        {
+          "id": "com.microsoft.dds",
+          "name": "DDS textures",
+          "extensions": [
+            "dds"
+          ]
+        },
+        {
+          "id": "com.apple.pdf-printer-settings",
+          "name": "PDF Printing Settings",
+          "extensions": [
+            "pset"
+          ]
+        },
+        {
+          "id": "com.apple.preview.blank",
+          "name": "Blank",
+          "extensions": [
+            "blank"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Print Center",
+      "version": "1.0",
+      "path": "/System/Applications/Utilities/Print Center.app",
+      "bundle": "com.apple.printcenter",
+      "documentEntries": 1,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.printcenter.jobids",
+          "name": "JobIDs",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "QuickTime Player",
+      "version": "10.5",
+      "path": "/System/Applications/QuickTime Player.app",
+      "bundle": "com.apple.QuickTimePlayerX",
+      "documentEntries": 21,
+      "utis": [
+        "com.apple.avurlasset-content",
+        "com.apple.coreaudio-format",
+        "com.apple.m4v-video",
+        "com.apple.mediaextension-content",
+        "com.apple.photos.apple-adjustment-envelope",
+        "com.apple.photos.slow-motion-video-sidecar",
+        "com.apple.protected-mpeg-4-audio",
+        "com.apple.protected-mpeg-4-video",
+        "com.apple.quicktime-audio",
+        "com.apple.quicktime-movie",
+        "com.apple.quicktimeplayerx-composition",
+        "com.apple.quicktimeplayerx-composition-bundle",
+        "com.digidesign.sd2-audio",
+        "com.microsoft.waveform-audio",
+        "org.3gpp.adaptive-multi-rate-audio",
+        "public.3gpp",
+        "public.3gpp2",
+        "public.aifc-audio",
+        "public.aiff-audio",
+        "public.au-audio",
+        "public.audio",
+        "public.audiovisual-content",
+        "public.avchd-collection",
+        "public.avchd-content",
+        "public.avi",
+        "public.camera-raw-image",
+        "public.dv-movie",
+        "public.flc-animation",
+        "public.heif",
+        "public.jpeg",
+        "public.movie",
+        "public.mp3",
+        "public.mpeg",
+        "public.mpeg-2-video",
+        "public.mpeg-4",
+        "public.mpeg-4-audio",
+        "public.png",
+        "public.tiff",
+        "public.ulaw-audio"
+      ],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.quicktimeplayerx-composition",
+          "name": "QuickTime Player Composition",
+          "extensions": [
+            "qtpxcomposition"
+          ]
+        },
+        {
+          "id": "com.apple.quicktimeplayerx-composition-bundle",
+          "name": "QuickTime Player Composition",
+          "extensions": [
+            "qtpxcomposition"
+          ]
+        },
+        {
+          "id": "public.sdp",
+          "name": "SDP Session Description",
+          "extensions": [
+            "sdp"
+          ]
+        },
+        {
+          "id": "public.avchd-content",
+          "name": "AVCHD Content",
+          "extensions": [
+            "bdm",
+            "bdmv"
+          ]
+        },
+        {
+          "id": "public.avchd-mpeg-2-transport-stream",
+          "name": "AVCHD MPEG-2 Transport Stream",
+          "extensions": [
+            "mts",
+            "m2ts"
+          ]
+        },
+        {
+          "id": "com.apple.photos.apple-adjustment-envelope",
+          "name": "Apple Adjustments and Edits Sidecar",
+          "extensions": [
+            "aae"
+          ]
+        },
+        {
+          "id": "com.apple.photos.slow-motion-video-sidecar",
+          "name": "Apple Adjustments and Edits Sidecar",
+          "extensions": [
+            "slm"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rcmm",
+      "version": "0.0.17",
+      "path": "/Applications/rcmm.app",
+      "bundle": "com.sunven.rcmm",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Reminders",
+      "version": "7.0",
+      "path": "/System/Applications/Reminders.app",
+      "bundle": "com.apple.reminders",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.reminders.list"
+      ],
+      "extensions": [],
+      "schemes": [
+        "x-apple-reminderkit"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.reminders.button.menu.inline",
+          "name": "Reminders inline menu button",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.reminders.description.inline",
+          "name": "Reminders inline text attachment",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Safari",
+      "version": "27.2",
+      "path": "/Applications/Safari.app",
+      "bundle": "com.apple.Safari",
+      "documentEntries": 24,
+      "utis": [],
+      "extensions": [
+        "avif",
+        "css",
+        "download",
+        "gif",
+        "heic",
+        "htm",
+        "html",
+        "ico",
+        "jhtml",
+        "jpeg",
+        "jpg",
+        "js",
+        "jxl",
+        "pdf",
+        "png",
+        "safariextz",
+        "shtml",
+        "svg",
+        "text",
+        "tif",
+        "tiff",
+        "txt",
+        "url",
+        "webarchive",
+        "webbookmark",
+        "webhistory",
+        "webloc",
+        "webp",
+        "xbl",
+        "xht",
+        "xhtm",
+        "xhtml",
+        "xml",
+        "xsl",
+        "xslt"
+      ],
+      "schemes": [
+        "file",
+        "http",
+        "https",
+        "prefs",
+        "x-safari-https",
+        "x-webkit-app-launch"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.safari.bookmark",
+          "name": "Safari bookmark",
+          "extensions": [
+            "webbookmark"
+          ]
+        },
+        {
+          "id": "com.apple.safari.extension",
+          "name": "Safari extension",
+          "extensions": [
+            "safariextz"
+          ]
+        },
+        {
+          "id": "com.apple.safari.history",
+          "name": "Safari history item",
+          "extensions": [
+            "webhistory"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Screen Sharing",
+      "version": "7.1",
+      "path": "/System/Applications/Utilities/Screen Sharing.app",
+      "bundle": "com.apple.ScreenSharing",
+      "documentEntries": 2,
+      "utis": [],
+      "extensions": [
+        "ssdownload",
+        "vncloc"
+      ],
+      "schemes": [
+        "vnc"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.ScreenSharing.DraggableConnectionsItem",
+          "name": "DraggableConnectionsItem",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Screenshot",
+      "version": "1.0",
+      "path": "/System/Applications/Utilities/Screenshot.app",
+      "bundle": "com.apple.screenshot.launcher",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Script Editor",
+      "version": "2.11",
+      "path": "/System/Applications/Utilities/Script Editor.app",
+      "bundle": "com.apple.ScriptEditor2",
+      "documentEntries": 10,
+      "utis": [],
+      "extensions": [
+        "*",
+        "app",
+        "applescript",
+        "osax",
+        "scpt",
+        "scptd",
+        "sdef",
+        "seplugin",
+        "text",
+        "txt"
+      ],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Shortcuts",
+      "version": "10.0",
+      "path": "/System/Applications/Shortcuts.app",
+      "bundle": "com.apple.shortcuts",
+      "documentEntries": 3,
+      "utis": [
+        "com.apple.shortcut",
+        "com.apple.shortcuts.workflow-file"
+      ],
+      "extensions": [
+        "app",
+        "workflow"
+      ],
+      "schemes": [
+        "shortcuts",
+        "shortcuts-production",
+        "workflow"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.shortcut",
+          "name": "Shortcut",
+          "extensions": [
+            "shortcut"
+          ]
+        },
+        {
+          "id": "com.apple.shortcuts.workflow-file",
+          "name": "Shortcut",
+          "extensions": [
+            "wflow"
+          ]
+        },
+        {
+          "id": "com.apple.shortcuts.action",
+          "name": "Shortcuts Action",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.shortcuts.contextual-action",
+          "name": "Shortcuts Action",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.shortcuts.workflow-reference",
+          "name": "Shortcut",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.automator-workflow",
+          "name": "Automator Workflow Document",
+          "extensions": [
+            "workflow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Siri",
+      "version": "1.0",
+      "path": "/System/Applications/Siri.app",
+      "bundle": "com.apple.siri.launcher",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Siri AI",
+      "version": "1.0",
+      "path": "/System/Applications/Siri AI.app",
+      "bundle": "com.apple.campo",
+      "documentEntries": 11,
+      "utis": [
+        "com.adobe.pdf",
+        "com.apple.iwork.keynote.key",
+        "com.apple.iwork.keynote.sffkey",
+        "com.apple.iwork.numbers.numbers",
+        "com.apple.iwork.numbers.sffnumbers",
+        "com.apple.mail.email",
+        "com.microsoft.word.doc",
+        "org.openxmlformats.presentationml.presentation",
+        "org.openxmlformats.wordprocessingml.document",
+        "public.image",
+        "public.tar-archive",
+        "public.text",
+        "public.zip-archive"
+      ],
+      "extensions": [],
+      "schemes": [
+        "siri",
+        "spotlight"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "skills-box",
+      "version": "0.1.2",
+      "path": "/Applications/skills-box.app",
+      "bundle": "com.sunven.skills-box",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Stickies",
+      "version": "10.3",
+      "path": "/System/Applications/Stickies.app",
+      "bundle": "com.apple.Stickies",
+      "documentEntries": 1,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Stocks",
+      "version": "8.0",
+      "path": "/System/Applications/Stocks.app",
+      "bundle": "com.apple.stocks",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "stocks"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "System Information",
+      "version": "11.0",
+      "path": "/System/Applications/Utilities/System Information.app",
+      "bundle": "com.apple.SystemProfiler",
+      "documentEntries": 4,
+      "utis": [],
+      "extensions": [
+        "rtf",
+        "spreporter",
+        "spx",
+        "txt"
+      ],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.systemprofiler.document",
+          "name": "System Profile Report",
+          "extensions": [
+            "spx"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "System Settings",
+      "version": "1.0",
+      "path": "/System/Applications/System Settings.app",
+      "bundle": "com.apple.systempreferences",
+      "documentEntries": 4,
+      "utis": [],
+      "extensions": [
+        "internetconnect",
+        "networkconnect",
+        "prefPane",
+        "saver",
+        "sysprefex"
+      ],
+      "schemes": [
+        "settings-navigation",
+        "x-apple.systempreferences"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.preference.network",
+          "name": "Internet Connect Document",
+          "extensions": [
+            "internetconnect",
+            "networkconnect"
+          ]
+        },
+        {
+          "id": "com.apple.systempreference.prefpane",
+          "name": "System Preference pane",
+          "extensions": [
+            "prefPane"
+          ]
+        },
+        {
+          "id": "com.apple.systempreference.prefpane.extension",
+          "name": "System Preference pane extension",
+          "extensions": [
+            "sysprefex"
+          ]
+        },
+        {
+          "id": "com.apple.settings.section.icon.general",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.settings.section.icon.privacy",
+          "name": null,
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "Tabby",
+      "version": "1.0.236",
+      "path": "/Applications/Tabby.app",
+      "bundle": "org.tabby",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "tabby"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Tencent Lemon",
+      "version": "5.3.8",
+      "path": "/Applications/Tencent Lemon.app",
+      "bundle": "com.tencent.Lemon",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "TencentMeeting",
+      "version": "3.41.10",
+      "path": "/Applications/TencentMeeting.app",
+      "bundle": "com.tencent.meeting",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "wemeet",
+        "wemeet3",
+        "wwauth3rd3a24940e95296ca3",
+        "wwauth3rd3a82ac41e00d815d",
+        "wwauth3rd4806d2ddf553eb8b",
+        "wwauth3rdca2b0d866939bfde",
+        "wwauth3rdd5968e076e21ca07"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Terminal",
+      "version": "2.15",
+      "path": "/System/Applications/Utilities/Terminal.app",
+      "bundle": "com.apple.Terminal",
+      "documentEntries": 5,
+      "utis": [
+        "com.apple.bundle",
+        "com.apple.resolvable",
+        "com.apple.terminal.session",
+        "com.apple.terminal.settings",
+        "com.apple.terminal.shell-script",
+        "public.directory",
+        "public.unix-executable"
+      ],
+      "extensions": [],
+      "schemes": [
+        "ssh",
+        "telnet",
+        "x-man-page"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.terminal.shell-script",
+          "name": "Terminal shell script",
+          "extensions": [
+            "command",
+            "tool"
+          ]
+        },
+        {
+          "id": "com.apple.terminal.session",
+          "name": "Terminal session",
+          "extensions": [
+            "term"
+          ]
+        },
+        {
+          "id": "com.apple.terminal.settings",
+          "name": "Terminal settings",
+          "extensions": [
+            "terminal"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TextEdit",
+      "version": "1.21",
+      "path": "/System/Applications/TextEdit.app",
+      "bundle": "com.apple.TextEdit",
+      "documentEntries": 13,
+      "utis": [
+        "com.apple.rtfd",
+        "com.apple.traditional-mac-plain-text",
+        "com.apple.webarchive",
+        "com.microsoft.word.doc",
+        "com.microsoft.word.wordml",
+        "org.oasis-open.opendocument.text",
+        "org.oasis-open.opendocument.text-template",
+        "org.openoffice.text",
+        "org.openoffice.text-template",
+        "org.openxmlformats.wordprocessingml.document",
+        "public.data",
+        "public.html",
+        "public.plain-text",
+        "public.rtf",
+        "public.text"
+      ],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Time Machine",
+      "version": "1.3",
+      "path": "/System/Applications/Time Machine.app",
+      "bundle": "com.apple.backup.launcher",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": []
+    },
+    {
+      "name": "Tips",
+      "version": "27.2",
+      "path": "/System/Applications/Tips.app",
+      "bundle": "com.apple.helpviewer",
+      "documentEntries": 1,
+      "utis": [],
+      "extensions": [
+        "help"
+      ],
+      "schemes": [
+        "help",
+        "x-apple-tips"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.help",
+          "name": "macOS Help Bundle",
+          "extensions": [
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TV",
+      "version": "1.7.2",
+      "path": "/System/Applications/TV.app",
+      "bundle": "com.apple.TV",
+      "documentEntries": 9,
+      "utis": [
+        "com.apple.TV.database",
+        "com.apple.TV.ite",
+        "com.apple.TV.library",
+        "com.apple.TV.movpkg",
+        "com.apple.m4v-video",
+        "com.apple.protected-mpeg-4-video",
+        "com.apple.quicktime-movie",
+        "public.mpeg"
+      ],
+      "extensions": [
+        "movpkg",
+        "tvdb",
+        "tvlibrary",
+        "videoslibrary"
+      ],
+      "schemes": [
+        "com.apple.tv",
+        "com.apple.watchlist",
+        "daap",
+        "itls",
+        "itlss",
+        "itvls",
+        "itvlss",
+        "videos"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.TV.library",
+          "name": "TV Library",
+          "extensions": [
+            "tvlibrary",
+            "videoslibrary"
+          ]
+        },
+        {
+          "id": "com.apple.TV.database",
+          "name": "TV Database",
+          "extensions": [
+            "tvdb"
+          ]
+        },
+        {
+          "id": "com.apple.TV.movpkg",
+          "name": "HLS Media",
+          "extensions": [
+            "movpkg"
+          ]
+        },
+        {
+          "id": "com.apple.TV.itms",
+          "name": "iTunes Music Store URL",
+          "extensions": [
+            "itms"
+          ]
+        },
+        {
+          "id": "com.apple.TV.ite",
+          "name": "iTunes Extra",
+          "extensions": [
+            "ite"
+          ]
+        },
+        {
+          "id": "com.apple.TV.m3u-playlist",
+          "name": "M3U Playlist",
+          "extensions": [
+            "m3u",
+            "m3u8"
+          ]
+        },
+        {
+          "id": "com.apple.TV.metadata",
+          "name": "Metadata",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.TV.iappurl",
+          "name": "iApp Compatibility",
+          "extensions": []
+        }
+      ]
+    },
+    {
+      "name": "UURemote",
+      "version": "4.44.0",
+      "path": "/Applications/UURemote.app",
+      "bundle": "com.netease.uuremote",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "uuremote"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "VoiceMemos",
+      "version": "4.0",
+      "path": "/System/Applications/VoiceMemos.app",
+      "bundle": "com.apple.VoiceMemos",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.quicktime-audio",
+          "name": "QuickTime Audio",
+          "extensions": [
+            "qta"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VoiceOver Utility",
+      "version": "10",
+      "path": "/System/Applications/Utilities/VoiceOver Utility.app",
+      "bundle": "com.apple.VoiceOverUtility",
+      "documentEntries": 1,
+      "utis": [
+        "com.apple.voiceover-preferences"
+      ],
+      "extensions": [],
+      "schemes": [],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.voiceover-preferences",
+          "name": "VoiceOver Preferences",
+          "extensions": [
+            "voprefs"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Weather",
+      "version": "6.0",
+      "path": "/System/Applications/Weather.app",
+      "bundle": "com.apple.weather",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "weather"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "WeChat",
+      "version": "4.1.15",
+      "path": "/Applications/WeChat.app",
+      "bundle": "com.tencent.xinWeChat",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "wechat",
+        "weixin",
+        "xweixin"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "wechatwebdevtools",
+      "version": "36.6.0",
+      "path": "/Applications/wechatwebdevtools.app",
+      "bundle": "com.github.Electron",
+      "documentEntries": 0,
+      "utis": [],
+      "extensions": [],
+      "schemes": [
+        "wechatide"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "WorkBuddy",
+      "version": "5.9.3",
+      "path": "/Applications/WorkBuddy.app",
+      "bundle": "com.tencent.workbuddy.mac",
+      "documentEntries": 43,
+      "utis": [
+        "com.adobe.pdf",
+        "com.microsoft.excel.xls",
+        "com.microsoft.powerpoint.ppt",
+        "com.microsoft.word.doc",
+        "net.daringfireball.markdown",
+        "org.openxmlformats.presentationml.presentation",
+        "org.openxmlformats.spreadsheetml.sheet",
+        "org.openxmlformats.wordprocessingml.document",
+        "public.comma-separated-values-text",
+        "public.folder",
+        "public.html",
+        "public.image"
+      ],
+      "extensions": [
+        "aac",
+        "csv",
+        "doc",
+        "docm",
+        "docx",
+        "dot",
+        "dotm",
+        "dotx",
+        "html",
+        "jpeg",
+        "jpg",
+        "m4a",
+        "md",
+        "mp3",
+        "pdf",
+        "png",
+        "pot",
+        "potm",
+        "potx",
+        "ppt",
+        "pptm",
+        "pptx",
+        "txt",
+        "wav",
+        "webp",
+        "wps",
+        "wpt",
+        "xls",
+        "xlsm",
+        "xlsx",
+        "xlt",
+        "xltm",
+        "xltx",
+        "zip"
+      ],
+      "schemes": [
+        "workbuddy"
+      ],
+      "typeDeclarations": []
+    },
+    {
+      "name": "wpsoffice",
+      "version": "12.1.26046",
+      "path": "/Applications/wpsoffice.app",
+      "bundle": "com.kingsoft.wpsoffice.mac",
+      "documentEntries": 55,
+      "utis": [
+        "cn.wps.docm.text",
+        "cn.wps.docx.text",
+        "cn.wps.dotm.text",
+        "cn.wps.dotx.text",
+        "cn.wps.securitydoc.elnk",
+        "cn.wps.securitydoc.flnk",
+        "cn.wps.securitydoc.plnk",
+        "cn.wps.securitydoc.wlnk",
+        "cn.wps.securitydoc.ylnk",
+        "cn.wps.text",
+        "cn.wps.wpt.text",
+        "com.adobe.pdf",
+        "com.apple.mail.email",
+        "com.microsoft.excel.openxmlformats.spreadsheetml.sheet",
+        "com.microsoft.excel.openxmlformats.spreadsheetml.sheet.macroenabled",
+        "com.microsoft.excel.openxmlformats.spreadsheetml.template",
+        "com.microsoft.excel.openxmlformats.spreadsheetml.template.macroenabled",
+        "com.microsoft.excel.space-separated-values-text",
+        "com.microsoft.excel.xls",
+        "com.microsoft.excel.xls.biff2",
+        "com.microsoft.excel.xls.biff4",
+        "com.microsoft.excel.xls.biff5",
+        "com.microsoft.excel.xls.stationery.biff3",
+        "com.microsoft.excel.xls.stationery.biff5",
+        "com.microsoft.excel.xlt",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.presentation",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.presentation.macroenabled",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.slideshow",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.slideshow.macroenabled",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.template",
+        "com.microsoft.powerpoint.openxmlformats.presentationml.template.macroenabled",
+        "com.microsoft.powerpoint.pot",
+        "com.microsoft.powerpoint.pps",
+        "com.microsoft.powerpoint.ppt",
+        "com.microsoft.word.doc",
+        "com.microsoft.word.dot",
+        "com.microsoft.word.mhtml",
+        "com.pkware.zip-archive",
+        "com.rarlab.rar-archive",
+        "org.7-zip.7-zip-archive",
+        "org.opendpsformats.presentation",
+        "org.opendptformats.presentation",
+        "org.openwpsformat.spreadsheetml.sheet",
+        "org.openwpsformat.wordprocessing.document",
+        "org.openwpsformats.spreadsheetml.template",
+        "org.openwptformat.wordprocessing.document",
+        "org.openxmlformats.presentationml.presentation",
+        "org.openxmlformats.presentationml.presentation.macroenabled",
+        "org.openxmlformats.presentationml.slideshow",
+        "org.openxmlformats.presentationml.slideshow.macroenabled",
+        "org.openxmlformats.presentationml.template",
+        "org.openxmlformats.presentationml.template.macroenabled",
+        "org.openxmlformats.spreadsheetml.sheet",
+        "org.openxmlformats.spreadsheetml.sheet.macroenabled",
+        "org.openxmlformats.spreadsheetml.template",
+        "org.openxmlformats.spreadsheetml.template.macroenabled",
+        "org.openxmlformats.wordprocessingml.document",
+        "org.openxmlformats.wordprocessingml.document.macroenabled",
+        "org.openxmlformats.wordprocessingml.template",
+        "org.openxmlformats.wordprocessingml.template.macroenabled",
+        "public.comma-separated-values-text",
+        "public.ofd",
+        "public.rtf",
+        "public.xml"
+      ],
+      "extensions": [
+        "7z",
+        "csv",
+        "doc",
+        "docm",
+        "docx",
+        "dot",
+        "dotm",
+        "dotx",
+        "dps",
+        "dpt",
+        "elnk",
+        "eml",
+        "et",
+        "ett",
+        "flnk",
+        "htm",
+        "html",
+        "mht",
+        "mhtm",
+        "mhtml",
+        "msg",
+        "pdf",
+        "plnk",
+        "pot",
+        "potm",
+        "potx",
+        "pps",
+        "ppsm",
+        "ppsx",
+        "ppt",
+        "pptm",
+        "pptx",
+        "prn",
+        "rar",
+        "rtf",
+        "txt",
+        "wlnk",
+        "wps",
+        "wpt",
+        "xhtml",
+        "xls",
+        "xlsm",
+        "xlsx",
+        "xlt",
+        "xltm",
+        "xltx",
+        "xml",
+        "ylnk",
+        "zip"
+      ],
+      "schemes": [
+        "ksoapp",
+        "ksodoccenter",
+        "ksoet",
+        "ksopdf",
+        "ksoqing",
+        "ksowpp",
+        "ksowps",
+        "ksowpscloudsvr"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.microsoft.word.doc",
+          "name": "Microsoft Word 97 - 2003 document",
+          "extensions": [
+            "doc"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.wordprocessingml.document",
+          "name": "Microsoft Word 2007/2010 document (.docx)",
+          "extensions": [
+            "docx"
+          ]
+        },
+        {
+          "id": "com.microsoft.word.dot",
+          "name": "Microsoft Word 97 - 2003 template document",
+          "extensions": [
+            "dot"
+          ]
+        },
+        {
+          "id": "cn.wps.docm.text",
+          "name": "Microsoft Word 2007/2010 marcoenabled document",
+          "extensions": [
+            "docm"
+          ]
+        },
+        {
+          "id": "cn.wps.dotm.text",
+          "name": "Microsoft Word 2007/2010 macroenabled template",
+          "extensions": [
+            "dotm"
+          ]
+        },
+        {
+          "id": "cn.wps.dotx.text",
+          "name": "Microsoft Word 2007/2010 template document",
+          "extensions": [
+            "dotx"
+          ]
+        },
+        {
+          "id": "com.microsoft.word.mhtml",
+          "name": "Microsoft Word Single File Web Page",
+          "extensions": [
+            "mht",
+            "mhtm",
+            "mhtml"
+          ]
+        },
+        {
+          "id": "cn.wps.wpt.text",
+          "name": "WPSOffice Open WPT processing document",
+          "extensions": [
+            "wpt"
+          ]
+        },
+        {
+          "id": "cn.wps.text",
+          "name": "WPSOffice Open WPS processing document",
+          "extensions": [
+            "wps"
+          ]
+        },
+        {
+          "id": "org.openwpsformat.spreadsheetml.sheet",
+          "name": "WPSOffice Open spreadsheet",
+          "extensions": [
+            "et"
+          ]
+        },
+        {
+          "id": "org.openwpsformats.spreadsheetml.template",
+          "name": "WPSOffice Open spreadsheet template",
+          "extensions": [
+            "ett"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.dif",
+          "name": "Microsoft Excel data interchange file",
+          "extensions": [
+            "dif"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xlt",
+          "name": "Microsoft Excel template file",
+          "extensions": [
+            "xlt"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.stationery.biff3",
+          "name": "Microsoft Excel 3.0 worksheet stationery",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.stationery.biff4",
+          "name": "Microsoft Excel 4.0 worksheet stationery",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.stationery.biff5",
+          "name": "Microsoft Excel 5.0/95 workbook stationery",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.biff2",
+          "name": "Microsoft Excel 2.2 worksheet",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.biff3",
+          "name": "Microsoft Excel 3.0 worksheet",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.biff4",
+          "name": "Microsoft Excel 4.0 worksheet",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls.biff5",
+          "name": "Microsoft Excel 5.0/95 workbook",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls",
+          "name": "Microsoft Excel 97-2004 Worksheet",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.openxmlformats.spreadsheetml.template.macroenabled",
+          "name": "Microsoft Excel Open XML spreadsheet template (macros enabled)",
+          "extensions": [
+            "xltm"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.openxmlformats.spreadsheetml.template",
+          "name": "Microsoft Excel Open XML spreadsheet template",
+          "extensions": [
+            "xltx"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.openxmlformats.spreadsheetml.sheet.macroenabled",
+          "name": "Microsoft Excel Open XML spreadsheet (macros enabled)",
+          "extensions": [
+            "xlsm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.spreadsheetml.sheet",
+          "name": "Microsoft Excel Open XML spreadsheet",
+          "extensions": [
+            "xlsx"
+          ]
+        },
+        {
+          "id": "org.opendpsformats.presentation",
+          "name": "WPSOffice Open DPS Presentation",
+          "extensions": [
+            "dps"
+          ]
+        },
+        {
+          "id": "org.opendptformats.presentation",
+          "name": "WPSOffice Open DPT Presentation",
+          "extensions": [
+            "dpt"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.rtf",
+          "name": "Rich Text Format",
+          "extensions": [
+            "rtf"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.mov",
+          "name": "MOV",
+          "extensions": [
+            "mov"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.mp4",
+          "name": "MP4",
+          "extensions": [
+            "mp4"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.ext.bmp",
+          "name": "BMP",
+          "extensions": [
+            "bmp"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.bmp",
+          "name": "BMP",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.ppt.export.ext.png",
+          "name": "PNG",
+          "extensions": [
+            "png"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.png",
+          "name": "PNG",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.ppt.export.ext.tiff",
+          "name": "TIFF",
+          "extensions": [
+            "tiff"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.tiff",
+          "name": "TIFF",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.ppt.export.ext.jpg",
+          "name": "JPEG",
+          "extensions": [
+            "jpg"
+          ]
+        },
+        {
+          "id": "com.microsoft.ppt.export.jpg",
+          "name": "JPEG",
+          "extensions": []
+        },
+        {
+          "id": "com.microsoft.powerpoint.ppt.stationery",
+          "name": "Microsoft PowerPoint Stationery",
+          "extensions": [
+            "ppt"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.ppt",
+          "name": "Microsoft PowerPoint 97-2003 Presentation",
+          "extensions": [
+            "ppt"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.pps",
+          "name": "Microsoft PowerPoint 97-2003 Slide Show",
+          "extensions": [
+            "pps"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.pot",
+          "name": "Microsoft PowerPoint 97-2003 Template",
+          "extensions": [
+            "pot"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.openxmlformats.presentationml.template.macroenabled",
+          "name": "WPSOffice Open XML Presentation Template (macros enabled)",
+          "extensions": [
+            "potm"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.openxmlformats.presentationml.template",
+          "name": "WPSOffice Open XML presentation template",
+          "extensions": [
+            "potx"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.openxmlformats.presentationml.slideshow.macroenabled",
+          "name": "WPSOffice Open XML Slide Show (macros enabled)",
+          "extensions": [
+            "ppsm"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.openxmlformats.presentationml.slideshow",
+          "name": "WPSOffice Open XML slide show",
+          "extensions": [
+            "ppsx"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.openxmlformats.presentationml.presentation.macroenabled",
+          "name": "WPSOffice Open XML Presentation (macros enabled)",
+          "extensions": [
+            "pptm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.presentation",
+          "name": "WPSOffice Open XML Presentation",
+          "extensions": [
+            "pptx"
+          ]
+        },
+        {
+          "id": "cn.wps.securitydoc.wlnk",
+          "name": "WPSOffice Soft Link File (wlnk)",
+          "extensions": [
+            "wlnk"
+          ]
+        },
+        {
+          "id": "cn.wps.securitydoc.plnk",
+          "name": "WPSOffice Soft Link File (plnk)",
+          "extensions": [
+            "plnk"
+          ]
+        },
+        {
+          "id": "cn.wps.securitydoc.elnk",
+          "name": "WPSOffice Soft Link File (elnk)",
+          "extensions": [
+            "elnk"
+          ]
+        },
+        {
+          "id": "cn.wps.securitydoc.flnk",
+          "name": "WPSOffice Soft Link File (flnk)",
+          "extensions": [
+            "flnk"
+          ]
+        },
+        {
+          "id": "cn.wps.securitydoc.ylnk",
+          "name": "WPSOffice Soft Link File (ylnk)",
+          "extensions": [
+            "ylnk"
+          ]
+        },
+        {
+          "id": "org.openwpsformats.spreadsheetml.template",
+          "name": "WPSOffice Open spreadsheet template",
+          "extensions": [
+            "ett"
+          ]
+        },
+        {
+          "id": "org.openwpsformat.spreadsheetml.sheet",
+          "name": "WPSOffice Open spreadsheet",
+          "extensions": [
+            "et"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xls",
+          "name": "WPSOffice Open spreadsheet",
+          "extensions": [
+            "xls"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.spreadsheetml.sheet",
+          "name": "WPSOffice Open XML spreadsheet",
+          "extensions": [
+            "xlsx"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.spreadsheetml.sheet.macroenabled",
+          "name": "WPSOffice Open XML spreadsheet (macros enabled)",
+          "extensions": [
+            "xlsm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.spreadsheetml.template",
+          "name": "WPSOffice Open XML spreadsheet template",
+          "extensions": [
+            "xltx"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.spreadsheetml.template.macroenabled",
+          "name": "WPSOffice Open XML spreadsheet template (macros enabled)",
+          "extensions": [
+            "xltm"
+          ]
+        },
+        {
+          "id": "public.comma-separated-values-text",
+          "name": "Comma separated Values",
+          "extensions": [
+            "csv"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.space-separated-values-text",
+          "name": "com.microsoft.excel.space-separated-values-text",
+          "extensions": [
+            "prn"
+          ]
+        },
+        {
+          "id": "public.plain-text",
+          "name": "WPSOffice text document",
+          "extensions": [
+            "txt",
+            "text"
+          ]
+        },
+        {
+          "id": "public.plain-text",
+          "name": null,
+          "extensions": [
+            "txt",
+            "text"
+          ]
+        },
+        {
+          "id": "public.rtf",
+          "name": null,
+          "extensions": [
+            "rtf"
+          ]
+        },
+        {
+          "id": "com.microsoft.word.doc",
+          "name": "Microsoft Word 97 - 2003 document",
+          "extensions": [
+            "doc"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.wordprocessingml.template",
+          "name": "WPSOffice Open XML word processing template",
+          "extensions": [
+            "dotx"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.wordprocessingml.document",
+          "name": "WPSOffice Open XML word processing document",
+          "extensions": [
+            "docx"
+          ]
+        },
+        {
+          "id": "org.openwptformat.wordprocessing.document",
+          "name": "WPSOffice Open WPT processing document",
+          "extensions": [
+            "wpt"
+          ]
+        },
+        {
+          "id": "org.openwpsformat.wordprocessing.document",
+          "name": "WPSOffice Open WPS processing document",
+          "extensions": [
+            "wps"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.wordprocessingml.template.macroenabled",
+          "name": "WPSOffice Open XML word processing macroabled template",
+          "extensions": [
+            "dotm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.wordprocessingml.document.macroenabled",
+          "name": "WPSOffice Open XML Word processing macroenabled document",
+          "extensions": [
+            "docm"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.ppt",
+          "name": "Microsoft PowerPoint 97-2003 Presentation",
+          "extensions": [
+            "ppt"
+          ]
+        },
+        {
+          "id": "com.microsoft.excel.xlt",
+          "name": "WPSOffice Open spreadsheet template",
+          "extensions": [
+            "xlt"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.pot",
+          "name": "Microsoft PowerPoint 97-2003 Template",
+          "extensions": [
+            "pot"
+          ]
+        },
+        {
+          "id": "com.microsoft.powerpoint.pps",
+          "name": "Microsoft PowerPoint 97-2003 Slide Show",
+          "extensions": [
+            "pps"
+          ]
+        },
+        {
+          "id": "org.opendpsformats.presentation",
+          "name": "WPSOffice Open DPS Presentation Template",
+          "extensions": [
+            "dps"
+          ]
+        },
+        {
+          "id": "org.opendptformats.presentation",
+          "name": "WPSOffice Open DPT Presentation Template ",
+          "extensions": [
+            "dpt"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.template.macroenabled",
+          "name": "WPSOffice Open XML Presentation Template (macros enabled)",
+          "extensions": [
+            "potm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.template",
+          "name": "WPSOffice Open XML Presentation Template",
+          "extensions": [
+            "potx"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.slideshow.macroenabled",
+          "name": "WPSOffice Open XML Slide Show (macros enabled)",
+          "extensions": [
+            "ppsm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.presentation",
+          "name": "WPSOffice Open XML presentation",
+          "extensions": [
+            "pptx"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.presentation.macroenabled",
+          "name": "WPSOffice Open XML Presentation (macros enabled)",
+          "extensions": [
+            "pptm"
+          ]
+        },
+        {
+          "id": "org.openxmlformats.presentationml.slideshow",
+          "name": "WPSOffice Open XML slide show",
+          "extensions": [
+            "ppsx"
+          ]
+        },
+        {
+          "id": "com.rarlab.rar-archive",
+          "name": "RAR Archive",
+          "extensions": [
+            "rar"
+          ]
+        },
+        {
+          "id": "org.7-zip.7-zip-archive",
+          "name": "7-Zip Archive",
+          "extensions": [
+            "7z"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Xcode",
+      "version": "27.0",
+      "path": "/Applications/Xcode.app",
+      "bundle": "com.apple.dt.Xcode",
+      "documentEntries": 156,
+      "utis": [
+        "com.apple.applescript.text",
+        "com.apple.arkit.referenceobject",
+        "com.apple.arobject",
+        "com.apple.binary-property-list",
+        "com.apple.clips-source",
+        "com.apple.coreai.aimodel",
+        "com.apple.coreai.aimodelc",
+        "com.apple.coreai.perfreport",
+        "com.apple.coreml.mlarchive",
+        "com.apple.coreml.mlmodelc",
+        "com.apple.coreml.mlmodelkey",
+        "com.apple.coreml.mlpackage",
+        "com.apple.coreml.mlperfreport",
+        "com.apple.coreml.model",
+        "com.apple.crashreport",
+        "com.apple.documentation.doccarchive",
+        "com.apple.documentation.guide",
+        "com.apple.documentation.tutorial",
+        "com.apple.dt.bundle.unit-test.xctest",
+        "com.apple.dt.document.apns",
+        "com.apple.dt.document.ascii-property-list",
+        "com.apple.dt.document.scheme",
+        "com.apple.dt.document.script-suite-property-list",
+        "com.apple.dt.document.script-terminology-property-list",
+        "com.apple.dt.document.simplefilescontainer",
+        "com.apple.dt.document.snapshot",
+        "com.apple.dt.document.toolchain",
+        "com.apple.dt.document.workspace",
+        "com.apple.dt.document.xccrashpoint",
+        "com.apple.dt.document.xcdiskwritelog",
+        "com.apple.dt.document.xcdiskwritepoint",
+        "com.apple.dt.document.xcfeedbackpoint",
+        "com.apple.dt.document.xchanglog",
+        "com.apple.dt.document.xchangpoint",
+        "com.apple.dt.document.xclaunchlog",
+        "com.apple.dt.document.xclaunchpoint",
+        "com.apple.dt.document.xcmetricsdata",
+        "com.apple.dt.document.xcprocessorusagelog",
+        "com.apple.dt.document.xcprocessorusagepoint",
+        "com.apple.dt.dvt.plug-in",
+        "com.apple.dt.ide.debughierarchycontenttype",
+        "com.apple.dt.ide.memorygraphdebuggercontenttype",
+        "com.apple.dt.ide.plug-in",
+        "com.apple.dt.interfacebuilder.document.storyboard",
+        "com.apple.dt.interfacebuilder.document.storyboard.package",
+        "com.apple.dt.messages-sticker-pack",
+        "com.apple.dt.playground",
+        "com.apple.dt.playgroundpage",
+        "com.apple.dt.storekit",
+        "com.apple.dt.storekitbundle",
+        "com.apple.dt.xcode.settings-bundle",
+        "com.apple.dt.xctestplancontenttype",
+        "com.apple.dt.xctestproductscontenttype",
+        "com.apple.dt.xctestruncontenttype",
+        "com.apple.fmadapter",
+        "com.apple.gputools.gputrace",
+        "com.apple.gputools.gtdbg",
+        "com.apple.iig-source",
+        "com.apple.instruments.package-definition",
+        "com.apple.interfacebuilder.document",
+        "com.apple.interfacebuilder.document.cocoa",
+        "com.apple.iphone.ipsw",
+        "com.apple.iphone.mobileprovision",
+        "com.apple.lsr-image",
+        "com.apple.metal",
+        "com.apple.mobileprovision",
+        "com.apple.mps.graph.package",
+        "com.apple.mtl.package",
+        "com.apple.property-list",
+        "com.apple.provisionprofile",
+        "com.apple.rez-source",
+        "com.apple.rtfd",
+        "com.apple.scenekit.particlesystem",
+        "com.apple.scenekit.scene",
+        "com.apple.scenekit.scene.zip",
+        "com.apple.scripting-definition",
+        "com.apple.sirikit.intentdefinition",
+        "com.apple.spritekit.serialized",
+        "com.apple.swiftpm",
+        "com.apple.symbol-export",
+        "com.apple.text-based-dylib",
+        "com.apple.tightbeam-source",
+        "com.apple.xcframework",
+        "com.apple.xcode.apinotes",
+        "com.apple.xcode.app-privacy-property-list",
+        "com.apple.xcode.appdata",
+        "com.apple.xcode.archive",
+        "com.apple.xcode.buildmetrics",
+        "com.apple.xcode.code-requirement-property-list",
+        "com.apple.xcode.configsettings",
+        "com.apple.xcode.dsym",
+        "com.apple.xcode.entitlements-property-list",
+        "com.apple.xcode.model.data",
+        "com.apple.xcode.model.data-mapping",
+        "com.apple.xcode.model.data-version",
+        "com.apple.xcode.mom",
+        "com.apple.xcode.plugin",
+        "com.apple.xcode.plugindata",
+        "com.apple.xcode.plugindata.compiled",
+        "com.apple.xcode.project",
+        "com.apple.xcode.projectdata",
+        "com.apple.xcode.resultbundle",
+        "com.apple.xcode.strings-dictionary",
+        "com.apple.xcode.strings-text",
+        "com.apple.xcode.usersettings",
+        "com.apple.xcode.xcfilelist",
+        "com.apple.xcode.xcloc",
+        "com.apple.xcode.xcstrings",
+        "com.apple.xml-property-list",
+        "com.pixar.universal-scene-description",
+        "com.pixar.universal-scene-description-mobile",
+        "com.pixar.usd.ascii",
+        "com.pixar.usd.crate",
+        "com.topografix.gpx",
+        "net.daringfireball.markdown",
+        "org.khronos.glsl-source",
+        "org.khronos.glsl.fragment-shader",
+        "org.khronos.glsl.geometry-shader",
+        "org.khronos.glsl.tess-control-shader",
+        "org.khronos.glsl.tess-evaluation-shader",
+        "org.khronos.glsl.vertex-shader",
+        "org.oasis-open.xliff",
+        "public.assembly-source",
+        "public.bash-script",
+        "public.c-header",
+        "public.c-plus-plus-header",
+        "public.c-plus-plus-source",
+        "public.c-source",
+        "public.csh-script",
+        "public.data",
+        "public.geojson",
+        "public.geometry-definition-format",
+        "public.json",
+        "public.ksh-script",
+        "public.make-source",
+        "public.mig-source",
+        "public.module-map",
+        "public.nasm-assembly-source",
+        "public.objective-c-plus-plus-source",
+        "public.objective-c-source",
+        "public.opencl-source",
+        "public.perl-script",
+        "public.php-script",
+        "public.polygon-file-format",
+        "public.precompiled-c-header",
+        "public.precompiled-c-plus-plus-header",
+        "public.python-script",
+        "public.rtf",
+        "public.ruby-script",
+        "public.script",
+        "public.shell-script",
+        "public.source-code",
+        "public.standard-tesselated-geometry-format",
+        "public.swift-source",
+        "public.tcsh-script",
+        "public.text",
+        "public.xml",
+        "public.yaml",
+        "public.zsh-script"
+      ],
+      "extensions": [
+        "gpx",
+        "swiftpm"
+      ],
+      "schemes": [
+        "apple-reference-documentation",
+        "doc",
+        "interface-builder",
+        "x-xcode-documentation",
+        "xcdevice",
+        "xcdoc",
+        "xcode"
+      ],
+      "typeDeclarations": [
+        {
+          "id": "com.apple.dt.xcode.settings-bundle",
+          "name": "Xcode Settings Bundle",
+          "extensions": [
+            "xcodesettings"
+          ]
+        },
+        {
+          "id": "com.apple.dt.XcodeCloud.icon",
+          "name": "Xcode Cloud Icon",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.dt.XcodeIntelligence.icon",
+          "name": "Xcode Intelligence Icon",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.xcode.resultbundle",
+          "name": "Xcode Result Bundle",
+          "extensions": [
+            "xcresult"
+          ]
+        },
+        {
+          "id": "com.apple.dt.xctest.element-snapshot",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.dt.xctest.synthesized-event-record",
+          "name": null,
+          "extensions": []
+        },
+        {
+          "id": "com.apple.xcode.docset",
+          "name": "Documentation Set",
+          "extensions": [
+            "docset"
+          ]
+        },
+        {
+          "id": "com.apple.gputools.gputrace",
+          "name": "GPU Trace",
+          "extensions": [
+            "gputrace"
+          ]
+        },
+        {
+          "id": "com.apple.spritekit.serialized",
+          "name": "SpriteKit Serialized Data",
+          "extensions": [
+            "sks"
+          ]
+        },
+        {
+          "id": "com.apple.scenekit.scene",
+          "name": "SceneKit Scene",
+          "extensions": [
+            "scn"
+          ]
+        },
+        {
+          "id": "com.apple.scenekit.scene.zip",
+          "name": "SceneKit Compressed Scene",
+          "extensions": [
+            "scnz"
+          ]
+        },
+        {
+          "id": "com.apple.scenekit.particlesystem",
+          "name": "SceneKit Particle System",
+          "extensions": [
+            "scnp"
+          ]
+        },
+        {
+          "id": "com.apple.lsr-image",
+          "name": "Layered Stack Rendition",
+          "extensions": [
+            "lsr"
+          ]
+        },
+        {
+          "id": "com.apple.scenekit.assetcatalog",
+          "name": "SceneKit Asset Catalog",
+          "extensions": [
+            "scnassets"
+          ]
+        },
+        {
+          "id": "com.apple.scenekit.shadercache",
+          "name": "SceneKit Shader Cache",
+          "extensions": [
+            "scncache"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.workspace",
+          "name": "Xcode Workspace",
+          "extensions": [
+            "xcworkspace"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.simplefilescontainer",
+          "name": "Xcode Workspace Container",
+          "extensions": [
+            "xcfilescontainer"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.scheme",
+          "name": "Xcode Scheme",
+          "extensions": [
+            "xcscheme"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.toolchain",
+          "name": "Xcode Toolchain",
+          "extensions": [
+            "xctoolchain"
+          ]
+        },
+        {
+          "id": "com.apple.dt.ide.plug-in",
+          "name": "Xcode IDE Plug-in",
+          "extensions": [
+            "ideplugin"
+          ]
+        },
+        {
+          "id": "com.apple.dt.dvt.plug-in",
+          "name": "Xcode DVT Plug-in",
+          "extensions": [
+            "dvtplugin"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.plugin",
+          "name": "Xcode Plug-in",
+          "extensions": [
+            "xcplugin"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.snapshot",
+          "name": "Xcode Snapshot",
+          "extensions": [
+            "xcsnapshots"
+          ]
+        },
+        {
+          "id": "com.apple.dt.bundle.unit-test",
+          "name": "Test Bundle",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.dt.bundle.unit-test.ocunit",
+          "name": "OCUnit Test Bundle",
+          "extensions": [
+            "octest"
+          ]
+        },
+        {
+          "id": "com.apple.dt.bundle.unit-test.xctest",
+          "name": "Xcode Test Bundle",
+          "extensions": [
+            "xctest"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.archive",
+          "name": "Xcode Archive",
+          "extensions": [
+            "xcarchive"
+          ]
+        },
+        {
+          "id": "com.apple.dt.messages-sticker-pack",
+          "name": "Messages Sticker Pack",
+          "extensions": [
+            "stickerpack"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.plugindata",
+          "name": "Xcode Plugin Data",
+          "extensions": [
+            "plugindata"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.plugindata.compiled",
+          "name": "Xcode Compiled Plugin Data",
+          "extensions": [
+            "xcplugindata"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.appdata",
+          "name": "Xcode Application Data Package",
+          "extensions": [
+            "xcappdata"
+          ]
+        },
+        {
+          "id": "public.swift-source",
+          "name": "Swift Source",
+          "extensions": [
+            "swift"
+          ]
+        },
+        {
+          "id": "com.apple.dt.playground",
+          "name": "Xcode Playground",
+          "extensions": [
+            "playground"
+          ]
+        },
+        {
+          "id": "com.apple.dt.playgroundpage",
+          "name": "Xcode Playground Page",
+          "extensions": [
+            "xcplaygroundpage"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xccrashpoint",
+          "name": "Crash Point",
+          "extensions": [
+            "xccrashpoint"
+          ]
+        },
+        {
+          "id": "com.apple.dt.ide.memorygraphdebuggercontenttype",
+          "name": "Memory Graph",
+          "extensions": [
+            "memgraph"
+          ]
+        },
+        {
+          "id": "com.apple.dt.ide.debughierarchycontenttype",
+          "name": "View Hierarchy",
+          "extensions": [
+            "viewhierarchy"
+          ]
+        },
+        {
+          "id": "com.apple.dt.xctestruncontenttype",
+          "name": "Xcode Test Run Parameters",
+          "extensions": [
+            "xctestrun"
+          ]
+        },
+        {
+          "id": "com.apple.dt.xctestplancontenttype",
+          "name": "Xcode Test Plan",
+          "extensions": [
+            "xctestplan"
+          ]
+        },
+        {
+          "id": "com.apple.dt.xctestproductscontenttype",
+          "name": "XCTest Products",
+          "extensions": [
+            "xctestproducts"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.apns",
+          "name": "Apple Push Notification Service",
+          "extensions": [
+            "apns"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.project",
+          "name": "Xcode Project",
+          "extensions": [
+            "xcodeproj",
+            "xcode",
+            "pbproj"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.projectdata",
+          "name": "Xcode Project Data",
+          "extensions": [
+            "pbxproj",
+            "perspective",
+            "mode0",
+            "mode1",
+            "mode2",
+            "mode3",
+            "perspectivev3",
+            "mode0v3",
+            "mode1v3",
+            "mode2v3",
+            "mode3v3"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.usersettings",
+          "name": "Xcode User Data",
+          "extensions": [
+            "pbxuser"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.configsettings",
+          "name": "Xcode Configuration Settings",
+          "extensions": [
+            "xcconfig"
+          ]
+        },
+        {
+          "id": "com.apple.rez-source",
+          "name": "Rez Source",
+          "extensions": [
+            "r"
+          ]
+        },
+        {
+          "id": "com.apple.sirikit.intentdefinition",
+          "name": "SiriKit Intent Definition",
+          "extensions": [
+            "intentdefinition"
+          ]
+        },
+        {
+          "id": "com.apple.symbol-export",
+          "name": "Symbol Export",
+          "extensions": [
+            "exp"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.strings-dictionary",
+          "name": "Localizable Strings Dictionary",
+          "extensions": [
+            "stringsdict"
+          ]
+        },
+        {
+          "id": "com.apple.documentation.tutorial",
+          "name": "Tutorial File",
+          "extensions": [
+            "tutorial"
+          ]
+        },
+        {
+          "id": "com.apple.documentation.doccarchive",
+          "name": "DocC Archive",
+          "extensions": [
+            "doccarchive"
+          ]
+        },
+        {
+          "id": "com.apple.documentation.guide",
+          "name": "Educational Guide",
+          "extensions": [
+            "guide"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.apinotes",
+          "name": "API Notes",
+          "extensions": [
+            "apinotes"
+          ]
+        },
+        {
+          "id": "com.apple.text-based-dylib",
+          "name": "Text-Based Dynamic Library Definition",
+          "extensions": [
+            "tbd"
+          ]
+        },
+        {
+          "id": "com.apple.interfacebuilder.document.cocoa",
+          "name": "Interface Builder XML",
+          "extensions": [
+            "xib"
+          ]
+        },
+        {
+          "id": "com.apple.interfacebuilder.document",
+          "name": "Interface Builder NIB",
+          "extensions": [
+            "nib"
+          ]
+        },
+        {
+          "id": "com.apple.dt.interfacebuilder.document.storyboard",
+          "name": "Interface Builder Storyboard",
+          "extensions": [
+            "storyboard"
+          ]
+        },
+        {
+          "id": "com.apple.dt.interfacebuilder.document.storyboard.package",
+          "name": "Interface Builder Compiled Storyboard",
+          "extensions": [
+            "storyboardc"
+          ]
+        },
+        {
+          "id": "com.apple.dt.assetcatalog",
+          "name": "Xcode Asset Catalog",
+          "extensions": [
+            "xcassets"
+          ]
+        },
+        {
+          "id": "com.apple.dt.gamekit",
+          "name": "GameKit Configuration",
+          "extensions": [
+            "gamekit"
+          ]
+        },
+        {
+          "id": "com.apple.dt.stickers",
+          "name": "Xcode Stickers Catalog",
+          "extensions": [
+            "xcstickers"
+          ]
+        },
+        {
+          "id": "com.apple.interfacebuilder.plugin",
+          "name": "Interface Builder Plug-in",
+          "extensions": [
+            "ibplugin"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.model",
+          "name": "Core Data",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.xcode.model.data",
+          "name": "Core Data Model",
+          "extensions": [
+            "xcdatamodel"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.model.data-version",
+          "name": "Core Data Versioned Model",
+          "extensions": [
+            "xcdatamodeld"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.model.data-mapping",
+          "name": "Core Data Mapping Model",
+          "extensions": [
+            "xcmappingmodel"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.mom",
+          "name": "Core Data Managed Object Model",
+          "extensions": [
+            "mom"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.ascii-property-list",
+          "name": "Xcode ASCII Property List",
+          "extensions": []
+        },
+        {
+          "id": "com.apple.dt.document.script-suite-property-list",
+          "name": "AppleScript Script Suite",
+          "extensions": [
+            "scriptSuite"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.script-terminology-property-list",
+          "name": "AppleScript Script Terminology",
+          "extensions": [
+            "scriptTerminology"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.entitlements-property-list",
+          "name": "Entitlements",
+          "extensions": [
+            "entitlements"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.code-requirement-property-list",
+          "name": "Code Requirement",
+          "extensions": [
+            "coderequirement"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.app-privacy-property-list",
+          "name": "App Privacy Configuration",
+          "extensions": [
+            "xcprivacy"
+          ]
+        },
+        {
+          "id": "com.apple.mobileprovision",
+          "name": "Mobile Provision",
+          "extensions": [
+            "mobileprovision"
+          ]
+        },
+        {
+          "id": "com.apple.provisionprofile",
+          "name": "Provision Profile",
+          "extensions": [
+            "provisionprofile"
+          ]
+        },
+        {
+          "id": "com.apple.gputools.gtdbg",
+          "name": "GPU Debug Document",
+          "extensions": [
+            "gtdbg"
+          ]
+        },
+        {
+          "id": "com.apple.metal",
+          "name": "Metal Source",
+          "extensions": [
+            "metal"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.model",
+          "name": "Core ML Model",
+          "extensions": [
+            "mlmodel"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlmodelkey",
+          "name": "Core ML Encryption Key",
+          "extensions": [
+            "mlmodelkey"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlarchive",
+          "name": "Core ML Archive",
+          "extensions": [
+            "mlarchive"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlmodelc",
+          "name": "Core ML Compiled Model",
+          "extensions": [
+            "mlmodelc"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlpackage",
+          "name": "Core ML Package",
+          "extensions": [
+            "mlpackage"
+          ]
+        },
+        {
+          "id": "com.apple.coreai.aimodel",
+          "name": "Core AI Model",
+          "extensions": [
+            "aimodel"
+          ]
+        },
+        {
+          "id": "com.apple.coreai.aimodelc",
+          "name": "Core AI Compiled Model",
+          "extensions": [
+            "aimodelc"
+          ]
+        },
+        {
+          "id": "com.apple.coreai.aipackage",
+          "name": "Core AI Package",
+          "extensions": [
+            "aipackage"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.odix",
+          "name": "ML Binary",
+          "extensions": [
+            "odix"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlirb",
+          "name": "ML Binary",
+          "extensions": [
+            "mlirb"
+          ]
+        },
+        {
+          "id": "com.apple.coreml.mlperfreport",
+          "name": "Core ML Performance Report",
+          "extensions": [
+            "mlperf"
+          ]
+        },
+        {
+          "id": "com.apple.coreai.perfreport",
+          "name": "Core AI Performance Report",
+          "extensions": [
+            "aiperf"
+          ]
+        },
+        {
+          "id": "com.apple.fmadapter",
+          "name": "Foundation Model Adapter",
+          "extensions": [
+            "fmadapter"
+          ]
+        },
+        {
+          "id": "com.apple.arkit.referenceobject",
+          "name": "ARKit Reference Object",
+          "extensions": [
+            "referenceobject"
+          ]
+        },
+        {
+          "id": "com.apple.dt.dvticon.spec",
+          "name": "Xcode Icon Spec",
+          "extensions": [
+            "dvticonspec"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcprocessorusagepoint",
+          "name": "Processor Usage Point",
+          "extensions": [
+            "xcprocessorusagepoint"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcprocessorusagelog",
+          "name": "Processor Usage Log",
+          "extensions": [
+            "xcprocessorusagelog"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcdiskwritepoint",
+          "name": "Disk Write Point",
+          "extensions": [
+            "xcdiskwritepoint"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcdiskwritelog",
+          "name": "Disk Write Log",
+          "extensions": [
+            "xcdiskwritelog"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xchangpoint",
+          "name": "Hang Point",
+          "extensions": [
+            "xchangpoint"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xchanglog",
+          "name": "Hang Log",
+          "extensions": [
+            "xchanglog"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xclaunchpoint",
+          "name": "Launch Point",
+          "extensions": [
+            "xclaunchpoint"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xclaunchlog",
+          "name": "Launch Log",
+          "extensions": [
+            "xclaunchlog"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcmetricsdata",
+          "name": "App Metrics Data",
+          "extensions": [
+            "xcmetricsdata"
+          ]
+        },
+        {
+          "id": "com.apple.clips-source",
+          "name": "CLIPS Source",
+          "extensions": [
+            "clp"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.xcloc",
+          "name": "Xcode Localization Catalog",
+          "extensions": [
+            "xcloc"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.xcstrings",
+          "name": "Xcode String Catalog",
+          "extensions": [
+            "xcstrings"
+          ]
+        },
+        {
+          "id": "com.apple.arobject",
+          "name": "AR Object",
+          "extensions": [
+            "arobject"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.xcfilelist",
+          "name": "Build Phase File List",
+          "extensions": [
+            "xcfilelist"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.buildmetrics",
+          "name": "Xcode Build Metrics",
+          "extensions": [
+            "xcbuildmetrics"
+          ]
+        },
+        {
+          "id": "com.apple.xcframework",
+          "name": "Xcode Framework",
+          "extensions": [
+            "xcframework"
+          ]
+        },
+        {
+          "id": "com.apple.dt.storekit",
+          "name": "StoreKit Configuration Settings",
+          "extensions": [
+            "storekit"
+          ]
+        },
+        {
+          "id": "com.apple.dt.storekitbundle",
+          "name": "StoreKit Configuration Settings",
+          "extensions": [
+            "storekit"
+          ]
+        },
+        {
+          "id": "com.apple.dt.document.xcfeedbackpoint",
+          "name": "TestFlight Feedback",
+          "extensions": [
+            "xcfeedbackpoint"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl-source",
+          "name": "OpenGL Shader Source",
+          "extensions": [
+            "glsl"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl.vertex-shader",
+          "name": "OpenGL Vertex Shader Source",
+          "extensions": [
+            "vs",
+            "vert",
+            "vsh",
+            "vertex"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl.fragment-shader",
+          "name": "OpenGL Fragment Shader Source",
+          "extensions": [
+            "fs",
+            "fsh",
+            "frag",
+            "fragsh",
+            "fragment"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl.geometry-shader",
+          "name": "OpenGL Geometry Source",
+          "extensions": [
+            "gs",
+            "geom",
+            "gsh",
+            "geometry"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl.tess-control-shader",
+          "name": "OpenGL Tessellation Control Shader Source",
+          "extensions": [
+            "ctrl"
+          ]
+        },
+        {
+          "id": "org.khronos.glsl.tess-evaluation-shader",
+          "name": "OpenGL Tessellation Evaluation Shader Source",
+          "extensions": [
+            "eval"
+          ]
+        },
+        {
+          "id": "com.apple.mps.graph",
+          "name": "MPS Graph",
+          "extensions": [
+            "mpsgraph"
+          ]
+        },
+        {
+          "id": "com.apple.mps.graph.package",
+          "name": "MPS Graph Package",
+          "extensions": [
+            "mpsgraphpackage"
+          ]
+        },
+        {
+          "id": "com.apple.mtl.package",
+          "name": "MTL Package",
+          "extensions": [
+            "mtlpackage"
+          ]
+        },
+        {
+          "id": "com.microsoft.hlsl",
+          "name": "HLSL Source",
+          "extensions": [
+            "hlsl"
+          ]
+        },
+        {
+          "id": "com.apple.iphone.ipsw",
+          "name": "Apple Device Software Update",
+          "extensions": [
+            "ipsw"
+          ]
+        },
+        {
+          "id": "com.apple.haptics.ahap",
+          "name": "Apple Haptics Audio Pattern",
+          "extensions": [
+            "ahap"
+          ]
+        },
+        {
+          "id": "public.geojson",
+          "name": "Geographical JSON",
+          "extensions": [
+            "geojson"
+          ]
+        },
+        {
+          "id": "com.apple.scripting-definition",
+          "name": "AppleScript Scripting Definition",
+          "extensions": [
+            "sdef"
+          ]
+        },
+        {
+          "id": "org.oasis-open.xliff",
+          "name": "XML Localization Interchange",
+          "extensions": [
+            "xliff",
+            "xlf"
+          ]
+        },
+        {
+          "id": "com.apple.instruments.instrdst",
+          "name": "Instruments Distribution Package",
+          "extensions": [
+            "instrdst"
+          ]
+        },
+        {
+          "id": "public.protobuf-source",
+          "name": "Protocol Buffer Source",
+          "extensions": [
+            "proto"
+          ]
+        },
+        {
+          "id": "com.apple.iig-source",
+          "name": "IOKit Interface Generator Source",
+          "extensions": [
+            "iig"
+          ]
+        },
+        {
+          "id": "com.apple.property-list",
+          "name": "Property List",
+          "extensions": [
+            "plist"
+          ]
+        },
+        {
+          "id": "com.apple.xml-property-list",
+          "name": "XML Property List",
+          "extensions": [
+            "plist"
+          ]
+        },
+        {
+          "id": "com.topografix.gpx",
+          "name": "GPS Exchange",
+          "extensions": [
+            "gpx"
+          ]
+        },
+        {
+          "id": "com.apple.binary-property-list",
+          "name": "Binary Property List",
+          "extensions": [
+            "plist"
+          ]
+        },
+        {
+          "id": "com.apple.ascii-property-list",
+          "name": "ASCII Property List",
+          "extensions": [
+            "plist"
+          ]
+        },
+        {
+          "id": "com.apple.crashreport",
+          "name": "Crash Report",
+          "extensions": [
+            "crash"
+          ]
+        },
+        {
+          "id": "com.pixar.universal-scene-description-mobile",
+          "name": "Pixar USD Document",
+          "extensions": [
+            "usdz"
+          ]
+        },
+        {
+          "id": "com.apple.swiftpm",
+          "name": "Swift Package",
+          "extensions": [
+            "swiftpm"
+          ]
+        },
+        {
+          "id": "com.apple.swiftpm-playgrounds-project",
+          "name": "Swift Playgrounds Project",
+          "extensions": []
+        },
+        {
+          "id": "public.geometry-definition-format",
+          "name": "Geometry Definition File Format",
+          "extensions": [
+            "obj"
+          ]
+        },
+        {
+          "id": "public.standard-tesselated-geometry-format",
+          "name": "Standard Tesselated Geometry File Format",
+          "extensions": [
+            "stl"
+          ]
+        },
+        {
+          "id": "public.polygon-file-format",
+          "name": "Polygon File Format",
+          "extensions": [
+            "ply"
+          ]
+        },
+        {
+          "id": "com.apple.avatarkit.animoji",
+          "name": "Animoji",
+          "extensions": [
+            "animoji"
+          ]
+        },
+        {
+          "id": "public.c-header",
+          "name": "Header",
+          "extensions": [
+            "h"
+          ]
+        },
+        {
+          "id": "public.precompiled-c-header",
+          "name": "Precompiled C Header",
+          "extensions": [
+            "pch"
+          ]
+        },
+        {
+          "id": "public.c-plus-plus-header",
+          "name": "C++ Header",
+          "extensions": [
+            "hh",
+            "hp",
+            "hpp",
+            "hxx",
+            "h++",
+            "ipp"
+          ]
+        },
+        {
+          "id": "public.precompiled-c-plus-plus-header",
+          "name": "Precompiled C++ Header",
+          "extensions": [
+            "pch++"
+          ]
+        },
+        {
+          "id": "public.c-source",
+          "name": "C Source",
+          "extensions": [
+            "c"
+          ]
+        },
+        {
+          "id": "public.c-source.preprocessed",
+          "name": "Preprocessed C Source",
+          "extensions": [
+            "i"
+          ]
+        },
+        {
+          "id": "public.opencl-source",
+          "name": "OpenCL Source",
+          "extensions": [
+            "cl"
+          ]
+        },
+        {
+          "id": "public.module-map",
+          "name": "Module Map",
+          "extensions": [
+            "modulemap"
+          ]
+        },
+        {
+          "id": "public.objective-c-source",
+          "name": "Objective-C Source",
+          "extensions": [
+            "m"
+          ]
+        },
+        {
+          "id": "public.objective-c-source.preprocessed",
+          "name": "Preprocessed Objective-C Source",
+          "extensions": [
+            "mi"
+          ]
+        },
+        {
+          "id": "public.objective-c-plus-plus-source",
+          "name": "Objective-C++ Source",
+          "extensions": [
+            "mm"
+          ]
+        },
+        {
+          "id": "public.objective-c-plus-plus-source.preprocessed",
+          "name": "Preprocessed Objective-C++ Source",
+          "extensions": [
+            "mii"
+          ]
+        },
+        {
+          "id": "public.c-plus-plus-source",
+          "name": "C++ Source",
+          "extensions": [
+            "cc",
+            "cp",
+            "cpp",
+            "cxx",
+            "c++"
+          ]
+        },
+        {
+          "id": "public.c-plus-plus-source.preprocessed",
+          "name": "Preprocessed C++ Source",
+          "extensions": [
+            "ii"
+          ]
+        },
+        {
+          "id": "public.assembly-source",
+          "name": "Assembly Source",
+          "extensions": [
+            "s",
+            "asm"
+          ]
+        },
+        {
+          "id": "public.nasm-assembly-source",
+          "name": "NASM Assembly Source",
+          "extensions": [
+            "nasm"
+          ]
+        },
+        {
+          "id": "public.yacc-source",
+          "name": "YACC Source",
+          "extensions": [
+            "y",
+            "ym",
+            "ymm",
+            "ypp",
+            "yxx",
+            "yy"
+          ]
+        },
+        {
+          "id": "public.lex-source",
+          "name": "Lex Source",
+          "extensions": [
+            "l",
+            "lm",
+            "lmm",
+            "lpp",
+            "lxx",
+            "ll"
+          ]
+        },
+        {
+          "id": "public.mig-source",
+          "name": "Mach Interface Generator Source",
+          "extensions": [
+            "defs",
+            "mig"
+          ]
+        },
+        {
+          "id": "public.ruby-script",
+          "name": "Ruby Script",
+          "extensions": [
+            "rb",
+            "rbw"
+          ]
+        },
+        {
+          "id": "public.python-script",
+          "name": "Python Script",
+          "extensions": [
+            "py"
+          ]
+        },
+        {
+          "id": "public.php-script",
+          "name": "PHP Script",
+          "extensions": [
+            "php"
+          ]
+        },
+        {
+          "id": "public.perl-script",
+          "name": "Perl Script",
+          "extensions": [
+            "pl"
+          ]
+        },
+        {
+          "id": "public.make-source",
+          "name": "Make Source",
+          "extensions": [
+            "make",
+            "mak",
+            "gmk"
+          ]
+        },
+        {
+          "id": "public.bash-script",
+          "name": "Bourne-Again Shell Script",
+          "extensions": [
+            "bash"
+          ]
+        },
+        {
+          "id": "public.csh-script",
+          "name": "C Shell Script",
+          "extensions": [
+            "csh"
+          ]
+        },
+        {
+          "id": "public.ksh-script",
+          "name": "Korn Shell Script",
+          "extensions": [
+            "ksh"
+          ]
+        },
+        {
+          "id": "public.tcsh-script",
+          "name": "Tenex C Shell Script",
+          "extensions": [
+            "tcsh"
+          ]
+        },
+        {
+          "id": "public.zsh-script",
+          "name": "Z Shell Script",
+          "extensions": [
+            "zsh"
+          ]
+        },
+        {
+          "id": "org.iso.sql",
+          "name": "SQL Source",
+          "extensions": [
+            "sql"
+          ]
+        },
+        {
+          "id": "public.pkl-source",
+          "name": "Pkl Source",
+          "extensions": [
+            "pkl",
+            "pcf"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.strings-text",
+          "name": "Localizable Strings",
+          "extensions": [
+            "strings"
+          ]
+        },
+        {
+          "id": "public.xml",
+          "name": "XML Text",
+          "extensions": [
+            "xml"
+          ]
+        },
+        {
+          "id": "net.daringfireball.markdown",
+          "name": "Markdown Text",
+          "extensions": [
+            "md",
+            "mdown",
+            "markdown",
+            "text"
+          ]
+        },
+        {
+          "id": "public.json",
+          "name": "JavaScript Object Notation",
+          "extensions": [
+            "json"
+          ]
+        },
+        {
+          "id": "com.microsoft.ini",
+          "name": "MS Windows initialization file",
+          "extensions": [
+            "ini"
+          ]
+        },
+        {
+          "id": "public.toml",
+          "name": "TOML/Configuration file",
+          "extensions": [
+            "cfg",
+            "config",
+            "toml"
+          ]
+        },
+        {
+          "id": "public.yaml",
+          "name": "YAML",
+          "extensions": [
+            "yml",
+            "yaml"
+          ]
+        },
+        {
+          "id": "public.css",
+          "name": "CSS",
+          "extensions": [
+            "css"
+          ]
+        },
+        {
+          "id": "com.apple.xcode.dsym",
+          "name": "Debug Symbols",
+          "extensions": [
+            "dsym"
+          ]
+        },
+        {
+          "id": "com.apple.instruments.package-definition",
+          "name": "Instruments Package Definition",
+          "extensions": [
+            "instrpkg"
+          ]
+        },
+        {
+          "id": "com.microsoft.typescript",
+          "name": null,
+          "extensions": [
+            "ts",
+            "tsx"
+          ]
+        },
+        {
+          "id": "com.apple.tightbeam-source",
+          "name": "Tightbeam Interface Source",
+          "extensions": [
+            "tightbeam"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "企业微信",
+      "version": "5.0.13",
+      "path": "/Applications/企业微信.app",
+      "bundle": "com.tencent.WeWorkMac",
+      "documentEntries": 2,
+      "utis": [],
+      "extensions": [
+        "eml",
+        "ics"
+      ],
+      "schemes": [
+        "mailto",
+        "qqmailapijs",
+        "wedrive",
+        "wework",
+        "wxwork",
+        "wxworksaas",
+        "wxworkwedrive"
+      ],
+      "typeDeclarations": []
+    }
+  ],
+  "errors": []
+}

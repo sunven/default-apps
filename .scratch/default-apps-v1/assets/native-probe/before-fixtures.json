@@ -1,0 +1,70 @@
+[
+  {
+    "candidates": [
+      "/Applications/Google Chrome.app",
+      "/Applications/wpsoffice.app",
+      "/System/Applications/Preview.app",
+      "/System/Applications/Utilities/ColorSync Utility.app",
+      "/System/Applications/Books.app",
+      "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+      "/Applications/WorkBuddy.app",
+      "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    ],
+    "current": "/Applications/Google Chrome.app",
+    "key": "com.adobe.pdf",
+    "kind": "type",
+    "queryMainThread": true,
+    "resolved": true
+  },
+  {
+    "candidates": [
+      "/System/Applications/Mail.app",
+      "/Applications/企业微信.app"
+    ],
+    "current": "/System/Applications/Mail.app",
+    "key": "mailto",
+    "kind": "scheme",
+    "queryMainThread": true,
+    "resolved": true
+  },
+  {
+    "candidates": [
+      "/Applications/Google Chrome.app",
+      "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+    ],
+    "current": "/Applications/Google Chrome.app",
+    "key": "http",
+    "kind": "scheme",
+    "queryMainThread": true,
+    "resolved": true
+  },
+  {
+    "candidates": [
+      "/Applications/Google Chrome.app",
+      "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+      "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+    ],
+    "current": "/Applications/Google Chrome.app",
+    "key": "https",
+    "kind": "scheme",
+    "queryMainThread": true,
+    "resolved": true
+  },
+  {
+    "candidates": [],
+    "current": null,
+    "key": "org.defaultapps.probe.7a9a0204.document",
+    "kind": "type",
+    "queryMainThread": true,
+    "resolved": false
+  },
+  {
+    "candidates": [],
+    "current": null,
+    "key": "defaultapps-probe-7a9a0204",
+    "kind": "scheme",
+    "queryMainThread": true,
+    "resolved": true
+  }
+]
