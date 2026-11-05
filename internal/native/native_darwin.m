@@ -22,25 +22,83 @@ static NSDictionary *applicationCopy(NSURL *url) {
         name = canonical.lastPathComponent.stringByDeletingPathExtension;
     id version = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     if (![version isKindOfClass:NSString.class]) version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSError *metadataError = nil;
+    [canonical checkResourceIsReachableAndReturnError:&metadataError];
     return @{@"path": canonical.path ?: @"", @"displayPath": url.path ?: @"",
              @"name": name ?: @"", @"version": [version isKindOfClass:NSString.class] ? version : @"",
+             @"metadataError": metadataError.localizedDescription ?: (bundle.infoDictionary ? @"" : @"无法读取应用包元数据"),
              @"bundleID": bundle.bundleIdentifier ?: @""};
 }
 
-char *default_apps_resolve_extension(const char *extension) {
+// Property-list objects are decoded as data on the scan worker. No NSWorkspace,
+// app launch, registration or main-thread filesystem traversal is involved.
+static id jsonProperty(id value) {
+    if ([value isKindOfClass:NSDictionary.class]) {
+        NSMutableDictionary *result = [NSMutableDictionary dictionary];
+        for (id key in value) if ([key isKindOfClass:NSString.class]) result[key] = jsonProperty(value[key]);
+        return result;
+    }
+    if ([value isKindOfClass:NSArray.class]) {
+        NSMutableArray *result = [NSMutableArray array];
+        for (id item in value) [result addObject:jsonProperty(item)];
+        return result;
+    }
+    if ([value isKindOfClass:NSString.class] || [value isKindOfClass:NSNumber.class]) return value;
+    return NSNull.null;
+}
+
+char *default_apps_read_application(const char *path) {
     @autoreleasepool {
-        if (!NSThread.isMainThread) return encode(@{@"error": @"原生解析未在主线程调度"});
         @try {
-            NSMutableArray *types = [NSMutableArray array];
-            for (UTType *type in [UTType typesWithTag:@(extension) tagClass:UTTagClassFilenameExtension conformingToType:nil]) {
-                [types addObject:@{@"identifier": type.identifier, @"name": type.localizedDescription ?: type.identifier,
-                  @"extensions": type.tags[UTTagClassFilenameExtension] ?: @[], @"mimeTypes": type.tags[UTTagClassMIMEType] ?: @[],
-                  @"declared": @(type.isDeclared), @"dynamic": @(type.isDynamic)}];
+            NSURL *original = [NSURL fileURLWithPath:@(path)].URLByStandardizingPath;
+            NSURL *resolved = original.URLByResolvingSymlinksInPath;
+            NSError *error = nil;
+            if (![resolved checkResourceIsReachableAndReturnError:&error]) return encode(@{@"error": error.localizedDescription ?: @"应用包不存在"});
+            NSNumber *directory = nil;
+            [resolved getResourceValue:&directory forKey:NSURLIsDirectoryKey error:&error];
+            if (!directory.boolValue) return encode(@{@"error": @"所选位置不是应用包目录"});
+            NSURL *canonical = resolved.fileReferenceURL.filePathURL ?: resolved;
+            NSMutableDictionary *app = [applicationCopy(original) mutableCopy];
+            NSData *data = [NSData dataWithContentsOfURL:[canonical URLByAppendingPathComponent:@"Contents/Info.plist"] options:0 error:&error];
+            id info = data ? [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:nil error:&error] : nil;
+            NSMutableArray *issues = [NSMutableArray array];
+            if (![info isKindOfClass:NSDictionary.class]) {
+                NSString *message = error.localizedDescription ?: @"应用声明不是属性字典";
+                [issues addObject:@{@"path": app[@"path"], @"origin": @"Info.plist", @"message": message}];
+                app[@"metadataError"] = message;
+                info = @{};
             }
-            return encode(@{@"types": types});
+            // Avoid NSBundle's process cache when an installed copy changes on refresh.
+            id name = info[@"CFBundleDisplayName"] ?: info[@"CFBundleName"];
+            if ([name isKindOfClass:NSString.class] && [name length]) app[@"name"] = name;
+            id version = info[@"CFBundleShortVersionString"] ?: info[@"CFBundleVersion"];
+            app[@"version"] = [version isKindOfClass:NSString.class] ? version : @"";
+            id bundleID = info[@"CFBundleIdentifier"];
+            app[@"bundleID"] = [bundleID isKindOfClass:NSString.class] ? bundleID : @"";
+            return encode(@{@"app": app, @"info": jsonProperty(info), @"issues": issues});
         } @catch (NSException *exception) {
-            return encode(@{@"error": exception.reason ?: @"文件类型解析失败"});
+            return encode(@{@"error": exception.reason ?: @"无法读取应用声明"});
         }
+    }
+}
+
+char *default_apps_resolve_type(const char *kind, const char *value) {
+    @autoreleasepool {
+        @try {
+            NSArray<UTType *> *matches;
+            if (strcmp(kind,"identifier")==0) {
+                UTType *type = [UTType typeWithIdentifier:@(value)];
+                matches = type ? @[type] : @[];
+            } else {
+                NSString *tagClass = strcmp(kind,"mime")==0 ? UTTagClassMIMEType : UTTagClassFilenameExtension;
+                matches = [UTType typesWithTag:@(value) tagClass:tagClass conformingToType:nil];
+            }
+            NSMutableArray *types = [NSMutableArray array];
+            for (UTType *type in matches) [types addObject:@{@"identifier": type.identifier, @"name": type.localizedDescription ?: type.identifier,
+                @"extensions": type.tags[UTTagClassFilenameExtension] ?: @[], @"mimeTypes": type.tags[UTTagClassMIMEType] ?: @[],
+                @"declared": @(type.isDeclared), @"dynamic": @(type.isDynamic)}];
+            return encode(@{@"types":types});
+        } @catch(NSException *exception) { return encode(@{@"error":exception.reason ?: @"文件类型解析失败"}); }
     }
 }
 

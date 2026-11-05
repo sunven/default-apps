@@ -19,38 +19,67 @@ import (
 
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
+	"github.com/sunven/default-apps/internal/discovery"
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
 type Adapter struct{}
 
-func (Adapter) ResolveExtension(ctx context.Context, extension string) ([]catalog.ResolvedType, error) {
+func (Adapter) ReadApplication(ctx context.Context, path string) (discovery.Bundle, error) {
+	if err := ctx.Err(); err != nil {
+		return discovery.Bundle{}, err
+	}
+	value := C.CString(path)
+	defer C.free(unsafe.Pointer(value))
+	data := C.default_apps_read_application(value)
+	if data == nil {
+		return discovery.Bundle{}, errors.New("无法读取应用声明")
+	}
+	defer C.free(unsafe.Pointer(data))
+	var response struct {
+		discovery.Bundle
+		Error string `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(C.GoString(data)), &response); err != nil {
+		return discovery.Bundle{}, err
+	}
+	if response.Error != "" {
+		return response.Bundle, errors.New(response.Error)
+	}
+	return response.Bundle, nil
+}
+func (Adapter) ResolveExtension(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
+	return resolveType(ctx, "extension", value)
+}
+func (Adapter) ResolveIdentifier(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
+	return resolveType(ctx, "identifier", value)
+}
+func (Adapter) ResolveMIME(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
+	return resolveType(ctx, "mime", value)
+}
+func resolveType(ctx context.Context, kind, value string) ([]catalog.ResolvedType, error) {
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
-	return application.InvokeSyncWithResultAndError(func() ([]catalog.ResolvedType, error) {
-		if err := ctx.Err(); err != nil {
-			return nil, err
-		}
-		value := C.CString(extension)
-		defer C.free(unsafe.Pointer(value))
-		data := C.default_apps_resolve_extension(value)
-		if data == nil {
-			return nil, errors.New("无法读取文件类型解析结果")
-		}
-		defer C.free(unsafe.Pointer(data))
-		var response struct {
-			Types []catalog.ResolvedType `json:"types"`
-			Error string                 `json:"error"`
-		}
-		if err := json.Unmarshal([]byte(C.GoString(data)), &response); err != nil {
-			return nil, err
-		}
-		if response.Error != "" {
-			return nil, errors.New(response.Error)
-		}
-		return response.Types, nil
-	})
+	nativeKind, nativeValue := C.CString(kind), C.CString(value)
+	defer C.free(unsafe.Pointer(nativeKind))
+	defer C.free(unsafe.Pointer(nativeValue))
+	data := C.default_apps_resolve_type(nativeKind, nativeValue)
+	if data == nil {
+		return nil, errors.New("无法读取文件类型解析结果")
+	}
+	defer C.free(unsafe.Pointer(data))
+	var response struct {
+		Types []catalog.ResolvedType `json:"types"`
+		Error string                 `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(C.GoString(data)), &response); err != nil {
+		return nil, err
+	}
+	if response.Error != "" {
+		return nil, errors.New(response.Error)
+	}
+	return response.Types, nil
 }
 
 func (Adapter) CurrentDefault(ctx context.Context, a association.Association) (*association.AppCopy, error) {

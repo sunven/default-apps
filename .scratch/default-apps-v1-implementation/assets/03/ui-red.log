@@ -1,0 +1,200 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/03/frontend
+
+ ❯ src/App.test.tsx (11 tests | 1 failed) 238ms
+   × opens with installed copies, declared associations, and an independent default outside the scan 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.tsx > opens with installed copies, declared associations, and an independent default outside the scan
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "应用"
+
+Here are the accessible roles:
+
+  complementary:
+
+  Name "":
+  [36m<aside[39m
+    [33mclass[39m=[32m"sidebar"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "浏览入口":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"浏览入口"[39m
+    [33mclass[39m=[32m"view-navigation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "文件类型":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+  [36m/>[39m
+
+  Name "URL 协议":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "常用文件类型":
+  [36m<h2 />[39m
+
+  Name "正在加载关联目录":
+  [36m<h1 />[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  [36m<p[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "常用关联列表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"常用关联列表"[39m
+    [33mclass[39m=[32m"association-list"[39m
+    [33mrole[39m=[32m"region"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"sidebar-note"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"workspace"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"catalog-heading"[39m
+        [36m>[39m
+          [36m<h2>[39m
+            [0m常用[0m
+            [0m文件类型[0m
+          [36m</h2>[39m
+          [36m<span>[39m
+            [0m0[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mrole[39m=[32m"status"[39m
+        [36m>[39m
+          [0m正在解析常用关联…[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33maria-label[39m=[32m"常用关联列表"[39m
+          [33mclass[39m=[32m"association-list"[39m
+          [33mrole[39m=[32m"region"[39m
+          [33mtabindex[39m=[32m"0"[39m
+        [36m/>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"sidebar-note"[39m
+        [36m>[39m
+          [0m这台 Mac 的实际默认与系统候选[0m
+        [36m</p>[39m
+      [36m</aside>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"workspace"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"empty-workspace"[39m
+        [36m>[39m
+          [36m<h1>[39m
+            [0m正在加载关联目录[0m
+          [36m</h1>[39m
+          [36m<p>[39m
+            [0m正在通过系统解析常用文件类型与协议。[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.test.tsx:175:16
+    173|  vi.mocked(Query).mockResolvedValue(observation)
+    174|  render(<App />)
+    175|  expect(screen.getByRole('button',{name:'应用'})).toHaveAttribute('aria-…
+       |                ^
+    176|  const apps=await screen.findByRole('region',{name:'已安装应用列表'})
+    177|  expect(await within(apps).findByText('/Applications/Reader.app')).toB…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  23:42:43
+   Duration  584ms (tests 51%, environment 32%, setup 8%, transform 6%, import 3%)
+

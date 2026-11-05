@@ -1,0 +1,8 @@
+{
+  "bundleID": "io.github.sunven.default-apps",
+  "minimumOS": "13.0.0",
+  "machOMinimum13": true,
+  "noSetterSelector": true,
+  "signatureVerified": true,
+  "mcpExcludedFromOrdinaryBuild": true
+}

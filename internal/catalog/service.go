@@ -12,10 +12,15 @@ import (
 )
 
 type Input struct {
-	Kind   string `json:"kind"`
-	Value  string `json:"value"`
-	Label  string `json:"label"`
-	Source string `json:"source"`
+	Kind    string `json:"kind"`
+	Value   string `json:"value"`
+	Label   string `json:"label"`
+	Source  string `json:"source"`
+	AppPath string `json:"appPath,omitempty"`
+	Origin  string `json:"origin,omitempty"`
+	Role    string `json:"role,omitempty"`
+	Rank    string `json:"rank,omitempty"`
+	Problem string `json:"problem,omitempty"`
 }
 
 type Source struct {
@@ -24,6 +29,10 @@ type Source struct {
 	RawInput        string `json:"rawInput"`
 	NormalizedInput string `json:"normalizedInput"`
 	Label           string `json:"label"`
+	AppPath         string `json:"appPath,omitempty"`
+	Origin          string `json:"origin,omitempty"`
+	Role            string `json:"role,omitempty"`
+	Rank            string `json:"rank,omitempty"`
 }
 
 type ResolvedType struct {
@@ -49,6 +58,13 @@ type Entry struct {
 
 type TypeResolver interface {
 	ResolveExtension(context.Context, string) ([]ResolvedType, error)
+}
+
+type IdentifierResolver interface {
+	ResolveIdentifier(context.Context, string) ([]ResolvedType, error)
+}
+type MIMEResolver interface {
+	ResolveMIME(context.Context, string) ([]ResolvedType, error)
 }
 
 type Service struct{ resolver TypeResolver }
@@ -89,7 +105,7 @@ func (s *Service) Resolve(ctx context.Context, inputs []Input) ([]Entry, error) 
 		}
 		if input.Kind == "scheme" {
 			scheme := strings.ToLower(strings.TrimSuffix(strings.TrimSpace(input.Value), ":"))
-			source := Source{Kind: input.Source, InputKind: input.Kind, RawInput: input.Value, NormalizedInput: scheme, Label: input.Label}
+			source := Source{Kind: input.Source, InputKind: input.Kind, RawInput: input.Value, NormalizedInput: scheme, Label: input.Label, AppPath: input.AppPath, Origin: input.Origin, Role: input.Role, Rank: input.Rank}
 			if !schemePattern.MatchString(scheme) {
 				entries = addUnresolved(entries, indices, unresolved(input, source, "请输入有效的 URL 协议名称，而非完整网址"))
 				continue
@@ -105,12 +121,43 @@ func (s *Service) Resolve(ctx context.Context, inputs []Input) ([]Entry, error) 
 			continue
 		}
 		extension := strings.ToLower(strings.TrimPrefix(strings.TrimSpace(input.Value), "."))
-		source := Source{Kind: input.Source, InputKind: input.Kind, RawInput: input.Value, NormalizedInput: extension, Label: input.Label}
-		if input.Kind != "extension" || extension == "" || strings.ContainsAny(extension, "/\\:*?") || strings.HasPrefix(extension, ".") || strings.ContainsFunc(extension, unicode.IsSpace) {
+		source := Source{Kind: input.Source, InputKind: input.Kind, RawInput: input.Value, NormalizedInput: extension, Label: input.Label, AppPath: input.AppPath, Origin: input.Origin, Role: input.Role, Rank: input.Rank}
+		if input.Problem != "" {
+			entries = addUnresolved(entries, indices, unresolved(input, source, input.Problem))
+			continue
+		}
+		if input.Kind == "identifier" {
+			extension = input.Value
+			source.NormalizedInput = extension
+		}
+		if input.Kind == "mime" {
+			extension = strings.TrimSpace(input.Value)
+			source.NormalizedInput = extension
+		}
+		if input.Kind == "extension" && (extension == "" || strings.ContainsAny(extension, "/\\:*?") || strings.HasPrefix(extension, ".") || strings.ContainsFunc(extension, unicode.IsSpace)) {
 			entries = addUnresolved(entries, indices, unresolved(input, source, "请输入单个扩展名；不能使用路径、网址或通配符"))
 			continue
 		}
-		matches, err := s.resolver.ResolveExtension(ctx, extension)
+		var matches []ResolvedType
+		var err error
+		switch input.Kind {
+		case "extension":
+			matches, err = s.resolver.ResolveExtension(ctx, extension)
+		case "identifier":
+			if resolver, ok := s.resolver.(IdentifierResolver); ok {
+				matches, err = resolver.ResolveIdentifier(ctx, extension)
+			} else {
+				err = fmt.Errorf("类型标识符解析不可用")
+			}
+		case "mime":
+			if resolver, ok := s.resolver.(MIMEResolver); ok {
+				matches, err = resolver.ResolveMIME(ctx, extension)
+			} else {
+				err = fmt.Errorf("MIME 类型解析不可用")
+			}
+		default:
+			err = fmt.Errorf("无法解析此声明字段")
+		}
 		if err != nil {
 			entries = addUnresolved(entries, indices, unresolved(input, source, err.Error()))
 			continue
@@ -145,7 +192,10 @@ func (s *Service) Resolve(ctx context.Context, inputs []Input) ([]Entry, error) 
 				entries = append(entries, Entry{ID: id, Association: association.Association{Kind: "file", Key: match.Identifier}, Name: match.Name, Resolved: true, Extensions: []string{}, MIMETypes: []string{}, Sources: []Source{}, DiagnosticIdentifiers: []string{}})
 			}
 			entry := &entries[index]
-			entry.Extensions = union(entry.Extensions, append([]string{extension}, match.Extensions...)...)
+			entry.Extensions = union(entry.Extensions, match.Extensions...)
+			if input.Kind == "extension" {
+				entry.Extensions = union([]string{extension}, entry.Extensions...)
+			}
 			entry.MIMETypes = union(entry.MIMETypes, match.MIMETypes...)
 			entry.Sources = appendSource(entry.Sources, source)
 		}
@@ -195,4 +245,27 @@ func addUnresolved(entries []Entry, indices map[string]int, entry Entry) []Entry
 	}
 	indices[entry.ID] = len(entries)
 	return append(entries, entry)
+}
+
+// Merge preserves the first catalog's ordering, so common identities stay first.
+func Merge(groups ...[]Entry) []Entry {
+	result := []Entry{}
+	indices := map[string]int{}
+	for _, entries := range groups {
+		for _, entry := range entries {
+			if index, exists := indices[entry.ID]; exists {
+				existing := &result[index]
+				existing.Extensions = union(existing.Extensions, entry.Extensions...)
+				existing.MIMETypes = union(existing.MIMETypes, entry.MIMETypes...)
+				existing.DiagnosticIdentifiers = union(existing.DiagnosticIdentifiers, entry.DiagnosticIdentifiers...)
+				for _, source := range entry.Sources {
+					existing.Sources = appendSource(existing.Sources, source)
+				}
+			} else {
+				indices[entry.ID] = len(result)
+				result = append(result, entry)
+			}
+		}
+	}
+	return result
 }

@@ -1,0 +1,45 @@
+?   	github.com/sunven/default-apps	[no test files]
+?   	github.com/sunven/default-apps/build/android/scripts/deps	[no test files]
+?   	github.com/sunven/default-apps/build/ios	[no test files]
+?   	github.com/sunven/default-apps/build/ios/scripts/deps	[no test files]
+=== RUN   TestQueryKeepsCurrentDefaultIndependentFromCandidates
+--- PASS: TestQueryKeepsCurrentDefaultIndependentFromCandidates (0.00s)
+=== RUN   TestRefreshFailureRetainsLastValidObservationsIndependently
+--- PASS: TestRefreshFailureRetainsLastValidObservationsIndependently (0.00s)
+=== RUN   TestCandidatesMergeOnlyTheSameCanonicalBundlePath
+--- PASS: TestCandidatesMergeOnlyTheSameCanonicalBundlePath (0.00s)
+=== RUN   TestInitialQueryErrorsAreNotReportedAsEmptySuccess
+--- PASS: TestInitialQueryErrorsAreNotReportedAsEmptySuccess (0.00s)
+=== RUN   TestLastValidObservationOwnsItsCopyMetadata
+--- PASS: TestLastValidObservationOwnsItsCopyMetadata (0.00s)
+PASS
+ok  	github.com/sunven/default-apps/internal/association	(cached)
+=== RUN   TestAliasesMergeSourcesWhileSharedExtensionsKeepDistinctTypes
+--- PASS: TestAliasesMergeSourcesWhileSharedExtensionsKeepDistinctTypes (0.00s)
+=== RUN   TestUnresolvedInputsRemainDistinctAndPreserveLocalFailures
+--- PASS: TestUnresolvedInputsRemainDistinctAndPreserveLocalFailures (0.00s)
+=== RUN   TestCommonCatalogResolvesEveryApprovedAliasAndKeepsSchemesIndependent
+--- PASS: TestCommonCatalogResolvesEveryApprovedAliasAndKeepsSchemesIndependent (0.00s)
+=== RUN   TestExtensionNormalizationMergesAliasSourcesWithoutGuessingTypeIdentity
+--- PASS: TestExtensionNormalizationMergesAliasSourcesWithoutGuessingTypeIdentity (0.00s)
+=== RUN   TestRepeatedUnresolvedInputMergesProvenanceWithoutHidingAnotherUnknown
+--- PASS: TestRepeatedUnresolvedInputMergesProvenanceWithoutHidingAnotherUnknown (0.00s)
+PASS
+ok  	github.com/sunven/default-apps/internal/catalog	(cached)
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+=== RUN   TestPartialDiscoveryProblemsPreserveUsableAppsAndNeighboringDeclarations
+--- PASS: TestPartialDiscoveryProblemsPreserveUsableAppsAndNeighboringDeclarations (0.01s)
+=== RUN   TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorting
+--- PASS: TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorting (0.01s)
+=== RUN   TestDeclarationsMergeCommonIdentityButDoNotInferSupportFromDefinitionsOrLegacyTags
+--- PASS: TestDeclarationsMergeCommonIdentityButDoNotInferSupportFromDefinitionsOrLegacyTags (0.00s)
+=== RUN   TestBackgroundScanKeepsNestedCopiesAndStopsAtBundlesAndDirectoryLinks
+--- PASS: TestBackgroundScanKeepsNestedCopiesAndStopsAtBundlesAndDirectoryLinks (0.01s)
+PASS
+ok  	github.com/sunven/default-apps/internal/discovery	1.539s
+=== RUN   TestNativeDiscoveryReadsRealPlistsCopiesAliasesAndLocalFailures
+    scan_darwin_test.go:88: actual Foundation plist scan: apps=3, issues=8, duration=15ms, same-name distinct copies=2, bundle-helper and links excluded
+--- PASS: TestNativeDiscoveryReadsRealPlistsCopiesAliasesAndLocalFailures (0.03s)
+PASS
+ok  	github.com/sunven/default-apps/internal/native	1.618s

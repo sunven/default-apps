@@ -22,6 +22,11 @@ export interface Input {
     "value": string;
     "label": string;
     "source": string;
+    "appPath"?: string;
+    "origin"?: string;
+    "role"?: string;
+    "rank"?: string;
+    "problem"?: string;
 }
 
 export interface Source {
@@ -30,4 +35,8 @@ export interface Source {
     "rawInput": string;
     "normalizedInput": string;
     "label": string;
+    "appPath"?: string;
+    "origin"?: string;
+    "role"?: string;
+    "rank"?: string;
 }

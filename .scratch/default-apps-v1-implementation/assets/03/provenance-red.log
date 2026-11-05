@@ -1,0 +1,6 @@
+=== RUN   TestPartialDiscoveryProblemsPreserveUsableAppsAndNeighboringDeclarations
+    service_test.go:65: malformed neighbor shifted declaration provenance: CFBundleDocumentTypes[0]
+--- FAIL: TestPartialDiscoveryProblemsPreserveUsableAppsAndNeighboringDeclarations (0.00s)
+FAIL
+FAIL	github.com/sunven/default-apps/internal/discovery	0.546s
+FAIL
