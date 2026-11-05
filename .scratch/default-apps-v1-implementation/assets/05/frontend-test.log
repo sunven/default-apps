@@ -8,7 +8,7 @@ npm warn Unknown project config "minimum-release-age". This will stop working in
 
 
  Test Files  1 passed (1)
-      Tests  6 passed (6)
-   Start at  01:25:03
-   Duration  799ms (environment 47%, tests 33%, setup 12%, import 4%, transform 3%)
+      Tests  7 passed (7)
+   Start at  01:43:56
+   Duration  806ms (environment 45%, tests 34%, setup 12%, import 4%, transform 4%)
 

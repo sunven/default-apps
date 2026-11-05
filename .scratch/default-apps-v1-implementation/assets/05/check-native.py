@@ -72,7 +72,7 @@ def first_run():
  for path,count in [(FIXTURE/'outside-one/Manual Reader.app',1),(FIXTURE/'Manual Alias.app',1),(FIXTURE/'outside-two/Manual Reader.app',2)]:
   click('添加应用位置…');selections.append(select_file(path));wait('!document.body.innerText.includes("正在选择…")');assert len(config()['applications'])==count
  capture('applications-native.png')
- click('关闭');wait('!document.querySelector("dialog[open]")')
+ js("document.querySelector('[aria-label=\"关闭手动补充\"]').click();return true");wait('!document.querySelector("dialog[open]")')
  wait('!document.body.innerText.includes("正在扫描…")')
  snapshot=service('discovery','GetSnapshot');saved=config();manual=[a for a in snapshot['apps'] if a.get('manual')];assert len(manual)==2
  assert len({a['app']['path'] for a in manual})==2 and len({a['app']['bundleID'] for a in manual})==1

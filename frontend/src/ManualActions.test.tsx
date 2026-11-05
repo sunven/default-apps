@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { AddInput, AddIdentifiedType, GetStatus, IdentifyFile, PickApplication, ResolveInput } from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
-import { ManualActions } from './ManualActions'
+import { ManualActions, ManualApplicationAction } from './ManualActions'
 
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({AddInput:vi.fn(),AddIdentifiedType:vi.fn(),GetStatus:vi.fn(),IdentifyFile:vi.fn(),PickApplication:vi.fn(),ResolveInput:vi.fn()}))
 const jpeg:Entry={id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG',extensions:['jpg'],mimeTypes:[],sources:[],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]}
@@ -59,4 +59,14 @@ test('shows stored application path without claiming a default change and makes 
 test('reports preserved corrupt configuration and disables actions that would overwrite it',async()=>{
  const user=userEvent.setup();vi.mocked(GetStatus).mockResolvedValue({error:'配置损坏，已保留原文件',associations:0,applications:0})
  render(<ManualActions />);expect(await screen.findByRole('alert')).toHaveTextContent('已保留原文件');await user.click(screen.getByRole('button',{name:'手动补充…'}));expect(screen.getByRole('button',{name:'添加应用位置…'})).toBeDisabled();expect(screen.getByRole('button',{name:'保存手动关联'})).toBeDisabled()
+})
+
+test('association other-application entry preserves the concrete selected copy',async()=>{
+ const user=userEvent.setup();const selected=vi.fn()
+ vi.mocked(PickApplication).mockResolvedValue({saved:true,cancelled:false,entry:null,app:{path:'/Outside/Second.app',displayPath:'/Outside/Second.app',name:'Same name',version:'3',bundleID:'same.bundle'}})
+ render(<ManualApplicationAction association={{kind:'file',key:'public.jpeg'}} onSelected={selected}/>)
+ await user.click(screen.getByRole('button',{name:'选择其他应用…'}))
+ expect(await screen.findByText('/Outside/Second.app')).toBeVisible()
+ expect(selected).toHaveBeenCalledWith(expect.objectContaining({path:'/Outside/Second.app',version:'3',bundleID:'same.bundle'}))
+ expect(screen.getByText('尚未提出修改默认应用的请求。')).toBeVisible()
 })
