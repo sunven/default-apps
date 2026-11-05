@@ -13,6 +13,7 @@ import (
 
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
+	"github.com/sunven/default-apps/internal/config"
 )
 
 type Issue struct {
@@ -26,6 +27,8 @@ type Bundle struct {
 	Issues []Issue             `json:"issues"`
 }
 type Application struct {
+	Manual         bool                `json:"manual,omitempty"`
+	Unavailable    bool                `json:"unavailable,omitempty"`
 	App            association.AppCopy `json:"app"`
 	AssociationIDs []string            `json:"associationIDs"`
 	Issues         []Issue             `json:"issues"`
@@ -53,10 +56,16 @@ type Service struct {
 	roots   []string
 	state   Snapshot
 	changed func(Snapshot)
+	store   config.Repository
+	rescan  bool
 }
 
-func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot)) *Service {
-	return &Service{system: system, catalog: catalogService, roots: append([]string{}, roots...), changed: changed, state: Snapshot{Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}, Roots: append([]string{}, roots...)}}
+func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot), stores ...config.Repository) *Service {
+	var store config.Repository
+	if len(stores) > 0 {
+		store = stores[0]
+	}
+	return &Service{store: store, system: system, catalog: catalogService, roots: append([]string{}, roots...), changed: changed, state: Snapshot{Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}, Roots: append([]string{}, roots...)}}
 }
 func (s *Service) GetSnapshot() Snapshot { s.mu.Lock(); defer s.mu.Unlock(); return clone(s.state) }
 
@@ -64,6 +73,7 @@ func (s *Service) GetSnapshot() Snapshot { s.mu.Lock(); defer s.mu.Unlock(); ret
 func (s *Service) StartScan() Snapshot {
 	s.mu.Lock()
 	if s.state.Scanning {
+		s.rescan = true
 		result := clone(s.state)
 		s.mu.Unlock()
 		return result
@@ -121,24 +131,7 @@ func (s *Service) scan() {
 				state.Issues = append(state.Issues, Issue{Path: path, Origin: "bundle", Message: "应用包缺少可确认的规范路径"})
 			} else if !seen[bundle.App.Path] {
 				seen[bundle.App.Path] = true
-				app := Application{App: bundle.App, AssociationIDs: []string{}, Issues: append([]Issue{}, bundle.Issues...)}
-				decls, definitions, problems := declarations(bundle)
-				app.Declarations = decls
-				app.Definitions = definitions
-				app.Issues = append(app.Issues, problems...)
-				inputs := []catalog.Input{}
-				for _, declaration := range decls {
-					if declaration.Handling {
-						inputs = append(inputs, declaration.Inputs...)
-					}
-				}
-				entries, resolveErr := s.catalog.Resolve(ctx, inputs)
-				if resolveErr != nil {
-					app.Issues = append(app.Issues, Issue{Path: bundle.App.Path, Origin: "resolve", Message: resolveErr.Error()})
-				}
-				for _, entry := range entries {
-					app.AssociationIDs = append(app.AssociationIDs, entry.ID)
-				}
+				app, entries := s.describe(ctx, bundle)
 				state.Entries = catalog.Merge(state.Entries, entries)
 				state.Apps = append(state.Apps, app)
 				if len(state.Apps)%10 == 0 {
@@ -152,6 +145,58 @@ func (s *Service) scan() {
 			return nil
 		})
 	}
+	if s.store != nil {
+		doc, loadErr := s.store.Load(ctx)
+		if loadErr != nil {
+			state.Issues = append(state.Issues, Issue{Origin: "configuration", Message: loadErr.Error()})
+		} else {
+			for _, saved := range doc.Associations {
+				resolved, resolveErr := s.catalog.Resolve(ctx, []catalog.Input{saved.Input})
+				if resolveErr != nil {
+					state.Issues = append(state.Issues, Issue{Origin: "manual", Message: resolveErr.Error()})
+					continue
+				}
+				matched := false
+				for _, entry := range resolved {
+					if entry.ID == saved.SelectedID {
+						state.Entries = catalog.Merge(state.Entries, []catalog.Entry{entry})
+						matched = true
+					}
+				}
+				if !matched {
+					state.Entries = catalog.Merge(state.Entries, []catalog.Entry{{ID: "unavailable:" + saved.SelectedID, Association: association.Association{Kind: "file"}, Name: saved.Input.Label, Extensions: []string{}, MIMETypes: []string{}, Sources: []catalog.Source{{Kind: "manual", InputKind: saved.Input.Kind, RawInput: saved.Input.Value}}, UnresolvedReason: "先前选择的类型现在无法解析：" + saved.SelectedID, DiagnosticIdentifiers: []string{saved.SelectedID}}})
+				}
+			}
+			for _, saved := range doc.Applications {
+				if seen[saved.Path] {
+					for i := range state.Apps {
+						if state.Apps[i].App.Path == saved.Path {
+							state.Apps[i].Manual = true
+						}
+					}
+					continue
+				}
+				bundle, readErr := s.system.ReadApplication(ctx, saved.Path)
+				if readErr != nil || bundle.App.Path != saved.Path {
+					message := "原位置已指向另一应用副本，请重新选择"
+					if readErr != nil {
+						message = readErr.Error()
+					}
+					saved.MetadataError = message
+					issue := Issue{Path: saved.Path, Origin: "manual", Message: message}
+					state.Apps = append(state.Apps, Application{App: saved, Manual: true, Unavailable: true, AssociationIDs: []string{}, Declarations: []Declaration{}, Definitions: []TypeDefinition{}, Issues: []Issue{issue}})
+					state.Issues = append(state.Issues, issue)
+				} else {
+					app, entries := s.describe(ctx, bundle)
+					app.Manual = true
+					state.Apps = append(state.Apps, app)
+					state.Entries = catalog.Merge(state.Entries, entries)
+					state.Issues = append(state.Issues, app.Issues...)
+				}
+				seen[saved.Path] = true
+			}
+		}
+	}
 	sort.SliceStable(state.Apps, func(i, j int) bool {
 		a, b := state.Apps[i].App, state.Apps[j].App
 		if a.Name == b.Name {
@@ -163,4 +208,33 @@ func (s *Service) scan() {
 	state.CompletedAt = time.Now().UTC().Format(time.RFC3339Nano)
 	state.DurationMS = time.Since(start).Milliseconds()
 	s.publish(state)
+	s.mu.Lock()
+	rescan := s.rescan
+	s.rescan = false
+	s.mu.Unlock()
+	if rescan {
+		s.StartScan()
+	}
+}
+
+func (s *Service) describe(ctx context.Context, bundle Bundle) (Application, []catalog.Entry) {
+	app := Application{App: bundle.App, AssociationIDs: []string{}, Issues: append([]Issue{}, bundle.Issues...)}
+	decls, definitions, problems := declarations(bundle)
+	app.Declarations = decls
+	app.Definitions = definitions
+	app.Issues = append(app.Issues, problems...)
+	inputs := []catalog.Input{}
+	for _, declaration := range decls {
+		if declaration.Handling {
+			inputs = append(inputs, declaration.Inputs...)
+		}
+	}
+	entries, err := s.catalog.Resolve(ctx, inputs)
+	if err != nil {
+		app.Issues = append(app.Issues, Issue{Path: bundle.App.Path, Origin: "resolve", Message: err.Error()})
+	}
+	for _, entry := range entries {
+		app.AssociationIDs = append(app.AssociationIDs, entry.ID)
+	}
+	return app, entries
 }

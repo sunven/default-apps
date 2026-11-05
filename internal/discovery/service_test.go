@@ -11,6 +11,7 @@ import (
 
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
+	"github.com/sunven/default-apps/internal/config"
 	"github.com/sunven/default-apps/internal/discovery"
 )
 
@@ -199,5 +200,133 @@ func TestBackgroundScanKeepsNestedCopiesAndStopsAtBundlesAndDirectoryLinks(t *te
 	}
 	if snapshot.Apps[0].App.Path == snapshot.Apps[1].App.Path {
 		t.Fatal("different installed copies merged")
+	}
+}
+
+func TestManualItemsRejoinCatalogOnRestartAndUnavailableCopiesKeepOriginalPath(t *testing.T) {
+	root := t.TempDir()
+	path := filepath.Join(root, "Outside.app")
+	if err := os.Mkdir(path, 0755); err != nil {
+		t.Fatal(err)
+	}
+	path, _ = filepath.EvalSymlinks(path)
+	storePath := filepath.Join(t.TempDir(), "config.json")
+	store := config.NewStore(storePath)
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Associations = append(doc.Associations, config.ManualAssociation{Input: catalog.Input{Kind: "extension", Value: ".PDF", Source: "manual"}, SelectedID: "file:com.adobe.pdf"})
+		doc.Applications = append(doc.Applications, association.AppCopy{Path: path, DisplayPath: path, Name: "Saved Reader", BundleID: "test.reader"})
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	adapter := system{}
+	reopened := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, config.NewStore(storePath))
+	reopened.StartScan()
+	snapshot := finished(t, reopened)
+	if len(snapshot.Apps) != 1 || !snapshot.Apps[0].Manual || snapshot.Apps[0].Unavailable {
+		t.Fatalf("manual copy absent: %#v", snapshot.Apps)
+	}
+	var pdf catalog.Entry
+	for _, entry := range snapshot.Entries {
+		if entry.ID == "file:com.adobe.pdf" {
+			pdf = entry
+		}
+	}
+	if len(pdf.Sources) != 2 || pdf.Sources[0].Kind != "common" || pdf.Sources[1].Kind != "manual" {
+		t.Fatalf("sources did not merge: %#v", pdf)
+	}
+	if err := os.Remove(path); err != nil {
+		t.Fatal(err)
+	}
+	missing := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, config.NewStore(storePath))
+	missing.StartScan()
+	snapshot = finished(t, missing)
+	if len(snapshot.Apps) != 1 || !snapshot.Apps[0].Unavailable || snapshot.Apps[0].App.Path != path || len(snapshot.Apps[0].AssociationIDs) != 0 {
+		t.Fatalf("missing copy replaced or hidden: %#v", snapshot.Apps)
+	}
+	saved, err := store.Load(context.Background())
+	if err != nil || len(saved.Applications) != 1 || saved.Applications[0].Path != path {
+		t.Fatalf("missing copy configuration lost: %#v %v", saved, err)
+	}
+}
+
+func TestSavedManualChoiceDoesNotExpandIntoOtherAmbiguousTypes(t *testing.T) {
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "shared", Source: "manual"}, SelectedID: "file:fixture.second"}}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	adapter := ambiguousSystem{}
+	service := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, store)
+	service.StartScan()
+	snapshot := finished(t, service)
+	found := false
+	for _, entry := range snapshot.Entries {
+		if entry.ID == "file:fixture.first" {
+			t.Fatal("unselected ambiguous type was restored")
+		}
+		if entry.ID == "file:fixture.second" {
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("selected ambiguous type was not restored")
+	}
+}
+
+type ambiguousSystem struct{ system }
+
+func (ambiguousSystem) ResolveExtension(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
+	if value == "shared" {
+		return []catalog.ResolvedType{{Identifier: "fixture.first", Declared: true}, {Identifier: "fixture.second", Declared: true}}, nil
+	}
+	return system{}.ResolveExtension(ctx, value)
+}
+
+func TestReappearingManualCopyBecomesAvailableWithoutLosingSavedIdentity(t *testing.T) {
+	parent, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(parent, "Outside.app")
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Applications = []association.AppCopy{{Path: path, DisplayPath: path, Name: "Saved"}}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	service := discovery.NewService(system{}, catalog.NewService(system{}), nil, nil, store)
+	service.StartScan()
+	missing := finished(t, service)
+	if !missing.Apps[0].Unavailable {
+		t.Fatal("missing copy was usable")
+	}
+	if err := os.Mkdir(path, 0755); err != nil {
+		t.Fatal(err)
+	}
+	service.StartScan()
+	restored := finished(t, service)
+	if restored.Apps[0].Unavailable || restored.Apps[0].App.Path != path {
+		t.Fatalf("reappearing copy not restored: %#v", restored.Apps)
+	}
+}
+
+func TestCorruptManualConfigurationReportsIssueWhileCommonCatalogRemainsUsable(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "config.json")
+	if err := os.WriteFile(path, []byte("{broken"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	service := discovery.NewService(system{}, catalog.NewService(system{}), nil, nil, config.NewStore(path))
+	service.StartScan()
+	snapshot := finished(t, service)
+	if len(snapshot.Entries) == 0 || len(snapshot.Issues) != 1 || snapshot.Issues[0].Origin != "configuration" {
+		t.Fatalf("corruption hidden or valid catalog lost: %#v", snapshot)
+	}
+	after, _ := os.ReadFile(path)
+	if string(after) != "{broken" {
+		t.Fatal("discovery overwrote corrupt config")
 	}
 }

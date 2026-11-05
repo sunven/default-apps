@@ -135,3 +135,29 @@ func query(ctx context.Context, a association.Association, candidates bool) (que
 func SetContentMinimum(window unsafe.Pointer, width, height int) {
 	C.default_apps_content_minimum(window, C.double(width), C.double(height))
 }
+
+// IdentifyFile asks URL resource metadata for the content type; it does not open
+// the contents or call any per-file association API.
+func (Adapter) IdentifyFile(ctx context.Context, path string) (catalog.ResolvedType, error) {
+	if err := ctx.Err(); err != nil {
+		return catalog.ResolvedType{}, err
+	}
+	value := C.CString(path)
+	defer C.free(unsafe.Pointer(value))
+	data := C.default_apps_identify_file(value)
+	if data == nil {
+		return catalog.ResolvedType{}, errors.New("无法读取文件类型")
+	}
+	defer C.free(unsafe.Pointer(data))
+	var response struct {
+		Type  catalog.ResolvedType `json:"type"`
+		Error string               `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(C.GoString(data)), &response); err != nil {
+		return response.Type, err
+	}
+	if response.Error != "" {
+		return response.Type, errors.New(response.Error)
+	}
+	return response.Type, nil
+}
