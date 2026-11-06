@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "associations": [
+    {
+      "input": {
+        "kind": "identifier",
+        "value": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "label": "Dedicated Acceptance Document",
+        "source": "manual"
+      },
+      "selectedID": "file:org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+    }
+  ],
+  "applications": [
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+      "name": "Acceptance Undeclared",
+      "version": "3.0",
+      "bundleID": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.undeclared"
+    }
+  ]
+}
