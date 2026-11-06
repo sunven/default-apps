@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/resume-reparse.py", line 22, in <module>
+    native('menu');code=0
+    ^^^^^^^^^^^^^^
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/native-resume-client.py", line 33, in native
+    if process.poll() is not None:return {'exitCode':process.returncode}
+                                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Process' object has no attribute 'returncode'

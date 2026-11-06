@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "layer": "formal Wails React, native discovery/window, controlled default/setter only",
+  "checks": 4,
+  "sourceCommit": "b8494ba2ba5bcc565ec21a4ae30346bb3948211c",
+  "pid": 1474,
+  "exitCode": 0,
+  "systemSetters": 0,
+  "controlledStarts": 1,
+  "fixturesRegistered": false,
+  "limits": "Same-source unresolved-to-resolved and out-of-order bridge failures covered by public React tests; this run verifies full-scan wiring and unchanged unresolved behavior with native resolver."
+}

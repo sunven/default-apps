@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/resume-native.py", line 18, in <module>
+    assert not json.loads((isolated/'config.json').read_text()).get('pending')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,9 @@
+{
+  "path": "/Users/sunven/github/default-apps/bin/default-apps.app",
+  "SHA256": "6e9779eef23db7b14cca494f90b5298fe67297a54d06fb314e0a93b780ec9de8",
+  "sourceCommit": "b8494ba2ba5bcc565ec21a4ae30346bb3948211c",
+  "signatureVerified": true,
+  "nativeChecks": 4,
+  "ordinaryConfigUnchanged": true,
+  "isolatedConfigCopied": false
+}

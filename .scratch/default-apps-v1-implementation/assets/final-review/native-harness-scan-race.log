@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/check-native.py", line 84, in <module>
+    assert not any(v['id']=='scheme:review-final-transient' for v in catalog()['entries'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/check-native.py", line 114, in <module>
+    if process.poll() is None:process.terminate();process.wait(timeout=10)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sunven/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sunven/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/Users/sunven/github/default-apps/bin/Default Apps Review QA.app/Contents/MacOS/default-apps']' timed out after 10 seconds

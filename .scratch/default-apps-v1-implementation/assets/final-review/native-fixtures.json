@@ -1,0 +1,21 @@
+{
+  "root": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3",
+  "applications": [
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+      "name": "Review Transient",
+      "version": "1.0",
+      "bundleID": "io.defaultapps.review.review-final-transient"
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+      "name": "Review Persistent",
+      "version": "1.0",
+      "bundleID": "io.defaultapps.review.review-final-persistent"
+    }
+  ],
+  "registered": false,
+  "systemSetters": 0
+}

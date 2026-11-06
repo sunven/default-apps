@@ -1,0 +1,1613 @@
+[
+  {
+    "check": "controlled original request submitted",
+    "at": "2026-11-06T13:53:59.428587+00:00",
+    "snapshot": {
+      "activeRequestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+      "busy": true,
+      "observations": [
+        {
+          "association": {
+            "key": "ccswitch",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096259Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096257Z",
+            "stale": false
+          },
+          "version": 10
+        },
+        {
+          "association": {
+            "key": "review-final-persistent",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268491Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268489Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293847Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "stale": false
+          },
+          "version": 2
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "completion": {
+            "completedAt": "",
+            "error": null,
+            "known": false
+          },
+          "confirmed": false,
+          "phase": "submitted",
+          "preflight": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": null,
+              "error": null,
+              "known": false,
+              "observedAt": "",
+              "stale": false
+            },
+            "state": "pending"
+          },
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "storageError": null,
+          "submittedAt": "2026-11-06T13:53:59.410588Z",
+          "target": {
+            "bundleID": "io.defaultapps.review.review-final-transient",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "version": "1.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 15,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "control": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Controlled/Before.app",
+        "displayPath": "/Controlled/Before.app",
+        "name": "Before",
+        "version": "1",
+        "bundleID": "controlled.before"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "review-final-manual",
+              "label": "Review manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:review-final-manual"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "name": "Review Persistent",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-persistent"
+          }
+        ],
+        "pending": {
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "association": {
+            "kind": "scheme",
+            "key": "review-final-transient"
+          },
+          "target": {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "version": "1",
+              "bundleID": "controlled.before"
+            },
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-persistent"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        }
+      ],
+      "querySequence": 13,
+      "saving": false,
+      "starts": 1
+    },
+    "view": "app",
+    "dialog": "ok",
+    "viewport": [
+      1001,
+      701,
+      0
+    ],
+    "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7"
+  },
+  {
+    "check": "return after source disappearance keeps exact original identity and query",
+    "at": "2026-11-06T13:53:59.742609+00:00",
+    "snapshot": {
+      "activeRequestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+      "busy": true,
+      "observations": [
+        {
+          "association": {
+            "key": "ccswitch",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096259Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096257Z",
+            "stale": false
+          },
+          "version": 10
+        },
+        {
+          "association": {
+            "key": "review-final-persistent",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268491Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268489Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.730226Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.730225Z",
+            "stale": false
+          },
+          "version": 5
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "completion": {
+            "completedAt": "",
+            "error": null,
+            "known": false
+          },
+          "confirmed": false,
+          "phase": "submitted",
+          "preflight": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": null,
+              "error": null,
+              "known": false,
+              "observedAt": "",
+              "stale": false
+            },
+            "state": "pending"
+          },
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "storageError": null,
+          "submittedAt": "2026-11-06T13:53:59.410588Z",
+          "target": {
+            "bundleID": "io.defaultapps.review.review-final-transient",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "version": "1.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 18,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "control": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Controlled/Before.app",
+        "displayPath": "/Controlled/Before.app",
+        "name": "Before",
+        "version": "1",
+        "bundleID": "controlled.before"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "review-final-manual",
+              "label": "Review manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:review-final-manual"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "name": "Review Persistent",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-persistent"
+          }
+        ],
+        "pending": {
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "association": {
+            "kind": "scheme",
+            "key": "review-final-transient"
+          },
+          "target": {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "version": "1",
+              "bundleID": "controlled.before"
+            },
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-persistent"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        }
+      ],
+      "querySequence": 16,
+      "saving": false,
+      "starts": 1
+    },
+    "view": "app",
+    "dialog": "review-final-transient\n\nreview-final-transient\n\n关闭\n\n此关联已不在当前目录中；仍按原修改请求查询。\n\n关联查询\n\nreview-final-transient\n\n重新查询\n当前默认应用\nBefore\n版本 1\n\n/Controlled/Before.app\n\ncontrolled.before\n\n查看此副本\n\n最后有效查询：2026/11/6 21:53:59\n\n系统候选应用\n2 个应用副本\n\n最后有效查询：2026/11/6 21:53:59\n\n选择其他应用…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。\n\nXcode\n版本 27.2\n\n/Applications/Xcode.app\n\ncom.apple.dt.Xcode\n\n设为默认应用查看此副本\nXcode\n版本 27.2\n\n/Controlled/Other/Xcode.app\n\ncom.apple.dt.Xcode\n\n设为默认应用查看此副本\n关联来源",
+    "viewport": [
+      1001,
+      701,
+      0
+    ]
+  },
+  {
+    "check": "return preserves original app session",
+    "at": "2026-11-06T13:53:59.931810+00:00",
+    "snapshot": {
+      "activeRequestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+      "busy": true,
+      "observations": [
+        {
+          "association": {
+            "key": "ccswitch",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096259Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096257Z",
+            "stale": false
+          },
+          "version": 10
+        },
+        {
+          "association": {
+            "key": "review-final-persistent",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268491Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268489Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.730226Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.730225Z",
+            "stale": false
+          },
+          "version": 5
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "completion": {
+            "completedAt": "",
+            "error": null,
+            "known": false
+          },
+          "confirmed": false,
+          "phase": "submitted",
+          "preflight": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": null,
+              "error": null,
+              "known": false,
+              "observedAt": "",
+              "stale": false
+            },
+            "state": "pending"
+          },
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "storageError": null,
+          "submittedAt": "2026-11-06T13:53:59.410588Z",
+          "target": {
+            "bundleID": "io.defaultapps.review.review-final-transient",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "version": "1.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 18,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "control": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Controlled/Before.app",
+        "displayPath": "/Controlled/Before.app",
+        "name": "Before",
+        "version": "1",
+        "bundleID": "controlled.before"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "review-final-manual",
+              "label": "Review manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:review-final-manual"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "name": "Review Persistent",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-persistent"
+          }
+        ],
+        "pending": {
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "association": {
+            "kind": "scheme",
+            "key": "review-final-transient"
+          },
+          "target": {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "version": "1",
+              "bundleID": "controlled.before"
+            },
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-persistent"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        }
+      ],
+      "querySequence": 16,
+      "saving": false,
+      "starts": 1
+    },
+    "view": "app",
+    "dialog": "ok",
+    "viewport": [
+      1001,
+      701,
+      0
+    ]
+  },
+  {
+    "check": "reparse invokes full discovery, preserves unresolved selection and manual/declaration sources",
+    "at": "2026-11-06T13:54:00.288897+00:00",
+    "snapshot": {
+      "activeRequestID": "",
+      "busy": false,
+      "observations": [
+        {
+          "association": {
+            "key": "ccswitch",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096259Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.096257Z",
+            "stale": false
+          },
+          "version": 10
+        },
+        {
+          "association": {
+            "key": "review-final-persistent",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268491Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.268489Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.947982Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.947981Z",
+            "stale": false
+          },
+          "version": 6
+        },
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979044Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979043Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "public.plain-text",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979225Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979224Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "net.daringfireball.markdown",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979333Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979333Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "com.microsoft.ppt.export.rtf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.9794Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979398Z",
+            "stale": false
+          },
+          "version": 1
+        },
+        {
+          "association": {
+            "key": "public.rtf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979565Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "name": "Xcode",
+              "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.979564Z",
+            "stale": false
+          },
+          "version": 1
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "association": {
+            "key": "review-final-transient",
+            "kind": "scheme"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T13:53:59.947895Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "controlled.before",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "path": "/Controlled/Before.app",
+              "version": "1"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+                "name": "Xcode",
+                "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T13:53:59.947981Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "storageError": null,
+          "submittedAt": "2026-11-06T13:53:59.410588Z",
+          "target": {
+            "bundleID": "io.defaultapps.review.review-final-transient",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "version": "1.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 26,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "control": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "review-final-manual",
+              "label": "Review manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:review-final-manual"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app",
+            "name": "Review Persistent",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-persistent"
+          }
+        ],
+        "pending": {
+          "requestID": "ebdc2ed9-ec7f-45d7-a292-082569fc10e7",
+          "association": {
+            "kind": "scheme",
+            "key": "review-final-transient"
+          },
+          "target": {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Transient.app",
+            "name": "Review Transient",
+            "version": "1.0",
+            "bundleID": "io.defaultapps.review.review-final-transient"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Before",
+              "version": "1",
+              "bundleID": "controlled.before"
+            },
+            "observedAt": "2026-11-06T13:53:59.293846Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T13:53:59.294254Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "ccswitch"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-persistent"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "scheme",
+          "key": "review-final-transient"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "public.plain-text"
+        },
+        {
+          "kind": "file",
+          "key": "net.daringfireball.markdown"
+        },
+        {
+          "kind": "file",
+          "key": "com.microsoft.ppt.export.rtf"
+        },
+        {
+          "kind": "file",
+          "key": "public.rtf"
+        }
+      ],
+      "querySequence": 22,
+      "saving": false,
+      "starts": 1
+    },
+    "view": "file",
+    "dialog": "Review Unresolved\n\n尚未解析\n\n关闭\n关联查询\n\n尚未解析\n\n重新解析\n\n关联尚未解析，不能查询或修改默认应用。\n\n系统返回的类型未声明或为动态类型\n\n系统诊断：dyn.age81e3p0rfw1s3xmr3u027pssmw1g55qs3w0kqvugk5dcqmug2\n\n选择文件识别类型…\n关联来源\n应用声明 · Review Unresolved · reviewfinalunresolved20261106 · /Users/sunven/.codex/default-apps-implementation-20261105/final-review-controlled-3/fixtures/Review Persistent.app · Viewer",
+    "viewport": [
+      1001,
+      701,
+      0
+    ],
+    "catalogVersion": 36,
+    "previousVersion": 24
+  }
+]

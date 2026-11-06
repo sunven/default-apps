@@ -22,4 +22,4 @@ The original [Standards report](standards-original.md) and [Spec report](spec-or
 
 These tests reuse the [previously approved seams](SEAMS.md). The source changes are limited to frontend query acceptance, request detail presentation, and reparse actions/selection. No native setter, request coordinator, recovery, quit, storage, discovery implementation, or unavailable-copy filtering changed.
 
-Formal Wails regression checks and ordinary/development package rebuild, signature, copy and launch checks are delegated to the root integration task after merge. This source-seam handoff does not claim those post-merge product checks are complete. No real OS association write or system consent interaction occurred in this fix task.
+Post-merge integration verification is complete: [final delivery report](DELIVERY.md), four formal Wails checks, rebuilt signed ordinary/development apps, actual launch/normal exit, stable binary hashes and worktree cleanup. No real OS association write or system consent interaction occurred in this fix task.

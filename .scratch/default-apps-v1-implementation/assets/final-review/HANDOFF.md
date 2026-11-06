@@ -21,3 +21,5 @@ Reparse starts full discovery rather than calling common-seed `List()`. Existing
 ## Remaining integration work
 
 Root owns the fresh merge review, ordinary/development `.app` rebuild, product copy/signature/launch verification, and focused formal Wails scenarios. The native behavior coverage and limitations recorded in assets 07/08/11 remain applicable; this task adds no native setter or system-confirmation evidence. No original decision map or ticket status was changed here, and this handoff does not mark the entire implementation complete.
+
+Post-handoff completion: merged, rebuilt, verified and cleaned up by root. See [DELIVERY.md](DELIVERY.md) and `worktree-cleanup.json`; the above remaining-work list records the original handoff checkpoint.

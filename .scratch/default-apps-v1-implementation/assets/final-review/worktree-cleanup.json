@@ -1,0 +1,160 @@
+{
+  "at": "2026-11-06T13:56:34.029548+00:00",
+  "count": 12,
+  "worktrees": [
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/01",
+      "HEAD": "fe75e1959c66596ab471eff3fc5f930cd8feb58a",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/02",
+      "HEAD": "86bf7f6eafc7258c21e0439fb3d121c8e2b653ad",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/03",
+      "HEAD": "496065b97ce3791642c8bcd73db40388a17bceb8",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/04",
+      "HEAD": "124bded91958dbc894a87d22e0a8a2c3a0649dce",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05",
+      "HEAD": "a847e6759cb94c8fce43d11b1342d178521abe2e",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06",
+      "HEAD": "6b1c2709f7abc3d6a78b5181f7368a736c3d90fa",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07",
+      "HEAD": "c850404a83854321cc1ec74386a879c4ed38a248",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/08",
+      "HEAD": "00864bc88befe318ff6190a264bed29e680a7d60",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/09",
+      "HEAD": "0077afc16c48d247f16968724955487eb8a35ba6",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/10",
+      "HEAD": "b4388c46b897cd99c9a037624aa0f9bd48234c5a",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11",
+      "HEAD": "a4a746e71e7ae649727eee9aafadaa4bb4caec91",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! .task/",
+        "!! bin/",
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes",
+      "HEAD": "79e10dca5c008450a731f66955db782d889528c0",
+      "clean": true,
+      "merged": true,
+      "ignoredBuildOutputs": [
+        "!! frontend/dist/",
+        "!! frontend/node_modules/"
+      ],
+      "removed": true
+    }
+  ],
+  "remaining": "worktree /Users/sunven/github/default-apps\nHEAD b8494ba2ba5bcc565ec21a4ae30346bb3948211c\nbranch refs/heads/integration/default-apps-v1\n\n",
+  "stableApp": "/Users/sunven/github/default-apps/bin/default-apps.app",
+  "stableAppSHA256": "6e9779eef23db7b14cca494f90b5298fe67297a54d06fb314e0a93b780ec9de8",
+  "branchesRetained": true,
+  "historicalTranscriptTouched": false
+}

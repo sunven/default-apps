@@ -1,0 +1,50 @@
+{
+  "ordinary": {
+    "GoFiles": [
+      "change_environment.go",
+      "configuration.go",
+      "foreground.go",
+      "lifecycle_smoke_off.go",
+      "main.go",
+      "manual_smoke_off.go",
+      "native_picker.go"
+    ],
+    "CgoFiles": [],
+    "MFiles": [],
+    "IgnoredGoFiles": [
+      "change_environment_smoke.go",
+      "configuration_smoke.go",
+      "lifecycle_smoke.go",
+      "manual_smoke.go"
+    ],
+    "EmbedFiles": [
+      "frontend/dist/assets/index-BmsFa1M4.js",
+      "frontend/dist/assets/index-oyPzwa4o.css",
+      "frontend/dist/index.html"
+    ]
+  },
+  "development": {
+    "GoFiles": [
+      "change_environment.go",
+      "configuration.go",
+      "foreground.go",
+      "lifecycle_smoke_off.go",
+      "main.go",
+      "manual_smoke_off.go",
+      "native_picker.go"
+    ],
+    "CgoFiles": [],
+    "MFiles": [],
+    "IgnoredGoFiles": [
+      "change_environment_smoke.go",
+      "configuration_smoke.go",
+      "lifecycle_smoke.go",
+      "manual_smoke.go"
+    ],
+    "EmbedFiles": [
+      "frontend/dist/assets/index-BmsFa1M4.js",
+      "frontend/dist/assets/index-oyPzwa4o.css",
+      "frontend/dist/index.html"
+    ]
+  }
+}

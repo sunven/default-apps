@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/check-native.py", line 74, in <module>
+    wait('document.querySelectorAll("[data-app-path]").length===2')
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/final-verification/check-native.py", line 31, in wait
+    raise RuntimeError('UI timeout '+code)
+RuntimeError: UI timeout document.querySelectorAll("[data-app-path]").length===2
