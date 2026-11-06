@@ -1,0 +1,25 @@
+.manual-section + .manual-section {border-top:1px solid #e4e6e8;margin-top:24px;padding-top:20px}
+.manual-section h3 {font-size:15px;margin:0 0 12px}
+.manual-input-row {display:flex;align-items:end;gap:12px}
+.manual-input-row label {display:grid;gap:7px;font-size:13px}
+.manual-value {flex:1;min-width:0}
+.manual-input-row input,.manual-input-row select {height:35px;padding:6px 9px;border:1px solid #c9cdd1;border-radius:5px;font:inherit;color:inherit;background:white}
+.manual-help {color:#606873;font-size:12px;line-height:1.6;margin:10px 0}
+.manual-matches {display:grid;gap:0;max-height:235px;overflow:auto;margin:12px 0}
+.manual-match {display:flex;gap:12px;padding:12px 3px;border-bottom:1px solid #e5e7e9;cursor:pointer}
+.manual-match > span {display:grid;gap:5px}
+.manual-match strong {font-size:14px;font-weight:550}
+.manual-match code,.manual-match small,.manual-picked code {font-size:12px;overflow-wrap:anywhere}
+.manual-match input {align-self:center}
+.manual-buttons {display:flex;justify-content:space-between;gap:12px;margin-top:16px}
+.manual-file {font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.manual-file span {color:#606873}
+.manual-error,.manual-unresolved {color:#9c351f;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.manual-unresolved code {display:block}
+.manual-picked {display:grid;gap:7px;font-size:12px;line-height:1.6;padding-top:12px}
+.manual-picked strong {font-weight:550}
+.manual-storage-warning {font-size:12px;color:#9c351f;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Shared dialog presentation; ticket 04 uses the same rules. */
+.detail-dialog{width:700px;max-width:calc(100vw - 80px);max-height:calc(100vh - 64px);padding:0;border:1px solid #d2d5db;border-radius:10px;background:#fff;color:#20242a;box-shadow:0 18px 60px #0003;overflow:hidden}.detail-dialog[open]{display:flex;flex-direction:column}.detail-dialog::backdrop{background:#15192240}.dialog-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;border-bottom:1px solid #e8ebef;flex:none}.dialog-heading>div{min-width:0}.dialog-heading h2{font-size:18px;overflow-wrap:anywhere}.dialog-heading p{font-size:12px;color:#606875;overflow-wrap:anywhere;margin-top:4px}.dialog-heading button{flex:none}.dialog-body{overflow:auto;min-height:0;padding:18px 22px;overscroll-behavior:contain}
+.header-actions {margin:12px 0;display:flex;flex-wrap:wrap;gap:8px}

@@ -1,0 +1,46 @@
+{
+  "ui": {
+    "heading": "Manual Reader\n\n版本 1.0 · com.sunven.defaultapps.manual05.fixture\n\n/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+    "scanning": "正在扫描应用…已发现 94 份"
+  },
+  "manualApps": [
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "metadataError": "The file “Manual Reader.app” couldn’t be opened because there is no such file.",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "version": "1.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [
+        {
+          "message": "The file “Manual Reader.app” couldn’t be opened because there is no such file.",
+          "origin": "manual",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app"
+        }
+      ],
+      "manual": true,
+      "unavailable": true
+    },
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "version": "2.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [],
+      "manual": true
+    }
+  ],
+  "snapshotVersion": 24,
+  "scanning": false
+}

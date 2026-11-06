@@ -152,3 +152,19 @@ void default_apps_content_minimum(void *handle, double width, double height) {
             [window setContentSize:NSMakeSize(MAX(current.width,width), MAX(current.height,height))];
     }
 }
+
+char *default_apps_identify_file(const char *path) {
+    @autoreleasepool {
+        @try {
+            NSURL *url = [NSURL fileURLWithPath:@(path)];
+            NSError *error = nil;
+            UTType *type = nil;
+            if (![url getResourceValue:&type forKey:NSURLContentTypeKey error:&error])
+                return encode(@{@"error": error.localizedDescription ?: @"无法读取文件类型元数据"});
+            if (!type) return encode(@{@"error": @"系统未返回文件类型元数据"});
+            return encode(@{@"type": @{@"identifier":type.identifier, @"name":type.localizedDescription ?: type.identifier,
+                @"extensions":type.tags[UTTagClassFilenameExtension] ?: @[], @"mimeTypes":type.tags[UTTagClassMIMEType] ?: @[],
+                @"declared":@(type.isDeclared), @"dynamic":@(type.isDynamic)}});
+        } @catch (NSException *exception) { return encode(@{@"error":exception.reason ?: @"文件类型识别失败"}); }
+    }
+}

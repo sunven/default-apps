@@ -1,0 +1,52 @@
+{
+  "config": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "extension",
+          "value": "jpg",
+          "label": "jpg",
+          "source": "manual"
+        },
+        "selectedID": "file:public.jpeg"
+      },
+      {
+        "input": {
+          "kind": "scheme",
+          "value": " Manual+05: ",
+          "label": "Manual+05:",
+          "source": "manual"
+        },
+        "selectedID": "scheme:manual+05"
+      },
+      {
+        "input": {
+          "kind": "identifier",
+          "value": "public.plain-text",
+          "label": "public.plain-text",
+          "source": "manual",
+          "origin": "file"
+        },
+        "selectedID": "file:public.plain-text"
+      }
+    ],
+    "applications": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "1.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "2.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      }
+    ]
+  },
+  "text": "text\n\n.text · .txt · public.plain-text\n\n重新查询\n当前默认应用\nTextEdit\n版本 1.21\n\n/System/Applications/TextEdit.app\n\ncom.apple.TextEdit\n\n查看此副本\n\n最后有效查询：2026/11/6 09:44:53\n\n系统候选应用\n10 个应用副本\n\n最后有效查询：2026/11/6 09:44:53\n\nTextEdit\n版本 1.21\n\n/System/Applications/TextEdit.app\n\ncom.apple.TextEdit\n\n查看此副本\nWPS Office\n版本 12.1.26046\n\n/Applications/wpsoffice.app\n\ncom.kingsoft.wpsoffice.mac\n\n查看此副本\nInstruments\n版本 27.0\n\n/Applications/Xcode.app/Contents/Applications/Instruments.app\n\ncom.apple.dt.Instruments\n\n查看此副本\nScript Editor\n版本 2.11\n\n/System/Applications/Utilities/Script Editor.app\n\ncom.apple.ScriptEditor2\n\n查看此副本\nSafari\n版本 27.2\n\n/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app\n\ncom.apple.Safari\n\n查看此副本\nWorkBuddy\n版本 5.9.3\n\n/Applications/WorkBuddy.app\n\ncom.tencent.workbuddy.mac\n\n查看此副本\nXcode\n版本 27.0\n\n/Applications/Xcode.app\n\ncom.apple.dt.Xcode\n\n查看此副本\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\n查看此副本\nGoogle Chrome for Testing\n版本 153.0.8010.12\n\n/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app\n\ncom.google.chrome.for.testing\n\n查看此副本\nNotes\n版本 4.13\n\n/System/Applications/Notes.app\n\ncom.apple.Notes\n\n查看此副本\n选择其他应用…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。\n\n关联来源\n常用项 · 纯文本 · txt\n常用项 · 纯文本 · text\n应用声明 · Plain text document · txt · /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app · Viewer / Alternate\n应用声明 · Plain text document · text · /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app · Viewer / Alternate\n应用声明 · Plain text document · text/plain · /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app · Viewer / Alternate\n应用声明 · WorkBuddy Document · txt · /Applications/WorkBuddy.app · Viewer / Alternate\n应用声明 · Text · txt · /Applications/wpsoffice.app · Editor / Alternate\n应用声明 · NSStringPboardType · public.plain-text · /System/Applications/TextEdit.app · Editor\n应用声明 · Diagnostic Report · text/plain · /System/Applications/Utilities/Console.app · Viewer / Owner\n应用声明 · ASL Database · text/plain · /System/Applications/Utilities/Console.app · Viewer / Default\n应用声明 · plain text · txt · /System/Applications/Utilities/Script Editor.app · Viewer\n应用声明 · plain text · text · /System/Applications/Utilities/Script Editor.app · Viewer\n手动添加 · public.plain-text · public.plain-text\n\nMIME 标签：text/plain"
+}

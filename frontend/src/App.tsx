@@ -1,3 +1,4 @@
+import { ManualActions, ManualApplicationAction } from './ManualActions'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Events } from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
@@ -107,6 +108,7 @@ export default function App() {
   <aside className="sidebar">
    <div className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3" /></svg><span>Default Apps</span></div>
    <nav className="view-navigation" aria-label="浏览入口"><button aria-pressed={kind === 'app'} onClick={() => setKind('app')}>应用</button><button aria-pressed={kind === 'file'} onClick={() => setKind('file')}>文件类型</button><button aria-pressed={kind === 'scheme'} onClick={() => setKind('scheme')}>URL 协议</button></nav>
+   <div className="header-actions"><ManualActions /></div>
    <div className="catalog-heading"><h2>{kind==='app' ? '已安装应用' : kind==='file' ? '文件类型' : 'URL 协议'}</h2><span>{kind==='app' ? snapshot?.apps?.length ?? 0 : visibleEntries.length}</span></div>
    {catalogLoading || snapshot?.scanning ? <p className="scan-status" role="status">{snapshot?.scanning ? `正在扫描应用…已发现 ${snapshot.apps?.length ?? 0} 份` : '正在解析常用关联…'}</p> : null}
    {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button onClick={() => void refreshCatalog()}>重试加载目录</button></div> : null}
@@ -123,7 +125,7 @@ export default function App() {
   </aside>
   <main className="workspace">
    {kind==='app' && selectedApp ? <>
-    <header className="app-heading"><h1>{selectedApp.app.name}</h1><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="copy-path">{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.app.displayPath!==selectedApp.app.path ? <p className="copy-path">实际位置：{selectedApp.app.path}</p> : null}</header>
+    <header className="app-heading"><h1>{selectedApp.app.name}</h1>{selectedApp.unavailable ? <p className="query-error">应用位置不可用：{selectedApp.app.metadataError}。可通过手动补充重新选择。</p> : null}<p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="copy-path">{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.app.displayPath!==selectedApp.app.path ? <p className="copy-path">实际位置：{selectedApp.app.path}</p> : null}</header>
     <div className="declaration-heading"><h2>声明支持</h2><span>{visibleEntries.length} 个关联 · 默认应用由系统独立查询</span></div>
     <div className="declaration-list" role="region" aria-label="声明关联列表" tabIndex={0}>{visibleEntries.map(entry=><button className="declaration-row" key={entry.id} data-association-id={entry.id} aria-pressed={selected?.id===entry.id} onClick={()=>setSelectedID(entry.id)}><span><strong>{entry.name || entry.sources?.[0]?.rawInput}</strong><span>{entry.association.key || entry.sources?.[0]?.rawInput} {entry.extensions?.map(value=>`.${value}`).join(' · ')}</span></span><span className="declared-default">{!entry.resolved ? '未解析' : rowErrors[entry.id] ? '查询连接失败' : observations[entry.id]?.default.error ? '默认查询失败' : observations[entry.id]?.default.known ? observations[entry.id].default.app?.name || '无默认应用' : '尚未查询'}</span></button>)}</div>
    </> : null}
@@ -131,7 +133,7 @@ export default function App() {
    {selected ? <>
     <header className="page-heading"><div>{kind==='app' ? <h2>{selected.name || selected.sources?.[0]?.rawInput}</h2> : <h1>{selected.name || selected.sources?.[0]?.rawInput}</h1>}<p>{selected.extensions?.map(value => `.${value}`).join(' · ')}{selected.extensions?.length ? ' · ' : ''}{selected.association.key || '尚未解析'}</p></div><button onClick={() => void (selected.resolved ? refresh() : refreshCatalog())} disabled={loading || catalogLoading}>{loading ? '正在查询…' : selected.resolved ? '重新查询' : '重新解析'}</button></header>
     <div className="query-content" role="region" aria-label={`${selected.name || '关联'} 查询结果`} tabIndex={0} aria-busy={loading}>
-     {!selected.resolved ? <div className="query-error" role="status"><p>关联尚未解析，不能查询或修改默认应用。</p><p>{selected.unresolvedReason}</p>{selected.diagnosticIdentifiers?.length ? <p>系统诊断：{selected.diagnosticIdentifiers.join('、')}</p> : null}<p>后续可从「选择文件识别类型…」入口选择真实文件；当前版本尚未接入此选择器。</p></div> : <>
+     {!selected.resolved ? <div className="query-error" role="status"><p>关联尚未解析，不能查询或修改默认应用。</p><p>{selected.unresolvedReason}</p>{selected.diagnosticIdentifiers?.length ? <p>系统诊断：{selected.diagnosticIdentifiers.join('、')}</p> : null}<ManualActions label="选择文件识别类型…" showStorageWarning={false}/></div> : <>
       {transportError ? <p role="alert" className="query-error">查询连接失败{visibleResult ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
       <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
        {visibleResult?.default.error ? <div className="query-error" role="status"><p>{visibleResult.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{visibleResult.default.error.message}</p></div> : null}
@@ -144,6 +146,7 @@ export default function App() {
        {visibleResult?.candidates.known && !visibleResult.candidates.apps?.length ? <p>系统未返回候选应用</p> : null}
        {visibleResult?.candidates.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.candidates.observedAt).toLocaleString()}</p> : null}
        <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSelect={setInspectedCopy} /></li>)}</ul>
+       <ManualApplicationAction association={selected.association}/>
       </section>
      </>}
      <Sources entry={selected} />

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05/.scratch/default-apps-v1-implementation/assets/05/check-native.py", line 105, in <module>
+    first_run() if args.phase=='first' else restart()
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05/.scratch/default-apps-v1-implementation/assets/05/check-native.py", line 65, in first_run
+    click('选择文件识别类型…');filepanel=select_file(FIXTURE/'selected.txt');wait('document.querySelector(".manual-file")?.innerText.includes("selected.txt")');assert CONFIG.read_bytes()==before
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05/.scratch/default-apps-v1-implementation/assets/05/check-native.py", line 18, in wait
+    def wait(condition):return js('for(let i=0;i<300;i++){if('+condition+')return true;await new Promise(r=>setTimeout(r,50))};throw Error("UI observation timeout")')
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05/.scratch/default-apps-v1-implementation/assets/05/check-native.py", line 17, in js
+    def js(code):return call('js_eval',js=code)
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/05/.scratch/default-apps-v1-implementation/assets/05/check-native.py", line 12, in call
+    if result.get('isError'):raise RuntimeError(result)
+RuntimeError: {'content': [{'text': 'timed out after 30s waiting for the page to respond; the window may be reloading, busy or showing a native dialog', 'type': 'text'}], 'isError': True}
