@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-06T11:13:09Z",
+  "readOnly": true,
+  "scheme": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app"
+    },
+    "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f"
+  },
+  "type": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app"
+    },
+    "declared": true,
+    "dynamic": false,
+    "identifier": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.document"
+  }
+}

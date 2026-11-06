@@ -31,7 +31,7 @@ var operations = struct {
 }{callbacks: make(map[uint64]func(*change.NativeError))}
 
 func (Dispatcher) Dispatch(a association.Association, target association.AppCopy, submitted func(), complete func(*change.NativeError)) {
-	if a.Kind != "file" {
+	if a.Kind != "file" && a.Kind != "scheme" {
 		go complete(&change.NativeError{Domain: "defaultapps.native", Code: 1, Description: "此关联种类尚未接入原生修改。"})
 		return
 	}
@@ -47,7 +47,11 @@ func (Dispatcher) Dispatch(a association.Association, target association.AppCopy
 		defer C.free(unsafe.Pointer(key))
 		defer C.free(unsafe.Pointer(path))
 		submitted()
-		C.default_apps_set_file_type(C.uint64_t(id), key, path)
+		if a.Kind == "scheme" {
+			C.default_apps_set_url_scheme(C.uint64_t(id), key, path)
+		} else {
+			C.default_apps_set_file_type(C.uint64_t(id), key, path)
+		}
 	})
 }
 

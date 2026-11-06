@@ -68,3 +68,40 @@ void default_apps_set_file_type(uint64_t operation, const char *identifier, cons
         }
     }
 }
+
+void default_apps_set_url_scheme(uint64_t operation, const char *scheme, const char *path) {
+    @autoreleasepool {
+#ifdef DEFAULT_APPS_ADAPTER_TEST
+        BOOL success = strcmp(scheme,"test-success") == 0;
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT,0), ^{
+            @autoreleasepool {
+                NSError *error = success ? nil : [NSError errorWithDomain:@"org.defaultapps.test.native" code:-709 userInfo:@{NSLocalizedDescriptionKey:@"异步原生错误：保留完整字段"}];
+                finish(operation,error);
+                finish(operation,error);
+            }
+        });
+        return;
+#endif
+        if (!NSThread.isMainThread) {
+            finish(operation, adapterError(2, @"原生修改未在主线程调度。"));
+            return;
+        }
+        @try {
+            // The service has already resolved this single canonical scheme.
+            // Own Foundation input copies; the asynchronous block keeps only ID.
+            NSString *key = [[NSString alloc] initWithUTF8String:scheme];
+            NSString *bundlePath = [[NSString alloc] initWithUTF8String:path];
+            NSURL *applicationURL = [NSURL fileURLWithPath:bundlePath];
+            void (^completion)(NSError *) = ^(NSError *error) { finish(operation, error); };
+#ifdef DEFAULT_APPS_NATIVE_ACCEPTANCE
+            NSDictionary *trace = @{@"event":@"native-start",@"operation":@(operation),@"mainThread":@(NSThread.isMainThread),@"kind":@"scheme",@"key":key,@"targetPath":bundlePath};
+            fprintf(stderr,"NATIVE_ACCEPTANCE %s\n",[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:trace options:0 error:nil] encoding:NSUTF8StringEncoding].UTF8String);
+#endif
+            [NSWorkspace.sharedWorkspace setDefaultApplicationAtURL:applicationURL
+                toOpenURLsWithScheme:key completionHandler:completion];
+        } @catch (NSException *exception) {
+            finish(operation, [NSError errorWithDomain:@"defaultapps.native.exception" code:1
+                userInfo:@{NSLocalizedDescriptionKey:exception.reason ?: @"无法发起系统修改。"}]);
+        }
+    }
+}

@@ -1,0 +1,19 @@
+=== RUN   TestSchemeRequestKeepsHTTPAndHTTPSIndependentAndGatesFileChanges
+--- PASS: TestSchemeRequestKeepsHTTPAndHTTPSIndependentAndGatesFileChanges (0.03s)
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/exact
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/same-id-copy
+    testing.go:1619: TempDir RemoveAll cleanup: unlinkat /var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawErr2699801249/001: directory not empty
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/old
+    testing.go:1619: TempDir RemoveAll cleanup: unlinkat /var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawErr1614892441/001: directory not empty
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/native-error-even-at-target
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/readback-failure
+--- FAIL: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError (0.09s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/exact (0.01s)
+    --- FAIL: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/same-id-copy (0.02s)
+    --- FAIL: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/old (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/native-error-even-at-target (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/readback-failure (0.02s)
+FAIL
+FAIL	github.com/sunven/default-apps/internal/change	3.202s
+FAIL

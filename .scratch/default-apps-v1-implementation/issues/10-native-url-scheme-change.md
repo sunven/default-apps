@@ -4,7 +4,7 @@
 
 **Blocked by:** [09: 真实文件类型修改](09-native-file-type-change.md).
 
-**Status:** ready-for-agent
+**Status:** in-progress
 
 - [ ] 复用 09 已验证的原生请求所有权与 Go 生命周期，接通公共协议 setter；每次提交只包含一个规范 scheme 和具体应用副本，继续执行预检查、去重、先保存再提交、回读与退出恢复。（WRITE-1、WRITE-2、STORE-2）
 - [ ] 应用视角与协议视角共享同一关联的默认和请求状态；http 与 https 分别查询和修改，修改一个不生成另一个的隐式请求，日常协议仅做只读核对。（QUERY-1、WRITE-1）
@@ -15,3 +15,9 @@
 - [ ] 实验保持日常浏览器、邮件等协议默认只读，核对前后基线，只清理此次专用夹具并处理残留；系统是否接受未声明应用及是否提示按观察记录，不承诺所有协议都能强制改写。
 
 依据：[实施入口](../spec.md)、[修改语义最终决议](../../default-apps-v1/issues/05-change-semantics-prototype.md#answer)、[架构方案](../../default-apps-v1/assets/architecture-proposal.md)、[验收清单与原生记录要求](../../default-apps-v1/assets/acceptance-criteria.md)。
+
+## Comments
+
+- 2026-11-06: Fresh implementer claimed at integration `ae714e2` (09 code `0077afc`); independent 09 merger confirmed PASS. Applying agreed public service, native external-boundary and production React/Wails seams. Reuse 06–09 lifecycle evidence; add focused scheme/cross-kind checks and fresh dedicated real scheme A→B→A with human-only system consent.
+
+- TDD: production-capability test failed with `[file]`, then green after enabling both kinds. Scheme dispatcher test failed with native-unavailable before queue, then green with actual C→Go callback/error copying. Added independent service regression cases for http/https identity, bidirectional shared gate (existing file→scheme plus new scheme→file), exact-path/error/readback combinations; these already-passed lifecycle rules required no coordinator change. First new readback test stopped before asynchronous disk clear, causing temporary-directory cleanup races; fixed harness to await the public settled gate. Existing accepted TDD seams remain unchanged.

@@ -1,0 +1,28 @@
+/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app: replacing existing signature
+/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app: replacing existing signature
+{
+  "createdAt": "2026-11-06T11:11:42.770414+00:00",
+  "token": "3a3a1716722f4165ab1af27186902b3f",
+  "root": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f",
+  "type": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.document",
+  "scheme": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+  "extension": "dafa3a3a1716722f4165ab1af27186902b3f",
+  "targets": {
+    "a": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+      "name": "Scheme Acceptance A",
+      "version": "1.0",
+      "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+      "declared": true
+    },
+    "b": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+      "name": "Scheme Acceptance B",
+      "version": "2.0",
+      "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+      "declared": true
+    }
+  }
+}
