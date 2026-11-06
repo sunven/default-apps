@@ -1,0 +1,5650 @@
+{
+  "activeRequestID": "",
+  "busy": false,
+  "observations": [
+    {
+      "association": {
+        "key": "ccswitch",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.ccswitch.desktop",
+            "displayPath": "/Applications/CC Switch.app",
+            "name": "CC Switch",
+            "path": "/Applications/CC Switch.app",
+            "version": "4.0.24"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.308218Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.ccswitch.desktop",
+          "displayPath": "/Applications/CC Switch.app",
+          "name": "CC Switch",
+          "path": "/Applications/CC Switch.app",
+          "version": "4.0.24"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.308217Z",
+        "stale": false
+      },
+      "version": 11
+    },
+    {
+      "association": {
+        "key": "http",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          },
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          },
+          {
+            "bundleID": "com.google.chrome.for.testing",
+            "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "name": "Google Chrome for Testing",
+            "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "version": "153.0.8010.12"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:16:54.391151Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:16:54.391148Z",
+        "stale": false
+      },
+      "version": 2
+    },
+    {
+      "association": {
+        "key": "https",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          },
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          },
+          {
+            "bundleID": "com.google.chrome.for.testing",
+            "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "name": "Google Chrome for Testing",
+            "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "version": "153.0.8010.12"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.354879Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.354879Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "mailto",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mail",
+            "displayPath": "/System/Applications/Mail.app",
+            "name": "Mail",
+            "path": "/System/Applications/Mail.app",
+            "version": "16.0"
+          },
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.354983Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mail",
+          "displayPath": "/System/Applications/Mail.app",
+          "name": "Mail",
+          "path": "/System/Applications/Mail.app",
+          "version": "16.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.354975Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "webcal",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.iCal",
+            "displayPath": "/System/Applications/Calendar.app",
+            "name": "Calendar",
+            "path": "/System/Applications/Calendar.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.356348Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.iCal",
+          "displayPath": "/System/Applications/Calendar.app",
+          "name": "Calendar",
+          "path": "/System/Applications/Calendar.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.356347Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "clash",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "io.github.clash-verge-rev.clash-verge-rev",
+            "displayPath": "/Applications/Clash Verge.app",
+            "name": "Clash Verge",
+            "path": "/Applications/Clash Verge.app",
+            "version": "2.5.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.356552Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "io.github.clash-verge-rev.clash-verge-rev",
+          "displayPath": "/Applications/Clash Verge.app",
+          "name": "Clash Verge",
+          "path": "/Applications/Clash Verge.app",
+          "version": "2.5.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.356551Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "clash-verge",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "io.github.clash-verge-rev.clash-verge-rev",
+            "displayPath": "/Applications/Clash Verge.app",
+            "name": "Clash Verge",
+            "path": "/Applications/Clash Verge.app",
+            "version": "2.5.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.361165Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "io.github.clash-verge-rev.clash-verge-rev",
+          "displayPath": "/Applications/Clash Verge.app",
+          "name": "Clash Verge",
+          "path": "/Applications/Clash Verge.app",
+          "version": "2.5.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.361163Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "dbx",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.dbx.app",
+            "displayPath": "/Applications/DBX.app",
+            "name": "DBX",
+            "path": "/Applications/DBX.app",
+            "version": "0.6.51"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.361435Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.dbx.app",
+          "displayPath": "/Applications/DBX.app",
+          "name": "DBX",
+          "path": "/Applications/DBX.app",
+          "version": "0.6.51"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.361434Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "google-chrome",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.361942Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.google.Chrome",
+          "displayPath": "/Applications/Google Chrome.app",
+          "name": "Google Chrome",
+          "path": "/Applications/Google Chrome.app",
+          "version": "156.0.8078.81"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.36194Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "file",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": {
+          "message": "此协议不能用于链接关联查询"
+        },
+        "known": false,
+        "observedAt": "",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": {
+          "message": "此协议不能用于链接关联查询"
+        },
+        "known": false,
+        "observedAt": "",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "orbstack",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "dev.kdrag0n.MacVirt",
+            "displayPath": "/Applications/OrbStack.app",
+            "name": "OrbStack",
+            "path": "/Applications/OrbStack.app",
+            "version": "2.2.5"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365138Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "dev.kdrag0n.MacVirt",
+          "displayPath": "/Applications/OrbStack.app",
+          "name": "OrbStack",
+          "path": "/Applications/OrbStack.app",
+          "version": "2.2.5"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365137Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "orca",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.stablyai.orca",
+            "displayPath": "/Applications/Orca.app",
+            "name": "Orca",
+            "path": "/Applications/Orca.app",
+            "version": "1.4.246"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365209Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.stablyai.orca",
+          "displayPath": "/Applications/Orca.app",
+          "name": "Orca",
+          "path": "/Applications/Orca.app",
+          "version": "1.4.246"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365208Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "pixpin",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.depthpicture.PixPin",
+            "displayPath": "/Applications/PixPin.app",
+            "name": "PixPin",
+            "path": "/Applications/PixPin.app",
+            "version": "3.6.6.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365257Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.depthpicture.PixPin",
+          "displayPath": "/Applications/PixPin.app",
+          "name": "PixPin",
+          "path": "/Applications/PixPin.app",
+          "version": "3.6.6.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365257Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-safari-https",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.36555Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Safari",
+          "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "name": "Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "version": "27.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.365549Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "tabby",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "org.tabby",
+            "displayPath": "/Applications/Tabby.app",
+            "name": "Tabby",
+            "path": "/Applications/Tabby.app",
+            "version": "1.0.236"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369595Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "org.tabby",
+          "displayPath": "/Applications/Tabby.app",
+          "name": "Tabby",
+          "path": "/Applications/Tabby.app",
+          "version": "1.0.236"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369594Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wemeet",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369667Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369666Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wemeet3",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369703Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369702Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wwauth3rdca2b0d866939bfde",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.369841Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.36984Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          },
+          {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "name": "Scheme Acceptance B",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "version": "2.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:16:54.467292Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "name": "Scheme Acceptance A",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:16:54.467291Z",
+        "stale": false
+      },
+      "version": 11
+    },
+    {
+      "association": {
+        "key": "wwauth3rd3a82ac41e00d815d",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.378905Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.378903Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wwauth3rd4806d2ddf553eb8b",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.379368Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.379367Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wwauth3rd3a24940e95296ca3",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.379555Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.379554Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wwauth3rdd5968e076e21ca07",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.meeting",
+            "displayPath": "/Applications/TencentMeeting.app",
+            "name": "TencentMeeting",
+            "path": "/Applications/TencentMeeting.app",
+            "version": "3.41.10"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.380333Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.meeting",
+          "displayPath": "/Applications/TencentMeeting.app",
+          "name": "TencentMeeting",
+          "path": "/Applications/TencentMeeting.app",
+          "version": "3.41.10"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.380331Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "uuremote",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.netease.uuremote",
+            "displayPath": "/Applications/UURemote.app",
+            "name": "UU远程",
+            "path": "/Applications/UURemote.app",
+            "version": "4.44.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388194Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.netease.uuremote",
+          "displayPath": "/Applications/UURemote.app",
+          "name": "UU远程",
+          "path": "/Applications/UURemote.app",
+          "version": "4.44.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388192Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "xweixin",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.xinWeChat",
+            "displayPath": "/Applications/WeChat.app",
+            "name": "WeChat",
+            "path": "/Applications/WeChat.app",
+            "version": "4.1.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388678Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.xinWeChat",
+          "displayPath": "/Applications/WeChat.app",
+          "name": "WeChat",
+          "path": "/Applications/WeChat.app",
+          "version": "4.1.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388643Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "weixin",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.xinWeChat",
+            "displayPath": "/Applications/WeChat.app",
+            "name": "WeChat",
+            "path": "/Applications/WeChat.app",
+            "version": "4.1.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388935Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.xinWeChat",
+          "displayPath": "/Applications/WeChat.app",
+          "name": "WeChat",
+          "path": "/Applications/WeChat.app",
+          "version": "4.1.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.388934Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wechat",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.xinWeChat",
+            "displayPath": "/Applications/WeChat.app",
+            "name": "WeChat",
+            "path": "/Applications/WeChat.app",
+            "version": "4.1.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.389487Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.xinWeChat",
+          "displayPath": "/Applications/WeChat.app",
+          "name": "WeChat",
+          "path": "/Applications/WeChat.app",
+          "version": "4.1.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.389486Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "workbuddy",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.workbuddy.mac",
+            "displayPath": "/Applications/WorkBuddy.app",
+            "name": "WorkBuddy",
+            "path": "/Applications/WorkBuddy.app",
+            "version": "5.9.3"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.564502Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.workbuddy.mac",
+          "displayPath": "/Applications/WorkBuddy.app",
+          "name": "WorkBuddy",
+          "path": "/Applications/WorkBuddy.app",
+          "version": "5.9.3"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.5645Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "xcode",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.565179Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.565177Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "xcdoc",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.566564Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.566562Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "xcdevice",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.56685Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.566848Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "apple-reference-documentation",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.572868Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.572867Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-xcode-documentation",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.572997Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.572996Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "interface-builder",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.57386Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.573858Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "doc",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.573936Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.dt.Xcode",
+          "displayPath": "/Applications/Xcode.app",
+          "name": "Xcode",
+          "path": "/Applications/Xcode.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.573935Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksoqing",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.579899Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.579889Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wechatide",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.github.Electron",
+            "displayPath": "/Applications/wechatwebdevtools.app",
+            "name": "Wechat Devtools",
+            "path": "/Applications/wechatwebdevtools.app",
+            "version": "36.6.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.579908Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.github.Electron",
+          "displayPath": "/Applications/wechatwebdevtools.app",
+          "name": "Wechat Devtools",
+          "path": "/Applications/wechatwebdevtools.app",
+          "version": "36.6.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.579898Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksodoccenter",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.581633Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.581631Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksoapp",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.581844Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.581843Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksowpscloudsvr",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.584105Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.584104Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksowps",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.584367Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.584365Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksowpp",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.585617Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.585615Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksoet",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.587626Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.587623Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ksopdf",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.589172Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.kingsoft.wpsoffice.mac",
+          "displayPath": "/Applications/wpsoffice.app",
+          "name": "WPS Office",
+          "path": "/Applications/wpsoffice.app",
+          "version": "12.1.26046"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.589171Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wxwork",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.589259Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.589258Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wxworksaas",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.590096Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.590095Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wework",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.591368Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.591367Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "qqmailapijs",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.592848Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.592846Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wxworkwedrive",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.593277Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.593276Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "wedrive",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.tencent.WeWorkMac",
+            "displayPath": "/Applications/企业微信.app",
+            "name": "WeCom",
+            "path": "/Applications/企业微信.app",
+            "version": "5.0.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.593825Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.tencent.WeWorkMac",
+          "displayPath": "/Applications/企业微信.app",
+          "name": "WeCom",
+          "path": "/Applications/企业微信.app",
+          "version": "5.0.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.593824Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "claude-cli",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.anthropic.claude-code-url-handler",
+            "displayPath": "/Users/sunven/Applications/Claude Code URL Handler.app",
+            "name": "Claude Code URL Handler",
+            "path": "/Users/sunven/Applications/Claude Code URL Handler.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596118Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.anthropic.claude-code-url-handler",
+          "displayPath": "/Users/sunven/Applications/Claude Code URL Handler.app",
+          "name": "Claude Code URL Handler",
+          "path": "/Users/sunven/Applications/Claude Code URL Handler.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596117Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-apps",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AppStore",
+            "displayPath": "/System/Applications/App Store.app",
+            "name": "App Store",
+            "path": "/System/Applications/App Store.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.5965Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AppStore",
+          "displayPath": "/System/Applications/App Store.app",
+          "name": "App Store",
+          "path": "/System/Applications/App Store.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596499Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-appss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AppStore",
+            "displayPath": "/System/Applications/App Store.app",
+            "name": "App Store",
+            "path": "/System/Applications/App Store.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596561Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AppStore",
+          "displayPath": "/System/Applications/App Store.app",
+          "name": "App Store",
+          "path": "/System/Applications/App Store.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.59656Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "macappstore",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AppStore",
+            "displayPath": "/System/Applications/App Store.app",
+            "name": "App Store",
+            "path": "/System/Applications/App Store.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596874Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AppStore",
+          "displayPath": "/System/Applications/App Store.app",
+          "name": "App Store",
+          "path": "/System/Applications/App Store.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.596873Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "macappstores",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AppStore",
+            "displayPath": "/System/Applications/App Store.app",
+            "name": "App Store",
+            "path": "/System/Applications/App Store.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.59847Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AppStore",
+          "displayPath": "/System/Applications/App Store.app",
+          "name": "App Store",
+          "path": "/System/Applications/App Store.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.598469Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-books",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.iBooksX",
+            "displayPath": "/System/Applications/Books.app",
+            "name": "Books",
+            "path": "/System/Applications/Books.app",
+            "version": "9.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.601439Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.iBooksX",
+          "displayPath": "/System/Applications/Books.app",
+          "name": "Books",
+          "path": "/System/Applications/Books.app",
+          "version": "9.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.601438Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-bookss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.iBooksX",
+            "displayPath": "/System/Applications/Books.app",
+            "name": "Books",
+            "path": "/System/Applications/Books.app",
+            "version": "9.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.601491Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.iBooksX",
+          "displayPath": "/System/Applications/Books.app",
+          "name": "Books",
+          "path": "/System/Applications/Books.app",
+          "version": "9.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.60149Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ibooks",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.iBooksX",
+            "displayPath": "/System/Applications/Books.app",
+            "name": "Books",
+            "path": "/System/Applications/Books.app",
+            "version": "9.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.601537Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.iBooksX",
+          "displayPath": "/System/Applications/Books.app",
+          "name": "Books",
+          "path": "/System/Applications/Books.app",
+          "version": "9.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.601537Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ical",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.iCal",
+            "displayPath": "/System/Applications/Calendar.app",
+            "name": "Calendar",
+            "path": "/System/Applications/Calendar.app",
+            "version": "27.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.604268Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.iCal",
+          "displayPath": "/System/Applications/Calendar.app",
+          "name": "Calendar",
+          "path": "/System/Applications/Calendar.app",
+          "version": "27.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.604267Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "addressbook",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AddressBook",
+            "displayPath": "/System/Applications/Contacts.app",
+            "name": "Contacts",
+            "path": "/System/Applications/Contacts.app",
+            "version": "14.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.605562Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AddressBook",
+          "displayPath": "/System/Applications/Contacts.app",
+          "name": "Contacts",
+          "path": "/System/Applications/Contacts.app",
+          "version": "14.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.60556Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "contacts-sensitive",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.AddressBook",
+            "displayPath": "/System/Applications/Contacts.app",
+            "name": "Contacts",
+            "path": "/System/Applications/Contacts.app",
+            "version": "14.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.606693Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.AddressBook",
+          "displayPath": "/System/Applications/Contacts.app",
+          "name": "Contacts",
+          "path": "/System/Applications/Contacts.app",
+          "version": "14.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.606691Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-dictionary",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Dictionary",
+            "displayPath": "/System/Applications/Dictionary.app",
+            "name": "Dictionary",
+            "path": "/System/Applications/Dictionary.app",
+            "version": "2.3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.607257Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Dictionary",
+          "displayPath": "/System/Applications/Dictionary.app",
+          "name": "Dictionary",
+          "path": "/System/Applications/Dictionary.app",
+          "version": "2.3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.607256Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "dict",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Dictionary",
+            "displayPath": "/System/Applications/Dictionary.app",
+            "name": "Dictionary",
+            "path": "/System/Applications/Dictionary.app",
+            "version": "2.3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.608672Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Dictionary",
+          "displayPath": "/System/Applications/Dictionary.app",
+          "name": "Dictionary",
+          "path": "/System/Applications/Dictionary.app",
+          "version": "2.3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.608671Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "facetime",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.FaceTime",
+            "displayPath": "/System/Applications/FaceTime.app",
+            "name": "FaceTime",
+            "path": "/System/Applications/FaceTime.app",
+            "version": "36"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.610105Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.FaceTime",
+          "displayPath": "/System/Applications/FaceTime.app",
+          "name": "FaceTime",
+          "path": "/System/Applications/FaceTime.app",
+          "version": "36"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.610104Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "facetime-group",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.FaceTime",
+            "displayPath": "/System/Applications/FaceTime.app",
+            "name": "FaceTime",
+            "path": "/System/Applications/FaceTime.app",
+            "version": "36"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.610164Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.FaceTime",
+          "displayPath": "/System/Applications/FaceTime.app",
+          "name": "FaceTime",
+          "path": "/System/Applications/FaceTime.app",
+          "version": "36"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.610163Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "facetime-open-link",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.FaceTime",
+            "displayPath": "/System/Applications/FaceTime.app",
+            "name": "FaceTime",
+            "path": "/System/Applications/FaceTime.app",
+            "version": "36"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.612046Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.FaceTime",
+          "displayPath": "/System/Applications/FaceTime.app",
+          "name": "FaceTime",
+          "path": "/System/Applications/FaceTime.app",
+          "version": "36"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.612044Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "system-call-controls",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.FaceTime",
+            "displayPath": "/System/Applications/FaceTime.app",
+            "name": "FaceTime",
+            "path": "/System/Applications/FaceTime.app",
+            "version": "36"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.612163Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.FaceTime",
+          "displayPath": "/System/Applications/FaceTime.app",
+          "name": "FaceTime",
+          "path": "/System/Applications/FaceTime.app",
+          "version": "36"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.612162Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "grenada",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.findmy",
+            "displayPath": "/System/Applications/FindMy.app",
+            "name": "Find My",
+            "path": "/System/Applications/FindMy.app",
+            "version": "5.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.614104Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.findmy",
+          "displayPath": "/System/Applications/FindMy.app",
+          "name": "Find My",
+          "path": "/System/Applications/FindMy.app",
+          "version": "5.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.614103Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "findmyfriends",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.findmy",
+            "displayPath": "/System/Applications/FindMy.app",
+            "name": "Find My",
+            "path": "/System/Applications/FindMy.app",
+            "version": "5.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.614199Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.findmy",
+          "displayPath": "/System/Applications/FindMy.app",
+          "name": "Find My",
+          "path": "/System/Applications/FindMy.app",
+          "version": "5.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.614198Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "fmf1",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.findmy",
+            "displayPath": "/System/Applications/FindMy.app",
+            "name": "Find My",
+            "path": "/System/Applications/FindMy.app",
+            "version": "5.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.616481Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.findmy",
+          "displayPath": "/System/Applications/FindMy.app",
+          "name": "Find My",
+          "path": "/System/Applications/FindMy.app",
+          "version": "5.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.61648Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "findmy",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.findmy",
+            "displayPath": "/System/Applications/FindMy.app",
+            "name": "Find My",
+            "path": "/System/Applications/FindMy.app",
+            "version": "5.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.616549Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.findmy",
+          "displayPath": "/System/Applications/FindMy.app",
+          "name": "Find My",
+          "path": "/System/Applications/FindMy.app",
+          "version": "5.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.616548Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "fmip1",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.findmy",
+            "displayPath": "/System/Applications/FindMy.app",
+            "name": "Find My",
+            "path": "/System/Applications/FindMy.app",
+            "version": "5.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.618995Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.findmy",
+          "displayPath": "/System/Applications/FindMy.app",
+          "name": "Find My",
+          "path": "/System/Applications/FindMy.app",
+          "version": "5.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.618993Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "fontbook",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.FontBook",
+            "displayPath": "/System/Applications/Font Book.app",
+            "name": "Font Book",
+            "path": "/System/Applications/Font Book.app",
+            "version": "11.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.619202Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.FontBook",
+          "displayPath": "/System/Applications/Font Book.app",
+          "name": "Font Book",
+          "path": "/System/Applications/Font Book.app",
+          "version": "11.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.619199Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "freeform",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.freeform",
+            "displayPath": "/System/Applications/Freeform.app",
+            "name": "Freeform",
+            "path": "/System/Applications/Freeform.app",
+            "version": "5.1"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.621673Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.freeform",
+          "displayPath": "/System/Applications/Freeform.app",
+          "name": "Freeform",
+          "path": "/System/Applications/Freeform.app",
+          "version": "5.1"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.621671Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "com.apple.apps.freeform-edit-in",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.freeform",
+            "displayPath": "/System/Applications/Freeform.app",
+            "name": "Freeform",
+            "path": "/System/Applications/Freeform.app",
+            "version": "5.1"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.621808Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.freeform",
+          "displayPath": "/System/Applications/Freeform.app",
+          "name": "Freeform",
+          "path": "/System/Applications/Freeform.app",
+          "version": "5.1"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.621806Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "games",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.games",
+            "displayPath": "/System/Applications/Games.app",
+            "name": "Games",
+            "path": "/System/Applications/Games.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.623633Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.games",
+          "displayPath": "/System/Applications/Games.app",
+          "name": "Games",
+          "path": "/System/Applications/Games.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.623631Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "game-overlay-ui",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.games",
+            "displayPath": "/System/Applications/Games.app",
+            "name": "Games",
+            "path": "/System/Applications/Games.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.623813Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.games",
+          "displayPath": "/System/Applications/Games.app",
+          "name": "Games",
+          "path": "/System/Applications/Games.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.623812Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "imageplayground.open",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.627335Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.627333Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "imageplayground.open-image",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.62787Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.627868Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "moments",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.journal",
+            "displayPath": "/System/Applications/Journal.app",
+            "name": "Journal",
+            "path": "/System/Applications/Journal.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.628584Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.journal",
+          "displayPath": "/System/Applications/Journal.app",
+          "name": "Journal",
+          "path": "/System/Applications/Journal.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.628582Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "message",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mail",
+            "displayPath": "/System/Applications/Mail.app",
+            "name": "Mail",
+            "path": "/System/Applications/Mail.app",
+            "version": "16.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.629075Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mail",
+          "displayPath": "/System/Applications/Mail.app",
+          "name": "Mail",
+          "path": "/System/Applications/Mail.app",
+          "version": "16.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.629075Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "mail-pref-pane",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mail",
+            "displayPath": "/System/Applications/Mail.app",
+            "name": "Mail",
+            "path": "/System/Applications/Mail.app",
+            "version": "16.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.633782Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mail",
+          "displayPath": "/System/Applications/Mail.app",
+          "name": "Mail",
+          "path": "/System/Applications/Mail.app",
+          "version": "16.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.63378Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-maps-ac-auth",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.634224Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.634223Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "maps",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.634351Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.634349Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "mapitem",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.6359Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.635899Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "map",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.664961Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.66496Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-maps-mapitemhandles",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.665001Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.665Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-maps-bulletin",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.66504Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.665039Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-maps-punchinhint",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Maps",
+            "displayPath": "/System/Applications/Maps.app",
+            "name": "Maps",
+            "path": "/System/Applications/Maps.app",
+            "version": "3.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.665081Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Maps",
+          "displayPath": "/System/Applications/Maps.app",
+          "name": "Maps",
+          "path": "/System/Applications/Maps.app",
+          "version": "3.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.66508Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "sms",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868048Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868046Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "sms-private",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868357Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868356Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-messages",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868509Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.868508Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-messagess",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.870464Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.870462Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "imessage",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.873203Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.873201Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ichat",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.873289Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.873288Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "im",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.875117Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.875116Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "messages",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.MobileSMS",
+            "displayPath": "/System/Applications/Messages.app",
+            "name": "Messages",
+            "path": "/System/Applications/Messages.app",
+            "version": "26.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.875351Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.MobileSMS",
+          "displayPath": "/System/Applications/Messages.app",
+          "name": "Messages",
+          "path": "/System/Applications/Messages.app",
+          "version": "26.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.875349Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "daap",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          },
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.877924Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.877921Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.878274Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.878272Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itmss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.879202Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.879201Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itunes",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.881054Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.881052Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "music",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.881138Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.881137Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "musics",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.882597Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.882596Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itls",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          },
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.884381Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.88438Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itlss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          },
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.884609Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.884608Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itals",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.885753Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.885752Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "italss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.886557Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.886556Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itsradio",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.887532Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.887531Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itunesradio",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Music",
+            "displayPath": "/System/Applications/Music.app",
+            "name": "Music",
+            "path": "/System/Applications/Music.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.88754Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Music",
+          "displayPath": "/System/Applications/Music.app",
+          "name": "Music",
+          "path": "/System/Applications/Music.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.88754Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "applenews",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.890028Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.890027Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "applenewss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.890068Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.890067Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "notes",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Notes",
+            "displayPath": "/System/Applications/Notes.app",
+            "name": "Notes",
+            "path": "/System/Applications/Notes.app",
+            "version": "4.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.892015Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.892014Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "applenotes",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Notes",
+            "displayPath": "/System/Applications/Notes.app",
+            "name": "Notes",
+            "path": "/System/Applications/Notes.app",
+            "version": "4.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.892087Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Notes",
+          "displayPath": "/System/Applications/Notes.app",
+          "name": "Notes",
+          "path": "/System/Applications/Notes.app",
+          "version": "4.13"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.892085Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "otpauth",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Passwords",
+            "displayPath": "/System/Applications/Passwords.app",
+            "name": "Passwords",
+            "path": "/System/Applications/Passwords.app",
+            "version": "3.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.893608Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Passwords",
+          "displayPath": "/System/Applications/Passwords.app",
+          "name": "Passwords",
+          "path": "/System/Applications/Passwords.app",
+          "version": "3.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.893607Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "apple-otpauth",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Passwords",
+            "displayPath": "/System/Applications/Passwords.app",
+            "name": "Passwords",
+            "path": "/System/Applications/Passwords.app",
+            "version": "3.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.893819Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Passwords",
+          "displayPath": "/System/Applications/Passwords.app",
+          "name": "Passwords",
+          "path": "/System/Applications/Passwords.app",
+          "version": "3.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.893813Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "otpauth-migration",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Passwords",
+            "displayPath": "/System/Applications/Passwords.app",
+            "name": "Passwords",
+            "path": "/System/Applications/Passwords.app",
+            "version": "3.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.895302Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Passwords",
+          "displayPath": "/System/Applications/Passwords.app",
+          "name": "Passwords",
+          "path": "/System/Applications/Passwords.app",
+          "version": "3.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.895301Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "apple-otpauth-migration",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Passwords",
+            "displayPath": "/System/Applications/Passwords.app",
+            "name": "Passwords",
+            "path": "/System/Applications/Passwords.app",
+            "version": "3.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.89543Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Passwords",
+          "displayPath": "/System/Applications/Passwords.app",
+          "name": "Passwords",
+          "path": "/System/Applications/Passwords.app",
+          "version": "3.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.895429Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "phoneapp",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.897748Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.897747Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "phone-tel",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.898092Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.898091Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "phone-facetime-audio",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.898472Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.898471Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "phone-telephony",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.899572Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.899571Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "vmshow",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.900442Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.900441Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "mobilephone-recents",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.901254Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.901253Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "tel",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.901958Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.901957Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "telephony",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.902015Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.902014Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "facetime-audio",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.mobilephone",
+            "displayPath": "/System/Applications/Phone.app",
+            "name": "Phone",
+            "path": "/System/Applications/Phone.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.90406Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.mobilephone",
+          "displayPath": "/System/Applications/Phone.app",
+          "name": "Phone",
+          "path": "/System/Applications/Phone.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.904058Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "photos",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Photos",
+            "displayPath": "/System/Applications/Photos.app",
+            "name": "Photos",
+            "path": "/System/Applications/Photos.app",
+            "version": "12.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.904124Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Photos",
+          "displayPath": "/System/Applications/Photos.app",
+          "name": "Photos",
+          "path": "/System/Applications/Photos.app",
+          "version": "12.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.904123Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "photos-navigation",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Photos",
+            "displayPath": "/System/Applications/Photos.app",
+            "name": "Photos",
+            "path": "/System/Applications/Photos.app",
+            "version": "12.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.906003Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Photos",
+          "displayPath": "/System/Applications/Photos.app",
+          "name": "Photos",
+          "path": "/System/Applications/Photos.app",
+          "version": "12.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.906002Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "cloudphoto",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Photos",
+            "displayPath": "/System/Applications/Photos.app",
+            "name": "Photos",
+            "path": "/System/Applications/Photos.app",
+            "version": "12.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.906055Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Photos",
+          "displayPath": "/System/Applications/Photos.app",
+          "name": "Photos",
+          "path": "/System/Applications/Photos.app",
+          "version": "12.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.906055Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "podcast",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.podcasts",
+            "displayPath": "/System/Applications/Podcasts.app",
+            "name": "Podcasts",
+            "path": "/System/Applications/Podcasts.app",
+            "version": "1.1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.907615Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.podcasts",
+          "displayPath": "/System/Applications/Podcasts.app",
+          "name": "Podcasts",
+          "path": "/System/Applications/Podcasts.app",
+          "version": "1.1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.907614Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "pcast",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.podcasts",
+            "displayPath": "/System/Applications/Podcasts.app",
+            "name": "Podcasts",
+            "path": "/System/Applications/Podcasts.app",
+            "version": "1.1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.90774Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.podcasts",
+          "displayPath": "/System/Applications/Podcasts.app",
+          "name": "Podcasts",
+          "path": "/System/Applications/Podcasts.app",
+          "version": "1.1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.907739Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itms-podcasts",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.podcasts",
+            "displayPath": "/System/Applications/Podcasts.app",
+            "name": "Podcasts",
+            "path": "/System/Applications/Podcasts.app",
+            "version": "1.1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.909399Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.podcasts",
+          "displayPath": "/System/Applications/Podcasts.app",
+          "name": "Podcasts",
+          "path": "/System/Applications/Podcasts.app",
+          "version": "1.1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.909391Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "podcasts",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.podcasts",
+            "displayPath": "/System/Applications/Podcasts.app",
+            "name": "Podcasts",
+            "path": "/System/Applications/Podcasts.app",
+            "version": "1.1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.910255Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.podcasts",
+          "displayPath": "/System/Applications/Podcasts.app",
+          "name": "Podcasts",
+          "path": "/System/Applications/Podcasts.app",
+          "version": "1.1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.910254Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-apple-reminderkit",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.reminders",
+            "displayPath": "/System/Applications/Reminders.app",
+            "name": "Reminders",
+            "path": "/System/Applications/Reminders.app",
+            "version": "7.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.910373Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.reminders",
+          "displayPath": "/System/Applications/Reminders.app",
+          "name": "Reminders",
+          "path": "/System/Applications/Reminders.app",
+          "version": "7.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.910372Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "shortcuts-production",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.shortcuts",
+            "displayPath": "/System/Applications/Shortcuts.app",
+            "name": "Shortcuts",
+            "path": "/System/Applications/Shortcuts.app",
+            "version": "10.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.912123Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.shortcuts",
+          "displayPath": "/System/Applications/Shortcuts.app",
+          "name": "Shortcuts",
+          "path": "/System/Applications/Shortcuts.app",
+          "version": "10.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.912122Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "shortcuts",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.shortcuts",
+            "displayPath": "/System/Applications/Shortcuts.app",
+            "name": "Shortcuts",
+            "path": "/System/Applications/Shortcuts.app",
+            "version": "10.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.913115Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.shortcuts",
+          "displayPath": "/System/Applications/Shortcuts.app",
+          "name": "Shortcuts",
+          "path": "/System/Applications/Shortcuts.app",
+          "version": "10.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.913114Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "workflow",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.shortcuts",
+            "displayPath": "/System/Applications/Shortcuts.app",
+            "name": "Shortcuts",
+            "path": "/System/Applications/Shortcuts.app",
+            "version": "10.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.913962Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.shortcuts",
+          "displayPath": "/System/Applications/Shortcuts.app",
+          "name": "Shortcuts",
+          "path": "/System/Applications/Shortcuts.app",
+          "version": "10.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.913961Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "siri",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.914088Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.914087Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "spotlight",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.915864Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.915864Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "stocks",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.stocks",
+            "displayPath": "/System/Applications/Stocks.app",
+            "name": "Stocks",
+            "path": "/System/Applications/Stocks.app",
+            "version": "8.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.916042Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.stocks",
+          "displayPath": "/System/Applications/Stocks.app",
+          "name": "Stocks",
+          "path": "/System/Applications/Stocks.app",
+          "version": "8.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.916041Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "settings-navigation",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.systempreferences",
+            "displayPath": "/System/Applications/System Settings.app",
+            "name": "System Settings",
+            "path": "/System/Applications/System Settings.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.9179Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.systempreferences",
+          "displayPath": "/System/Applications/System Settings.app",
+          "name": "System Settings",
+          "path": "/System/Applications/System Settings.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.917899Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-apple.systempreferences",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.systempreferences",
+            "displayPath": "/System/Applications/System Settings.app",
+            "name": "System Settings",
+            "path": "/System/Applications/System Settings.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.9181Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.systempreferences",
+          "displayPath": "/System/Applications/System Settings.app",
+          "name": "System Settings",
+          "path": "/System/Applications/System Settings.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.9181Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "com.apple.tv",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.918547Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.918547Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "videos",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.920085Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.920084Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "com.apple.watchlist",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.920156Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.920154Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itvls",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.922165Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.922164Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "itvlss",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TV",
+            "displayPath": "/System/Applications/TV.app",
+            "name": "TV",
+            "path": "/System/Applications/TV.app",
+            "version": "1.7.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.92221Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TV",
+          "displayPath": "/System/Applications/TV.app",
+          "name": "TV",
+          "path": "/System/Applications/TV.app",
+          "version": "1.7.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.92221Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "help",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.helpviewer",
+            "displayPath": "/System/Applications/Tips.app",
+            "name": "Tips",
+            "path": "/System/Applications/Tips.app",
+            "version": "27.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.923453Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.helpviewer",
+          "displayPath": "/System/Applications/Tips.app",
+          "name": "Tips",
+          "path": "/System/Applications/Tips.app",
+          "version": "27.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.923453Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-apple-tips",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.helpviewer",
+            "displayPath": "/System/Applications/Tips.app",
+            "name": "Tips",
+            "path": "/System/Applications/Tips.app",
+            "version": "27.2"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.923575Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.helpviewer",
+          "displayPath": "/System/Applications/Tips.app",
+          "name": "Tips",
+          "path": "/System/Applications/Tips.app",
+          "version": "27.2"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.923575Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "apupdate",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.airport.airportutility",
+            "displayPath": "/System/Applications/Utilities/AirPort Utility.app",
+            "name": "AirPort Utility",
+            "path": "/System/Applications/Utilities/AirPort Utility.app",
+            "version": "6.3.9"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.925617Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.airport.airportutility",
+          "displayPath": "/System/Applications/Utilities/AirPort Utility.app",
+          "name": "AirPort Utility",
+          "path": "/System/Applications/Utilities/AirPort Utility.app",
+          "version": "6.3.9"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.925616Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "apconfig",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.airport.airportutility",
+            "displayPath": "/System/Applications/Utilities/AirPort Utility.app",
+            "name": "AirPort Utility",
+            "path": "/System/Applications/Utilities/AirPort Utility.app",
+            "version": "6.3.9"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.926459Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.airport.airportutility",
+          "displayPath": "/System/Applications/Utilities/AirPort Utility.app",
+          "name": "AirPort Utility",
+          "path": "/System/Applications/Utilities/AirPort Utility.app",
+          "version": "6.3.9"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.926458Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "vnc",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.ScreenSharing",
+            "displayPath": "/System/Applications/Utilities/Screen Sharing.app",
+            "name": "Screen Sharing",
+            "path": "/System/Applications/Utilities/Screen Sharing.app",
+            "version": "7.1"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.927822Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.ScreenSharing",
+          "displayPath": "/System/Applications/Utilities/Screen Sharing.app",
+          "name": "Screen Sharing",
+          "path": "/System/Applications/Utilities/Screen Sharing.app",
+          "version": "7.1"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.927821Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "telnet",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Terminal",
+            "displayPath": "/System/Applications/Utilities/Terminal.app",
+            "name": "Terminal",
+            "path": "/System/Applications/Utilities/Terminal.app",
+            "version": "2.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.928127Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Terminal",
+          "displayPath": "/System/Applications/Utilities/Terminal.app",
+          "name": "Terminal",
+          "path": "/System/Applications/Utilities/Terminal.app",
+          "version": "2.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.928126Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "ssh",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Terminal",
+            "displayPath": "/System/Applications/Utilities/Terminal.app",
+            "name": "Terminal",
+            "path": "/System/Applications/Utilities/Terminal.app",
+            "version": "2.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.930209Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Terminal",
+          "displayPath": "/System/Applications/Utilities/Terminal.app",
+          "name": "Terminal",
+          "path": "/System/Applications/Utilities/Terminal.app",
+          "version": "2.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.930208Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "x-man-page",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Terminal",
+            "displayPath": "/System/Applications/Utilities/Terminal.app",
+            "name": "Terminal",
+            "path": "/System/Applications/Utilities/Terminal.app",
+            "version": "2.15"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.930306Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Terminal",
+          "displayPath": "/System/Applications/Utilities/Terminal.app",
+          "name": "Terminal",
+          "path": "/System/Applications/Utilities/Terminal.app",
+          "version": "2.15"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.930305Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "weather",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.weather",
+            "displayPath": "/System/Applications/Weather.app",
+            "name": "Weather",
+            "path": "/System/Applications/Weather.app",
+            "version": "6.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.932169Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.weather",
+          "displayPath": "/System/Applications/Weather.app",
+          "name": "Weather",
+          "path": "/System/Applications/Weather.app",
+          "version": "6.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:25.932167Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    {
+      "association": {
+        "key": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.document",
+        "kind": "file"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "name": "Scheme Acceptance B",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "version": "2.0"
+          },
+          {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.323364Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "name": "Scheme Acceptance B",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "version": "2.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.323363Z",
+        "stale": false
+      },
+      "version": 1
+    }
+  ],
+  "quit": {
+    "exiting": false,
+    "prompt": false,
+    "promptID": 0
+  },
+  "recovery": null,
+  "requests": [
+    {
+      "acceptedAt": "2026-11-06T11:13:42.793548Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:13:42.806888Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "name": "Scheme Acceptance B",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "version": "2.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:42.791784Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:13:42.808928Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "244a1bdb-4d18-4993-bb25-5da7d0f98088",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:13:42.804969Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "name": "Scheme Acceptance A",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "version": "1.0"
+      }
+    },
+    {
+      "acceptedAt": "2026-11-06T11:15:35.6072Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:15:35.620156Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "name": "Scheme Acceptance A",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:35.605699Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "name": "Scheme Acceptance B",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "version": "2.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:15:35.622554Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "58ac4489-92c5-47a2-841b-9fcddd9e8420",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:15:35.618321Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "name": "Scheme Acceptance B",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "version": "2.0"
+      }
+    },
+    {
+      "acceptedAt": "2026-11-06T11:15:58.462051Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:15:58.473564Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "name": "Scheme Acceptance B",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "version": "2.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.460243Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:15:58.475937Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "28d480e4-70af-4bf9-8719-ff96de4e3bf4",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:15:58.471694Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "name": "Scheme Acceptance A",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "version": "1.0"
+      }
+    }
+  ],
+  "storageError": null,
+  "version": 190,
+  "writableKinds": [
+    "file",
+    "scheme"
+  ]
+}

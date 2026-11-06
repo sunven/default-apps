@@ -138,3 +138,39 @@ func TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError(t *testi
 		})
 	}
 }
+
+func TestRecoveredSchemeRemainsUnknownAndRequiresAcknowledgementForFileChange(t *testing.T) {
+	svc, sys, store := fixture(t)
+	in := input("previous-scheme")
+	in.Association = association.Association{Kind: "scheme", Key: "test-recovered"}
+	if got := svc.Submit(ctx, in); got.Outcome != "accepted" {
+		t.Fatal(got)
+	}
+	waitStart(t, sys)
+	sys.mu.Lock()
+	sys.current = &target
+	sys.mu.Unlock()
+	reopened := restart(t, store, sys)
+	first := reopened.GetSnapshot()
+	if first.Recovery == nil || first.Recovery.Record.Association != in.Association || !first.Busy {
+		t.Fatal(first)
+	}
+	observed, err := reopened.Requery(ctx, in.Association)
+	if err != nil || !observed.Recovery.Ready || observed.Requests[0].Completion.Known || observed.Requests[0].Confirmed || observed.Observations[0].Default.App.Path != target.Path {
+		t.Fatal(observed, err)
+	}
+	next := input("explicit-file")
+	next.Expected.Path = target.Path
+	next.TargetPath = old.Path
+	if got := reopened.Submit(ctx, next); got.Outcome != "recovery_ack_required" {
+		t.Fatal(got)
+	}
+	if got := reopened.Submit(ctx, in); got.Outcome != "existing" || got.Request.Phase != "recovered" {
+		t.Fatal(got)
+	}
+	sys.mu.Lock()
+	defer sys.mu.Unlock()
+	if sys.starts != 1 {
+		t.Fatalf("recovery replayed a setter: %d", sys.starts)
+	}
+}

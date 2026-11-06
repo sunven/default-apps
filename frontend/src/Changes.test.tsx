@@ -23,13 +23,13 @@ test('explicit action sends one canonical copy and shows accepted separately fro
  await act(async()=>notify({data:{...empty,version:3,busy:true,activeRequestID:'one',requests:[{...request,phase:'submitted',submittedAt:'now'}]}}))
  expect(screen.getByText('已提交系统 · 等待系统返回')).toBeVisible()
 })
-test('native error and failed readback preserve actual facts and retry never submits again',async()=>{
- const failed={...request,phase:'completed',completion:{known:true,error:{domain:'NativeDomain',code:91,description:'Denied by system'},completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Query failed'}}}}
+test.each([association,{kind:'scheme',key:'test-error-scheme'}])('native error and failed readback preserve actual facts and retry never submits again: $kind',async currentAssociation=>{
+ const failed={...request,association:currentAssociation,phase:'completed',completion:{known:true,error:{domain:'NativeDomain',code:91,description:'Denied by system'},completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Query failed'}}}}
  vi.mocked(GetSnapshot).mockResolvedValue({...empty,version:5,busy:true,activeRequestID:'one',requests:[failed]})
  vi.mocked(Requery).mockResolvedValue({...empty,version:6,requests:[{...failed,phase:'resolved',readback:{state:'valid',observation:{...observation,app:copy}}}]})
  render(<Screen/>);expect(await screen.findByText('系统已返回 · 回读失败，等待重查')).toBeVisible()
  expect(screen.getByText('NativeDomain · 91 · Denied by system')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'重新回读'}));expect(Requery).toHaveBeenCalledWith(association);expect(Submit).not.toHaveBeenCalled()
+ await userEvent.click(screen.getByRole('button',{name:'重新回读'}));expect(Requery).toHaveBeenCalledWith(currentAssociation);expect(Submit).not.toHaveBeenCalled()
  expect(await screen.findByText('系统返回错误 · 已读取实际默认')).toBeVisible();expect(screen.queryByText('已确认本次修改')).not.toBeInTheDocument()
 })
 test('known success and separate clear error survive an older event',async()=>{

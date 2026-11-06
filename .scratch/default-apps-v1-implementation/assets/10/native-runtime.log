@@ -1,0 +1,6 @@
+NATIVE_ACCEPTANCE {"operation":1,"mainThread":true,"kind":"scheme","event":"native-start","key":"defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f","targetPath":"\/Users\/sunven\/.codex\/default-apps-implementation-20261105\/native10-3a3a1716722f4165ab1af27186902b3f\/fixtures\/Scheme Acceptance A.app"}
+NATIVE_ACCEPTANCE {"operation":1,"mainThread":false,"event":"native-completion","error":null}
+NATIVE_ACCEPTANCE {"operation":2,"mainThread":true,"kind":"scheme","event":"native-start","key":"defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f","targetPath":"\/Users\/sunven\/.codex\/default-apps-implementation-20261105\/native10-3a3a1716722f4165ab1af27186902b3f\/fixtures\/Scheme Acceptance B.app"}
+NATIVE_ACCEPTANCE {"operation":2,"mainThread":false,"event":"native-completion","error":null}
+NATIVE_ACCEPTANCE {"operation":3,"mainThread":true,"kind":"scheme","event":"native-start","key":"defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f","targetPath":"\/Users\/sunven\/.codex\/default-apps-implementation-20261105\/native10-3a3a1716722f4165ab1af27186902b3f\/fixtures\/Scheme Acceptance A.app"}
+NATIVE_ACCEPTANCE {"operation":3,"mainThread":false,"event":"native-completion","error":null}

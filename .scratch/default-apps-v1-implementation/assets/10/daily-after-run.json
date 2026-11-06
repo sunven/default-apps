@@ -1,0 +1,427 @@
+{
+  "extensions": [
+    {
+      "input": "pdf",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.adobe.pdf"
+        }
+      ]
+    },
+    {
+      "input": "txt",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.plain-text"
+        }
+      ]
+    },
+    {
+      "input": "text",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.plain-text"
+        }
+      ]
+    },
+    {
+      "input": "rtf",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.rtf"
+        },
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.microsoft.ppt.export.rtf"
+        }
+      ]
+    },
+    {
+      "input": "md",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "net.daringfireball.markdown"
+        }
+      ]
+    },
+    {
+      "input": "markdown",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "net.daringfireball.markdown"
+        }
+      ]
+    },
+    {
+      "input": "jpg",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.jpeg"
+        },
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.microsoft.ppt.export.ext.jpg"
+        }
+      ]
+    },
+    {
+      "input": "jpeg",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.jpeg"
+        }
+      ]
+    },
+    {
+      "input": "png",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.png"
+        },
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.microsoft.ppt.export.ext.png"
+        }
+      ]
+    },
+    {
+      "input": "gif",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.compuserve.gif"
+        }
+      ]
+    },
+    {
+      "input": "tif",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.tiff"
+        },
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.canon.tif-raw-image"
+        }
+      ]
+    },
+    {
+      "input": "tiff",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.tiff"
+        },
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "com.microsoft.ppt.export.ext.tiff"
+        }
+      ]
+    },
+    {
+      "input": "heic",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.heic"
+        }
+      ]
+    },
+    {
+      "input": "svg",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.svg-image"
+        }
+      ]
+    },
+    {
+      "input": "html",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.html"
+        }
+      ]
+    },
+    {
+      "input": "htm",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.html"
+        }
+      ]
+    },
+    {
+      "input": "json",
+      "matches": [
+        {
+          "declared": true,
+          "dynamic": false,
+          "identifier": "public.json"
+        }
+      ]
+    }
+  ],
+  "queries": {
+    "file:com.adobe.pdf": {
+      "candidates": [
+        "/Applications/Google Chrome.app",
+        "/Applications/wpsoffice.app",
+        "/System/Applications/Preview.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/System/Applications/Books.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/Applications/WorkBuddy.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+      ],
+      "current": "/Applications/Google Chrome.app"
+    },
+    "file:com.canon.tif-raw-image": {
+      "candidates": [
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    },
+    "file:com.compuserve.gif": {
+      "candidates": [
+        "/System/Applications/Preview.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Applications/Preview.app"
+    },
+    "file:com.microsoft.ppt.export.ext.jpg": {
+      "candidates": [
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app",
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+      ],
+      "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    },
+    "file:com.microsoft.ppt.export.ext.png": {
+      "candidates": [
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app",
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+      ],
+      "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    },
+    "file:com.microsoft.ppt.export.ext.tiff": {
+      "candidates": [
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+    },
+    "file:com.microsoft.ppt.export.rtf": {
+      "candidates": [
+        "/System/Applications/TextEdit.app",
+        "/Applications/wpsoffice.app",
+        "/Applications/Xcode.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Applications/Notes.app"
+      ],
+      "current": "/System/Applications/TextEdit.app"
+    },
+    "file:net.daringfireball.markdown": {
+      "candidates": [
+        "/Applications/WorkBuddy.app",
+        "/Applications/Xcode.app",
+        "/Applications/Orca.app",
+        "/System/Applications/TextEdit.app",
+        "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Applications/Notes.app"
+      ],
+      "current": "/Applications/WorkBuddy.app"
+    },
+    "file:public.heic": {
+      "candidates": [
+        "/System/Applications/Preview.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Applications/Preview.app"
+    },
+    "file:public.html": {
+      "candidates": [
+        "/Applications/Google Chrome.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/System/Applications/TextEdit.app",
+        "/Applications/wpsoffice.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Applications/Notes.app",
+        "/Applications/WorkBuddy.app",
+        "/Applications/Xcode.app"
+      ],
+      "current": "/Applications/Google Chrome.app"
+    },
+    "file:public.jpeg": {
+      "candidates": [
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Applications/Preview.app"
+    },
+    "file:public.json": {
+      "candidates": [
+        "/Applications/Xcode.app",
+        "/System/Applications/TextEdit.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Applications/Notes.app"
+      ],
+      "current": "/Applications/Xcode.app"
+    },
+    "file:public.plain-text": {
+      "candidates": [
+        "/System/Applications/TextEdit.app",
+        "/Applications/wpsoffice.app",
+        "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+        "/System/Applications/Utilities/Script Editor.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app",
+        "/Applications/Xcode.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Applications/Notes.app"
+      ],
+      "current": "/System/Applications/TextEdit.app"
+    },
+    "file:public.png": {
+      "candidates": [
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Applications/Preview.app"
+    },
+    "file:public.rtf": {
+      "candidates": [
+        "/System/Applications/TextEdit.app",
+        "/Applications/wpsoffice.app",
+        "/Applications/Xcode.app",
+        "/System/Applications/Notes.app",
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+      ],
+      "current": "/System/Applications/TextEdit.app"
+    },
+    "file:public.svg-image": {
+      "candidates": [
+        "/Applications/Google Chrome.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/System/Applications/TextEdit.app",
+        "/Applications/Xcode.app",
+        "/Applications/wpsoffice.app",
+        "/System/Applications/Notes.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/Applications/Google Chrome.app"
+    },
+    "file:public.tiff": {
+      "candidates": [
+        "/System/Applications/Preview.app",
+        "/System/Applications/QuickTime Player.app",
+        "/System/Applications/Utilities/ColorSync Utility.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Applications/WorkBuddy.app"
+      ],
+      "current": "/System/Applications/Preview.app"
+    },
+    "scheme:http": {
+      "candidates": [
+        "/Applications/Google Chrome.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+      ],
+      "current": "/Applications/Google Chrome.app"
+    },
+    "scheme:https": {
+      "candidates": [
+        "/Applications/Google Chrome.app",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+      ],
+      "current": "/Applications/Google Chrome.app"
+    },
+    "scheme:mailto": {
+      "candidates": [
+        "/System/Applications/Mail.app",
+        "/Applications/企业微信.app"
+      ],
+      "current": "/System/Applications/Mail.app"
+    },
+    "scheme:webcal": {
+      "candidates": [
+        "/System/Applications/Calendar.app"
+      ],
+      "current": "/System/Applications/Calendar.app"
+    }
+  },
+  "readOnly": true
+}
