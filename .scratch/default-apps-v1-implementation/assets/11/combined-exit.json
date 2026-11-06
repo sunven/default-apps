@@ -1,0 +1,764 @@
+{
+  "pid": 28882,
+  "recordID": "5e8fdfce-b886-4727-ad46-4fcb5dfa71d9",
+  "disk": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "scheme",
+          "value": "final11-manual-marker",
+          "label": "Final acceptance marker",
+          "source": "manual"
+        },
+        "selectedID": "scheme:final11-manual-marker"
+      }
+    ],
+    "applications": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+        "name": "Final Acceptance 000",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.0"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 001/Long path with distinct application copies and complete metadata 1 Long path with distinct application copies and complete metadata 1 Long path with distinct application copies and complete metadata 1 /Final Acceptance 001.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 001/Long path with distinct application copies and complete metadata 1 Long path with distinct application copies and complete metadata 1 Long path with distinct application copies and complete metadata 1 /Final Acceptance 001.app",
+        "name": "Final Acceptance 001",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.1"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 002/Long path with distinct application copies and complete metadata 2 Long path with distinct application copies and complete metadata 2 Long path with distinct application copies and complete metadata 2 /Final Acceptance 002.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 002/Long path with distinct application copies and complete metadata 2 Long path with distinct application copies and complete metadata 2 Long path with distinct application copies and complete metadata 2 /Final Acceptance 002.app",
+        "name": "Final Acceptance 002",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.2"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 003/Long path with distinct application copies and complete metadata 3 Long path with distinct application copies and complete metadata 3 Long path with distinct application copies and complete metadata 3 /Final Acceptance 003.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 003/Long path with distinct application copies and complete metadata 3 Long path with distinct application copies and complete metadata 3 Long path with distinct application copies and complete metadata 3 /Final Acceptance 003.app",
+        "name": "Final Acceptance 003",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.3"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 004/Long path with distinct application copies and complete metadata 4 Long path with distinct application copies and complete metadata 4 Long path with distinct application copies and complete metadata 4 /Final Acceptance 004.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 004/Long path with distinct application copies and complete metadata 4 Long path with distinct application copies and complete metadata 4 Long path with distinct application copies and complete metadata 4 /Final Acceptance 004.app",
+        "name": "Final Acceptance 004",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.4"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 005/Long path with distinct application copies and complete metadata 5 Long path with distinct application copies and complete metadata 5 Long path with distinct application copies and complete metadata 5 /Final Acceptance 005.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 005/Long path with distinct application copies and complete metadata 5 Long path with distinct application copies and complete metadata 5 Long path with distinct application copies and complete metadata 5 /Final Acceptance 005.app",
+        "name": "Final Acceptance 005",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.5"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 006/Long path with distinct application copies and complete metadata 6 Long path with distinct application copies and complete metadata 6 Long path with distinct application copies and complete metadata 6 /Final Acceptance 006.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 006/Long path with distinct application copies and complete metadata 6 Long path with distinct application copies and complete metadata 6 Long path with distinct application copies and complete metadata 6 /Final Acceptance 006.app",
+        "name": "Final Acceptance 006",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.6"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 007/Long path with distinct application copies and complete metadata 7 Long path with distinct application copies and complete metadata 7 Long path with distinct application copies and complete metadata 7 /Final Acceptance 007.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 007/Long path with distinct application copies and complete metadata 7 Long path with distinct application copies and complete metadata 7 Long path with distinct application copies and complete metadata 7 /Final Acceptance 007.app",
+        "name": "Final Acceptance 007",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.7"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 008/Long path with distinct application copies and complete metadata 8 Long path with distinct application copies and complete metadata 8 Long path with distinct application copies and complete metadata 8 /Final Acceptance 008.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 008/Long path with distinct application copies and complete metadata 8 Long path with distinct application copies and complete metadata 8 Long path with distinct application copies and complete metadata 8 /Final Acceptance 008.app",
+        "name": "Final Acceptance 008",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.8"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 009/Long path with distinct application copies and complete metadata 9 Long path with distinct application copies and complete metadata 9 Long path with distinct application copies and complete metadata 9 /Final Acceptance 009.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 009/Long path with distinct application copies and complete metadata 9 Long path with distinct application copies and complete metadata 9 Long path with distinct application copies and complete metadata 9 /Final Acceptance 009.app",
+        "name": "Final Acceptance 009",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.9"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 010/Long path with distinct application copies and complete metadata 10 Long path with distinct application copies and complete metadata 10 Long path with distinct application copies and complete metadata 10 /Final Acceptance 010.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 010/Long path with distinct application copies and complete metadata 10 Long path with distinct application copies and complete metadata 10 Long path with distinct application copies and complete metadata 10 /Final Acceptance 010.app",
+        "name": "Final Acceptance 010",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.10"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 011/Long path with distinct application copies and complete metadata 11 Long path with distinct application copies and complete metadata 11 Long path with distinct application copies and complete metadata 11 /Final Acceptance 011.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 011/Long path with distinct application copies and complete metadata 11 Long path with distinct application copies and complete metadata 11 Long path with distinct application copies and complete metadata 11 /Final Acceptance 011.app",
+        "name": "Final Acceptance 011",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.11"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 012/Long path with distinct application copies and complete metadata 12 Long path with distinct application copies and complete metadata 12 Long path with distinct application copies and complete metadata 12 /Final Acceptance 012.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 012/Long path with distinct application copies and complete metadata 12 Long path with distinct application copies and complete metadata 12 Long path with distinct application copies and complete metadata 12 /Final Acceptance 012.app",
+        "name": "Final Acceptance 012",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.12"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 013/Long path with distinct application copies and complete metadata 13 Long path with distinct application copies and complete metadata 13 Long path with distinct application copies and complete metadata 13 /Final Acceptance 013.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 013/Long path with distinct application copies and complete metadata 13 Long path with distinct application copies and complete metadata 13 Long path with distinct application copies and complete metadata 13 /Final Acceptance 013.app",
+        "name": "Final Acceptance 013",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.13"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 014/Long path with distinct application copies and complete metadata 14 Long path with distinct application copies and complete metadata 14 Long path with distinct application copies and complete metadata 14 /Final Acceptance 014.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 014/Long path with distinct application copies and complete metadata 14 Long path with distinct application copies and complete metadata 14 Long path with distinct application copies and complete metadata 14 /Final Acceptance 014.app",
+        "name": "Final Acceptance 014",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.14"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 015/Long path with distinct application copies and complete metadata 15 Long path with distinct application copies and complete metadata 15 Long path with distinct application copies and complete metadata 15 /Final Acceptance 015.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 015/Long path with distinct application copies and complete metadata 15 Long path with distinct application copies and complete metadata 15 Long path with distinct application copies and complete metadata 15 /Final Acceptance 015.app",
+        "name": "Final Acceptance 015",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.15"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 016/Long path with distinct application copies and complete metadata 16 Long path with distinct application copies and complete metadata 16 Long path with distinct application copies and complete metadata 16 /Final Acceptance 016.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 016/Long path with distinct application copies and complete metadata 16 Long path with distinct application copies and complete metadata 16 Long path with distinct application copies and complete metadata 16 /Final Acceptance 016.app",
+        "name": "Final Acceptance 016",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.16"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 017/Long path with distinct application copies and complete metadata 17 Long path with distinct application copies and complete metadata 17 Long path with distinct application copies and complete metadata 17 /Final Acceptance 017.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 017/Long path with distinct application copies and complete metadata 17 Long path with distinct application copies and complete metadata 17 Long path with distinct application copies and complete metadata 17 /Final Acceptance 017.app",
+        "name": "Final Acceptance 017",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.17"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 018/Long path with distinct application copies and complete metadata 18 Long path with distinct application copies and complete metadata 18 Long path with distinct application copies and complete metadata 18 /Final Acceptance 018.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 018/Long path with distinct application copies and complete metadata 18 Long path with distinct application copies and complete metadata 18 Long path with distinct application copies and complete metadata 18 /Final Acceptance 018.app",
+        "name": "Final Acceptance 018",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.18"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 019/Long path with distinct application copies and complete metadata 19 Long path with distinct application copies and complete metadata 19 Long path with distinct application copies and complete metadata 19 /Final Acceptance 019.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 019/Long path with distinct application copies and complete metadata 19 Long path with distinct application copies and complete metadata 19 Long path with distinct application copies and complete metadata 19 /Final Acceptance 019.app",
+        "name": "Final Acceptance 019",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.19"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 020/Long path with distinct application copies and complete metadata 20 Long path with distinct application copies and complete metadata 20 Long path with distinct application copies and complete metadata 20 /Final Acceptance 020.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 020/Long path with distinct application copies and complete metadata 20 Long path with distinct application copies and complete metadata 20 Long path with distinct application copies and complete metadata 20 /Final Acceptance 020.app",
+        "name": "Final Acceptance 020",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.20"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 021/Long path with distinct application copies and complete metadata 21 Long path with distinct application copies and complete metadata 21 Long path with distinct application copies and complete metadata 21 /Final Acceptance 021.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 021/Long path with distinct application copies and complete metadata 21 Long path with distinct application copies and complete metadata 21 Long path with distinct application copies and complete metadata 21 /Final Acceptance 021.app",
+        "name": "Final Acceptance 021",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.21"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 022/Long path with distinct application copies and complete metadata 22 Long path with distinct application copies and complete metadata 22 Long path with distinct application copies and complete metadata 22 /Final Acceptance 022.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 022/Long path with distinct application copies and complete metadata 22 Long path with distinct application copies and complete metadata 22 Long path with distinct application copies and complete metadata 22 /Final Acceptance 022.app",
+        "name": "Final Acceptance 022",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.22"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 023/Long path with distinct application copies and complete metadata 23 Long path with distinct application copies and complete metadata 23 Long path with distinct application copies and complete metadata 23 /Final Acceptance 023.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 023/Long path with distinct application copies and complete metadata 23 Long path with distinct application copies and complete metadata 23 Long path with distinct application copies and complete metadata 23 /Final Acceptance 023.app",
+        "name": "Final Acceptance 023",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.23"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 024/Long path with distinct application copies and complete metadata 24 Long path with distinct application copies and complete metadata 24 Long path with distinct application copies and complete metadata 24 /Final Acceptance 024.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 024/Long path with distinct application copies and complete metadata 24 Long path with distinct application copies and complete metadata 24 Long path with distinct application copies and complete metadata 24 /Final Acceptance 024.app",
+        "name": "Final Acceptance 024",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.24"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 025/Long path with distinct application copies and complete metadata 25 Long path with distinct application copies and complete metadata 25 Long path with distinct application copies and complete metadata 25 /Final Acceptance 025.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 025/Long path with distinct application copies and complete metadata 25 Long path with distinct application copies and complete metadata 25 Long path with distinct application copies and complete metadata 25 /Final Acceptance 025.app",
+        "name": "Final Acceptance 025",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.25"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 026/Long path with distinct application copies and complete metadata 26 Long path with distinct application copies and complete metadata 26 Long path with distinct application copies and complete metadata 26 /Final Acceptance 026.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 026/Long path with distinct application copies and complete metadata 26 Long path with distinct application copies and complete metadata 26 Long path with distinct application copies and complete metadata 26 /Final Acceptance 026.app",
+        "name": "Final Acceptance 026",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.26"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 027/Long path with distinct application copies and complete metadata 27 Long path with distinct application copies and complete metadata 27 Long path with distinct application copies and complete metadata 27 /Final Acceptance 027.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 027/Long path with distinct application copies and complete metadata 27 Long path with distinct application copies and complete metadata 27 Long path with distinct application copies and complete metadata 27 /Final Acceptance 027.app",
+        "name": "Final Acceptance 027",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.27"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 028/Long path with distinct application copies and complete metadata 28 Long path with distinct application copies and complete metadata 28 Long path with distinct application copies and complete metadata 28 /Final Acceptance 028.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 028/Long path with distinct application copies and complete metadata 28 Long path with distinct application copies and complete metadata 28 Long path with distinct application copies and complete metadata 28 /Final Acceptance 028.app",
+        "name": "Final Acceptance 028",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.28"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 029/Long path with distinct application copies and complete metadata 29 Long path with distinct application copies and complete metadata 29 Long path with distinct application copies and complete metadata 29 /Final Acceptance 029.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 029/Long path with distinct application copies and complete metadata 29 Long path with distinct application copies and complete metadata 29 Long path with distinct application copies and complete metadata 29 /Final Acceptance 029.app",
+        "name": "Final Acceptance 029",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.29"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 030/Long path with distinct application copies and complete metadata 30 Long path with distinct application copies and complete metadata 30 Long path with distinct application copies and complete metadata 30 /Final Acceptance 030.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 030/Long path with distinct application copies and complete metadata 30 Long path with distinct application copies and complete metadata 30 Long path with distinct application copies and complete metadata 30 /Final Acceptance 030.app",
+        "name": "Final Acceptance 030",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.30"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 031/Long path with distinct application copies and complete metadata 31 Long path with distinct application copies and complete metadata 31 Long path with distinct application copies and complete metadata 31 /Final Acceptance 031.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 031/Long path with distinct application copies and complete metadata 31 Long path with distinct application copies and complete metadata 31 Long path with distinct application copies and complete metadata 31 /Final Acceptance 031.app",
+        "name": "Final Acceptance 031",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.31"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 032/Long path with distinct application copies and complete metadata 32 Long path with distinct application copies and complete metadata 32 Long path with distinct application copies and complete metadata 32 /Final Acceptance 032.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 032/Long path with distinct application copies and complete metadata 32 Long path with distinct application copies and complete metadata 32 Long path with distinct application copies and complete metadata 32 /Final Acceptance 032.app",
+        "name": "Final Acceptance 032",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.32"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 033/Long path with distinct application copies and complete metadata 33 Long path with distinct application copies and complete metadata 33 Long path with distinct application copies and complete metadata 33 /Final Acceptance 033.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 033/Long path with distinct application copies and complete metadata 33 Long path with distinct application copies and complete metadata 33 Long path with distinct application copies and complete metadata 33 /Final Acceptance 033.app",
+        "name": "Final Acceptance 033",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.33"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 034/Long path with distinct application copies and complete metadata 34 Long path with distinct application copies and complete metadata 34 Long path with distinct application copies and complete metadata 34 /Final Acceptance 034.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 034/Long path with distinct application copies and complete metadata 34 Long path with distinct application copies and complete metadata 34 Long path with distinct application copies and complete metadata 34 /Final Acceptance 034.app",
+        "name": "Final Acceptance 034",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.34"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 035/Long path with distinct application copies and complete metadata 35 Long path with distinct application copies and complete metadata 35 Long path with distinct application copies and complete metadata 35 /Final Acceptance 035.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 035/Long path with distinct application copies and complete metadata 35 Long path with distinct application copies and complete metadata 35 Long path with distinct application copies and complete metadata 35 /Final Acceptance 035.app",
+        "name": "Final Acceptance 035",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.35"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 036/Long path with distinct application copies and complete metadata 36 Long path with distinct application copies and complete metadata 36 Long path with distinct application copies and complete metadata 36 /Final Acceptance 036.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 036/Long path with distinct application copies and complete metadata 36 Long path with distinct application copies and complete metadata 36 Long path with distinct application copies and complete metadata 36 /Final Acceptance 036.app",
+        "name": "Final Acceptance 036",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.36"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 037/Long path with distinct application copies and complete metadata 37 Long path with distinct application copies and complete metadata 37 Long path with distinct application copies and complete metadata 37 /Final Acceptance 037.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 037/Long path with distinct application copies and complete metadata 37 Long path with distinct application copies and complete metadata 37 Long path with distinct application copies and complete metadata 37 /Final Acceptance 037.app",
+        "name": "Final Acceptance 037",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.37"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 038/Long path with distinct application copies and complete metadata 38 Long path with distinct application copies and complete metadata 38 Long path with distinct application copies and complete metadata 38 /Final Acceptance 038.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 038/Long path with distinct application copies and complete metadata 38 Long path with distinct application copies and complete metadata 38 Long path with distinct application copies and complete metadata 38 /Final Acceptance 038.app",
+        "name": "Final Acceptance 038",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.38"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 039/Long path with distinct application copies and complete metadata 39 Long path with distinct application copies and complete metadata 39 Long path with distinct application copies and complete metadata 39 /Final Acceptance 039.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 039/Long path with distinct application copies and complete metadata 39 Long path with distinct application copies and complete metadata 39 Long path with distinct application copies and complete metadata 39 /Final Acceptance 039.app",
+        "name": "Final Acceptance 039",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.39"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 040/Long path with distinct application copies and complete metadata 40 Long path with distinct application copies and complete metadata 40 Long path with distinct application copies and complete metadata 40 /Final Acceptance 040.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 040/Long path with distinct application copies and complete metadata 40 Long path with distinct application copies and complete metadata 40 Long path with distinct application copies and complete metadata 40 /Final Acceptance 040.app",
+        "name": "Final Acceptance 040",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.40"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 041/Long path with distinct application copies and complete metadata 41 Long path with distinct application copies and complete metadata 41 Long path with distinct application copies and complete metadata 41 /Final Acceptance 041.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 041/Long path with distinct application copies and complete metadata 41 Long path with distinct application copies and complete metadata 41 Long path with distinct application copies and complete metadata 41 /Final Acceptance 041.app",
+        "name": "Final Acceptance 041",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.41"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 042/Long path with distinct application copies and complete metadata 42 Long path with distinct application copies and complete metadata 42 Long path with distinct application copies and complete metadata 42 /Final Acceptance 042.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 042/Long path with distinct application copies and complete metadata 42 Long path with distinct application copies and complete metadata 42 Long path with distinct application copies and complete metadata 42 /Final Acceptance 042.app",
+        "name": "Final Acceptance 042",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.42"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 043/Long path with distinct application copies and complete metadata 43 Long path with distinct application copies and complete metadata 43 Long path with distinct application copies and complete metadata 43 /Final Acceptance 043.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 043/Long path with distinct application copies and complete metadata 43 Long path with distinct application copies and complete metadata 43 Long path with distinct application copies and complete metadata 43 /Final Acceptance 043.app",
+        "name": "Final Acceptance 043",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.43"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 044/Long path with distinct application copies and complete metadata 44 Long path with distinct application copies and complete metadata 44 Long path with distinct application copies and complete metadata 44 /Final Acceptance 044.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 044/Long path with distinct application copies and complete metadata 44 Long path with distinct application copies and complete metadata 44 Long path with distinct application copies and complete metadata 44 /Final Acceptance 044.app",
+        "name": "Final Acceptance 044",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.44"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 045/Long path with distinct application copies and complete metadata 45 Long path with distinct application copies and complete metadata 45 Long path with distinct application copies and complete metadata 45 /Final Acceptance 045.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 045/Long path with distinct application copies and complete metadata 45 Long path with distinct application copies and complete metadata 45 Long path with distinct application copies and complete metadata 45 /Final Acceptance 045.app",
+        "name": "Final Acceptance 045",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.45"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 046/Long path with distinct application copies and complete metadata 46 Long path with distinct application copies and complete metadata 46 Long path with distinct application copies and complete metadata 46 /Final Acceptance 046.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 046/Long path with distinct application copies and complete metadata 46 Long path with distinct application copies and complete metadata 46 Long path with distinct application copies and complete metadata 46 /Final Acceptance 046.app",
+        "name": "Final Acceptance 046",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.46"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 047/Long path with distinct application copies and complete metadata 47 Long path with distinct application copies and complete metadata 47 Long path with distinct application copies and complete metadata 47 /Final Acceptance 047.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 047/Long path with distinct application copies and complete metadata 47 Long path with distinct application copies and complete metadata 47 Long path with distinct application copies and complete metadata 47 /Final Acceptance 047.app",
+        "name": "Final Acceptance 047",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.47"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 048/Long path with distinct application copies and complete metadata 48 Long path with distinct application copies and complete metadata 48 Long path with distinct application copies and complete metadata 48 /Final Acceptance 048.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 048/Long path with distinct application copies and complete metadata 48 Long path with distinct application copies and complete metadata 48 Long path with distinct application copies and complete metadata 48 /Final Acceptance 048.app",
+        "name": "Final Acceptance 048",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.48"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 049/Long path with distinct application copies and complete metadata 49 Long path with distinct application copies and complete metadata 49 Long path with distinct application copies and complete metadata 49 /Final Acceptance 049.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 049/Long path with distinct application copies and complete metadata 49 Long path with distinct application copies and complete metadata 49 Long path with distinct application copies and complete metadata 49 /Final Acceptance 049.app",
+        "name": "Final Acceptance 049",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.49"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 050/Long path with distinct application copies and complete metadata 50 Long path with distinct application copies and complete metadata 50 Long path with distinct application copies and complete metadata 50 /Final Acceptance 050.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 050/Long path with distinct application copies and complete metadata 50 Long path with distinct application copies and complete metadata 50 Long path with distinct application copies and complete metadata 50 /Final Acceptance 050.app",
+        "name": "Final Acceptance 050",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.50"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 051/Long path with distinct application copies and complete metadata 51 Long path with distinct application copies and complete metadata 51 Long path with distinct application copies and complete metadata 51 /Final Acceptance 051.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 051/Long path with distinct application copies and complete metadata 51 Long path with distinct application copies and complete metadata 51 Long path with distinct application copies and complete metadata 51 /Final Acceptance 051.app",
+        "name": "Final Acceptance 051",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.51"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 052/Long path with distinct application copies and complete metadata 52 Long path with distinct application copies and complete metadata 52 Long path with distinct application copies and complete metadata 52 /Final Acceptance 052.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 052/Long path with distinct application copies and complete metadata 52 Long path with distinct application copies and complete metadata 52 Long path with distinct application copies and complete metadata 52 /Final Acceptance 052.app",
+        "name": "Final Acceptance 052",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.52"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 053/Long path with distinct application copies and complete metadata 53 Long path with distinct application copies and complete metadata 53 Long path with distinct application copies and complete metadata 53 /Final Acceptance 053.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 053/Long path with distinct application copies and complete metadata 53 Long path with distinct application copies and complete metadata 53 Long path with distinct application copies and complete metadata 53 /Final Acceptance 053.app",
+        "name": "Final Acceptance 053",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.53"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 054/Long path with distinct application copies and complete metadata 54 Long path with distinct application copies and complete metadata 54 Long path with distinct application copies and complete metadata 54 /Final Acceptance 054.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 054/Long path with distinct application copies and complete metadata 54 Long path with distinct application copies and complete metadata 54 Long path with distinct application copies and complete metadata 54 /Final Acceptance 054.app",
+        "name": "Final Acceptance 054",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.54"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 055/Long path with distinct application copies and complete metadata 55 Long path with distinct application copies and complete metadata 55 Long path with distinct application copies and complete metadata 55 /Final Acceptance 055.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 055/Long path with distinct application copies and complete metadata 55 Long path with distinct application copies and complete metadata 55 Long path with distinct application copies and complete metadata 55 /Final Acceptance 055.app",
+        "name": "Final Acceptance 055",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.55"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 056/Long path with distinct application copies and complete metadata 56 Long path with distinct application copies and complete metadata 56 Long path with distinct application copies and complete metadata 56 /Final Acceptance 056.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 056/Long path with distinct application copies and complete metadata 56 Long path with distinct application copies and complete metadata 56 Long path with distinct application copies and complete metadata 56 /Final Acceptance 056.app",
+        "name": "Final Acceptance 056",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.56"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 057/Long path with distinct application copies and complete metadata 57 Long path with distinct application copies and complete metadata 57 Long path with distinct application copies and complete metadata 57 /Final Acceptance 057.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 057/Long path with distinct application copies and complete metadata 57 Long path with distinct application copies and complete metadata 57 Long path with distinct application copies and complete metadata 57 /Final Acceptance 057.app",
+        "name": "Final Acceptance 057",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.57"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 058/Long path with distinct application copies and complete metadata 58 Long path with distinct application copies and complete metadata 58 Long path with distinct application copies and complete metadata 58 /Final Acceptance 058.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 058/Long path with distinct application copies and complete metadata 58 Long path with distinct application copies and complete metadata 58 Long path with distinct application copies and complete metadata 58 /Final Acceptance 058.app",
+        "name": "Final Acceptance 058",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.58"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 059/Long path with distinct application copies and complete metadata 59 Long path with distinct application copies and complete metadata 59 Long path with distinct application copies and complete metadata 59 /Final Acceptance 059.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 059/Long path with distinct application copies and complete metadata 59 Long path with distinct application copies and complete metadata 59 Long path with distinct application copies and complete metadata 59 /Final Acceptance 059.app",
+        "name": "Final Acceptance 059",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.59"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 060/Long path with distinct application copies and complete metadata 60 Long path with distinct application copies and complete metadata 60 Long path with distinct application copies and complete metadata 60 /Final Acceptance 060.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 060/Long path with distinct application copies and complete metadata 60 Long path with distinct application copies and complete metadata 60 Long path with distinct application copies and complete metadata 60 /Final Acceptance 060.app",
+        "name": "Final Acceptance 060",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.60"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 061/Long path with distinct application copies and complete metadata 61 Long path with distinct application copies and complete metadata 61 Long path with distinct application copies and complete metadata 61 /Final Acceptance 061.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 061/Long path with distinct application copies and complete metadata 61 Long path with distinct application copies and complete metadata 61 Long path with distinct application copies and complete metadata 61 /Final Acceptance 061.app",
+        "name": "Final Acceptance 061",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.61"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 062/Long path with distinct application copies and complete metadata 62 Long path with distinct application copies and complete metadata 62 Long path with distinct application copies and complete metadata 62 /Final Acceptance 062.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 062/Long path with distinct application copies and complete metadata 62 Long path with distinct application copies and complete metadata 62 Long path with distinct application copies and complete metadata 62 /Final Acceptance 062.app",
+        "name": "Final Acceptance 062",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.62"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 063/Long path with distinct application copies and complete metadata 63 Long path with distinct application copies and complete metadata 63 Long path with distinct application copies and complete metadata 63 /Final Acceptance 063.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 063/Long path with distinct application copies and complete metadata 63 Long path with distinct application copies and complete metadata 63 Long path with distinct application copies and complete metadata 63 /Final Acceptance 063.app",
+        "name": "Final Acceptance 063",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.63"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 064/Long path with distinct application copies and complete metadata 64 Long path with distinct application copies and complete metadata 64 Long path with distinct application copies and complete metadata 64 /Final Acceptance 064.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 064/Long path with distinct application copies and complete metadata 64 Long path with distinct application copies and complete metadata 64 Long path with distinct application copies and complete metadata 64 /Final Acceptance 064.app",
+        "name": "Final Acceptance 064",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.64"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 065/Long path with distinct application copies and complete metadata 65 Long path with distinct application copies and complete metadata 65 Long path with distinct application copies and complete metadata 65 /Final Acceptance 065.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 065/Long path with distinct application copies and complete metadata 65 Long path with distinct application copies and complete metadata 65 Long path with distinct application copies and complete metadata 65 /Final Acceptance 065.app",
+        "name": "Final Acceptance 065",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.65"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 066/Long path with distinct application copies and complete metadata 66 Long path with distinct application copies and complete metadata 66 Long path with distinct application copies and complete metadata 66 /Final Acceptance 066.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 066/Long path with distinct application copies and complete metadata 66 Long path with distinct application copies and complete metadata 66 Long path with distinct application copies and complete metadata 66 /Final Acceptance 066.app",
+        "name": "Final Acceptance 066",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.66"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 067/Long path with distinct application copies and complete metadata 67 Long path with distinct application copies and complete metadata 67 Long path with distinct application copies and complete metadata 67 /Final Acceptance 067.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 067/Long path with distinct application copies and complete metadata 67 Long path with distinct application copies and complete metadata 67 Long path with distinct application copies and complete metadata 67 /Final Acceptance 067.app",
+        "name": "Final Acceptance 067",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.67"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 068/Long path with distinct application copies and complete metadata 68 Long path with distinct application copies and complete metadata 68 Long path with distinct application copies and complete metadata 68 /Final Acceptance 068.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 068/Long path with distinct application copies and complete metadata 68 Long path with distinct application copies and complete metadata 68 Long path with distinct application copies and complete metadata 68 /Final Acceptance 068.app",
+        "name": "Final Acceptance 068",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.68"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 069/Long path with distinct application copies and complete metadata 69 Long path with distinct application copies and complete metadata 69 Long path with distinct application copies and complete metadata 69 /Final Acceptance 069.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 069/Long path with distinct application copies and complete metadata 69 Long path with distinct application copies and complete metadata 69 Long path with distinct application copies and complete metadata 69 /Final Acceptance 069.app",
+        "name": "Final Acceptance 069",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.69"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 070/Long path with distinct application copies and complete metadata 70 Long path with distinct application copies and complete metadata 70 Long path with distinct application copies and complete metadata 70 /Final Acceptance 070.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 070/Long path with distinct application copies and complete metadata 70 Long path with distinct application copies and complete metadata 70 Long path with distinct application copies and complete metadata 70 /Final Acceptance 070.app",
+        "name": "Final Acceptance 070",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.70"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 071/Long path with distinct application copies and complete metadata 71 Long path with distinct application copies and complete metadata 71 Long path with distinct application copies and complete metadata 71 /Final Acceptance 071.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 071/Long path with distinct application copies and complete metadata 71 Long path with distinct application copies and complete metadata 71 Long path with distinct application copies and complete metadata 71 /Final Acceptance 071.app",
+        "name": "Final Acceptance 071",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.71"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 072/Long path with distinct application copies and complete metadata 72 Long path with distinct application copies and complete metadata 72 Long path with distinct application copies and complete metadata 72 /Final Acceptance 072.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 072/Long path with distinct application copies and complete metadata 72 Long path with distinct application copies and complete metadata 72 Long path with distinct application copies and complete metadata 72 /Final Acceptance 072.app",
+        "name": "Final Acceptance 072",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.72"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 073/Long path with distinct application copies and complete metadata 73 Long path with distinct application copies and complete metadata 73 Long path with distinct application copies and complete metadata 73 /Final Acceptance 073.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 073/Long path with distinct application copies and complete metadata 73 Long path with distinct application copies and complete metadata 73 Long path with distinct application copies and complete metadata 73 /Final Acceptance 073.app",
+        "name": "Final Acceptance 073",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.73"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 074/Long path with distinct application copies and complete metadata 74 Long path with distinct application copies and complete metadata 74 Long path with distinct application copies and complete metadata 74 /Final Acceptance 074.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 074/Long path with distinct application copies and complete metadata 74 Long path with distinct application copies and complete metadata 74 Long path with distinct application copies and complete metadata 74 /Final Acceptance 074.app",
+        "name": "Final Acceptance 074",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.74"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 075/Long path with distinct application copies and complete metadata 75 Long path with distinct application copies and complete metadata 75 Long path with distinct application copies and complete metadata 75 /Final Acceptance 075.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 075/Long path with distinct application copies and complete metadata 75 Long path with distinct application copies and complete metadata 75 Long path with distinct application copies and complete metadata 75 /Final Acceptance 075.app",
+        "name": "Final Acceptance 075",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.75"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 076/Long path with distinct application copies and complete metadata 76 Long path with distinct application copies and complete metadata 76 Long path with distinct application copies and complete metadata 76 /Final Acceptance 076.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 076/Long path with distinct application copies and complete metadata 76 Long path with distinct application copies and complete metadata 76 Long path with distinct application copies and complete metadata 76 /Final Acceptance 076.app",
+        "name": "Final Acceptance 076",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.76"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 077/Long path with distinct application copies and complete metadata 77 Long path with distinct application copies and complete metadata 77 Long path with distinct application copies and complete metadata 77 /Final Acceptance 077.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 077/Long path with distinct application copies and complete metadata 77 Long path with distinct application copies and complete metadata 77 Long path with distinct application copies and complete metadata 77 /Final Acceptance 077.app",
+        "name": "Final Acceptance 077",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.77"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 078/Long path with distinct application copies and complete metadata 78 Long path with distinct application copies and complete metadata 78 Long path with distinct application copies and complete metadata 78 /Final Acceptance 078.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 078/Long path with distinct application copies and complete metadata 78 Long path with distinct application copies and complete metadata 78 Long path with distinct application copies and complete metadata 78 /Final Acceptance 078.app",
+        "name": "Final Acceptance 078",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.78"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 079/Long path with distinct application copies and complete metadata 79 Long path with distinct application copies and complete metadata 79 Long path with distinct application copies and complete metadata 79 /Final Acceptance 079.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 079/Long path with distinct application copies and complete metadata 79 Long path with distinct application copies and complete metadata 79 Long path with distinct application copies and complete metadata 79 /Final Acceptance 079.app",
+        "name": "Final Acceptance 079",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.79"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 080/Long path with distinct application copies and complete metadata 80 Long path with distinct application copies and complete metadata 80 Long path with distinct application copies and complete metadata 80 /Final Acceptance 080.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 080/Long path with distinct application copies and complete metadata 80 Long path with distinct application copies and complete metadata 80 Long path with distinct application copies and complete metadata 80 /Final Acceptance 080.app",
+        "name": "Final Acceptance 080",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.80"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 081/Long path with distinct application copies and complete metadata 81 Long path with distinct application copies and complete metadata 81 Long path with distinct application copies and complete metadata 81 /Final Acceptance 081.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 081/Long path with distinct application copies and complete metadata 81 Long path with distinct application copies and complete metadata 81 Long path with distinct application copies and complete metadata 81 /Final Acceptance 081.app",
+        "name": "Final Acceptance 081",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.81"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 082/Long path with distinct application copies and complete metadata 82 Long path with distinct application copies and complete metadata 82 Long path with distinct application copies and complete metadata 82 /Final Acceptance 082.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 082/Long path with distinct application copies and complete metadata 82 Long path with distinct application copies and complete metadata 82 Long path with distinct application copies and complete metadata 82 /Final Acceptance 082.app",
+        "name": "Final Acceptance 082",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.82"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 083/Long path with distinct application copies and complete metadata 83 Long path with distinct application copies and complete metadata 83 Long path with distinct application copies and complete metadata 83 /Final Acceptance 083.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 083/Long path with distinct application copies and complete metadata 83 Long path with distinct application copies and complete metadata 83 Long path with distinct application copies and complete metadata 83 /Final Acceptance 083.app",
+        "name": "Final Acceptance 083",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.83"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 084/Long path with distinct application copies and complete metadata 84 Long path with distinct application copies and complete metadata 84 Long path with distinct application copies and complete metadata 84 /Final Acceptance 084.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 084/Long path with distinct application copies and complete metadata 84 Long path with distinct application copies and complete metadata 84 Long path with distinct application copies and complete metadata 84 /Final Acceptance 084.app",
+        "name": "Final Acceptance 084",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.84"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 085/Long path with distinct application copies and complete metadata 85 Long path with distinct application copies and complete metadata 85 Long path with distinct application copies and complete metadata 85 /Final Acceptance 085.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 085/Long path with distinct application copies and complete metadata 85 Long path with distinct application copies and complete metadata 85 Long path with distinct application copies and complete metadata 85 /Final Acceptance 085.app",
+        "name": "Final Acceptance 085",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.85"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 086/Long path with distinct application copies and complete metadata 86 Long path with distinct application copies and complete metadata 86 Long path with distinct application copies and complete metadata 86 /Final Acceptance 086.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 086/Long path with distinct application copies and complete metadata 86 Long path with distinct application copies and complete metadata 86 Long path with distinct application copies and complete metadata 86 /Final Acceptance 086.app",
+        "name": "Final Acceptance 086",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.86"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 087/Long path with distinct application copies and complete metadata 87 Long path with distinct application copies and complete metadata 87 Long path with distinct application copies and complete metadata 87 /Final Acceptance 087.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 087/Long path with distinct application copies and complete metadata 87 Long path with distinct application copies and complete metadata 87 Long path with distinct application copies and complete metadata 87 /Final Acceptance 087.app",
+        "name": "Final Acceptance 087",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.87"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 088/Long path with distinct application copies and complete metadata 88 Long path with distinct application copies and complete metadata 88 Long path with distinct application copies and complete metadata 88 /Final Acceptance 088.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 088/Long path with distinct application copies and complete metadata 88 Long path with distinct application copies and complete metadata 88 Long path with distinct application copies and complete metadata 88 /Final Acceptance 088.app",
+        "name": "Final Acceptance 088",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.88"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 089/Long path with distinct application copies and complete metadata 89 Long path with distinct application copies and complete metadata 89 Long path with distinct application copies and complete metadata 89 /Final Acceptance 089.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 089/Long path with distinct application copies and complete metadata 89 Long path with distinct application copies and complete metadata 89 Long path with distinct application copies and complete metadata 89 /Final Acceptance 089.app",
+        "name": "Final Acceptance 089",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.89"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 090/Long path with distinct application copies and complete metadata 90 Long path with distinct application copies and complete metadata 90 Long path with distinct application copies and complete metadata 90 /Final Acceptance 090.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 090/Long path with distinct application copies and complete metadata 90 Long path with distinct application copies and complete metadata 90 Long path with distinct application copies and complete metadata 90 /Final Acceptance 090.app",
+        "name": "Final Acceptance 090",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.90"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 091/Long path with distinct application copies and complete metadata 91 Long path with distinct application copies and complete metadata 91 Long path with distinct application copies and complete metadata 91 /Final Acceptance 091.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 091/Long path with distinct application copies and complete metadata 91 Long path with distinct application copies and complete metadata 91 Long path with distinct application copies and complete metadata 91 /Final Acceptance 091.app",
+        "name": "Final Acceptance 091",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.91"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 092/Long path with distinct application copies and complete metadata 92 Long path with distinct application copies and complete metadata 92 Long path with distinct application copies and complete metadata 92 /Final Acceptance 092.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 092/Long path with distinct application copies and complete metadata 92 Long path with distinct application copies and complete metadata 92 Long path with distinct application copies and complete metadata 92 /Final Acceptance 092.app",
+        "name": "Final Acceptance 092",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.92"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 093/Long path with distinct application copies and complete metadata 93 Long path with distinct application copies and complete metadata 93 Long path with distinct application copies and complete metadata 93 /Final Acceptance 093.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 093/Long path with distinct application copies and complete metadata 93 Long path with distinct application copies and complete metadata 93 Long path with distinct application copies and complete metadata 93 /Final Acceptance 093.app",
+        "name": "Final Acceptance 093",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.93"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 094/Long path with distinct application copies and complete metadata 94 Long path with distinct application copies and complete metadata 94 Long path with distinct application copies and complete metadata 94 /Final Acceptance 094.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 094/Long path with distinct application copies and complete metadata 94 Long path with distinct application copies and complete metadata 94 Long path with distinct application copies and complete metadata 94 /Final Acceptance 094.app",
+        "name": "Final Acceptance 094",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.94"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 095/Long path with distinct application copies and complete metadata 95 Long path with distinct application copies and complete metadata 95 Long path with distinct application copies and complete metadata 95 /Final Acceptance 095.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 095/Long path with distinct application copies and complete metadata 95 Long path with distinct application copies and complete metadata 95 Long path with distinct application copies and complete metadata 95 /Final Acceptance 095.app",
+        "name": "Final Acceptance 095",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.95"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 096/Long path with distinct application copies and complete metadata 96 Long path with distinct application copies and complete metadata 96 Long path with distinct application copies and complete metadata 96 /Final Acceptance 096.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 096/Long path with distinct application copies and complete metadata 96 Long path with distinct application copies and complete metadata 96 Long path with distinct application copies and complete metadata 96 /Final Acceptance 096.app",
+        "name": "Final Acceptance 096",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.96"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 097/Long path with distinct application copies and complete metadata 97 Long path with distinct application copies and complete metadata 97 Long path with distinct application copies and complete metadata 97 /Final Acceptance 097.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 097/Long path with distinct application copies and complete metadata 97 Long path with distinct application copies and complete metadata 97 Long path with distinct application copies and complete metadata 97 /Final Acceptance 097.app",
+        "name": "Final Acceptance 097",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.97"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 098/Long path with distinct application copies and complete metadata 98 Long path with distinct application copies and complete metadata 98 Long path with distinct application copies and complete metadata 98 /Final Acceptance 098.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 098/Long path with distinct application copies and complete metadata 98 Long path with distinct application copies and complete metadata 98 Long path with distinct application copies and complete metadata 98 /Final Acceptance 098.app",
+        "name": "Final Acceptance 098",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.98"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 099/Long path with distinct application copies and complete metadata 99 Long path with distinct application copies and complete metadata 99 Long path with distinct application copies and complete metadata 99 /Final Acceptance 099.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 099/Long path with distinct application copies and complete metadata 99 Long path with distinct application copies and complete metadata 99 Long path with distinct application copies and complete metadata 99 /Final Acceptance 099.app",
+        "name": "Final Acceptance 099",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.99"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 100/Long path with distinct application copies and complete metadata 100 Long path with distinct application copies and complete metadata 100 Long path with distinct application copies and complete metadata 100 /Final Acceptance 100.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 100/Long path with distinct application copies and complete metadata 100 Long path with distinct application copies and complete metadata 100 Long path with distinct application copies and complete metadata 100 /Final Acceptance 100.app",
+        "name": "Final Acceptance 100",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.100"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 101/Long path with distinct application copies and complete metadata 101 Long path with distinct application copies and complete metadata 101 Long path with distinct application copies and complete metadata 101 /Final Acceptance 101.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 101/Long path with distinct application copies and complete metadata 101 Long path with distinct application copies and complete metadata 101 Long path with distinct application copies and complete metadata 101 /Final Acceptance 101.app",
+        "name": "Final Acceptance 101",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.101"
+      }
+    ],
+    "pending": {
+      "requestID": "5e8fdfce-b886-4727-ad46-4fcb5dfa71d9",
+      "association": {
+        "kind": "scheme",
+        "key": "final11-scheme-0000"
+      },
+      "target": {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+        "name": "Final Acceptance 000",
+        "version": "11.0",
+        "bundleID": "io.defaultapps.final.fixture.0"
+      },
+      "preflight": {
+        "known": true,
+        "app": {
+          "path": "/Controlled/Before.app",
+          "displayPath": "/Controlled/Before.app",
+          "name": "Xcode",
+          "version": "27.2",
+          "bundleID": "com.apple.dt.Xcode"
+        },
+        "observedAt": "2026-11-06T12:03:12.108055Z",
+        "error": null,
+        "stale": false
+      },
+      "phase": "accepted",
+      "acceptedAt": "2026-11-06T12:03:12.119702Z",
+      "submittedAt": ""
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "4196f131e3f201cb57a7792fb217df42cdfd6ff9",
+  "capturedAt": "2026-11-06T12:30:19.116703+00:00",
+  "binaries": {
+    "default-apps.app": {
+      "sha256": "9e22d5ac72d9b8ac612f08bea0d59c3c3b4c5b2f7309f93c4856373d1dc04ac8",
+      "buildInfo": "bin/default-apps.app/Contents/MacOS/default-apps: go1.27.3\n\tpath\tgithub.com/sunven/default-apps\n\tmod\tgithub.com/sunven/default-apps\t(devel)\t\n\tdep\tgithub.com/wailsapp/wails/v3\tv3.1.0\th1:ld0AXSicXiTTsIvmTq3qNn9FzCP8vIHRSJdkRLgaAo8=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=production\n\tbuild\t-trimpath=true\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n"
+    },
+    "default-apps.dev.app": {
+      "sha256": "7c96e7108dbcecf2ffa65229bd063730c621f33421f70d34d8b26ccaadf33676",
+      "buildInfo": "bin/default-apps.dev.app/Contents/MacOS/default-apps: go1.27.3\n\tpath\tgithub.com/sunven/default-apps\n\tmod\tgithub.com/sunven/default-apps\t(devel)\t\n\tdep\tgithub.com/wailsapp/wails/v3\tv3.1.0\th1:ld0AXSicXiTTsIvmTq3qNn9FzCP8vIHRSJdkRLgaAo8=\n\tdep\tgolang.org/x/sys\tv0.48.0\th1:bbX/i/6MgT9BVLM9RT1thmxL04yeTAhbEz4SyadbXoo=\n\tdep\tgolang.org/x/term\tv0.46.0\th1:3+OXuTbaKDgwk8jTi3aSLHRlmWqHEUDUtxnbFigO4YE=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-gcflags=all=-l\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=-mmacosx-version-min=13.0\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=-mmacosx-version-min=13.0\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n"
+    },
+    "Default Apps Final native QA.app": {
+      "sha256": "bbfbec75a4fb2a66358425a2f5ad8b74d02998c4de412b0334e58ab50d4b77ed",
+      "buildInfo": "bin/Default Apps Final native QA.app/Contents/MacOS/default-apps: go1.27.3\n\tpath\tgithub.com/sunven/default-apps\n\tmod\tgithub.com/sunven/default-apps\tv0.0.0-20261106113344-884e4ffcc6cd+dirty\t\n\tdep\tgithub.com/wailsapp/wails/v3\tv3.1.0\th1:ld0AXSicXiTTsIvmTq3qNn9FzCP8vIHRSJdkRLgaAo8=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=production,mcp,manual_smoke,lifecycle_smoke,native_keyboard\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=-mmacosx-version-min=13.0\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=-mmacosx-version-min=13.0\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=884e4ffcc6cd40edf7cc45ba5713e128c6ed8d01\n\tbuild\tvcs.time=2026-11-06T11:33:44Z\n\tbuild\tvcs.modified=true\n"
+    },
+    "Default Apps Final controlled QA.app": {
+      "sha256": "48745a81e8cae9d4fc6e5cacb259dae91c79f3e3d15ea85b8d62b0b4722a8dfe",
+      "buildInfo": "bin/Default Apps Final controlled QA.app/Contents/MacOS/default-apps: go1.27.3\n\tpath\tgithub.com/sunven/default-apps\n\tmod\tgithub.com/sunven/default-apps\tv0.0.0-20261106113344-884e4ffcc6cd+dirty\t\n\tdep\tgithub.com/wailsapp/wails/v3\tv3.1.0\th1:ld0AXSicXiTTsIvmTq3qNn9FzCP8vIHRSJdkRLgaAo8=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-tags=production,mcp,manual_smoke,lifecycle_smoke,native_keyboard,change_smoke\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=-mmacosx-version-min=13.0\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=-mmacosx-version-min=13.0\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=884e4ffcc6cd40edf7cc45ba5713e128c6ed8d01\n\tbuild\tvcs.time=2026-11-06T11:33:44Z\n\tbuild\tvcs.modified=true\n"
+    }
+  },
+  "nativeSettersPresent": [
+    "setDefaultApplicationAtURL:toOpenContentType:completionHandler:",
+    "setDefaultApplicationAtURL:toOpenURLsWithScheme:completionHandler:"
+  ],
+  "fixtureManifestSHA256": "5c0de3952d8cf1f6b96ca4e7c9c60d3d86aec73596c259d0364357201e92fc52"
+}

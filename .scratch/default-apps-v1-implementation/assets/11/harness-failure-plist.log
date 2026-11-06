@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/check-products.py", line 15, in <module>
+    app=repo/'bin'/name;binary=app/'Contents/MacOS/default-apps';info=plistlib.loads((app/'Contents/Info.plist').read_bytes());run('codesign','--verify','--deep','--strict',str(app))
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/plistlib.py", line 883, in loads
+    return load(fp, fmt=fmt, dict_type=dict_type)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/plistlib.py", line 869, in load
+    raise InvalidFileException()
+plistlib.InvalidFileException: Invalid file

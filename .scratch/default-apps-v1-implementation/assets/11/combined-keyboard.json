@@ -1,0 +1,291 @@
+[
+  {
+    "step": "Command-2 during pending",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "文件类型",
+      "view": "file"
+    }
+  },
+  {
+    "step": "Command-3 during pending",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "URL 协议",
+      "view": "scheme"
+    }
+  },
+  {
+    "step": "Command-1 restores app session",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "应用",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Command-2 restores file search",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "文件类型",
+      "view": "file"
+    }
+  },
+  {
+    "step": "Command-3 restores protocol search",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "URL 协议",
+      "view": "scheme"
+    }
+  },
+  {
+    "step": "Command-1 returns app",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "应用",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Command-F app search",
+    "focus": {
+      "dialogs": 0,
+      "label": "搜索应用名称、版本、路径或声明",
+      "tag": "INPUT",
+      "text": "",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Down enters current app",
+    "focus": {
+      "dialogs": 0,
+      "label": "Final Acceptance 000 11.0 /Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "tag": "BUTTON",
+      "text": "Final Acceptance 000版本 11.0 · 1000 个声明关联/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fix",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Enter enters association",
+    "focus": {
+      "association": "scheme:final11-scheme-0000",
+      "dialogs": 0,
+      "label": "final11-scheme-0000 final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0000final11-scheme-0000",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Tab row detail",
+    "focus": {
+      "dialogs": 0,
+      "label": "查看 final11-scheme-0000 详情",
+      "tag": "BUTTON",
+      "text": "详情…",
+      "view": "app"
+    }
+  },
+  {
+    "step": "ShiftTab row identity",
+    "focus": {
+      "association": "scheme:final11-scheme-0000",
+      "dialogs": 0,
+      "label": "final11-scheme-0000 final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0000final11-scheme-0000",
+      "view": "app"
+    }
+  },
+  {
+    "step": "End association list",
+    "focus": {
+      "association": "scheme:final11-scheme-0999",
+      "dialogs": 0,
+      "label": "final11-scheme-0999 final11-scheme-0999",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0999final11-scheme-0999",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Up association list",
+    "focus": {
+      "association": "scheme:final11-scheme-0998",
+      "dialogs": 0,
+      "label": "final11-scheme-0998 final11-scheme-0998",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0998final11-scheme-0998",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Home association list",
+    "focus": {
+      "association": "scheme:final11-scheme-0000",
+      "dialogs": 0,
+      "label": "final11-scheme-0000 final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0000final11-scheme-0000",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Enter candidate dialog",
+    "focus": {
+      "dialogs": 1,
+      "label": "关闭final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "关闭",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Candidate ShiftTab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": "查看此副本 /Controlled/Other/Xcode.app",
+      "tag": "BUTTON",
+      "text": "查看此副本",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Candidate Tab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": "关闭final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "关闭",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Candidate Escape returns row",
+    "focus": {
+      "association": "scheme:final11-scheme-0000",
+      "dialogs": 0,
+      "label": "final11-scheme-0000 final11-scheme-0000",
+      "tag": "BUTTON",
+      "text": "final11-scheme-0000final11-scheme-0000",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Manual ShiftTab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "添加应用位置…",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Manual Tab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": "关闭手动补充",
+      "tag": "BUTTON",
+      "text": "关闭",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Manual Escape restores header trigger",
+    "focus": {
+      "dialogs": 0,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "手动补充…",
+      "view": "app"
+    }
+  },
+  {
+    "step": "No declaration Enter focuses filter",
+    "focus": {
+      "dialogs": 0,
+      "label": "筛选当前关联",
+      "tag": "INPUT",
+      "text": "",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Quit ShiftTab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "仍然退出",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Quit Tab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": "关闭修改结果仍未确定",
+      "tag": "BUTTON",
+      "text": "关闭",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Quit Escape stays",
+    "focus": {
+      "dialogs": 0,
+      "label": "Final Acceptance 000 11.0 /Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "tag": "BUTTON",
+      "text": "Final Acceptance 000版本 11.0 · 1000 个声明关联/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fix",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Recovery ShiftTab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": null,
+      "tag": "BUTTON",
+      "text": "明确提交新修改",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Recovery Tab wrap",
+    "focus": {
+      "dialogs": 1,
+      "label": "关闭上次修改仍可能完成",
+      "tag": "BUTTON",
+      "text": "关闭",
+      "view": "app"
+    }
+  },
+  {
+    "step": "Recovery Escape returns sensible focus",
+    "focus": {
+      "dialogs": 0,
+      "label": "Final Acceptance 000 11.0 /Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+      "tag": "BUTTON",
+      "text": "Final Acceptance 000版本 11.0 · 1000 个声明关联/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fix",
+      "view": "app"
+    }
+  }
+]

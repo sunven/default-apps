@@ -1,0 +1,26 @@
+{
+  "pid": 62705,
+  "windows": [
+    {
+      "kCGWindowAlpha": 1,
+      "kCGWindowBounds": {
+        "Height": 831,
+        "Width": 1179,
+        "X": 370,
+        "Y": 109
+      },
+      "kCGWindowIsOnscreen": true,
+      "kCGWindowLayer": 0,
+      "kCGWindowMemoryUsage": 2432,
+      "kCGWindowName": "Default Apps",
+      "kCGWindowNumber": 7534,
+      "kCGWindowOwnerName": "Default Apps",
+      "kCGWindowOwnerPID": 62705,
+      "kCGWindowSharingState": 1,
+      "kCGWindowStoreType": 1
+    }
+  ],
+  "captureExit": 0,
+  "stderr": "",
+  "exitCode": 0
+}

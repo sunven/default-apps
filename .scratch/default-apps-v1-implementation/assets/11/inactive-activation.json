@@ -1,0 +1,935 @@
+{
+  "status": "通过",
+  "pid": 50822,
+  "beforeActivation": {
+    "events": [
+      {
+        "version": 22
+      },
+      {
+        "version": 23
+      },
+      {
+        "version": 24
+      },
+      {
+        "version": 25
+      },
+      {
+        "version": 26
+      },
+      {
+        "version": 27
+      },
+      {
+        "version": 28
+      },
+      {
+        "version": 29
+      },
+      {
+        "version": 30
+      },
+      {
+        "version": 31
+      },
+      {
+        "version": 32
+      },
+      {
+        "version": 33
+      },
+      {
+        "version": 34
+      },
+      {
+        "version": 35
+      },
+      {
+        "version": 36
+      },
+      {
+        "phase": "accepted",
+        "version": 37
+      },
+      {
+        "phase": "accepted",
+        "version": 38
+      },
+      {
+        "phase": "accepted",
+        "version": 39
+      },
+      {
+        "phase": "accepted",
+        "version": 40
+      },
+      {
+        "phase": "accepted",
+        "version": 41
+      },
+      {
+        "phase": "accepted",
+        "version": 42
+      },
+      {
+        "phase": "accepted",
+        "version": 43
+      },
+      {
+        "phase": "accepted",
+        "version": 44
+      },
+      {
+        "phase": "accepted",
+        "version": 45
+      },
+      {
+        "phase": "accepted",
+        "version": 46
+      },
+      {
+        "phase": "accepted",
+        "version": 47
+      },
+      {
+        "phase": "accepted",
+        "version": 48
+      },
+      {
+        "phase": "accepted",
+        "version": 49
+      },
+      {
+        "phase": "accepted",
+        "version": 50
+      },
+      {
+        "phase": "accepted",
+        "version": 51
+      },
+      {
+        "phase": "accepted",
+        "version": 52
+      },
+      {
+        "phase": "accepted",
+        "version": 53
+      },
+      {
+        "phase": "accepted",
+        "version": 54
+      },
+      {
+        "phase": "accepted",
+        "version": 55
+      },
+      {
+        "phase": "accepted",
+        "version": 56
+      },
+      {
+        "phase": "accepted",
+        "version": 57
+      },
+      {
+        "phase": "accepted",
+        "version": 58
+      },
+      {
+        "phase": "accepted",
+        "version": 59
+      },
+      {
+        "phase": "accepted",
+        "version": 60
+      },
+      {
+        "phase": "accepted",
+        "version": 61
+      },
+      {
+        "phase": "accepted",
+        "version": 62
+      },
+      {
+        "phase": "accepted",
+        "version": 63
+      },
+      {
+        "phase": "accepted",
+        "version": 64
+      },
+      {
+        "phase": "accepted",
+        "version": 65
+      },
+      {
+        "phase": "accepted",
+        "version": 66
+      },
+      {
+        "phase": "accepted",
+        "version": 67
+      },
+      {
+        "phase": "accepted",
+        "version": 68
+      },
+      {
+        "phase": "accepted",
+        "version": 69
+      },
+      {
+        "phase": "accepted",
+        "version": 70
+      },
+      {
+        "phase": "accepted",
+        "version": 71
+      },
+      {
+        "phase": "accepted",
+        "version": 72
+      },
+      {
+        "phase": "accepted",
+        "version": 73
+      },
+      {
+        "phase": "accepted",
+        "version": 74
+      },
+      {
+        "phase": "accepted",
+        "version": 75
+      },
+      {
+        "phase": "accepted",
+        "version": 76
+      },
+      {
+        "phase": "accepted",
+        "version": 77
+      },
+      {
+        "phase": "accepted",
+        "version": 78
+      },
+      {
+        "phase": "accepted",
+        "version": 79
+      },
+      {
+        "phase": "accepted",
+        "version": 80
+      },
+      {
+        "phase": "accepted",
+        "version": 81
+      },
+      {
+        "phase": "accepted",
+        "version": 82
+      },
+      {
+        "phase": "accepted",
+        "version": 83
+      },
+      {
+        "phase": "accepted",
+        "version": 84
+      },
+      {
+        "phase": "accepted",
+        "version": 85
+      },
+      {
+        "phase": "accepted",
+        "version": 86
+      },
+      {
+        "phase": "accepted",
+        "version": 87
+      },
+      {
+        "phase": "accepted",
+        "version": 88
+      },
+      {
+        "phase": "accepted",
+        "version": 89
+      },
+      {
+        "phase": "accepted",
+        "version": 90
+      },
+      {
+        "phase": "accepted",
+        "version": 91
+      },
+      {
+        "phase": "accepted",
+        "version": 92
+      },
+      {
+        "phase": "accepted",
+        "version": 93
+      },
+      {
+        "phase": "accepted",
+        "version": 94
+      },
+      {
+        "phase": "accepted",
+        "version": 95
+      },
+      {
+        "phase": "accepted",
+        "version": 96
+      },
+      {
+        "phase": "accepted",
+        "version": 97
+      },
+      {
+        "phase": "accepted",
+        "version": 98
+      },
+      {
+        "phase": "accepted",
+        "version": 99
+      },
+      {
+        "phase": "accepted",
+        "version": 100
+      },
+      {
+        "phase": "accepted",
+        "version": 101
+      },
+      {
+        "phase": "accepted",
+        "version": 102
+      },
+      {
+        "phase": "accepted",
+        "version": 103
+      },
+      {
+        "phase": "accepted",
+        "version": 104
+      },
+      {
+        "phase": "accepted",
+        "version": 105
+      },
+      {
+        "phase": "accepted",
+        "version": 106
+      }
+    ],
+    "status": "已受理 · 等待提交系统\nfinal11-scheme-0000\n返回请求项\n\n目标：/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app"
+  },
+  "afterActivation": {
+    "events": [
+      {
+        "version": 22
+      },
+      {
+        "version": 23
+      },
+      {
+        "version": 24
+      },
+      {
+        "version": 25
+      },
+      {
+        "version": 26
+      },
+      {
+        "version": 27
+      },
+      {
+        "version": 28
+      },
+      {
+        "version": 29
+      },
+      {
+        "version": 30
+      },
+      {
+        "version": 31
+      },
+      {
+        "version": 32
+      },
+      {
+        "version": 33
+      },
+      {
+        "version": 34
+      },
+      {
+        "version": 35
+      },
+      {
+        "version": 36
+      },
+      {
+        "phase": "accepted",
+        "version": 37
+      },
+      {
+        "phase": "accepted",
+        "version": 38
+      },
+      {
+        "phase": "accepted",
+        "version": 39
+      },
+      {
+        "phase": "accepted",
+        "version": 40
+      },
+      {
+        "phase": "accepted",
+        "version": 41
+      },
+      {
+        "phase": "accepted",
+        "version": 42
+      },
+      {
+        "phase": "accepted",
+        "version": 43
+      },
+      {
+        "phase": "accepted",
+        "version": 44
+      },
+      {
+        "phase": "accepted",
+        "version": 45
+      },
+      {
+        "phase": "accepted",
+        "version": 46
+      },
+      {
+        "phase": "accepted",
+        "version": 47
+      },
+      {
+        "phase": "accepted",
+        "version": 48
+      },
+      {
+        "phase": "accepted",
+        "version": 49
+      },
+      {
+        "phase": "accepted",
+        "version": 50
+      },
+      {
+        "phase": "accepted",
+        "version": 51
+      },
+      {
+        "phase": "accepted",
+        "version": 52
+      },
+      {
+        "phase": "accepted",
+        "version": 53
+      },
+      {
+        "phase": "accepted",
+        "version": 54
+      },
+      {
+        "phase": "accepted",
+        "version": 55
+      },
+      {
+        "phase": "accepted",
+        "version": 56
+      },
+      {
+        "phase": "accepted",
+        "version": 57
+      },
+      {
+        "phase": "accepted",
+        "version": 58
+      },
+      {
+        "phase": "accepted",
+        "version": 59
+      },
+      {
+        "phase": "accepted",
+        "version": 60
+      },
+      {
+        "phase": "accepted",
+        "version": 61
+      },
+      {
+        "phase": "accepted",
+        "version": 62
+      },
+      {
+        "phase": "accepted",
+        "version": 63
+      },
+      {
+        "phase": "accepted",
+        "version": 64
+      },
+      {
+        "phase": "accepted",
+        "version": 65
+      },
+      {
+        "phase": "accepted",
+        "version": 66
+      },
+      {
+        "phase": "accepted",
+        "version": 67
+      },
+      {
+        "phase": "accepted",
+        "version": 68
+      },
+      {
+        "phase": "accepted",
+        "version": 69
+      },
+      {
+        "phase": "accepted",
+        "version": 70
+      },
+      {
+        "phase": "accepted",
+        "version": 71
+      },
+      {
+        "phase": "accepted",
+        "version": 72
+      },
+      {
+        "phase": "accepted",
+        "version": 73
+      },
+      {
+        "phase": "accepted",
+        "version": 74
+      },
+      {
+        "phase": "accepted",
+        "version": 75
+      },
+      {
+        "phase": "accepted",
+        "version": 76
+      },
+      {
+        "phase": "accepted",
+        "version": 77
+      },
+      {
+        "phase": "accepted",
+        "version": 78
+      },
+      {
+        "phase": "accepted",
+        "version": 79
+      },
+      {
+        "phase": "accepted",
+        "version": 80
+      },
+      {
+        "phase": "accepted",
+        "version": 81
+      },
+      {
+        "phase": "accepted",
+        "version": 82
+      },
+      {
+        "phase": "accepted",
+        "version": 83
+      },
+      {
+        "phase": "accepted",
+        "version": 84
+      },
+      {
+        "phase": "accepted",
+        "version": 85
+      },
+      {
+        "phase": "accepted",
+        "version": 86
+      },
+      {
+        "phase": "accepted",
+        "version": 87
+      },
+      {
+        "phase": "accepted",
+        "version": 88
+      },
+      {
+        "phase": "accepted",
+        "version": 89
+      },
+      {
+        "phase": "accepted",
+        "version": 90
+      },
+      {
+        "phase": "accepted",
+        "version": 91
+      },
+      {
+        "phase": "accepted",
+        "version": 92
+      },
+      {
+        "phase": "accepted",
+        "version": 93
+      },
+      {
+        "phase": "accepted",
+        "version": 94
+      },
+      {
+        "phase": "accepted",
+        "version": 95
+      },
+      {
+        "phase": "accepted",
+        "version": 96
+      },
+      {
+        "phase": "accepted",
+        "version": 97
+      },
+      {
+        "phase": "accepted",
+        "version": 98
+      },
+      {
+        "phase": "accepted",
+        "version": 99
+      },
+      {
+        "phase": "accepted",
+        "version": 100
+      },
+      {
+        "phase": "accepted",
+        "version": 101
+      },
+      {
+        "phase": "accepted",
+        "version": 102
+      },
+      {
+        "phase": "accepted",
+        "version": 103
+      },
+      {
+        "phase": "accepted",
+        "version": 104
+      },
+      {
+        "phase": "accepted",
+        "version": 105
+      },
+      {
+        "phase": "accepted",
+        "version": 106
+      },
+      {
+        "phase": "accepted",
+        "version": 107
+      },
+      {
+        "phase": "accepted",
+        "version": 108
+      },
+      {
+        "phase": "accepted",
+        "version": 109
+      },
+      {
+        "phase": "accepted",
+        "version": 110
+      },
+      {
+        "phase": "accepted",
+        "version": 111
+      },
+      {
+        "phase": "accepted",
+        "version": 112
+      },
+      {
+        "phase": "accepted",
+        "version": 113
+      },
+      {
+        "phase": "accepted",
+        "version": 114
+      },
+      {
+        "phase": "accepted",
+        "version": 115
+      },
+      {
+        "phase": "accepted",
+        "version": 116
+      },
+      {
+        "phase": "accepted",
+        "version": 117
+      },
+      {
+        "phase": "accepted",
+        "version": 118
+      },
+      {
+        "phase": "accepted",
+        "version": 119
+      },
+      {
+        "phase": "accepted",
+        "version": 120
+      },
+      {
+        "phase": "accepted",
+        "version": 121
+      },
+      {
+        "phase": "accepted",
+        "version": 122
+      },
+      {
+        "phase": "accepted",
+        "version": 123
+      },
+      {
+        "phase": "accepted",
+        "version": 124
+      },
+      {
+        "phase": "accepted",
+        "version": 125
+      },
+      {
+        "phase": "accepted",
+        "version": 126
+      },
+      {
+        "phase": "accepted",
+        "version": 127
+      },
+      {
+        "phase": "accepted",
+        "version": 128
+      },
+      {
+        "phase": "accepted",
+        "version": 129
+      },
+      {
+        "phase": "accepted",
+        "version": 130
+      },
+      {
+        "phase": "accepted",
+        "version": 131
+      },
+      {
+        "phase": "accepted",
+        "version": 132
+      },
+      {
+        "phase": "accepted",
+        "version": 133
+      },
+      {
+        "phase": "accepted",
+        "version": 134
+      },
+      {
+        "phase": "accepted",
+        "version": 135
+      },
+      {
+        "phase": "accepted",
+        "version": 136
+      },
+      {
+        "phase": "accepted",
+        "version": 137
+      },
+      {
+        "phase": "accepted",
+        "version": 138
+      },
+      {
+        "phase": "accepted",
+        "version": 139
+      },
+      {
+        "phase": "accepted",
+        "version": 140
+      },
+      {
+        "phase": "accepted",
+        "version": 141
+      },
+      {
+        "phase": "accepted",
+        "version": 142
+      },
+      {
+        "phase": "accepted",
+        "version": 143
+      },
+      {
+        "phase": "accepted",
+        "version": 144
+      },
+      {
+        "phase": "accepted",
+        "version": 145
+      },
+      {
+        "phase": "accepted",
+        "version": 146
+      },
+      {
+        "phase": "accepted",
+        "version": 147
+      },
+      {
+        "phase": "accepted",
+        "version": 148
+      },
+      {
+        "phase": "accepted",
+        "version": 149
+      },
+      {
+        "phase": "accepted",
+        "version": 150
+      },
+      {
+        "phase": "accepted",
+        "version": 151
+      },
+      {
+        "phase": "accepted",
+        "version": 152
+      },
+      {
+        "phase": "accepted",
+        "version": 153
+      },
+      {
+        "phase": "accepted",
+        "version": 154
+      },
+      {
+        "phase": "accepted",
+        "version": 155
+      },
+      {
+        "phase": "accepted",
+        "version": 157
+      },
+      {
+        "phase": "accepted",
+        "version": 156
+      },
+      {
+        "phase": "accepted",
+        "version": 158
+      },
+      {
+        "phase": "accepted",
+        "version": 159
+      },
+      {
+        "phase": "accepted",
+        "version": 160
+      },
+      {
+        "phase": "accepted",
+        "version": 161
+      },
+      {
+        "phase": "submitted",
+        "version": 162
+      },
+      {
+        "phase": "submitted",
+        "version": 163
+      },
+      {
+        "phase": "submitted",
+        "version": 164
+      },
+      {
+        "phase": "submitted",
+        "version": 165
+      },
+      {
+        "phase": "submitted",
+        "version": 166
+      },
+      {
+        "phase": "submitted",
+        "version": 167
+      },
+      {
+        "phase": "submitted",
+        "version": 168
+      },
+      {
+        "phase": "submitted",
+        "version": 170
+      },
+      {
+        "phase": "submitted",
+        "version": 169
+      },
+      {
+        "phase": "submitted",
+        "version": 171
+      },
+      {
+        "phase": "submitted",
+        "version": 172
+      },
+      {
+        "phase": "submitted",
+        "version": 173
+      }
+    ],
+    "status": "已提交系统 · 等待系统返回\nfinal11-scheme-0000\n返回请求项\n\n目标：/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app"
+  },
+  "starts": 1,
+  "snapshotPhase": "submitted",
+  "explicitRequery": false
+}

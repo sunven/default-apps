@@ -1,0 +1,19 @@
+{
+  "collectedAt": "2026-11-06T12:16:37.436409+00:00",
+  "macOS": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123",
+  "architecture": "arm64",
+  "go": "go version go1.27.3 darwin/arm64",
+  "wails": "v3.1.0",
+  "node": "v26.13.0",
+  "npm": "11.20.0",
+  "goModule": "github.com/wailsapp/wails/v3 v3.1.0",
+  "lockSHA256": "db07624124178dae6a4f51c251d1e17b6d6d5d0e28efba89ca125cc9f0906e47",
+  "sourceCommit": "4196f131e3f201cb57a7792fb217df42cdfd6ff9",
+  "frontendVersions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@wailsio/runtime": "3.1.0",
+    "typescript": "5.9.3",
+    "vite": "8.3.5"
+  }
+}
