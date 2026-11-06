@@ -1,0 +1,2 @@
+github.com/sunven/default-apps [change_environment.go configuration.go foreground.go lifecycle_smoke_off.go main.go manual_smoke_off.go native_picker.go] [] []
+github.com/sunven/default-apps/internal/native [] [dispatcher_darwin.go native_darwin.go] [dispatcher_darwin.m native_darwin.m]

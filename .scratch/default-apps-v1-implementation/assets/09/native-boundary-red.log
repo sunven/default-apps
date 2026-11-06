@@ -1,0 +1,7 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+--- FAIL: TestDispatchKeepsCompletionAfterCallerReturnsAndCopiesNativeError (0.00s)
+    dispatcher_test.go:32: copied error = &change.NativeError{Domain:"defaultapps.native", Code:2, Description:"原生修改未在主线程调度。"}
+FAIL
+FAIL	github.com/sunven/default-apps/internal/native	3.133s
+FAIL

@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-06T06:45:01Z",
+  "readOnly": true,
+  "scheme": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+    },
+    "key": "defaultapps-acceptance-419b7422bf684b7aaa7af96e558de0c1"
+  },
+  "type": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+    },
+    "declared": true,
+    "dynamic": false,
+    "identifier": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+  }
+}

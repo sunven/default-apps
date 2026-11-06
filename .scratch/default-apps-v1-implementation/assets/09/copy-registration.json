@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-06T07:37:33.981465+00:00",
+  "command": [
+    "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+    "-f",
+    "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,8 @@
+{
+  "internal/native/dispatcher_darwin.go": "0750f2c0444c63107255e57460d2afda0cf986956c071645ef222093f38c20e7",
+  "internal/native/dispatcher_darwin.m": "9b10992b85d97768e5fab14fa8e9c845d62922dff8294711d3d27ac6b7a8dc67",
+  "change_environment.go": "fdeb6c45d20765a275fcc34227084257c00d403d7a39ec62f0c9ac300657ffbd",
+  "frontend/dist/assets/index-CMqhCr3u.js": "a44234728bc22bd9f31714ff6e82fc364df7132a0f7f4c2971f0b99c80a37c75",
+  "bin/Default Apps.app/Contents/MacOS/default-apps": "82e36172bfa27f3c7a3459eee8135f0c7843339edfee012f30fa1c8939e2a22c",
+  "bin/Default Apps Native QA.app/Contents/MacOS/default-apps": "6899acac4601f29023f5916fde4cf8af19bd81a20cf938c60047a0aa1fcc7bd3"
+}

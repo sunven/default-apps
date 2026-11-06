@@ -1,0 +1,7 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+--- FAIL: TestOverlappingNativeCallbacksKeepTheirOriginalTargets (0.00s)
+    dispatcher_test.go:59: completion went to the wrong request: success=true error=&change.NativeError{Domain:"org.defaultapps.test.native", Code:-709, Description:"异步原生错误：保留完整字段"}
+FAIL
+FAIL	github.com/sunven/default-apps/internal/native	0.572s
+FAIL

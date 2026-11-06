@@ -1,0 +1,189 @@
+{
+  "completedAt": "2026-11-06T09:09:08.327707+00:00",
+  "status": "通过",
+  "nativeTypeSequence": "A → B → A, distinct formal UI requests and exact path readbacks",
+  "realPendingExitRestart": "通过",
+  "realHumanRefusal": "通过; actual NSCocoaErrorDomain 256 preserved without general cancellation classification",
+  "sameIDMismatch": "通过; nil completion / target A / actual A Copy / confirmed false",
+  "manualUndeclared": "通过; human picker, explicit UI submission, nil completion / exact path",
+  "dailyBeforeAfterRunAfterCleanupIdentical": true,
+  "targetedCleanup": {
+    "at": "2026-11-06T08:50:41.709903+00:00",
+    "residualPaths": [],
+    "status": "通过",
+    "claim": "Targeted registration removal; no claim about erased history or never-set defaults"
+  },
+  "requests": [
+    {
+      "requestID": "e5711e25-daf1-4f05-afc2-75f93a952847",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "acceptedAt": "2026-11-06T05:42:14.766504Z",
+      "submittedAt": "",
+      "completion": {
+        "completedAt": "",
+        "error": null,
+        "known": false
+      },
+      "actual": null,
+      "readbackState": "unknown",
+      "confirmed": false,
+      "humanReports": [
+        {
+          "reportedAt": "2026-11-06T05:59:40.944829+00:00",
+          "requestID": "e5711e25-daf1-4f05-afc2-75f93a952847",
+          "source": "human report relayed by root",
+          "button": "使用 Acceptance A",
+          "context": "original system confirmation after originating process exited; old completion unobservable"
+        }
+      ]
+    },
+    {
+      "requestID": "de0587ac-e9a9-4709-a2c1-682e617c7e04",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "acceptedAt": "2026-11-06T05:59:41.29839Z",
+      "submittedAt": "2026-11-06T05:59:41.310115Z",
+      "completion": {
+        "completedAt": "2026-11-06T06:11:24.352998Z",
+        "error": null,
+        "known": true
+      },
+      "actual": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "readbackState": "valid",
+      "confirmed": true,
+      "humanReports": [
+        {
+          "reportedAt": "2026-11-06T06:20:24.644063+00:00",
+          "requestID": "de0587ac-e9a9-4709-a2c1-682e617c7e04",
+          "source": "human report relayed by root",
+          "button": "使用 Acceptance B"
+        }
+      ]
+    },
+    {
+      "requestID": "bc089332-6f56-4a0f-a633-9501aaa81a99",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "acceptedAt": "2026-11-06T06:20:24.978198Z",
+      "submittedAt": "2026-11-06T06:20:24.993538Z",
+      "completion": {
+        "completedAt": "2026-11-06T06:35:40.420578Z",
+        "error": null,
+        "known": true
+      },
+      "actual": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "readbackState": "valid",
+      "confirmed": true,
+      "humanReports": [
+        {
+          "reportedAt": "2026-11-06T06:45:01.224555+00:00",
+          "requestID": "bc089332-6f56-4a0f-a633-9501aaa81a99",
+          "source": "human report relayed by root",
+          "button": "使用 Acceptance A"
+        }
+      ]
+    },
+    {
+      "requestID": "10ee9dc1-6c11-4419-bc86-0b765175cfc9",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "acceptedAt": "2026-11-06T06:45:01.47169Z",
+      "submittedAt": "2026-11-06T06:45:01.486991Z",
+      "completion": {
+        "completedAt": "2026-11-06T07:11:27.677546Z",
+        "error": {
+          "code": 256,
+          "description": "The file couldn’t be opened.",
+          "domain": "NSCocoaErrorDomain"
+        },
+        "known": true
+      },
+      "actual": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "readbackState": "valid",
+      "confirmed": false,
+      "humanReports": [
+        {
+          "reportedAt": "2026-11-06T07:37:33.816858+00:00",
+          "requestID": "10ee9dc1-6c11-4419-bc86-0b765175cfc9",
+          "source": "human report relayed by root",
+          "button": "继续使用 Acceptance A"
+        }
+      ]
+    },
+    {
+      "requestID": "14cea5ae-950d-4ee1-8ce4-bad1d9d54c6d",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app",
+      "acceptedAt": "2026-11-06T07:46:29.157902Z",
+      "submittedAt": "2026-11-06T07:46:29.172941Z",
+      "completion": {
+        "completedAt": "2026-11-06T07:46:29.191946Z",
+        "error": null,
+        "known": true
+      },
+      "actual": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app",
+      "readbackState": "valid",
+      "confirmed": false,
+      "humanReports": []
+    },
+    {
+      "requestID": "daee7fee-963f-46cc-9cc8-f93113d03836",
+      "association": {
+        "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "kind": "file"
+      },
+      "target": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+      "before": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app",
+      "acceptedAt": "2026-11-06T08:27:30.968664Z",
+      "submittedAt": "2026-11-06T08:27:30.984284Z",
+      "completion": {
+        "completedAt": "2026-11-06T08:39:22.116822Z",
+        "error": null,
+        "known": true
+      },
+      "actual": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+      "readbackState": "valid",
+      "confirmed": true,
+      "humanReports": [
+        {
+          "reportedAt": "2026-11-06T08:50:34.583519+00:00",
+          "requestID": "daee7fee-963f-46cc-9cc8-f93113d03836",
+          "source": "human report relayed by root",
+          "button": "使用 Acceptance Undeclared"
+        }
+      ]
+    }
+  ],
+  "productionTags": [
+    "production"
+  ],
+  "acceptanceTags": [
+    "production",
+    "mcp",
+    "manual_smoke",
+    "lifecycle_smoke",
+    "native_acceptance"
+  ],
+  "controlledTests": "native_adapter_test only; these are not native system results"
+}

@@ -1,0 +1,14 @@
+{
+  "native": {
+    "contentWidth": 1000,
+    "contentHeight": 700,
+    "visible": true
+  },
+  "DOM": {
+    "height": 701,
+    "overflow": 0,
+    "scrollHeight": 701,
+    "width": 1001
+  },
+  "note": "Native content is 1000×700. WKWebView reports rounded logical 1001×701 at dpr=1. Earlier Wails set_size guessed outer 728 and temporarily gave content height696; this artifact records corrected native content-based minimum."
+}
