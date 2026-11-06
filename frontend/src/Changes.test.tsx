@@ -10,7 +10,7 @@ vi.mock('@wailsio/runtime',()=>({Events:{On:vi.fn()}}))
 const copy={path:'/Applications/Reader.app',displayPath:'/Applications/Reader.app',name:'Reader',version:'2',bundleID:'test.reader'}
 const association={kind:'file',key:'com.adobe.pdf'}
 const observation={known:true,app:null,observedAt:'2026-11-06T00:00:00Z',error:null,stale:false}
-const empty:Snapshot={version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file','scheme'],storageError:null}
+const empty:Snapshot={version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file','scheme'],storageError:null,recovery:null,quit:{prompt:false,promptID:0,exiting:false}}
 const request:Request={requestID:'one',association,target:copy,preflight:observation,phase:'accepted',acceptedAt:'now',submittedAt:'',completion:{known:false,error:null,completedAt:''},readback:{state:'pending',observation},confirmed:false,storageError:null}
 let notify:(event:{data:Snapshot})=>void
 beforeEach(()=>{vi.resetAllMocks();vi.mocked(GetSnapshot).mockResolvedValue(empty);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})

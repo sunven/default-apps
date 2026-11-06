@@ -38,6 +38,10 @@ func main() {
 		if app != nil {
 			app.Event.Emit("defaultapps:change", snapshot)
 		}
+	}, Quit: func() {
+		if app != nil {
+			app.Quit()
+		}
 	}})
 	discoveryService := discovery.NewService(native.Adapter{}, catalogService, []string{"/Applications", filepath.Join(home, "Applications"), "/System/Applications"}, func(snapshot discovery.Snapshot) { app.Event.Emit("defaultapps:catalog", snapshot) }, store)
 	manualService := manual.NewService(catalogService, native.Adapter{}, store, picker, func() { discoveryService.StartScan() })
@@ -47,12 +51,25 @@ func main() {
 		Services:    []application.Service{application.NewService(associationService), application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService)},
 		Assets:      application.AssetOptions{Handler: application.AssetFileServerFS(assets)},
 		Mac:         application.MacOptions{ApplicationShouldTerminateAfterLastWindowClosed: true},
+		ShouldQuit: func() bool {
+			allowed := changeService.RequestQuit()
+			traceQuitHook("ShouldQuit", allowed)
+			return allowed
+		},
 	})
 	window := app.Window.NewWithOptions(application.WebviewWindowOptions{
 		Name: "main", Title: "Default Apps", Width: 1180, Height: 800,
 		BackgroundColour: application.NewRGB(245, 246, 248), URL: "/",
 	})
 	picker.App, picker.Window = app, window
+	window.RegisterHook(events.Common.WindowClosing, func(event *application.WindowEvent) {
+		allowed := changeService.RequestQuit()
+		traceQuitHook("WindowClosing", allowed)
+		if !allowed {
+			event.Cancel()
+		}
+	})
+	setupLifecycleSmoke(app, window)
 	setupManualSmoke(app, window)
 	window.OnWindowEvent(events.Common.WindowRuntimeReady, func(*application.WindowEvent) {
 		application.InvokeAsync(func() { native.SetContentMinimum(window.NativeWindow(), 1000, 700) })

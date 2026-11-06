@@ -14,17 +14,17 @@ export function useChanges(){
  const version=useRef(-1),inFlight=useRef(false)
  const accept=useCallback((value:Snapshot)=>{if(value.version<=version.current)return;version.current=value.version;setState(value)},[])
  useEffect(()=>{let active=true;const off=Events.On('defaultapps:change',event=>{if(active)accept(event.data)});void GetSnapshot().then(value=>{if(active)accept(value)}).catch(error=>{if(active)setMessage(`无法读取修改状态：${String(error)}`)});return()=>{active=false;off()}},[accept])
- const submit=async(association:Association,target:AppCopy,observed:DefaultObservation)=>{
-  if(inFlight.current||state?.busy||uncertain)return
+ const submit=async(association:Association,target:AppCopy,observed:DefaultObservation,recoveryRequestID='')=>{
+  if(inFlight.current||state?.busy||state?.quit?.exiting||uncertain)return
   inFlight.current=true;setSending(true);setMessage('')
   const requestID=crypto.randomUUID()
-  try{const result=await Submit({requestID,association,targetPath:target.path,expected:{known:observed.known&&!observed.stale&&!observed.error,path:observed.app?.path??''}});accept(result.snapshot);setMessage(result.outcome==='accepted'||result.outcome==='existing'?'':result.message)}
+  try{const result=await Submit({requestID,recoveryRequestID,association,targetPath:target.path,expected:{known:observed.known&&!observed.stale&&!observed.error,path:observed.app?.path??''}});accept(result.snapshot);setMessage(result.outcome==='accepted'||result.outcome==='existing'?'':result.message)}
   catch(error){setUncertain(requestID);setMessage(`提交应答中断，受理结果待确认。${String(error)}`)}
   finally{inFlight.current=false;setSending(false)}
  }
  const retry=async(association:Association)=>{try{accept(await Requery(association));setMessage('')}catch(error){setMessage(`重新查询失败：${String(error)}`)}}
  const recoverReply=async()=>{try{const snapshot=await GetSnapshot();accept(snapshot);const found=snapshot.requests?.some(r=>r.requestID===uncertain);if(found)setUncertain(null);setMessage(found?'已找到原修改请求。':'原请求尚未出现在快照中，受理结果仍待确认；可继续查看原请求状态。')}catch(error){setMessage(`无法读取修改状态：${String(error)}`)}}
- return {state,message,sending,uncertain,blocked:!state||state.busy||sending||!!uncertain,submit,retry,recoverReply}
+ return {state,message,sending,uncertain,blocked:!state||state.busy||!!state.quit?.exiting||sending||!!uncertain,submit,retry,recoverReply}
 }
 export type Changes=ReturnType<typeof useChanges>
 export function requestLabel(request:Request){
@@ -34,7 +34,8 @@ export function requestLabel(request:Request){
  return request.phase==='submitted'?'已提交系统 · 等待系统返回':'已受理 · 等待提交系统'
 }
 export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(association:Association)=>void}){
- const request=changes.state?.requests?.find(r=>r.requestID===changes.state?.activeRequestID)??(changes.state?.requests?.length?changes.state.requests[changes.state.requests.length-1]:undefined)
+ const requests=changes.state?.requests?.filter(r=>r.phase!=='recovered')
+ const request=requests?.find(r=>r.requestID===changes.state?.activeRequestID)??requests?.[requests.length-1]
  if(!request&&!changes.message&&!changes.state?.storageError)return null
  return <section className="change-status" aria-label="修改请求状态" aria-live="polite">
   {request?<><div className="change-summary"><strong>{requestLabel(request)}</strong><span>{request.association.key}</span><button onClick={()=>onReturn(request.association)}>返回请求项</button>{request.readback.state==='failed'?<button onClick={()=>void changes.retry(request.association)}>重新回读</button>:null}</div>
