@@ -13,3 +13,8 @@ import "../github.com/wailsapp/wails/v3/internal/eventcreate.js";
  */
 export const DefaultappsCatalog = "defaultapps:catalog";
 
+/**
+ * Name of the custom event "defaultapps:change".
+ */
+export const DefaultappsChange = "defaultapps:change";
+

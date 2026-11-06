@@ -1,0 +1,289 @@
+[
+  {
+    "scenario": "app-row accepted before actual submission",
+    "busy": true,
+    "phase": "accepted",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "pending",
+    "setterCount": 1,
+    "pendingID": "ddc6a0d0-b23f-46c9-af98-4ba66466f6ca",
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "waiting preserves navigation and cross-kind gate",
+    "busy": true,
+    "phase": "submitted",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "pending",
+    "setterCount": 1,
+    "pendingID": "ddc6a0d0-b23f-46c9-af98-4ba66466f6ca",
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "target observation does not invent completion",
+    "busy": true,
+    "phase": "submitted",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "pending",
+    "setterCount": 1,
+    "pendingID": "ddc6a0d0-b23f-46c9-af98-4ba66466f6ca",
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "exact path confirmation clears record",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": true,
+    "nativeError": null,
+    "readback": "valid",
+    "setterCount": 1,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "same bundle id different path remains mismatch",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "valid",
+    "setterCount": 2,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "native error independently retained with failed readback",
+    "busy": true,
+    "phase": "completed",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "failed",
+    "setterCount": 3,
+    "pendingID": "898d59f5-7b3d-4998-8fdb-a35eb08d8770",
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "read-only retry releases gate without false success",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "preflight externally changed default returns fresh observation",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "preflight already target no-op",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "preflight unavailable target no dispatch",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "preflight query failure no dispatch",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "unresolved identity rejected through bound service",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "save failure leaves no setter and preserves manual data",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": false,
+    "nativeError": {
+      "code": 42,
+      "description": "System declined",
+      "domain": "ControlledNSError"
+    },
+    "readback": "valid",
+    "setterCount": 3,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "known success with separate record-clear error",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": true,
+    "nativeError": null,
+    "readback": "valid",
+    "setterCount": 4,
+    "pendingID": "06ef65bb-1d4d-4220-9bd4-e78f7704d331",
+    "manualAssociations": 1,
+    "viewport": [
+      1180,
+      800
+    ]
+  },
+  {
+    "scenario": "pending status and controls remain reachable at minimum content size",
+    "busy": true,
+    "phase": "submitted",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "pending",
+    "setterCount": 5,
+    "pendingID": "df2f2f44-357a-4469-8e90-b5168cc49543",
+    "manualAssociations": 1,
+    "viewport": [
+      1000,
+      700
+    ]
+  },
+  {
+    "scenario": "return to original request item",
+    "busy": true,
+    "phase": "submitted",
+    "confirmed": false,
+    "nativeError": null,
+    "readback": "pending",
+    "setterCount": 5,
+    "pendingID": "df2f2f44-357a-4469-8e90-b5168cc49543",
+    "manualAssociations": 1,
+    "viewport": [
+      1000,
+      700
+    ]
+  },
+  {
+    "scenario": "later request clears previous storage uncertainty",
+    "busy": false,
+    "phase": "resolved",
+    "confirmed": true,
+    "nativeError": null,
+    "readback": "valid",
+    "setterCount": 5,
+    "pendingID": null,
+    "manualAssociations": 1,
+    "viewport": [
+      1000,
+      700
+    ]
+  }
+]

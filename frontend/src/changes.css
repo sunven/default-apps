@@ -1,0 +1,17 @@
+.change-status{flex:none;padding:9px 24px;background:#f0f3f6;border-bottom:1px solid #dce1e7;font-size:12px;max-height:170px;overflow:auto;user-select:text}
+.change-summary{display:flex;align-items:center;gap:12px;min-width:0}
+.change-summary strong{font-weight:600;font-size:13px}
+.change-summary>span{min-width:0;overflow-wrap:anywhere}
+.change-summary button{margin-left:auto;flex:none;padding:3px 10px;min-height:28px;font-size:12px}
+.change-summary button+button{margin-left:0}
+.change-target{margin-top:4px;overflow-wrap:anywhere}
+.change-status p{overflow-wrap:anywhere}
+.change-error{color:#835006}
+.change-copy-action{margin-top:8px}
+.row-actions{display:flex;gap:5px;align-items:center;justify-content:flex-end}
+.row-actions button{padding:5px 8px;font-size:12px;white-space:nowrap}
+.change-row-state{display:block;font-size:11px;line-height:1.4;color:#835006}
+
+.browser-workspace:not(.catalog-view) .column-labels,.browser-workspace:not(.catalog-view) .association-row{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 138px;gap:10px}
+.row-actions{flex-wrap:wrap}
+.change-row-state{width:100%;text-align:right}

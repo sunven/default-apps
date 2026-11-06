@@ -1,0 +1,6 @@
+{
+  "unchanged": true,
+  "associations": 21,
+  "nativeSetters": 0,
+  "layer": "controlled writes only; independent native queries before and after"
+}

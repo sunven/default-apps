@@ -2,14 +2,14 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { Events } from '@wailsio/runtime'
-import { Query } from '../bindings/github.com/sunven/default-apps/internal/association/service'
+import { Query } from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
 import { GetSnapshot, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import App from './App'
 
-vi.mock('../bindings/github.com/sunven/default-apps/internal/association/service', () => ({Query:vi.fn()}))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({Query:vi.fn(),GetSnapshot:()=>Promise.resolve({version:0,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null})}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({List:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({GetSnapshot:vi.fn(),StartScan:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))
@@ -28,7 +28,7 @@ beforeEach(()=>{
  vi.mocked(List).mockResolvedValue(snapshot.entries!)
  vi.mocked(GetSnapshot).mockResolvedValue(snapshot)
  vi.mocked(StartScan).mockResolvedValue(snapshot)
- vi.mocked(Events.On).mockImplementation((_name,listener)=>{publish=listener as typeof publish;return ()=>{}})
+ vi.mocked(Events.On).mockImplementation((name,listener)=>{if(name==='defaultapps:catalog')publish=listener as typeof publish;return ()=>{}})
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
 })
 

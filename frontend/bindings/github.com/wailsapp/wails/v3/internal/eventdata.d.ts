@@ -7,12 +7,16 @@ import type { Events } from "@wailsio/runtime";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import type * as change$0 from "../../../../sunven/default-apps/internal/change/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import type * as discovery$0 from "../../../../sunven/default-apps/internal/discovery/models.js";
 
 declare module "@wailsio/runtime" {
     namespace Events {
         interface CustomEvents {
             "defaultapps:catalog": discovery$0.Snapshot;
+            "defaultapps:change": change$0.Snapshot;
         }
     }
 }
