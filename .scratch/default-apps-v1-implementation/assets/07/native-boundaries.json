@@ -5,19 +5,19 @@
       "active": {
         "label": null,
         "tag": "BODY",
-        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已确认本次修改com.adobe.pdf返回请求项目标：/Applications/Xcode.app实际默认：/Applications/Xcode.app提"
+        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用正在核对原修改请求 · com.adobe.pdf目标：/Applications/Xcode.app提交应答中断，受理结果待确认。Error: control"
       },
       "dialogs": 0,
       "overflow": 0,
-      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n提交应答中断，受理结果待确认。Error: controlled lost submit response\n\n查看原请求状态",
+      "text": "正在核对原修改请求 · com.adobe.pdf\n目标：/Applications/Xcode.app\n\n提交应答中断，受理结果待确认。Error: controlled lost submit response\n\n查看原请求状态",
       "view": "file",
       "viewport": [
-        1001,
-        701
+        1180,
+        800
       ]
     },
     "snapshot": {
-      "activeRequestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+      "activeRequestID": "982ec11a-462a-4f69-b073-891bd79a435c",
       "busy": true,
       "observations": [
         {
@@ -44,7 +44,7 @@
             ],
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685945Z",
+            "observedAt": "2026-11-06T05:11:52.271923Z",
             "stale": false
           },
           "default": {
@@ -57,121 +57,21 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "stale": false
           },
-          "version": 44
+          "version": 3
         }
       ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
       "requests": [
         {
-          "acceptedAt": "2026-11-06T05:02:42.047125Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:44.003714Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "controlled.before",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Before",
-              "path": "/Controlled/Before.app",
-              "version": "1"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:42.043943Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:44.010784Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "0e67cdfa-0cb3-43b9-a197-7e86cc434c4f",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:42.624079Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:44.814489Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:45.376802Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "com.apple.dt.Xcode",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Xcode",
-              "path": "/Controlled/Before.app",
-              "version": "27.2"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:44.807896Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:45.381823Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "822d58ba-b95b-485a-88f6-0104a8a6ef47",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:45.371912Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
           "association": {
             "key": "com.adobe.pdf",
             "kind": "file"
@@ -193,7 +93,7 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "stale": false
           },
           "readback": {
@@ -206,7 +106,7 @@
             },
             "state": "pending"
           },
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "storageError": null,
           "submittedAt": "",
           "target": {
@@ -219,13 +119,14 @@
         }
       ],
       "storageError": null,
-      "version": 637,
+      "version": 131,
       "writableKinds": [
         "file",
         "scheme"
       ]
     },
     "adapter": {
+      "actualStarts": 0,
       "current": {
         "path": "/Controlled/Before.app",
         "displayPath": "/Controlled/Before.app",
@@ -258,7 +159,7 @@
           }
         ],
         "pending": {
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "association": {
             "kind": "file",
             "key": "com.adobe.pdf"
@@ -279,61 +180,61 @@
               "version": "27.2",
               "bundleID": "com.apple.dt.Xcode"
             },
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "error": null,
             "stale": false
           },
           "phase": "accepted",
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
           "submittedAt": ""
         }
       },
       "queries": [
         {
           "kind": "file",
-          "key": "com.apple.bundle"
+          "key": "public.precompiled-c-header"
         },
         {
           "kind": "file",
-          "key": "com.apple.voiceover-preferences"
+          "key": "public.c-header"
         },
         {
           "kind": "file",
-          "key": "com.apple.resolvable"
+          "key": "public.c-plus-plus-header"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.precompiled-c-plus-plus-header"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.c-source"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.opencl-source"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.module-map"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.text-based-dylib"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.objective-c-source"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.objective-c-plus-plus-source"
         }
       ],
-      "querySequence": 629,
+      "querySequence": 144,
       "saving": false,
-      "starts": 3,
-      "queryCount": 629
+      "starts": 1,
+      "queryCount": 144
     },
     "original": {
       "association": {
@@ -345,7 +246,7 @@
         "path": "/Controlled/Before.app"
       },
       "recoveryRequestID": "",
-      "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+      "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
       "targetPath": "/Applications/Xcode.app"
     }
   },
@@ -362,12 +263,12 @@
       "text": "已受理 · 等待提交系统\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app",
       "view": "app",
       "viewport": [
-        1001,
-        701
+        1180,
+        800
       ]
     },
     "snapshot": {
-      "activeRequestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+      "activeRequestID": "982ec11a-462a-4f69-b073-891bd79a435c",
       "busy": true,
       "observations": [
         {
@@ -394,7 +295,7 @@
             ],
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685945Z",
+            "observedAt": "2026-11-06T05:11:52.271923Z",
             "stale": false
           },
           "default": {
@@ -407,121 +308,21 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "stale": false
           },
-          "version": 44
+          "version": 3
         }
       ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
       "requests": [
         {
-          "acceptedAt": "2026-11-06T05:02:42.047125Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:44.003714Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "controlled.before",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Before",
-              "path": "/Controlled/Before.app",
-              "version": "1"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:42.043943Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:44.010784Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "0e67cdfa-0cb3-43b9-a197-7e86cc434c4f",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:42.624079Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:44.814489Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:45.376802Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "com.apple.dt.Xcode",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Xcode",
-              "path": "/Controlled/Before.app",
-              "version": "27.2"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:44.807896Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:45.381823Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "822d58ba-b95b-485a-88f6-0104a8a6ef47",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:45.371912Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
           "association": {
             "key": "com.adobe.pdf",
             "kind": "file"
@@ -543,7 +344,7 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "stale": false
           },
           "readback": {
@@ -556,7 +357,7 @@
             },
             "state": "pending"
           },
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "storageError": null,
           "submittedAt": "",
           "target": {
@@ -569,13 +370,14 @@
         }
       ],
       "storageError": null,
-      "version": 637,
+      "version": 190,
       "writableKinds": [
         "file",
         "scheme"
       ]
     },
     "adapter": {
+      "actualStarts": 0,
       "current": {
         "path": "/Controlled/Before.app",
         "displayPath": "/Controlled/Before.app",
@@ -608,7 +410,7 @@
           }
         ],
         "pending": {
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "association": {
             "kind": "file",
             "key": "com.adobe.pdf"
@@ -629,61 +431,61 @@
               "version": "27.2",
               "bundleID": "com.apple.dt.Xcode"
             },
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "error": null,
             "stale": false
           },
           "phase": "accepted",
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
           "submittedAt": ""
         }
       },
       "queries": [
         {
           "kind": "file",
-          "key": "com.apple.bundle"
+          "key": "com.apple.dt.document.script-suite-property-list"
         },
         {
           "kind": "file",
-          "key": "com.apple.voiceover-preferences"
+          "key": "com.apple.dt.document.script-terminology-property-list"
         },
         {
           "kind": "file",
-          "key": "com.apple.resolvable"
+          "key": "com.apple.scripting-definition"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.xcode.resultbundle"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.applescript.text"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.xcode.entitlements-property-list"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.rtfd"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.xcode.model.data"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.xcode.model.data-version"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.apple.xcode.model.data-mapping"
         }
       ],
-      "querySequence": 629,
+      "querySequence": 189,
       "saving": false,
-      "starts": 3,
-      "queryCount": 629
+      "starts": 1,
+      "queryCount": 189
     }
   },
   {
@@ -692,15 +494,15 @@
       "active": {
         "label": null,
         "tag": "BODY",
-        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已确认本次修改com.adobe.pdf返回请求项目标：/Applications/Xcode.app实际默认：/Applications/Xcode.app原"
+        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已确认本次修改com.adobe.pdf返回请求项目标：/Applications/Xcode.app实际默认：/Applications/Xcode.app本"
       },
       "dialogs": 0,
       "overflow": 0,
-      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n原请求未获受理，未调用系统修改。请查看当前默认后重新选择。",
+      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
       "view": "file",
       "viewport": [
-        1001,
-        701
+        1180,
+        800
       ]
     },
     "snapshot": {
@@ -731,7 +533,7 @@
             ],
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:46.375385Z",
+            "observedAt": "2026-11-06T05:11:52.959225Z",
             "stale": false
           },
           "default": {
@@ -744,74 +546,27 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:46.375383Z",
+            "observedAt": "2026-11-06T05:11:52.959197Z",
             "stale": false
           },
-          "version": 47
+          "version": 6
         }
       ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
       "requests": [
         {
-          "acceptedAt": "2026-11-06T05:02:42.047125Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
           "association": {
             "key": "com.adobe.pdf",
             "kind": "file"
           },
           "completion": {
-            "completedAt": "2026-11-06T05:02:44.003714Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "controlled.before",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Before",
-              "path": "/Controlled/Before.app",
-              "version": "1"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:42.043943Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:44.010784Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "0e67cdfa-0cb3-43b9-a197-7e86cc434c4f",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:42.624079Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:44.814489Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:45.376802Z",
+            "completedAt": "2026-11-06T05:11:52.840183Z",
             "error": null,
             "known": true
           },
@@ -827,7 +582,7 @@
             },
             "error": null,
             "known": true,
-            "observedAt": "2026-11-06T05:02:44.807896Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "stale": false
           },
           "readback": {
@@ -841,67 +596,14 @@
               },
               "error": null,
               "known": true,
-              "observedAt": "2026-11-06T05:02:45.381823Z",
+              "observedAt": "2026-11-06T05:11:52.841688Z",
               "stale": false
             },
             "state": "valid"
           },
-          "requestID": "822d58ba-b95b-485a-88f6-0104a8a6ef47",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "storageError": null,
-          "submittedAt": "2026-11-06T05:02:45.371912Z",
-          "target": {
-            "bundleID": "com.apple.dt.Xcode",
-            "displayPath": "/Applications/Xcode.app",
-            "name": "Xcode",
-            "path": "/Applications/Xcode.app",
-            "version": "27.0"
-          }
-        },
-        {
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
-          "association": {
-            "key": "com.adobe.pdf",
-            "kind": "file"
-          },
-          "completion": {
-            "completedAt": "2026-11-06T05:02:46.257361Z",
-            "error": null,
-            "known": true
-          },
-          "confirmed": true,
-          "phase": "resolved",
-          "preflight": {
-            "app": {
-              "bundleID": "com.apple.dt.Xcode",
-              "displayPath": "/Controlled/Before.app",
-              "name": "Xcode",
-              "path": "/Controlled/Before.app",
-              "version": "27.2"
-            },
-            "error": null,
-            "known": true,
-            "observedAt": "2026-11-06T05:02:45.685944Z",
-            "stale": false
-          },
-          "readback": {
-            "observation": {
-              "app": {
-                "bundleID": "com.apple.dt.Xcode",
-                "displayPath": "/Applications/Xcode.app",
-                "name": "Xcode",
-                "path": "/Applications/Xcode.app",
-                "version": "27.2"
-              },
-              "error": null,
-              "known": true,
-              "observedAt": "2026-11-06T05:02:46.261526Z",
-              "stale": false
-            },
-            "state": "valid"
-          },
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
-          "storageError": null,
-          "submittedAt": "2026-11-06T05:02:46.253075Z",
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
           "target": {
             "bundleID": "com.apple.dt.Xcode",
             "displayPath": "/Applications/Xcode.app",
@@ -912,13 +614,14 @@
         }
       ],
       "storageError": null,
-      "version": 643,
+      "version": 336,
       "writableKinds": [
         "file",
         "scheme"
       ]
     },
     "adapter": {
+      "actualStarts": 1,
       "current": {
         "path": "/Controlled/Before.app",
         "displayPath": "/Controlled/Before.app",
@@ -951,7 +654,7 @@
           }
         ],
         "pending": {
-          "requestID": "f054c330-3874-4c90-8a13-91a5b18c04b9",
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
           "association": {
             "kind": "file",
             "key": "com.adobe.pdf"
@@ -972,12 +675,1462 @@
               "version": "27.2",
               "bundleID": "com.apple.dt.Xcode"
             },
-            "observedAt": "2026-11-06T05:02:45.685944Z",
+            "observedAt": "2026-11-06T05:11:52.271922Z",
             "error": null,
             "stale": false
           },
           "phase": "accepted",
-          "acceptedAt": "2026-11-06T05:02:45.691833Z",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "file",
+          "key": "com.apple.migratedphotolibrary"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.photo.library"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.migratedaplibrary"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.photos.asset-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.private.live-photo-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.pdf-printer-settings"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.localized-pdf-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.illustrator.ai-image"
+        },
+        {
+          "kind": "file",
+          "key": "public.camera-raw-image"
+        },
+        {
+          "kind": "file",
+          "key": "public.heif"
+        }
+      ],
+      "querySequence": 343,
+      "saving": false,
+      "starts": 1,
+      "queryCount": 343
+    },
+    "lateOutcome": "interrupted"
+  },
+  {
+    "scenario": "public Wails call cancellation before acceptance never dispatches",
+    "DOM": {
+      "active": {
+        "label": null,
+        "tag": "BODY",
+        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已确认本次修改com.adobe.pdf返回请求项目标：/Applications/Xcode.app实际默认：/Applications/Xcode.app本"
+      },
+      "dialogs": 0,
+      "overflow": 0,
+      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
+      "view": "file",
+      "viewport": [
+        1180,
+        800
+      ]
+    },
+    "snapshot": {
+      "activeRequestID": "",
+      "busy": false,
+      "observations": [
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.289097Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.28903Z",
+            "stale": false
+          },
+          "version": 7
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:52.840183Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:52.841688Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 442,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "adapter": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Controlled/Before.app",
+        "displayPath": "/Controlled/Before.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "ticket07-preserve",
+              "label": "Ticket 07 manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:ticket07-preserve"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "name": "Sync Reader",
+            "version": "1.0",
+            "bundleID": "com.sunven.defaultapps.ticket07"
+          }
+        ],
+        "pending": {
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "association": {
+            "kind": "file",
+            "key": "com.adobe.pdf"
+          },
+          "target": {
+            "path": "/Applications/Xcode.app",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "version": "27.0",
+            "bundleID": "com.apple.dt.Xcode"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "version": "27.2",
+              "bundleID": "com.apple.dt.Xcode"
+            },
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "file",
+          "key": "com.apple.magnifier.document"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.vnc-internet-location"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.systemprofiler.document"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.session"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.settings"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.resolvable"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.voiceover-preferences"
+        }
+      ],
+      "querySequence": 437,
+      "saving": false,
+      "starts": 1,
+      "queryCount": 437
+    }
+  },
+  {
+    "scenario": "public Wails call cancellation during durable save keeps one original request",
+    "DOM": {
+      "active": {
+        "label": null,
+        "tag": "BODY",
+        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已受理 · 等待提交系统com.adobe.pdf返回请求项目标：/Applications/Xcode.app本次会话未受理原请求，迟到的提交不会执行。请查看"
+      },
+      "dialogs": 0,
+      "overflow": 0,
+      "text": "已受理 · 等待提交系统\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
+      "view": "file",
+      "viewport": [
+        1180,
+        800
+      ]
+    },
+    "snapshot": {
+      "activeRequestID": "native-cancel-durable",
+      "busy": true,
+      "observations": [
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422929Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "stale": false
+          },
+          "version": 8
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:52.840183Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:52.841688Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        },
+        {
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "",
+            "error": null,
+            "known": false
+          },
+          "confirmed": false,
+          "phase": "accepted",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": null,
+              "error": null,
+              "known": false,
+              "observedAt": "",
+              "stale": false
+            },
+            "state": "pending"
+          },
+          "requestID": "native-cancel-durable",
+          "storageError": null,
+          "submittedAt": "",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 444,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "adapter": {
+      "actualStarts": 1,
+      "current": {
+        "path": "/Controlled/Before.app",
+        "displayPath": "/Controlled/Before.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "ticket07-preserve",
+              "label": "Ticket 07 manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:ticket07-preserve"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "name": "Sync Reader",
+            "version": "1.0",
+            "bundleID": "com.sunven.defaultapps.ticket07"
+          }
+        ],
+        "pending": {
+          "requestID": "native-cancel-durable",
+          "association": {
+            "kind": "file",
+            "key": "com.adobe.pdf"
+          },
+          "target": {
+            "path": "/Applications/Xcode.app",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "version": "27.0",
+            "bundleID": "com.apple.dt.Xcode"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "version": "27.2",
+              "bundleID": "com.apple.dt.Xcode"
+            },
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "file",
+          "key": "com.apple.vnc-internet-location"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.systemprofiler.document"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.session"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.settings"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.resolvable"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.voiceover-preferences"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        }
+      ],
+      "querySequence": 438,
+      "saving": false,
+      "starts": 2,
+      "queryCount": 438
+    }
+  },
+  {
+    "scenario": "completion after caller cancellation reaches original request in formal UI",
+    "DOM": {
+      "active": {
+        "label": null,
+        "tag": "BODY",
+        "text": "\n    Default Apps应用文件类型URL 协议手动补充…重新扫描应用已确认本次修改com.adobe.pdf返回请求项目标：/Applications/Xcode.app实际默认：/Applications/Xcode.app本"
+      },
+      "dialogs": 0,
+      "overflow": 0,
+      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
+      "view": "file",
+      "viewport": [
+        1180,
+        800
+      ]
+    },
+    "snapshot": {
+      "activeRequestID": "",
+      "busy": false,
+      "observations": [
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.674827Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Applications/Xcode.app",
+              "name": "Xcode",
+              "path": "/Applications/Xcode.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.674826Z",
+            "stale": false
+          },
+          "version": 9
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:52.840183Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:52.841688Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        },
+        {
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:53.672128Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:53.674826Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "native-cancel-durable",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:53.669165Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 448,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "adapter": {
+      "actualStarts": 2,
+      "current": {
+        "path": "/Applications/Xcode.app",
+        "displayPath": "/Applications/Xcode.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "ticket07-preserve",
+              "label": "Ticket 07 manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:ticket07-preserve"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "name": "Sync Reader",
+            "version": "1.0",
+            "bundleID": "com.sunven.defaultapps.ticket07"
+          }
+        ],
+        "pending": {
+          "requestID": "native-cancel-durable",
+          "association": {
+            "kind": "file",
+            "key": "com.adobe.pdf"
+          },
+          "target": {
+            "path": "/Applications/Xcode.app",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "version": "27.0",
+            "bundleID": "com.apple.dt.Xcode"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "version": "27.2",
+              "bundleID": "com.apple.dt.Xcode"
+            },
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.applescript.script-bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.systemprofiler.document"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.session"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.terminal.settings"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.resolvable"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.voiceover-preferences"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        }
+      ],
+      "querySequence": 439,
+      "saving": false,
+      "starts": 2,
+      "queryCount": 439
+    }
+  },
+  {
+    "scenario": "AppKit foreground activation refreshes visible default without another setter",
+    "DOM": {
+      "active": {
+        "label": "关闭PDF document",
+        "tag": "BUTTON",
+        "text": "关闭"
+      },
+      "dialogs": 1,
+      "overflow": 0,
+      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
+      "view": "file",
+      "viewport": [
+        1180,
+        800
+      ]
+    },
+    "snapshot": {
+      "activeRequestID": "",
+      "busy": false,
+      "observations": [
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:54.146527Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Foreground.app",
+              "name": "Xcode",
+              "path": "/Controlled/Foreground.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:54.146525Z",
+            "stale": false
+          },
+          "version": 11
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:52.840183Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:52.841688Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        },
+        {
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:53.672128Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:53.674826Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "native-cancel-durable",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:53.669165Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 453,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "adapter": {
+      "actualStarts": 2,
+      "current": {
+        "path": "/Controlled/Foreground.app",
+        "displayPath": "/Controlled/Foreground.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "ticket07-preserve",
+              "label": "Ticket 07 manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:ticket07-preserve"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "name": "Sync Reader",
+            "version": "1.0",
+            "bundleID": "com.sunven.defaultapps.ticket07"
+          }
+        ],
+        "pending": {
+          "requestID": "native-cancel-durable",
+          "association": {
+            "kind": "file",
+            "key": "com.adobe.pdf"
+          },
+          "target": {
+            "path": "/Applications/Xcode.app",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "version": "27.0",
+            "bundleID": "com.apple.dt.Xcode"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "version": "27.2",
+              "bundleID": "com.apple.dt.Xcode"
+            },
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "submittedAt": ""
+        }
+      },
+      "queries": [
+        {
+          "kind": "file",
+          "key": "com.apple.resolvable"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.bundle"
+        },
+        {
+          "kind": "file",
+          "key": "com.apple.voiceover-preferences"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "com.adobe.pdf"
+        },
+        {
+          "kind": "file",
+          "key": "public.rtf"
+        },
+        {
+          "kind": "file",
+          "key": "public.plain-text"
+        },
+        {
+          "kind": "file",
+          "key": "com.microsoft.ppt.export.rtf"
+        }
+      ],
+      "querySequence": 444,
+      "saving": false,
+      "starts": 2,
+      "queryCount": 444
+    },
+    "nativeDeactivate": {
+      "active": false
+    },
+    "nativeActivate": {
+      "windows": [
+        {
+          "key": false,
+          "title": "Default Apps",
+          "class": "WebviewWindow",
+          "visible": true
+        },
+        {
+          "key": false,
+          "title": "",
+          "class": "TUINSWindow",
+          "visible": false
+        }
+      ],
+      "policy": 0,
+      "active": false,
+      "hidden": false
+    },
+    "queriesSinceActivation": 4
+  },
+  {
+    "scenario": "activation burst coalesces visible identities",
+    "DOM": {
+      "active": {
+        "label": "关闭PDF document",
+        "tag": "BUTTON",
+        "text": "关闭"
+      },
+      "dialogs": 1,
+      "overflow": 0,
+      "text": "已确认本次修改\ncom.adobe.pdf\n返回请求项\n\n目标：/Applications/Xcode.app\n\n实际默认：/Applications/Xcode.app\n\n本次会话未受理原请求，迟到的提交不会执行。请查看当前默认后重新选择。",
+      "view": "file",
+      "viewport": [
+        1180,
+        800
+      ]
+    },
+    "snapshot": {
+      "activeRequestID": "",
+      "busy": false,
+      "observations": [
+        {
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "candidates": {
+            "apps": [
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Controlled/Other/Xcode.app",
+                "name": "Xcode",
+                "path": "/Controlled/Other/Xcode.app",
+                "version": "27.2"
+              }
+            ],
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:54.29954Z",
+            "stale": false
+          },
+          "default": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Foreground.app",
+              "name": "Xcode",
+              "path": "/Controlled/Foreground.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:54.299538Z",
+            "stale": false
+          },
+          "version": 12
+        }
+      ],
+      "quit": {
+        "exiting": false,
+        "prompt": false,
+        "promptID": 0
+      },
+      "recovery": null,
+      "requests": [
+        {
+          "acceptedAt": "2026-11-06T05:11:52.276258Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:52.840183Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:52.271922Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:52.841688Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "982ec11a-462a-4f69-b073-891bd79a435c",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:52.838283Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        },
+        {
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
+          "association": {
+            "key": "com.adobe.pdf",
+            "kind": "file"
+          },
+          "completion": {
+            "completedAt": "2026-11-06T05:11:53.672128Z",
+            "error": null,
+            "known": true
+          },
+          "confirmed": true,
+          "phase": "resolved",
+          "preflight": {
+            "app": {
+              "bundleID": "com.apple.dt.Xcode",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "path": "/Controlled/Before.app",
+              "version": "27.2"
+            },
+            "error": null,
+            "known": true,
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "stale": false
+          },
+          "readback": {
+            "observation": {
+              "app": {
+                "bundleID": "com.apple.dt.Xcode",
+                "displayPath": "/Applications/Xcode.app",
+                "name": "Xcode",
+                "path": "/Applications/Xcode.app",
+                "version": "27.2"
+              },
+              "error": null,
+              "known": true,
+              "observedAt": "2026-11-06T05:11:53.674826Z",
+              "stale": false
+            },
+            "state": "valid"
+          },
+          "requestID": "native-cancel-durable",
+          "storageError": null,
+          "submittedAt": "2026-11-06T05:11:53.669165Z",
+          "target": {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          }
+        }
+      ],
+      "storageError": null,
+      "version": 457,
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    "adapter": {
+      "actualStarts": 2,
+      "current": {
+        "path": "/Controlled/Foreground.app",
+        "displayPath": "/Controlled/Foreground.app",
+        "name": "Xcode",
+        "version": "27.2",
+        "bundleID": "com.apple.dt.Xcode"
+      },
+      "heldQueries": [],
+      "layer": "native Wails shell + controlled adapter",
+      "pendingAtDispatch": {
+        "version": 1,
+        "associations": [
+          {
+            "input": {
+              "kind": "scheme",
+              "value": "ticket07-preserve",
+              "label": "Ticket 07 manual marker",
+              "source": "manual"
+            },
+            "selectedID": "scheme:ticket07-preserve"
+          }
+        ],
+        "applications": [
+          {
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/change07-smoke/Sync Reader.app",
+            "name": "Sync Reader",
+            "version": "1.0",
+            "bundleID": "com.sunven.defaultapps.ticket07"
+          }
+        ],
+        "pending": {
+          "requestID": "native-cancel-durable",
+          "association": {
+            "kind": "file",
+            "key": "com.adobe.pdf"
+          },
+          "target": {
+            "path": "/Applications/Xcode.app",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "version": "27.0",
+            "bundleID": "com.apple.dt.Xcode"
+          },
+          "preflight": {
+            "known": true,
+            "app": {
+              "path": "/Controlled/Before.app",
+              "displayPath": "/Controlled/Before.app",
+              "name": "Xcode",
+              "version": "27.2",
+              "bundleID": "com.apple.dt.Xcode"
+            },
+            "observedAt": "2026-11-06T05:11:53.422928Z",
+            "error": null,
+            "stale": false
+          },
+          "phase": "accepted",
+          "acceptedAt": "2026-11-06T05:11:53.428267Z",
           "submittedAt": ""
         }
       },
@@ -996,7 +2149,15 @@
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.rtf"
+        },
+        {
+          "kind": "file",
+          "key": "public.plain-text"
+        },
+        {
+          "kind": "file",
+          "key": "com.microsoft.ppt.export.rtf"
         },
         {
           "kind": "file",
@@ -1004,30 +2165,39 @@
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.plain-text"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "public.rtf"
         },
         {
           "kind": "file",
-          "key": "com.adobe.pdf"
-        },
-        {
-          "kind": "file",
-          "key": "com.adobe.pdf"
-        },
-        {
-          "kind": "file",
-          "key": "com.adobe.pdf"
+          "key": "com.microsoft.ppt.export.rtf"
         }
       ],
-      "querySequence": 632,
+      "querySequence": 448,
       "saving": false,
-      "starts": 3,
-      "queryCount": 632
+      "starts": 2,
+      "queryCount": 448
     },
-    "lateOutcome": "interrupted"
+    "refreshed": [
+      {
+        "kind": "file",
+        "key": "com.adobe.pdf"
+      },
+      {
+        "kind": "file",
+        "key": "public.plain-text"
+      },
+      {
+        "kind": "file",
+        "key": "public.rtf"
+      },
+      {
+        "kind": "file",
+        "key": "com.microsoft.ppt.export.rtf"
+      }
+    ]
   }
 ]

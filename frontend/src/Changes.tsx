@@ -59,12 +59,13 @@ export function requestLabel(request:Request){
 export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(association:Association)=>void}){
  const requests=changes.state?.requests?.filter(r=>r.phase!=='recovered')
  const request=requests?.find(r=>r.requestID===changes.state?.activeRequestID)??requests?.[requests.length-1]
+ const actual=request?changes.state?.observations?.find(value=>value.association.kind===request.association.kind&&value.association.key===request.association.key)?.default??request.readback.observation:undefined
  if(!request&&!changes.pending&&!changes.message&&!changes.state?.storageError)return null
  return <section className="change-status" aria-label="修改请求状态" aria-live="polite">
   {request?<><div className="change-summary"><strong>{requestLabel(request)}</strong><span>{request.association.key}</span><button onClick={()=>onReturn(request.association)}>返回请求项</button>{request.readback.state==='failed'?<button onClick={()=>void changes.retry(request.association)}>重新回读</button>:null}</div>
   <p className="change-target">目标：<span>{request.target.path}</span></p>
   {request.completion.error?<p className="change-error">{request.completion.error.domain} · {request.completion.error.code} · {request.completion.error.description}</p>:null}
-  {request.readback.state==='valid'?<p>实际默认：{request.readback.observation.app?.path??'无默认应用'}</p>:null}
+  {request.readback.state==='valid'?<p>实际默认：{actual?.app?.path??'无默认应用'}{actual?.stale?'（最后有效观察）':''}{actual?.error?` · 查询失败：${actual.error.message}`:''}</p>:null}
   {request.readback.state==='failed'?<p>保留最后有效观察：{request.readback.observation.app?.path??'无默认应用'} · {request.readback.observation.error?.message}</p>:null}
   {request.storageError?<p className="change-error">系统结果与回读已知；未定记录清除失败：{request.storageError.message}</p>:null}</>:null}
   {changes.pending&&!request?<p>正在核对原修改请求 · {changes.pending.association.key}<br/>目标：{changes.pending.targetPath}</p>:null}

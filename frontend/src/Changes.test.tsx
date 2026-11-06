@@ -86,3 +86,12 @@ test('an immediate completion event survives the later initial snapshot and dupl
  expect(screen.getByText('已确认本次修改')).toBeVisible();expect(screen.queryByText('已受理 · 等待提交系统')).not.toBeInTheDocument()
  expect(screen.getByRole('button',{name:'修改'})).toBeEnabled();expect(Submit).not.toHaveBeenCalled()
 })
+
+test('external refresh updates the displayed actual default while preserving the original completed request',async()=>{
+ const confirmed={...request,phase:'resolved',confirmed:true,completion:{known:true,error:null,completedAt:'now'},readback:{state:'valid',observation:{...observation,app:copy}}}
+ vi.mocked(GetSnapshot).mockResolvedValue({...empty,version:9,requests:[confirmed]})
+ render(<Screen/>);await screen.findByText('已确认本次修改')
+ await act(async()=>notify({data:{...empty,version:10,requests:[confirmed],observations:[{association,version:2,default:{...observation,app:{...copy,path:'/External/Reader.app'}},candidates:{known:true,apps:[],error:null,stale:false,observedAt:'now'}}]}}))
+ expect(screen.getByText('实际默认：/External/Reader.app')).toBeVisible()
+ expect(screen.getByText(copy.path)).toBeVisible();expect(screen.getByText('已确认本次修改')).toBeVisible();expect(Submit).not.toHaveBeenCalled()
+})

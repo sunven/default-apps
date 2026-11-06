@@ -1,7 +1,9 @@
 accepted reply and change event both lost; original parameters retained
 reload recovers accepted identity after both notification channels were lost
 never-arrived request reconciled and later original binding rejected with zero dispatch
-Traceback (most recent call last):
-  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/.scratch/default-apps-v1-implementation/assets/07/check-native-boundaries.py", line 55, in <module>
-    assert result['result']['outcome']=='interrupted' and control()['starts']==before
-AssertionError
+public Wails call cancellation before acceptance never dispatches
+public Wails call cancellation during durable save keeps one original request
+completion after caller cancellation reaches original request in formal UI
+AppKit foreground activation refreshes visible default without another setter
+activation burst coalesces visible identities
+native boundaries passed 8

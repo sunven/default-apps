@@ -1,0 +1,9 @@
+ok  	github.com/sunven/default-apps/internal/association	(cached)
+ok  	github.com/sunven/default-apps/internal/catalog	(cached)
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ok  	github.com/sunven/default-apps/internal/change	2.608s
+ok  	github.com/sunven/default-apps/internal/config	(cached)
+ok  	github.com/sunven/default-apps/internal/discovery	(cached)
+ok  	github.com/sunven/default-apps/internal/manual	(cached)
+ok  	github.com/sunven/default-apps/internal/native	(cached)

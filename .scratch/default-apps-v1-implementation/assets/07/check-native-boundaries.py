@@ -24,6 +24,7 @@ def panel(command):
   if result.exists():return json.loads(result.read_text())
   time.sleep(.05)
  raise AssertionError('native command timed out')
+wait('document.querySelector("[data-view]")&&!document.querySelector(".scan-status")')
 # Both reply and event notification are lost; retained client parameters recover via snapshot/reconciliation after reload.
 control(path=BEFORE);file_detail();before=control()['starts']
 js('window.savedDispatcher=window._wails.dispatchWailsEvent;window._wails.dispatchWailsEvent=e=>{if(e.name!=="defaultapps:change")window.savedDispatcher(e)};window.savedFetch=window.fetch;window.fetch=async function(url,options){const body=options?.body?JSON.parse(options.body):{};if(body.args?.methodID===3692139412)return new Promise(()=>{});const response=await window.savedFetch(url,options);if(body.args?.methodID===9070636)throw Error("controlled lost submit response");return response};return true')

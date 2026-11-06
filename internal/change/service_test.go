@@ -659,3 +659,54 @@ func (s scheduledSystem) ReadApplication(c context.Context, path string) (discov
 	}
 	return s.system.ReadApplication(c, path)
 }
+
+func TestSupersededRecoveryQueryCannotReleaseRecoveredGate(t *testing.T) {
+	original, base, store := fixture(t)
+	in := input("recovery-superseded")
+	if r := original.Submit(ctx, in); r.Outcome != "accepted" {
+		t.Fatal(r)
+	}
+	waitStart(t, base)
+	sys := scheduledSystem{system: base, queries: make(chan chan struct{}, 10)}
+	queries := association.NewService(sys)
+	cached := make(chan struct{})
+	go func() { queries.Query(ctx, pdf); close(cached) }()
+	close(<-sys.queries)
+	<-cached
+	reopened := change.NewService(catalog.NewService(sys), queries, sys, store, sys, change.Options{WritableKinds: []string{"file"}})
+	if initial := reopened.GetSnapshot(); initial.Recovery == nil || initial.Recovery.Ready {
+		t.Fatal(initial)
+	}
+	olderResult := make(chan association.QueryResult, 1)
+	go func() { r, _ := reopened.Query(ctx, pdf); olderResult <- r }()
+	older := <-sys.queries
+	newerResult := make(chan association.QueryResult, 1)
+	go func() { r, _ := reopened.Query(ctx, pdf); newerResult <- r }()
+	newer := <-sys.queries
+	close(older)
+	superseded := <-olderResult
+	if !superseded.Superseded {
+		t.Fatal("old query lacked fence")
+	}
+	if current := reopened.GetSnapshot(); !current.Busy || current.Recovery.Ready {
+		t.Fatalf("superseded cache released recovery: %+v", current)
+	}
+	close(newer)
+	<-newerResult
+	if final := reopened.GetSnapshot(); final.Busy || !final.Recovery.Ready || final.Requests[0].Confirmed {
+		t.Fatal(final)
+	}
+	conflict := in
+	conflict.TargetPath = "/wrong.app"
+	if r := reopened.ReconcileSubmission(conflict); r.Result.Outcome != "conflict" {
+		t.Fatal(r)
+	}
+	if r := reopened.ReconcileSubmission(in); r.Result.Outcome != "existing" || r.Result.Request.Phase != "recovered" {
+		t.Fatal(r)
+	}
+	base.mu.Lock()
+	defer base.mu.Unlock()
+	if base.starts != 1 {
+		t.Fatal("recovery replayed native dispatch")
+	}
+}

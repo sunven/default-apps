@@ -1,0 +1,69 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/Changes.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/frontend
+
+ ❯ src/Changes.test.tsx (9 tests | 1 failed) 103ms
+   × external refresh updates the displayed actual default while preserving the original completed request 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/Changes.test.tsx > external refresh updates the displayed actual default while preserving the original completed request
+TestingLibraryElementError: Unable to find an element with the text: 实际默认：/External/Reader.app. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<button>[39m
+      [0m修改[0m
+    [36m</button>[39m
+    [36m<section[39m
+      [33maria-label[39m=[32m"修改请求状态"[39m
+      [33maria-live[39m=[32m"polite"[39m
+      [33mclass[39m=[32m"change-status"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"change-summary"[39m
+      [36m>[39m
+        [36m<strong>[39m
+          [0m已确认本次修改[0m
+        [36m</strong>[39m
+        [36m<span>[39m
+          [0mcom.adobe.pdf[0m
+        [36m</span>[39m
+        [36m<button>[39m
+          [0m返回请求项[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"change-target"[39m
+      [36m>[39m
+        [0m目标：[0m
+        [36m<span>[39m
+          [0m/Applications/Reader.app[0m
+        [36m</span>[39m
+      [36m</p>[39m
+      [36m<p>[39m
+        [0m实际默认：[0m
+        [0m/Applications/Reader.app[0m
+      [36m</p>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/Changes.test.tsx:95:16
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  13:14:13
+   Duration  688ms (environment 58%, tests 18%, setup 15%, transform 5%, import 5%)
