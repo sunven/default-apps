@@ -1,0 +1,1 @@
+{"steps": 19, "minimum": [1000, 700], "dom": {"height": 701, "overflow": 0, "panes": [{"client": 436, "scroll": 8102, "selector": ".application-list"}, {"client": 345, "scroll": 14629, "selector": ".association-list"}], "width": 1001}, "scroll": {"app": 300, "associations": 600, "headingFixed": true, "searchFixed": true, "windowScroll": 0}}

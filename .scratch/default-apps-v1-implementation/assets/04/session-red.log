@@ -1,0 +1,36 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx -t each view
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/04/frontend
+
+ ❯ src/App.browser.test.tsx (4 tests | 1 failed | 3 skipped) 124ms
+   × each view restores its own search, association identity and scroll position while application changes select the first visible association 124ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > each view restores its own search, association identity and scroll position while application changes select the first visible association
+Error: expect(element).toHaveValue(.jpg)
+
+Expected the element to have value:
+  .jpg
+Received:
+  .jpghttps
+ ❯ src/App.browser.test.tsx:115:56
+    113|  await userEvent.type(screen.getByRole('searchbox',{name:'搜索URL 协议'}),…
+    114|  await userEvent.keyboard('{Meta>}2{/Meta}')
+    115|  expect(screen.getByRole('searchbox',{name:'搜索文件类型'})).toHaveValue('.j…
+       |                                                        ^
+    116|  expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'…
+    117|  expect(screen.getByRole('region',{name:'关联列表'}).scrollTop).toBe(80)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  01:05:13
+   Duration  458ms (environment 42%, tests 36%, setup 10%, transform 6%, import 5%)
+
