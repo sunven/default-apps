@@ -25,7 +25,10 @@ const observation: QueryResult = {
 }
 beforeEach(() => { vi.resetAllMocks(); vi.mocked(List).mockResolvedValue([pdfEntry]); vi.mocked(GetSnapshot).mockResolvedValue(emptySnapshot); vi.mocked(StartScan).mockResolvedValue(emptySnapshot);vi.mocked(Events.On).mockReturnValue(() => {}) })
 
-async function renderFile() {render(<App />);await userEvent.click(screen.getByRole('button',{name:'文件类型'}))}
+async function closeDetails() {while(screen.queryAllByRole('dialog').length) await userEvent.keyboard('{Escape}')}
+async function openEntry(name:string|RegExp) {await closeDetails();await userEvent.click(screen.getByRole('button',{name}))}
+async function renderFile() {render(<App />);await userEvent.click(screen.getByRole('button',{name:'文件类型'}));const first=document.querySelector<HTMLButtonElement>('[data-association-id]');if(first)await userEvent.click(first)}
+const current=()=>within(screen.getByRole('region',{name:'当前默认应用'}))
 
 test('shows the PDF current default and independently returned candidate copies', async () => {
  vi.mocked(Query).mockResolvedValue(observation)
@@ -53,10 +56,10 @@ test('refresh keeps the last default visible and marks a failed update while can
   candidates: {...observation.candidates, apps: []},
  })
  await renderFile()
- expect(await screen.findByText('Reader')).toBeVisible()
+ expect(await current().findByText('Reader')).toBeVisible()
  await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
  expect(await screen.findByText(/默认应用待更新/)).toBeVisible()
- expect(screen.getByText('Reader')).toBeVisible()
+ expect(current().getByText('Reader')).toBeVisible()
  expect(screen.getByText('系统服务暂时不可用')).toBeVisible()
  expect(screen.getByText('系统未返回候选应用')).toBeVisible()
 })
@@ -87,7 +90,7 @@ test('shows loading without inventing an empty default, then retains data during
  const refreshing = new Promise<QueryResult>(resolve => { complete=resolve })
  vi.mocked(Query).mockReturnValueOnce(refreshing as ReturnType<typeof Query>)
  await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
- expect(screen.getByText('Reader')).toBeVisible()
+ expect(current().getByText('Reader')).toBeVisible()
  expect(screen.getByRole('button',{name:'正在查询…'})).toBeDisabled()
  await act(async () => complete({...observation,version:2}))
  expect(screen.getByRole('button',{name:'重新查询'})).toBeEnabled()
@@ -96,7 +99,7 @@ test('shows loading without inventing an empty default, then retains data during
 test('keyboard users can focus the scrollable results after the refresh control', async () => {
  vi.mocked(Query).mockResolvedValue(observation)
  await renderFile()
- await screen.findByText('Reader')
+ await current().findByText('Reader')
  screen.getByRole('button',{name:'重新查询'}).focus()
  expect(screen.getByRole('button',{name:'重新查询'})).toHaveFocus()
  await userEvent.tab()
@@ -112,14 +115,14 @@ test('browses ambiguous file identities and separate HTTP and HTTPS associations
  vi.mocked(List).mockResolvedValue([pdfEntry,jpeg,exported,http,https])
  vi.mocked(Query).mockImplementation(association => Promise.resolve({...observation,association,default:{...observation.default,app:{...observation.default.app!,name:association.key}}}) as ReturnType<typeof Query>)
  await renderFile()
- await userEvent.click(await screen.findByRole('button',{name:/JPEG public.jpeg/}))
+ await openEntry(/JPEG public.jpeg/)
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('public.jpeg')).toBeVisible()
  expect(screen.getByRole('button',{name:/JPEG export com.example.export.jpg/})).toBeVisible()
  expect(screen.getByRole('region',{name:'关联来源'})).toHaveTextContent('常用项')
- await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
- await userEvent.click(screen.getByRole('button',{name:'https https'}))
+ await closeDetails();await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
+ await openEntry('https https')
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('https')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'http http'}))
+ await openEntry('http http')
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('http')).toBeVisible()
  expect(Query).toHaveBeenCalledWith({kind:'scheme',key:'http'})
  expect(Query).toHaveBeenCalledWith({kind:'scheme',key:'https'})
@@ -143,8 +146,9 @@ test('catalog failure has a retry and an empty protocol view hides previous deta
  expect(await screen.findByText('关联目录暂时不可用')).toBeVisible()
  expect(screen.queryByText('系统未返回默认应用')).not.toBeInTheDocument()
  await userEvent.click(screen.getByRole('button',{name:'重试加载目录'}))
- expect(await screen.findByText('Reader')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
+ await openEntry('PDF 文稿 com.adobe.pdf')
+ expect(await current().findByText('Reader')).toBeVisible()
+ await closeDetails();await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
  expect(screen.getByText('此入口暂无关联')).toBeVisible()
  expect(screen.queryByText('Reader')).not.toBeInTheDocument()
 })
@@ -152,14 +156,15 @@ test('catalog failure has a retry and an empty protocol view hides previous deta
 test('returning to a type after a transport failure keeps that types own last observation', async () => {
  const jpeg = {...pdfEntry,id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG'}
  vi.mocked(List).mockResolvedValue([pdfEntry,jpeg])
- vi.mocked(Query).mockResolvedValueOnce(observation).mockResolvedValueOnce({...observation,association:jpeg.association,default:{...observation.default,app:null}}).mockRejectedValueOnce(new Error('连接已断开'))
+ let pdfCalls=0
+ vi.mocked(Query).mockImplementation(association=>(association.key===jpeg.association.key ? Promise.resolve({...observation,association,default:{...observation.default,app:null}}) : ++pdfCalls===1 ? Promise.resolve(observation) : Promise.reject(new Error('连接已断开'))) as ReturnType<typeof Query>)
  await renderFile()
- await screen.findByText('Reader')
- await userEvent.click(screen.getByRole('button',{name:'JPEG public.jpeg'}))
+ await current().findByText('Reader')
+ await openEntry('JPEG public.jpeg')
  expect(await screen.findByText('系统未返回默认应用')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'}))
+ await openEntry('PDF 文稿 com.adobe.pdf')
  expect(await screen.findByRole('alert')).toHaveTextContent('显示最后有效观察')
- expect(screen.getByText('Reader')).toBeVisible()
+ expect(current().getByText('Reader')).toBeVisible()
 })
 
 
@@ -178,11 +183,12 @@ test('opens with installed copies, declared associations, and an independent def
  expect(await within(apps).findByText('/Applications/Reader.app')).toBeVisible()
  expect(within(apps).getByText('/Volumes/Tools/Reader.app')).toBeVisible()
  expect(await screen.findByRole('region',{name:'声明关联列表'})).toHaveTextContent('PDF 文稿')
+ await openEntry('PDF 文稿 com.adobe.pdf')
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('/Volumes/Archive/Reader.app')).toBeVisible()
  expect(screen.getByText('扫描问题 · 1')).toBeVisible()
  await userEvent.click(screen.getByRole('button',{name:'查看此副本 /Volumes/Archive/Reader.app'}))
  expect(screen.getByRole('region',{name:'所选应用副本'})).toHaveTextContent('/Volumes/Archive/Reader.app')
- await userEvent.click(within(apps).getByRole('button',{name:/Reader 2/}))
+ await closeDetails();await userEvent.click(within(apps).getByRole('button',{name:/Reader 2/}))
  expect(screen.getByText('此应用未声明可处理的文件类型或 URL 协议')).toBeVisible()
  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDocument()
 })

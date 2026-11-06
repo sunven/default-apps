@@ -1,0 +1,78 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx -t association details
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/04/frontend
+
+ ❯ src/App.browser.test.tsx (2 tests | 1 failed | 1 skipped) 58ms
+   × association details are closed by default and nested copy dialogs return focus through their triggers 57ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > association details are closed by default and nested copy dialogs return focus through their triggers
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <section
+  aria-labelledby="current-heading"
+>
+  <h2
+    id="current-heading"
+  >
+    当前默认应用
+  </h2>
+  <div
+    class="application-copy"
+  >
+    <div
+      class="copy-heading"
+    >
+      <strong>
+        Reader
+      </strong>
+      <span>
+        版本 
+        1.2
+      </span>
+    </div>
+    <p
+      class="copy-path"
+    >
+      /Volumes/Archive/Reader.app
+    </p>
+    <p
+      class="copy-bundle"
+    >
+      test.reader
+    </p>
+    <button
+      aria-label="查看此副本 /Volumes/Archive/Reader.app"
+      class="copy-select"
+    >
+      查看此副本
+    </button>
+  </div>
+  <p
+    class="freshness"
+  >
+    最后有效查询：
+    11/5/2026, 6:00:00 PM
+  </p>
+</section> instead
+ ❯ src/App.browser.test.tsx:55:59
+     53|  render(<App/>);const rows=await screen.findByRole('region',{name:'声明关…
+     54|  const name=within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pd…
+     55|  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDoc…
+       |                                                           ^
+     56|  await userEvent.click(name)
+     57|  const detail=screen.getByRole('dialog',{name:'PDF 文稿'})
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  00:51:00
+   Duration  592ms (environment 60%, setup 18%, tests 12%, import 5%, transform 4%)
+

@@ -1,0 +1,231 @@
+{
+  "method": "AppKit synthesized native keyDown/keyUp via NSApplication.sendEvent; no global/hardware events",
+  "steps": [
+    {
+      "step": "Command-2",
+      "focus": {
+        "dialogs": 0,
+        "label": null,
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "文件类型",
+        "view": "file"
+      }
+    },
+    {
+      "step": "Command-3",
+      "focus": {
+        "dialogs": 0,
+        "label": null,
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "URL 协议",
+        "view": "scheme"
+      }
+    },
+    {
+      "step": "Command-1",
+      "focus": {
+        "dialogs": 0,
+        "label": null,
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "应用",
+        "view": "app"
+      }
+    },
+    {
+      "step": "Command-F",
+      "focus": {
+        "dialogs": 0,
+        "label": "搜索应用名称、版本、路径或声明",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    },
+    {
+      "step": "search Down",
+      "focus": {
+        "dialogs": 0,
+        "label": "Xcode 27.0 /Applications/Xcode.app",
+        "path": "/Applications/Xcode.app",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "Xcode版本 27.0 · 154 个声明关联/Applications/Xcode.app",
+        "view": "app"
+      }
+    },
+    {
+      "step": "application Enter",
+      "focus": {
+        "association": "file:net.daringfireball.markdown",
+        "dialogs": 0,
+        "label": "Markdown net.daringfireball.markdown",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "Markdown.markdown · .mdnet.daringfireball.markdown",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association Tab",
+      "focus": {
+        "dialogs": 0,
+        "label": "查看 Markdown 详情",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "详情…",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association Shift-Tab",
+      "focus": {
+        "association": "file:net.daringfireball.markdown",
+        "dialogs": 0,
+        "label": "Markdown net.daringfireball.markdown",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "Markdown.markdown · .mdnet.daringfireball.markdown",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association End",
+      "focus": {
+        "association": "scheme:interface-builder",
+        "dialogs": 0,
+        "label": "interface-builder interface-builder",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "interface-builderinterface-builder",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association Up",
+      "focus": {
+        "association": "scheme:doc",
+        "dialogs": 0,
+        "label": "doc doc",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "docdoc",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association Home",
+      "focus": {
+        "association": "file:net.daringfireball.markdown",
+        "dialogs": 0,
+        "label": "Markdown net.daringfireball.markdown",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "Markdown.markdown · .mdnet.daringfireball.markdown",
+        "view": "app"
+      }
+    },
+    {
+      "step": "association Enter opens detail",
+      "focus": {
+        "dialogs": 1,
+        "label": "关闭Markdown",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "关闭",
+        "view": "app"
+      }
+    },
+    {
+      "step": "dialog Shift-Tab traps focus",
+      "focus": {
+        "dialogs": 1,
+        "label": "查看此副本 /System/Applications/Notes.app",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "查看此副本",
+        "view": "app"
+      }
+    },
+    {
+      "step": "dialog Escape restores name",
+      "focus": {
+        "association": "file:net.daringfireball.markdown",
+        "dialogs": 0,
+        "label": "Markdown net.daringfireball.markdown",
+        "tabIndex": 0,
+        "tag": "BUTTON",
+        "text": "Markdown.markdown · .mdnet.daringfireball.markdown",
+        "view": "app"
+      }
+    },
+    {
+      "step": "Command-F again",
+      "focus": {
+        "dialogs": 0,
+        "label": "搜索应用名称、版本、路径或声明",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    },
+    {
+      "step": "search Escape clears only search",
+      "focus": {
+        "dialogs": 0,
+        "label": "搜索应用名称、版本、路径或声明",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    },
+    {
+      "step": "Command-F before empty test",
+      "focus": {
+        "dialogs": 0,
+        "label": "搜索应用名称、版本、路径或声明",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    },
+    {
+      "step": "empty search Escape",
+      "focus": {
+        "dialogs": 0,
+        "label": "搜索应用名称、版本、路径或声明",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    },
+    {
+      "step": "no declarations Enter",
+      "focus": {
+        "dialogs": 0,
+        "label": "筛选当前关联",
+        "tabIndex": 0,
+        "tag": "INPUT",
+        "text": "",
+        "view": "app"
+      }
+    }
+  ],
+  "nativeSettings": {
+    "tabFocusesLinks": false,
+    "AppleKeyboardUIMode": null
+  },
+  "menuCommandF123Matched": [
+    false,
+    false,
+    false,
+    false
+  ]
+}

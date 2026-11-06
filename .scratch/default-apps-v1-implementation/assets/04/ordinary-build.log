@@ -1,0 +1,52 @@
+task: [darwin:build] sh scripts/check-versions.sh
+task: [darwin:common:go:mod:tidy] go mod tidy
+task: Task "darwin:common:generate:icons" is up to date
+task: Task "darwin:common:generate:bindings" is up to date
+task: [darwin:common:install:frontend:deps:npm] npm ci
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+added 99 packages in 830ms
+
+21 packages are looking for funding
+  run `npm fund` for details
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   fsevents@2.3.3 (install: (install scripts present))
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+task: [darwin:common:frontend:run:npm] npm run build -q
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 build
+> tsc && vite build --mode production
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:  0.27 kB
+dist/assets/index-0lqMxrqD.css    7.84 kB │ gzip:  2.04 kB
+dist/assets/index-CybduQ0N.js   185.39 kB │ gzip: 60.44 kB
+
+✓ built in 356ms
+task: [darwin:build:native] wails3 tool prepare-macos-output --dir "bin"
+task: [darwin:build:native] go build -tags production -trimpath -buildvcs=false -ldflags="-w -s" -o "bin/default-apps"
+# github.com/sunven/default-apps
+ld: warning: ignoring duplicate libraries: '-lobjc'
+task: [darwin:create:app:bundle] test -n "bin" && test -n "default-apps" && rm -rf -- "bin/default-apps.app"
+task: [darwin:create:app:bundle] mkdir -p "bin/default-apps.app/Contents/MacOS"
+task: [darwin:create:app:bundle] mkdir -p "bin/default-apps.app/Contents/Resources"
+task: [darwin:create:app:bundle] cp build/darwin/icons.icns "bin/default-apps.app/Contents/Resources"
+task: [darwin:create:app:bundle] if [ -f build/darwin/Assets.car ]; then
+  cp build/darwin/Assets.car "bin/default-apps.app/Contents/Resources"
+fi
+
+task: [darwin:create:app:bundle] cp "bin/default-apps" "bin/default-apps.app/Contents/MacOS"
+task: [darwin:create:app:bundle] cp build/darwin/Info.plist "bin/default-apps.app/Contents"
+task: [darwin:codesign:adhoc] xattr -cr "bin/default-apps.app"
+task: [darwin:codesign:adhoc] codesign --force --deep --sign - "bin/default-apps.app"
+bin/default-apps.app: replacing existing signature
+task: [darwin:codesign:adhoc] codesign --verify --deep --strict "bin/default-apps.app"
+
+Need documentation? Run: ]8;;https://v3.wails.io/getting-started/your-first-app/\wails3 docs]8;;\
+ ♥   If Wails is useful to you or your company, please consider sponsoring the project: ]8;;https://github.com/sponsors/leaanthony\wails3 sponsor]8;;\

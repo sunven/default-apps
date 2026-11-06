@@ -1,0 +1,61 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx -t keyboard traverses
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/04/frontend
+
+ ❯ src/App.browser.test.tsx (3 tests | 1 failed | 2 skipped) 37ms
+   × keyboard traverses only the active list, opens details, and does not intercept composing or modified arrows 36ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > keyboard traverses only the active list, opens details, and does not intercept composing or modified arrows
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button
+  aria-label="Reader 2.4 /Applications/Reader.app"
+  aria-pressed="true"
+  class="association-row"
+  data-app-path="/Applications/Reader.app"
+>
+  <strong>
+    Reader
+  </strong>
+  <span>
+    版本·
+    2.4
+     ··
+    3
+     个声明关联
+  </span>
+  <span
+    class="app-list-path"
+  >
+    /Applications/Reader.app
+  </span>
+</button>
+Received element with focus:
+  <input
+  aria-label="搜索应用名称、版本、路径或声明"
+  type="search"
+  value=""
+/>
+ ❯ src/App.browser.test.tsx:76:16
+     74|  const first=within(apps).getByRole('button',{name:'Reader 2.4 /Applic…
+     75|  const second=within(apps).getByRole('button',{name:'Reader 1.2 /Volum…
+     76|  expect(first).toHaveFocus();expect(first).toHaveAttribute('tabindex',…
+       |                ^
+     77|  fireEvent.keyDown(first,{key:'ArrowDown',isComposing:true})
+     78|  expect(first).toHaveFocus()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  01:02:22
+   Duration  377ms (environment 57%, tests 14%, setup 14%, transform 8%, import 7%, worker 1%)
+

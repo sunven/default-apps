@@ -1,0 +1,14 @@
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 17 modules transformed.
+
+(!) outDir /tmp/default-apps-ticket04-scale is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+rendering chunks...
+computing gzip size...
+../../../../../../tmp/default-apps-ticket04-scale/index.html                   0.40 kB │ gzip:  0.28 kB
+../../../../../../tmp/default-apps-ticket04-scale/assets/index-0lqMxrqD.css    7.84 kB │ gzip:  2.04 kB
+../../../../../../tmp/default-apps-ticket04-scale/assets/index-2xZZ_HL7.js   161.97 kB │ gzip: 52.70 kB
+
+✓ built in 136ms

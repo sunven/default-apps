@@ -1,0 +1,36 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx -t current default pointing
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/04/frontend
+
+ ❯ src/App.browser.test.tsx (7 tests | 1 failed | 6 skipped) 90ms
+   × a current default pointing to a vanished copy keeps the observed path and separately marks its catalog absence 90ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > a current default pointing to a vanished copy keeps the observed path and separately marks its catalog absence
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  目录中已找不到此副本；以上仍是系统实际查询结果。
+Received:
+  当前默认应用Reader版本 2.4/Applications/Reader.apptest.reader查看此副本最后有效查询：11/5/2026, 6:00:00 PM
+ ❯ src/App.browser.test.tsx:163:18
+    161|  const current=screen.getByRole('region',{name:'当前默认应用'})
+    162|  expect(current).toHaveTextContent('/Applications/Reader.app')
+    163|  expect(current).toHaveTextContent('目录中已找不到此副本；以上仍是系统实际查询结果。')
+       |                  ^
+    164| })
+    165|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  09:42:45
+   Duration  704ms (environment 57%, setup 17%, tests 15%, transform 5%, import 5%)
+

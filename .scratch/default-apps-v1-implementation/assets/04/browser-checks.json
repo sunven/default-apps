@@ -1,0 +1,30 @@
+{
+  "fixture": "Wails service module replacement in test-only Vite config; actual App and styles",
+  "geometry": {
+    "appStops": 1,
+    "height": 700,
+    "overflow": 0,
+    "rowStops": 2,
+    "rows": 1000,
+    "width": 1000
+  },
+  "endNavigation": {
+    "bottom": 652,
+    "height": 700,
+    "id": "file:test.scale.999",
+    "scroll": 105647
+  },
+  "longPathCharacters": 271,
+  "scroll": {
+    "app": 240,
+    "filterFixed": true,
+    "headerFixed": true,
+    "rows": 600
+  },
+  "search": "metadata/declaration scope, independent filter, same extension different identities, empty, no declarations passed",
+  "desktopWidths": [
+    1000,
+    1280,
+    1440
+  ]
+}
