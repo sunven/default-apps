@@ -23,13 +23,13 @@ test('explicit action sends one canonical copy and shows accepted separately fro
  await act(async()=>notify({data:{...empty,version:3,busy:true,activeRequestID:'one',requests:[{...request,phase:'submitted',submittedAt:'now'}]}}))
  expect(screen.getByText('已提交系统 · 等待系统返回')).toBeVisible()
 })
-test('native error and failed readback preserve actual facts and retry never submits again',async()=>{
- const failed={...request,phase:'completed',completion:{known:true,error:{domain:'NativeDomain',code:91,description:'Denied by system'},completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Query failed'}}}}
+test.each([association,{kind:'scheme',key:'test-error-scheme'}])('native error and failed readback preserve actual facts and retry never submits again: $kind',async currentAssociation=>{
+ const failed={...request,association:currentAssociation,phase:'completed',completion:{known:true,error:{domain:'NativeDomain',code:91,description:'Denied by system'},completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Query failed'}}}}
  vi.mocked(GetSnapshot).mockResolvedValue({...empty,version:5,busy:true,activeRequestID:'one',requests:[failed]})
  vi.mocked(Requery).mockResolvedValue({...empty,version:6,requests:[{...failed,phase:'resolved',readback:{state:'valid',observation:{...observation,app:copy}}}]})
  render(<Screen/>);expect(await screen.findByText('系统已返回 · 回读失败，等待重查')).toBeVisible()
  expect(screen.getByText('NativeDomain · 91 · Denied by system')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'重新回读'}));expect(Requery).toHaveBeenCalledWith(association);expect(Submit).not.toHaveBeenCalled()
+ await userEvent.click(screen.getByRole('button',{name:'重新回读'}));expect(Requery).toHaveBeenCalledWith(currentAssociation);expect(Submit).not.toHaveBeenCalled()
  expect(await screen.findByText('系统返回错误 · 已读取实际默认')).toBeVisible();expect(screen.queryByText('已确认本次修改')).not.toBeInTheDocument()
 })
 test('known success and separate clear error survive an older event',async()=>{
@@ -94,4 +94,33 @@ test('external refresh updates the displayed actual default while preserving the
  await act(async()=>notify({data:{...empty,version:10,requests:[confirmed],observations:[{association,version:2,default:{...observation,app:{...copy,path:'/External/Reader.app'}},candidates:{known:true,apps:[],error:null,stale:false,observedAt:'now'}}]}}))
  expect(screen.getByText('实际默认：/External/Reader.app')).toBeVisible()
  expect(screen.getByText(copy.path)).toBeVisible();expect(screen.getByText('已确认本次修改')).toBeVisible();expect(Submit).not.toHaveBeenCalled()
+})
+
+function CrossKindScreen(){const changes=useChanges();return <>
+ <button disabled={changes.blocked} onClick={()=>void changes.submit({kind:'scheme',key:'http'},copy,observation)}>修改 http</button>
+ <button disabled={changes.blocked} onClick={()=>void changes.submit({kind:'scheme',key:'https'},copy,observation)}>修改 https</button>
+ <button disabled={changes.blocked} onClick={()=>void changes.submit(association,copy,observation)}>修改文件类型</button>
+ <ChangeStatus changes={changes} onReturn={()=>{}}/></>}
+test('scheme submission and reload preserve its identity and block file and other scheme writes until readback',async()=>{
+ const scheme={kind:'scheme',key:'http'}
+ const pending={...request,association:scheme,phase:'submitted'}
+ const state={...empty,version:2,busy:true,activeRequestID:'one',requests:[pending]}
+ vi.mocked(Submit).mockResolvedValue({outcome:'accepted',message:'',request:pending,snapshot:state,observation:null})
+ const page=render(<CrossKindScreen/>);await userEvent.click(screen.getByRole('button',{name:'修改 http'}))
+ expect(Submit).toHaveBeenCalledTimes(1)
+ expect(vi.mocked(Submit).mock.calls[0][0].association).toEqual(scheme)
+ for(const name of ['修改 http','修改 https','修改文件类型'])expect(screen.getByRole('button',{name})).toBeDisabled()
+ const original=vi.mocked(Submit).mock.calls[0][0]
+ page.unmount();vi.mocked(GetSnapshot).mockResolvedValue(state)
+ render(<CrossKindScreen/>);expect(await screen.findByText('已提交系统 · 等待系统返回')).toBeVisible()
+ for(const name of ['修改 http','修改 https','修改文件类型'])expect(screen.getByRole('button',{name})).toBeDisabled()
+ const failed={...pending,phase:'completed',completion:{known:true,error:null,completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Scheme query failed'}}}}
+ await act(async()=>notify({data:{...state,version:3,requests:[failed]}}))
+ expect(screen.getByRole('button',{name:'修改文件类型'})).toBeDisabled()
+ vi.mocked(Requery).mockResolvedValue({...state,version:4,busy:false,activeRequestID:'',requests:[{...failed,phase:'resolved',confirmed:true,readback:{state:'valid',observation:{...observation,app:copy}}}]})
+ await userEvent.click(screen.getByRole('button',{name:'重新回读'}))
+ expect(Requery).toHaveBeenCalledWith(scheme);expect(Submit).toHaveBeenCalledTimes(1)
+ expect(vi.mocked(Submit).mock.calls[0][0]).toEqual(original)
+ expect(await screen.findByText('已确认本次修改')).toBeVisible()
+ for(const name of ['修改 http','修改 https','修改文件类型'])expect(screen.getByRole('button',{name})).toBeEnabled()
 })

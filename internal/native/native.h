@@ -10,3 +10,4 @@ char *default_apps_identify_file(const char *path);
 // values. The completion block retains only the numeric ID; native copies error
 // strings, Go copies them synchronously, and native frees them after callback.
 void default_apps_set_file_type(uint64_t operation, const char *identifier, const char *path);
+void default_apps_set_url_scheme(uint64_t operation, const char *scheme, const char *path);

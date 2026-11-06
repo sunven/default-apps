@@ -1,0 +1,2 @@
+bin/Default Apps.app: valid on disk
+bin/Default Apps.app: satisfies its Designated Requirement

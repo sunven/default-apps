@@ -1,0 +1,9 @@
+{
+  "macOS": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123",
+  "architecture": "arm64",
+  "go": "go version go1.27.3 darwin/arm64",
+  "wails": "v3.1.0",
+  "node": "v26.13.0",
+  "npm": "11.20.0",
+  "collectedAt": "2026-11-06T11:19:53.328641+00:00"
+}

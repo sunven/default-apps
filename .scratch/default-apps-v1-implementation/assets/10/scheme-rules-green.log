@@ -1,0 +1,18 @@
+=== RUN   TestSchemeRequestKeepsHTTPAndHTTPSIndependentAndGatesFileChanges
+--- PASS: TestSchemeRequestKeepsHTTPAndHTTPSIndependentAndGatesFileChanges (0.04s)
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/exact
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/same-id-copy
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/old
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/native-error-even-at-target
+=== RUN   TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/readback-failure
+--- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError (0.12s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/exact (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/same-id-copy (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/old (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/native-error-even-at-target (0.02s)
+    --- PASS: TestSchemeCompletionRequiresIndependentExactCopyAndRetainsRawError/readback-failure (0.03s)
+=== RUN   TestRecoveredSchemeRemainsUnknownAndRequiresAcknowledgementForFileChange
+--- PASS: TestRecoveredSchemeRemainsUnknownAndRequiresAcknowledgementForFileChange (0.01s)
+PASS
+ok  	github.com/sunven/default-apps/internal/change	3.122s

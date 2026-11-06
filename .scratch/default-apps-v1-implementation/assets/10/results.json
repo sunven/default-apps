@@ -1,0 +1,226 @@
+{
+  "status": "通过",
+  "sourceCommit": "bea515331619cd1e24203e0e1dd69296f0cb7bd4",
+  "manifestSHA256": "6e6d797e2b6ac32481cd37a703973dcc9bd05f69d616885c389ecae517108c04",
+  "association": {
+    "kind": "scheme",
+    "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f"
+  },
+  "process": 68930,
+  "nativeAdapter": "real NSWorkspace; no change_smoke",
+  "requests": [
+    {
+      "acceptedAt": "2026-11-06T11:13:42.793548Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:13:42.806888Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "name": "Scheme Acceptance B",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "version": "2.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:13:42.791784Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:13:42.808928Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "244a1bdb-4d18-4993-bb25-5da7d0f98088",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:13:42.804969Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "name": "Scheme Acceptance A",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "version": "1.0"
+      }
+    },
+    {
+      "acceptedAt": "2026-11-06T11:15:35.6072Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:15:35.620156Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "name": "Scheme Acceptance A",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+          "version": "1.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:35.605699Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "name": "Scheme Acceptance B",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+            "version": "2.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:15:35.622554Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "58ac4489-92c5-47a2-841b-9fcddd9e8420",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:15:35.618321Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "name": "Scheme Acceptance B",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+        "version": "2.0"
+      }
+    },
+    {
+      "acceptedAt": "2026-11-06T11:15:58.462051Z",
+      "association": {
+        "key": "defaultapps-acceptance-3a3a1716722f4165ab1af27186902b3f",
+        "kind": "scheme"
+      },
+      "completion": {
+        "completedAt": "2026-11-06T11:15:58.473564Z",
+        "error": null,
+        "known": true
+      },
+      "confirmed": true,
+      "phase": "resolved",
+      "preflight": {
+        "app": {
+          "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.b",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "name": "Scheme Acceptance B",
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance B.app",
+          "version": "2.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T11:15:58.460243Z",
+        "stale": false
+      },
+      "readback": {
+        "observation": {
+          "app": {
+            "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+            "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "name": "Scheme Acceptance A",
+            "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+            "version": "1.0"
+          },
+          "error": null,
+          "known": true,
+          "observedAt": "2026-11-06T11:15:58.475937Z",
+          "stale": false
+        },
+        "state": "valid"
+      },
+      "requestID": "28d480e4-70af-4bf9-8719-ff96de4e3bf4",
+      "storageError": null,
+      "submittedAt": "2026-11-06T11:15:58.471694Z",
+      "target": {
+        "bundleID": "org.defaultapps.acceptance.3a3a1716722f4165ab1af27186902b3f.a",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "name": "Scheme Acceptance A",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native10-3a3a1716722f4165ab1af27186902b3f/fixtures/Scheme Acceptance A.app",
+        "version": "1.0"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "name": "establish A from observed B",
+      "origin": "formal protocol candidate button",
+      "requestID": "244a1bdb-4d18-4993-bb25-5da7d0f98088",
+      "independent": "establish-a-independent.json"
+    },
+    {
+      "name": "A→B",
+      "origin": "formal protocol candidate button",
+      "requestID": "58ac4489-92c5-47a2-841b-9fcddd9e8420",
+      "independent": "a-to-b-independent.json"
+    },
+    {
+      "name": "B→A",
+      "origin": "formal application declaration row",
+      "requestID": "28d480e4-70af-4bf9-8719-ff96de4e3bf4",
+      "independent": "b-to-a-independent.json"
+    }
+  ],
+  "observations": {
+    "systemPrompt": "尚未观察：all three completions arrived within 14ms of acceptance; no prompt seen",
+    "humanConsent": "No system consent action requested or automated",
+    "naturalPendingBrowseQueryReload": "尚未观察：no sustained pending interval; completed real frontend reload/query and controlled scheme waiting/reload/readback/recovery are separate evidence",
+    "schemeRefusalSameIDUndeclared": "Not attempted in10;09 already observed file refusal/raw NSError256, same-ID mismatch and undeclared manual acceptance. No universal scheme acceptance promised.",
+    "realPendingExit": "Reuse09 real file native pending-exit/restart, with unchanged shared coordinator;10 scheme-recovery boundary test remains controlled",
+    "eventInstrumentation": "a-to-b-events.json and b-to-a-events.json are empty: extra runtime listener did not collect events. No event-stage claim from these files; actual native logs and authoritative snapshots provide completion evidence."
+  },
+  "daily": {
+    "beforeAfterRunAfterCleanupIdentical": true,
+    "queryCount": 21,
+    "writes": 0
+  },
+  "cleanup": {
+    "at": "2026-11-06T11:17:28.001457+00:00",
+    "residualPaths": [],
+    "status": "通过",
+    "claim": "Targeted registration removal; no claim about erased history or never-set defaults"
+  },
+  "geometry": {
+    "nativeContent": [
+      1000,
+      700
+    ],
+    "DOM": [
+      1001,
+      701
+    ],
+    "horizontalOverflow": 0
+  },
+  "limitations": [
+    "Only dedicated fixture scheme was changed; daily http/https/mailto/webcal queried read-only.",
+    "No scheme pending human prompt observed in this run; do not substitute delayed controlled callback as native evidence."
+  ]
+}

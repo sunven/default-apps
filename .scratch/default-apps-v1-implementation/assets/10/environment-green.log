@@ -1,0 +1,6 @@
+# github.com/sunven/default-apps.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+=== RUN   TestProductionOffersFileAndSchemeChangesThroughOneCoordinator
+--- PASS: TestProductionOffersFileAndSchemeChangesThroughOneCoordinator (0.00s)
+PASS
+ok  	github.com/sunven/default-apps	1.929s

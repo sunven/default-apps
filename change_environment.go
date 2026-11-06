@@ -9,8 +9,7 @@ import (
 	"github.com/sunven/default-apps/internal/native"
 )
 
-// File changes share the durable coordinator; URL schemes remain read-only until
-// their native integration is accepted.
+// File types and URL schemes share one durable coordinator and global gate.
 func changeEnvironment(home string) (*config.Store, association.SystemAdapter, change.ApplicationReader, change.Dispatcher, []string) {
-	return config.NewStore(configurationPath(home)), native.Adapter{}, native.Adapter{}, native.Dispatcher{}, []string{"file"}
+	return config.NewStore(configurationPath(home)), native.Adapter{}, native.Adapter{}, native.Dispatcher{}, []string{"file", "scheme"}
 }

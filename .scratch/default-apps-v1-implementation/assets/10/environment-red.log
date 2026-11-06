@@ -1,0 +1,8 @@
+# github.com/sunven/default-apps.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+=== RUN   TestProductionOffersFileAndSchemeChangesThroughOneCoordinator
+    change_environment_test.go:19: both file type and scheme changes must be available: [file]
+--- FAIL: TestProductionOffersFileAndSchemeChangesThroughOneCoordinator (0.00s)
+FAIL
+FAIL	github.com/sunven/default-apps	0.447s
+FAIL

@@ -1,0 +1,8 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+=== RUN   TestSchemeDispatchOwnsErrorCompletionAcrossDeferredScheduling
+    dispatcher_test.go:84: scheme must reach the queued native boundary: &change.NativeError{Domain:"defaultapps.native", Code:1, Description:"此关联种类尚未接入原生修改。"}
+--- FAIL: TestSchemeDispatchOwnsErrorCompletionAcrossDeferredScheduling (0.00s)
+FAIL
+FAIL	github.com/sunven/default-apps/internal/native	0.446s
+FAIL
