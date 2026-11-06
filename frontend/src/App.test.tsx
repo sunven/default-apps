@@ -1,6 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react'
 import { beforeEach, expect, test, vi } from 'vitest'
-import { Query } from '../bindings/github.com/sunven/default-apps/internal/association/service'
+import { Query } from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type { QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
@@ -10,7 +10,7 @@ import type { Snapshot } from '../bindings/github.com/sunven/default-apps/intern
 import { Events } from '@wailsio/runtime'
 import userEvent from '@testing-library/user-event'
 
-vi.mock('../bindings/github.com/sunven/default-apps/internal/association/service', () => ({ Query: vi.fn() }))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({ Query: vi.fn(),GetSnapshot:()=>Promise.resolve({version:0,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null}) }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({ List: vi.fn() }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({ GetSnapshot:vi.fn(), StartScan:vi.fn() }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))

@@ -1,0 +1,16 @@
+{
+  "files": [
+    "change_environment.go",
+    "configuration.go",
+    "main.go",
+    "manual_smoke_off.go",
+    "native_picker.go"
+  ],
+  "ignoredGoFiles": [
+    "change_environment_smoke.go",
+    "configuration_smoke.go",
+    "manual_smoke.go"
+  ],
+  "controlledAdapterExcluded": true,
+  "productionWritableKinds": []
+}

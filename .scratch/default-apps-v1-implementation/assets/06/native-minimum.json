@@ -1,0 +1,517 @@
+{
+  "application": {
+    "bottom": 253,
+    "client": 116,
+    "height": 117,
+    "scroll": 116,
+    "width": 690,
+    "x": 301,
+    "y": 136
+  },
+  "apps": {
+    "bottom": 658,
+    "client": 366,
+    "height": 366,
+    "scroll": 8102,
+    "width": 272,
+    "x": 16,
+    "y": 292
+  },
+  "associations": {
+    "bottom": 644,
+    "client": 275,
+    "height": 275,
+    "scroll": 14476,
+    "width": 690,
+    "x": 301,
+    "y": 369
+  },
+  "buttons": [
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    },
+    {
+      "disabled": true
+    }
+  ],
+  "overflow": 0,
+  "search": {
+    "bottom": 334,
+    "client": 81,
+    "height": 81,
+    "scroll": 81,
+    "width": 690,
+    "x": 301,
+    "y": 253
+  },
+  "status": {
+    "bottom": 135,
+    "client": 68,
+    "height": 69,
+    "scroll": 68,
+    "width": 1000,
+    "x": 0,
+    "y": 66
+  },
+  "viewport": [
+    1000,
+    700
+  ],
+  "windowScroll": 0
+}

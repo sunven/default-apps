@@ -4,7 +4,7 @@
 
 **Blocked by:** [05: 手动补充并跨启动保存](05-manual-items-persistence.md).
 
-**Status:** ready-for-agent
+**Status:** resolved
 
 - [ ] 应用关联行和候选详情均能明确提交单项修改，目标包含规范副本路径；三种浏览入口共享 Go 持有的请求与观察。无暂存、批量、恢复、停止等待或撤回按钮。（WRITE-1）
 - [ ] 受理前检查关联可解析、目标应用可用及写入门控，重新查询默认。默认与用户查看时不同时返回新观察并要求再次明确选择；目标已是当前具体副本时返回无需修改；校验或查询失败不调用 setter。（WRITE-2）
@@ -20,3 +20,16 @@
 - [ ] 可控适配器通过测试环境注入，生产界面不含演练开关，也不把替身结果冒充系统事实；在 07、08 完成并由 09 接通之前，生产写入保持不可提交。（BUILD-2）
 
 依据：[实施入口](../spec.md)、[修改语义最终决议](../../default-apps-v1/issues/05-change-semantics-prototype.md#answer)、[架构方案](../../default-apps-v1/assets/architecture-proposal.md)、[验收矩阵](../../default-apps-v1/assets/acceptance-criteria.md#验收矩阵)。
+
+## Comments
+
+- 2026-11-06：从 integration/default-apps-v1 的 33bfcc9 开始，认领完整 06；使用已确认的 Go 服务、共享配置、正式 React／Wails 界面 seams，逐条 red → green。真实 setter 仍留给 09／10。
+
+
+## Answer
+
+Implemented the single-change lifecycle across the shared Go store, public Wails service/event boundary, generated React bindings, and formal desktop UI. The coordinator performs fresh identity/availability/default preflight, global admission and same-ID idempotence, persists the single opaque pending record before dispatch, retains accepted/submitted/completion/readback as distinct facts, confirms only nil native error plus valid exact target path, preserves native error fields, and makes readback retry query-only. Production builds expose no writable kinds and use a disabled dispatcher; only the isolated `change_smoke` build injects the controlled adapter.
+
+Evidence: `assets/06/change-final-test.log` and `go-test.log` pass `go test -race ./internal/change` (16 tests) and all repository Go tests. `assets/06/frontend-test.log` passes 32 React tests; `frontend-build.log` passes TypeScript/Vite production build. The formal Wails controlled adapter ran on MCP port 9107 with isolated config root and generated bindings. `native-lifecycle.json` covers accepted before dispatch, submitted, target observation while pending, exact confirmation, different-copy mismatch, native error plus failed readback, and readback-only retry. `native-boundaries.json` covers changed default, already-target no-op, unavailable target, query failure, unresolved identity, save failure with zero setter starts, clear failure with known result, replacement of leftover pending data, and return-to-request-item. `native-summary.json` summarizes 17 scenarios. `native-minimum.json` and `native-pending-minimum.png` show actual 1000×700 webview, zero horizontal overflow, both independent scroll regions, status/search/list controls reachable and writes disabled while pending. `baseline-check.json` compares 21 independent native association queries before/after and records no native setter. `a11y.json` reports zero axe violations. `visual-inspection.log` reports 0 FAIL/1 tiny-text warning and `visual-lint.log` reports 0 warnings.
+
+The existing 04/05 browser and manual tests remain green. `HANDOFF.md` documents the public coordinator/store boundary, native dispatcher contract, production exclusion, and explicit 07/08 follow-up gaps.

@@ -1,0 +1,1252 @@
+{
+ "url": "http://127.0.0.1:9316/native-pending.html",
+ "at": "2026-11-06T04:02:06.651Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.88
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 2498,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 1.7,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Xcode",
+     "words": 1,
+     "lines": 1,
+     "size": 24,
+     "font": "-apple-system"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 12,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 24,
+      "vw": 1.7,
+      "font": "-apple-system",
+      "text": "Xcode"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.05,
+     "smallText": 536
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f5f6f8",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.18,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 135,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#606875",
+       "share": 0.72
+      },
+      {
+       "color": "#262b32",
+       "share": 0.21
+      },
+      {
+       "color": "#20242a",
+       "share": 0.04
+      },
+      {
+       "color": "#656b74",
+       "share": 0.03
+      },
+      {
+       "color": "#835006",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#f4f5f6",
+      "hsl": {
+       "h": 210,
+       "s": 0.1,
+       "l": 0.96
+      },
+      "fg": "#656b74"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 313,
+     "inHero": 18,
+     "radius": 6,
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "文件类型",
+      "URL 协议",
+      "手动补充…",
+      "重新扫描应用",
+      "返回请求项"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 158,
+     "hairlineSamples": [
+      "section.change-status 1440px",
+      "header.app-heading 1130px",
+      "div.column-labels 1130px",
+      "div.association-row 1090px",
+      "div.association-row 1090px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 93,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 66,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 19,
+     "right": 29
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Xcode",
+      "size": 24,
+      "top": 156,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 321,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 960,
+     "y": 360,
+     "w": 300,
+     "h": 540
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f5f6f8",
+    "sidebar": null,
+    "topbar": {
+     "h": 66
+    },
+    "canvas": {
+     "left": 19,
+     "right": 29
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 1.7,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       6,
+       1
+      ],
+      [
+       10,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.78,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ]
+    },
+    "title": {
+     "text": "Xcode",
+     "size": 24,
+     "top": 156
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 1180,
+   "height": 738,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.87
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1180,
+     "h": 738
+    },
+    "page": {
+     "height": 738,
+     "screens": 1,
+     "words": 2498,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 2,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Xcode",
+     "words": 1,
+     "lines": 1,
+     "size": 24,
+     "font": "-apple-system"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 12,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 56,
+     "max": {
+      "size": 24,
+      "vw": 2,
+      "font": "-apple-system",
+      "text": "Xcode"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.05,
+     "smallText": 536
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f5f6f8",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.18,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 135,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#606875",
+       "share": 0.72
+      },
+      {
+       "color": "#262b32",
+       "share": 0.21
+      },
+      {
+       "color": "#20242a",
+       "share": 0.04
+      },
+      {
+       "color": "#656b74",
+       "share": 0.03
+      },
+      {
+       "color": "#835006",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#f4f5f6",
+      "hsl": {
+       "h": 210,
+       "s": 0.1,
+       "l": 0.96
+      },
+      "fg": "#656b74"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 312,
+     "inHero": 14,
+     "radius": 6,
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "文件类型",
+      "URL 协议",
+      "手动补充…",
+      "重新扫描应用",
+      "返回请求项"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 158,
+     "hairlineSamples": [
+      "section.change-status 1180px",
+      "header.app-heading 870px",
+      "div.column-labels 870px",
+      "div.association-row 830px",
+      "div.association-row 830px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 93,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 66,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1180,
+     "h": 738
+    },
+    "pageH": 738,
+    "margins": {
+     "left": 19,
+     "right": 29
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Xcode",
+      "size": 24,
+      "top": 156,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 321,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 541,
+     "y": 98,
+     "w": 492,
+     "h": 148
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1180,
+     "h": 738
+    },
+    "dark": false,
+    "ground": "#f5f6f8",
+    "sidebar": null,
+    "topbar": {
+     "h": 66
+    },
+    "canvas": {
+     "left": 19,
+     "right": 29
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 2,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       6,
+       1
+      ],
+      [
+       10,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.78,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ]
+    },
+    "title": {
+     "text": "Xcode",
+     "size": 24,
+     "top": 156
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 1000,
+   "height": 625,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.75,
+    0.83
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1000,
+     "h": 625
+    },
+    "page": {
+     "height": 700,
+     "screens": 1.1,
+     "words": 2498,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 1,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 2.4,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Xcode",
+     "words": 1,
+     "lines": 1,
+     "size": 24,
+     "font": "-apple-system"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 12,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.6
+     },
+     "measureChars": 41,
+     "max": {
+      "size": 24,
+      "vw": 2.4,
+      "font": "-apple-system",
+      "text": "Xcode"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.05,
+     "smallText": 536
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f5f6f8",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.18,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 135,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#606875",
+       "share": 0.72
+      },
+      {
+       "color": "#262b32",
+       "share": 0.21
+      },
+      {
+       "color": "#20242a",
+       "share": 0.04
+      },
+      {
+       "color": "#656b74",
+       "share": 0.03
+      },
+      {
+       "color": "#835006",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#f4f5f6",
+      "hsl": {
+       "h": 210,
+       "s": 0.1,
+       "l": 0.96
+      },
+      "fg": "#656b74"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 294,
+     "inHero": 12,
+     "radius": 6,
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "文件类型",
+      "URL 协议",
+      "手动补充…",
+      "重新扫描应用",
+      "返回请求项"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 158,
+     "hairlineSamples": [
+      "section.change-status 1000px",
+      "header.app-heading 690px",
+      "div.column-labels 690px",
+      "div.association-row 650px",
+      "div.association-row 650px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 93,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 66,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1000,
+     "h": 625
+    },
+    "pageH": 700,
+    "margins": {
+     "left": 19,
+     "right": 29
+    },
+    "sections": [
+     {
+      "sel": "div.association-row",
+      "tag": "div",
+      "top": 2962,
+      "height": 148,
+      "words": 0,
+      "media": 0,
+      "middle": 270,
+      "heading": null,
+      "left": 321,
+      "right": 29,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.association-row",
+      "tag": "div",
+      "top": 7460,
+      "height": 133,
+      "words": 0,
+      "media": 0,
+      "middle": 270,
+      "heading": null,
+      "left": 321,
+      "right": 29,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.association-row",
+      "tag": "div",
+      "top": 9895,
+      "height": 133,
+      "words": 0,
+      "media": 0,
+      "middle": 270,
+      "heading": null,
+      "left": 321,
+      "right": 29,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.association-row",
+      "tag": "div",
+      "top": 10306,
+      "height": 133,
+      "words": 0,
+      "media": 0,
+      "middle": 270,
+      "heading": null,
+      "left": 321,
+      "right": 29,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Xcode",
+      "size": 24,
+      "top": 156,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 321,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 3,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 500,
+     "y": 125,
+     "w": 375,
+     "h": 125
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1000,
+     "h": 625
+    },
+    "dark": false,
+    "ground": "#f5f6f8",
+    "sidebar": null,
+    "topbar": {
+     "h": 66
+    },
+    "canvas": {
+     "left": 19,
+     "right": 29
+    },
+    "hero": {
+     "text": "Xcode",
+     "words": 1,
+     "chars": 5,
+     "lines": 1,
+     "size": 24,
+     "vw": 2.4,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.02,
+     "leading": 1.25,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       6,
+       1
+      ],
+      [
+       10,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.78,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      16,
+      24
+     ]
+    },
+    "title": {
+     "text": "Xcode",
+     "size": 24,
+     "top": 156
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "78% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    1180,
+    1000
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/desktop-1440-fold.jpg",
+   "pages": [
+    "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/desktop-1440-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "desktop",
+   "width": 1180,
+   "fold": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/desktop-1180-fold.jpg",
+   "pages": [
+    "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/desktop-1180-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 1000,
+   "fold": "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/tablet-fold.jpg",
+   "pages": [
+    "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/.scratch/default-apps-v1-implementation/assets/06/visual-desktop/tablet-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+Wails v3.1.0 › Generate Bindings
+ INFO  Processed: 255 Packages, 5 Services, 15 Methods, 0 Enums, 26 Models, 2 Events in 797.145459ms.
+ INFO  Output directory: /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/06/frontend/bindings
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 build
+> tsc && vite build --mode production
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 54 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.40 kB │ gzip:  0.27 kB
+dist/assets/index-CkTaCeNb.css   10.47 kB │ gzip:  2.60 kB
+dist/assets/index-Dn8X3aOJ.js   196.50 kB │ gzip: 63.57 kB
+
+✓ built in 66ms
+# github.com/sunven/default-apps
+ld: warning: ignoring duplicate libraries: '-lobjc'
+bin/Default Apps Change QA.app: replacing existing signature
+bin/Default Apps Change QA.app: valid on disk
+bin/Default Apps Change QA.app: satisfies its Designated Requirement
