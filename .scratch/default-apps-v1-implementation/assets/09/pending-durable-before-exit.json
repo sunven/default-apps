@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "associations": [
+    {
+      "input": {
+        "kind": "identifier",
+        "value": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document",
+        "label": "Dedicated Acceptance Document",
+        "source": "manual"
+      },
+      "selectedID": "file:org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+    }
+  ],
+  "applications": [],
+  "pending": {
+    "requestID": "e5711e25-daf1-4f05-afc2-75f93a952847",
+    "association": {
+      "kind": "file",
+      "key": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+    },
+    "target": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+      "name": "Acceptance A",
+      "version": "1.0",
+      "bundleID": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.a"
+    },
+    "preflight": {
+      "known": true,
+      "app": {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "name": "Acceptance B",
+        "version": "2.0",
+        "bundleID": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.b"
+      },
+      "observedAt": "2026-11-06T05:42:14.762606Z",
+      "error": null,
+      "stale": false
+    },
+    "phase": "accepted",
+    "acceptedAt": "2026-11-06T05:42:14.766504Z",
+    "submittedAt": ""
+  }
+}

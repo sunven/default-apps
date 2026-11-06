@@ -1,0 +1,25 @@
+Executable=/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/09/bin/Default Apps.app/Contents/MacOS/default-apps
+Identifier=io.github.sunven.default-apps
+Format=app bundle with Mach-O thin (arm64)
+CodeDirectory v=20400 size=27638 flags=0x2(adhoc) hashes=857+3 location=embedded
+VersionPlatform=1
+VersionMin=851968
+VersionSDK=1769984
+Hash type=sha256 size=32
+CandidateCDHash sha256=f28bc9626e107a0a80f79a2a3349b7263a0c35f1
+CandidateCDHashFull sha256=f28bc9626e107a0a80f79a2a3349b7263a0c35f1f1835771c13dc65c142aedfb
+Hash choices=sha256
+CMSDigest=f28bc9626e107a0a80f79a2a3349b7263a0c35f1f1835771c13dc65c142aedfb
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=7929856
+Executable Segment flags=0x1
+Page size=16384
+CDHash=f28bc9626e107a0a80f79a2a3349b7263a0c35f1
+Signature=adhoc
+Info.plist entries=12
+TeamIdentifier=not set
+Sealed Resources version=2 rules=13 files=0
+Internal requirements count=0 size=12
+Total signatures=1
+Chosen signature=1

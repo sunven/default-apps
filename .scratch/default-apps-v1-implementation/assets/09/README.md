@@ -1,0 +1,34 @@
+# Ticket 09 evidence — completed
+
+2026-11-06, macOS 27.2 / Apple Silicon. Base `704aac2`. Production file-type setter is wired through the existing durable coordinator; schemes are still read-only. The acceptance build uses production React/Wails and real NSWorkspace with only observation/driver/configuration tags. No historical probe or daily-default setter is used.
+
+| Check | Layer | Status | Evidence |
+|---|---|---|---|
+| Production file capability / scheme gate | Go public service | 通过 | `environment-red.log`, `environment-green.log` |
+| Deferred queue, copied NSError from worker thread, duplicate callback, two independent numeric owners | Controlled native boundary | 通过 | `native-boundary-red.log`, `ownership-red.log`, `native-boundary-green.log` |
+| Existing coordinator/storage/query regression | Go race | 通过 | `go-tests.log` |
+| Signed ordinary and real-adapter acceptance builds | Build | 通过 | `build.log`, `production-signature.txt`, `production-floor.txt`, `production-inputs.txt` |
+| Fresh namespace and independent daily/dedicated baseline | Native read-only | 通过 | `manifest.json`, `daily-before.json`, `dedicated-before.json`, `dedicated-registered.json`, `registration.json` |
+| Browse, query, reload while actual system completion absent | Formal native | 通过 | `formal-native.jsonl`, `pending-independent.json`, `pending-reloaded-1000x700.png` |
+| Real native pending menu/Cmd-Q/last-window-close, stay, exit, restart unknown without replay | Formal native | 通过 | `native-exit.json`, `pending-durable-before-exit.json`, `processes.jsonl`, `real-pending-quit.png`, `real-pending-restart.png`, `after-pending-restart-independent.json` |
+| A→B→A genuine completion and exact canonical path | Formal native | 通过 | `a-to-b-completed-independent.json`, `b-to-a-completed-independent.json`, `formal-native.jsonl`, `human-actions.jsonl` |
+| Same-ID copy | Formal native | 通过 | `same-id-mismatch-independent.json`, request `14cea5ae-950d-4ee1-8ce4-bad1d9d54c6d`: selected A / actual A Copy / nil error / confirmed=false |
+| Undeclared manual picker and explicit request | Formal native | 通过 | Human selected exact undeclared app; request `daee7fee-963f-46cc-9cc8-f93113d03836` confirmed exact path (`undeclared-completed-independent.json`, `undeclared-confirmed.png`) |
+| Human refusal / copied real native error | Formal native | 通过 | Human chose continue-A; `NSCocoaErrorDomain`, 256, `The file couldn’t be opened.`; actual A / confirmed=false (`refusal-independent.json`, `refusal-result.png`) |
+| Daily after-run, targeted cleanup and residual queries | Native read-only / fixture cleanup | 通过 | `daily-before.json` = `daily-after-run.json` = `daily-after-cleanup.json`; `cleanup-result.json` has no residual paths, dedicated candidates/defaults empty |
+
+`formal-native.jsonl` records request identities, targets, before observations, durable records, complete service snapshots and UI text. `native-runtime.log` contains `NATIVE_ACCEPTANCE` events for actual NSWorkspace initiation and completion, including main-thread facts. The numeric operation counter is per process; `processes.jsonl` records process launches. `native_adapter_test` errors use `org.defaultapps.test.native` and appear only in controlled test logs, never as claimed native system errors.
+
+`build-fixtures.py` creates fresh inert signed bundles once and refuses to overwrite the immutable manifest. `prepare-native.py` saves independent pre-registration baselines, checks namespace collision and registers only A/B exact paths. `launch-native.py` reopens the same isolated configuration; it does not submit or replay anything. `native-client.py` drives production DOM actions and query-only evidence calls. The system consent dialog is always human-operated.
+
+Current special observation: the unanswered A/B system confirmation remained visible after its originating application process exited and a fresh product process opened. The old request remains unknown in product state. An independent current-path match later is an observation, not proof of old completion.
+
+The required native sequence completed in PID 66702: `de0587ac-e9a9-4709-a2c1-682e617c7e04` A→B and `bc089332-6f56-4a0f-a633-9501aaa81a99` B→A each received a nil native error, exact independent canonical-path readback, confirmed production UI state and pending-record clearing. The old exited-process request stays unknown in session snapshots. `minimum-geometry-valid.json` and `b-to-a-pending-1000x700.png` show corrected native content minimum 1000×700, DOM rounded 1001×701 and zero horizontal overflow. An earlier test helper guessed an outer height of728 and briefly measured only696 content; this was a harness sizing mistake, corrected with native frameRectForContentRect.
+
+Human continue-A refusal produced an observed `NSCocoaErrorDomain` code256 with description `The file couldn’t be opened.`. This is the actual result of this request, not a universal cancellation-code mapping. It arrived more than26minutes after initiation without any product timeout. After A Copy registration, the system current default resolved to A Copy. Selecting A Copy correctly returned a no-op; a fresh explicit original-A selection produced nil completion but actual A Copy, retained both paths, and was not confirmed. No system prompt was observed for this same-ID request.
+
+Final results are indexed in `results.json`, including every request, exact target/before/actual paths, independent completion fields, human reports and cleanup. Daily defaults **and candidate sets** matched exactly before registration, after all requests, and after cleanup. Only the four exact manifest-owned bundle paths were unregistered; no Launch Services reset occurred. A/B/type/scheme fresh-process queries had no remaining default or candidate path. Inert fixture files remain in the isolated external directory for reproducibility; no registration remains. The final normal menu Quit terminated PID66702, confirmed externally in `final-process-exit.json`.
+
+All43 existing React tests passed (`react-tests.log`). No frontend implementation changed. Inspected actual WKWebView screenshots cover pending, confirmed, error, same-ID mismatch, real quit/recovery and undeclared selection at the native content minimum. `system-*.png` are cropped system-dialog evidence; broader desktop contents are excluded. Human-reply receipt timestamps are separate from native callback timestamps and are not claimed as physical click times.
+
+`quit-hooks.jsonl` preserves the actual native guard route/time/decision events across both processes. `final-isolated-config.json` has the saved manual fixture location and no pending request after the completed attempts. These are isolated acceptance configuration records, not the user’s ordinary production configuration.

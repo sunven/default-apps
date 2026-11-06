@@ -1,0 +1,55 @@
+{
+  "system": {
+    "command": [
+      "sw_vers"
+    ],
+    "returncode": 0,
+    "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123\n",
+    "stderr": ""
+  },
+  "architecture": {
+    "command": [
+      "uname",
+      "-m"
+    ],
+    "returncode": 0,
+    "stdout": "arm64\n",
+    "stderr": ""
+  },
+  "go": {
+    "command": [
+      "go",
+      "version"
+    ],
+    "returncode": 0,
+    "stdout": "go version go1.27.3 darwin/arm64\n",
+    "stderr": ""
+  },
+  "wails": {
+    "command": [
+      "wails3",
+      "version"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "v3.1.0\n"
+  },
+  "node": {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "v26.13.0\n",
+    "stderr": ""
+  },
+  "npm": {
+    "command": [
+      "npm",
+      "--version"
+    ],
+    "returncode": 0,
+    "stdout": "11.20.0\n",
+    "stderr": ""
+  }
+}

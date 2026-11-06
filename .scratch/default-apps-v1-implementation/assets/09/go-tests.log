@@ -1,0 +1,15 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+# github.com/sunven/default-apps.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ok  	github.com/sunven/default-apps	2.589s
+?   	github.com/sunven/default-apps/build/android/scripts/deps	[no test files]
+?   	github.com/sunven/default-apps/build/ios	[no test files]
+?   	github.com/sunven/default-apps/build/ios/scripts/deps	[no test files]
+ok  	github.com/sunven/default-apps/internal/association	2.433s
+ok  	github.com/sunven/default-apps/internal/catalog	2.535s
+ok  	github.com/sunven/default-apps/internal/change	3.242s
+ok  	github.com/sunven/default-apps/internal/config	2.927s
+ok  	github.com/sunven/default-apps/internal/discovery	2.793s
+ok  	github.com/sunven/default-apps/internal/manual	2.651s
+ok  	github.com/sunven/default-apps/internal/native	2.502s

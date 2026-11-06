@@ -1,0 +1,6 @@
+{"reportedAt": "2026-11-06T05:59:40.944829+00:00", "requestID": "e5711e25-daf1-4f05-afc2-75f93a952847", "source": "human report relayed by root", "button": "使用 Acceptance A", "context": "original system confirmation after originating process exited; old completion unobservable"}
+{"reportedAt": "2026-11-06T06:20:24.644063+00:00", "requestID": "de0587ac-e9a9-4709-a2c1-682e617c7e04", "source": "human report relayed by root", "button": "使用 Acceptance B"}
+{"reportedAt": "2026-11-06T06:45:01.224555+00:00", "requestID": "bc089332-6f56-4a0f-a633-9501aaa81a99", "source": "human report relayed by root", "button": "使用 Acceptance A"}
+{"reportedAt": "2026-11-06T07:37:33.816858+00:00", "requestID": "10ee9dc1-6c11-4419-bc86-0b765175cfc9", "source": "human report relayed by root", "button": "继续使用 Acceptance A"}
+{"reportedAt": "2026-11-06T08:27:30.794390+00:00", "source": "human report relayed by root", "action": "selected Acceptance Undeclared.app and Open in native picker", "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app"}
+{"reportedAt": "2026-11-06T08:50:34.583519+00:00", "requestID": "daee7fee-963f-46cc-9cc8-f93113d03836", "source": "human report relayed by root", "button": "使用 Acceptance Undeclared"}

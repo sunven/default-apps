@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-06T08:50:34Z",
+  "readOnly": true,
+  "scheme": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+    },
+    "key": "defaultapps-acceptance-419b7422bf684b7aaa7af96e558de0c1"
+  },
+  "type": {
+    "candidates": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A Copy.app"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app",
+        "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+      }
+    ],
+    "current": {
+      "path": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app",
+      "rawPath": "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance Undeclared.app"
+    },
+    "declared": true,
+    "dynamic": false,
+    "identifier": "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+  }
+}

@@ -1,0 +1,3 @@
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ok  	github.com/sunven/default-apps/internal/native	1.759s

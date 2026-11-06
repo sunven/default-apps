@@ -1,0 +1,12 @@
+{
+  "pid": 59842,
+  "observedAt": 1793943967.002869,
+  "ps": "",
+  "returncode": 1,
+  "completionBeforeExit": {
+    "completedAt": "",
+    "error": null,
+    "known": false
+  },
+  "pendingRecordPreserved": true
+}

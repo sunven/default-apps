@@ -1,0 +1,6 @@
+{"allowed":false,"at":"2026-11-06T05:45:33.317891Z","route":"ShouldQuit"}
+{"allowed":false,"at":"2026-11-06T05:46:06.346076Z","route":"ShouldQuit"}
+{"allowed":false,"at":"2026-11-06T05:46:06.399178Z","route":"WindowClosing"}
+{"allowed":false,"at":"2026-11-06T05:46:06.861713Z","route":"ShouldQuit"}
+{"allowed":true,"at":"2026-11-06T05:46:06.931569Z","route":"ShouldQuit"}
+{"allowed":true,"at":"2026-11-06T08:50:36.288985Z","route":"ShouldQuit"}

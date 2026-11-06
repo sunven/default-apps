@@ -1,7 +1,6 @@
 //go:build darwin && cgo
 
 // Package native translates public macOS APIs into Go-owned values.
-// No native setter is linked into this read-only slice.
 package native
 
 /*

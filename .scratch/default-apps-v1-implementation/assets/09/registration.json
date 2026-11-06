@@ -1,0 +1,24 @@
+[
+  {
+    "at": "2026-11-06T05:41:29.116229+00:00",
+    "command": [
+      "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      "-f",
+      "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance A.app"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "at": "2026-11-06T05:41:29.133958+00:00",
+    "command": [
+      "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      "-f",
+      "/Users/sunven/.codex/default-apps-implementation-20261105/native09-419b7422bf684b7aaa7af96e558de0c1/fixtures/Acceptance B.app"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

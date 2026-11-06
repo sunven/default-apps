@@ -1,0 +1,20 @@
+{
+  "date" : "2026-11-06T05:41:29Z",
+  "readOnly" : true,
+  "scheme" : {
+    "candidates" : [
+
+    ],
+    "current" : null,
+    "key" : "defaultapps-acceptance-419b7422bf684b7aaa7af96e558de0c1"
+  },
+  "type" : {
+    "candidates" : [
+
+    ],
+    "current" : null,
+    "declared" : false,
+    "dynamic" : false,
+    "identifier" : "org.defaultapps.acceptance.419b7422bf684b7aaa7af96e558de0c1.document"
+  }
+}
