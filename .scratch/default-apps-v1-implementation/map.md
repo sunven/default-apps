@@ -10,9 +10,9 @@
 | [04：完整桌面搜索与键盘浏览](issues/04-desktop-search-keyboard.md) | resolved，已合并 | 实现 `ade4ae7`，05 组合 `124bded`，合并 `b358def`；[验收记录](assets/04/README.md) |
 | [05：手动补充并跨启动保存](issues/05-manual-items-persistence.md) | resolved，已合并 | 实现 `a847e67`，合并 `68ddfca`；[验收记录](assets/05/README.md)、[存储与原生验收交接](assets/05/HANDOFF.md) |
 | [06：单项修改的完整请求流程](issues/06-single-change-lifecycle.md) | resolved，已合并 | 实现 `db460f5`，证据 `77a22d6`，交接 `6b1c270`，合并 `714f256`；[验收记录](assets/06/README.md)、[生命周期交接](assets/06/HANDOFF.md) |
-| [07：刷新、重载与晚到结果同步](issues/07-refresh-reload-synchronisation.md) | claimed，当前实施 | 前置 06 已合并；正在组合 08 的退出防护与恢复边界 |
+| [07：刷新、重载与晚到结果同步](issues/07-refresh-reload-synchronisation.md) | resolved，已合并 | 实现 `fb2469c`，组合与证据 `c850404`，合并 `7d49bfe`；[验收记录](assets/07/README.md)、[同步交接](assets/07/HANDOFF.md) |
 | [08：待决退出与重启恢复](issues/08-quit-and-recovery.md) | resolved，已合并 | 实现 `00864bc`，合并 `580d94a`；[验收记录](assets/08/README.md)、[退出与恢复交接](assets/08/HANDOFF.md) |
-| [09：真实文件类型修改](issues/09-native-file-type-change.md) | ready-for-agent，受前置阻塞 | 08 已合并，仍等待 07 完成 |
+| [09：真实文件类型修改](issues/09-native-file-type-change.md) | ready-for-agent，当前 frontier | 07、08 已合并，全部前置满足 |
 
 01 建立的服务边界在 `internal/association/service.go`，可替换 `SystemAdapter` 分别返回默认和候选；规范应用包路径是副本身份。02 的 `internal/catalog/service.go` 通过可替换 `TypeResolver` 解析全部常用种子，合并同一身份的标签与来源，保留歧义及未解析项。03 的 `internal/discovery` 后台扫描三个常规目录，读取声明并发布独立版本快照；`internal/native` 负责公共 macOS 解析、两类关联查询与主线程／内存边界。05 的 `internal/manual` 通过正式原生选择器补充关联和应用副本，`internal/config.Repository` 在版本化 JSON 中原子保存手动项并为单条未定记录保留不透明字段；发现服务按已选身份恢复手动来源和不可用路径。04 的 `frontend/src/App.tsx` 提供已选 A 双列表、应用元数据／声明搜索、独立筛选、会话恢复和完整键盘浏览，`Dialog.tsx` 统一详情与手动对话框的焦点规则；顶部手动入口、未解析识别、其他应用选择及不可用副本说明已与 05 组合。06 的 `internal/change.Service` 持有受理、系统 completion、独立回读、去重与全局门控，先原子保存再调度；`Changes.tsx` 与正式三种浏览入口共享快照和状态。08 的 `quit.go`、`recovery.go` 和 `Lifecycle.tsx` 在同一协调器接入非阻塞原生退出判断、关闭受理、旧记录独立查询与明确确认替换。当前可保存本应用配置，生产系统写入仍禁用。
 
@@ -30,4 +30,6 @@
 
 `git diff --check c3ec320 007ad10` 仅报告原始采集文件 `assets/01/frontend-test.log` 的末尾空行及 `assets/01/rendered-window.html` 的空白行；`git diff --check b7c310d 30f54ed` 同样仅报告 `assets/02/frontend-test.log` 的末尾空行和三个 `*-window.html` 原始 DOM 文件的空白行。采集记录原样保留。03 排除原始采集资产后也通过源码与工单差异检查，新增验收 README 单独通过。构建日志、截图、静态视觉检查和原生操作证据的边界见各工单验收记录。
 
-07 已认领，继续在其 worktree 完成同步并合入当前集成分支，按 [08 交接](assets/08/HANDOFF.md)保留退出期间的提交／回读防护、恢复确认参数及有效当前查询门控，协调失效查询与恢复状态的组合。原生验收继续遵循 [06 交接](assets/06/HANDOFF.md)，避免第二个 Wails runtime 覆盖页面事件分发器。09 的 08 前置已满足，仍须等待 07 完成；生产真实写入待 09／10，11 核对完整组合。当前完成范围为 01–06、08，其余 4 个工单及完整首版仍待实现和验收；所有实现 worktree 保留至完整规格最终清理。
+07 合并核对源码与全部完成项、43 个 React 测试、内部 Go race、生产构建及普通输入排除测试适配器的记录。直接断言 14＋8＋10 个正式 Wails 原始观察中的原请求身份、丢应答／重载、旧查询、取消边界、恢复确认和单次 dispatch；90.039 秒后原 completion 才结束待决，外部变化更新实际默认且保留原确认事实。最终 DOM 为 1001×701、横向溢出 0；原生扫描保留的滚动偏移为 0，非零滚动由 React 行为测试覆盖。harness 行选择器修正仅续验最终观察，未重放请求。`c850404` 已包含集成前置 `c4e3046`，非快进合并 `7d49bfe` 无冲突，非资产差异检查通过；合并阶段未重跑广泛测试或触发真实 setter。
+
+当前完成范围为 01–08；09 为首个未认领且无前置阻塞的工单，接通真实文件类型写入时须遵循 [07 同步交接](assets/07/HANDOFF.md)和 [08 退出／恢复交接](assets/08/HANDOFF.md)，保留过期查询防护、原请求核对、退出防护及有效恢复查询门控。原生验收继续遵循 [06 交接](assets/06/HANDOFF.md)，避免第二个 Wails runtime 覆盖页面事件分发器。真实写入与人工系统确认由 09／10 验证，11 核对完整组合；其余 3 个工单及完整首版仍待实现和验收，所有实现 worktree 保留至最终清理。
