@@ -1,0 +1,13 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 build
+> tsc && vite build --mode production
+
+src/App.regressions.test.tsx(28,109): error TS2345: Argument of type '{ version: number; busy: false; activeRequestID: string; requests: never[]; observations: never[]; writableKinds: never[]; storageError: null; }' is not assignable to parameter of type 'Snapshot'.
+  Type '{ version: number; busy: false; activeRequestID: string; requests: never[]; observations: never[]; writableKinds: never[]; storageError: null; }' is missing the following properties from type 'Snapshot': "recovery", "quit"
+src/App.regressions.test.tsx(138,42): error TS2345: Argument of type '() => Promise<{ version: number; scanning: true; entries: Entry[]; apps: { associationIDs: string[]; manual?: boolean; unavailable?: boolean; app: AppCopy; issues: Issue[] | null; declarations: Declaration[] | null; definitions: TypeDefinition[] | null; }[]; ... 4 more ...; durationMS: number; }>' is not assignable to parameter of type '() => CancellablePromise<Snapshot>'.
+  Type 'Promise<{ version: number; scanning: true; entries: Entry[]; apps: { associationIDs: string[]; manual?: boolean | undefined; unavailable?: boolean | undefined; app: AppCopy; issues: Issue[] | null; declarations: Declaration[] | null; definitions: TypeDefinition[] | null; }[]; ... 4 more ...; durationMS: number; }>' is missing the following properties from type 'CancellablePromise<Snapshot>': cancel, cancelOn
+src/App.tsx(120,40): error TS2345: Argument of type '() => boolean' is not assignable to parameter of type '() => true'.
+  Type 'boolean' is not assignable to type 'true'.
+src/App.tsx(135,125): error TS2345: Argument of type '() => boolean' is not assignable to parameter of type '() => true'.
+  Type 'boolean' is not assignable to type 'true'.

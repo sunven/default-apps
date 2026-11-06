@@ -1,0 +1,50 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 181ms
+ × src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 178ms
+   → expect(element).not.toHaveTextContent()
+
+Expected element not to have text content:
+  查询连接失败
+Received:
+  JPEG 图像.jpg · .jpegpublic.jpeg查询连接失败详情…已是默认
+ × src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 26ms
+   → expect(element).not.toHaveTextContent()
+
+Expected element not to have text content:
+  查询连接失败
+Received:
+  JPEG 图像.jpg · .jpegpublic.jpeg查询连接失败详情…已是默认
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation
+ FAIL  src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation
+Error: expect(element).not.toHaveTextContent()
+
+Expected element not to have text content:
+  查询连接失败
+Received:
+  JPEG 图像.jpg · .jpegpublic.jpeg查询连接失败详情…已是默认
+ ❯ src/App.regressions.test.tsx:69:18
+     67|  await waitFor(()=>expect(row).toHaveTextContent('/Applications/Reader…
+     68|  await act(async()=>rejectOld(new Error('older transport failure')))
+     69|  expect(row).not.toHaveTextContent('查询连接失败')
+       |                  ^
+     70|  expect(row).toHaveTextContent('/Applications/Reader.app')
+     71| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  21:21:21
+   Duration  966ms (tests 46%, environment 39%, setup 10%, transform 3%, import 1%)
+

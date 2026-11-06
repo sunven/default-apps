@@ -1,0 +1,15 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 177ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  21:20:43
+   Duration  515ms (tests 44%, environment 37%, setup 9%, transform 7%, import 3%)
+

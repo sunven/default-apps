@@ -1,0 +1,484 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 177ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 168ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 19ms
+ ✓ src/App.regressions.test.tsx > fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them 70ms
+ ✓ src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session 93ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved common source without dropping neighbors 32ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved declaration source without dropping neighbors 27ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved manual source without dropping neighbors 27ms
+ × src/App.regressions.test.tsx > manual reparse restores the previously selected identity when its source also resolves to another type 27ms
+   → Unable to find an accessible element with the role "dialog" and name "Saved type"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"global-header"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"app-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "浏览入口":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"浏览入口"[39m
+    [33mclass[39m=[32m"view-navigation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "应用":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"app"[39m
+  [36m/>[39m
+
+  Name "文件类型":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mdata-view[39m=[32m"file"[39m
+  [36m/>[39m
+
+  Name "URL 协议":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"scheme"[39m
+  [36m/>[39m
+
+  Name "手动补充…":
+  [36m<button />[39m
+
+  Name "重新扫描应用":
+  [36m<button />[39m
+
+  Name "Other type fixture.first":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Other type fixture.first"[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"file:fixture.first"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "查看 Other type 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 Other type 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "Saved type fixture.second":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Saved type fixture.second"[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"file:fixture.second"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  Name "查看 Saved type 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 Saved type 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"workspace"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "文件类型":
+  [36m<h1 />[39m
+
+  Name "关联目录":
+  [36m<h2 />[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  [36m<p[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "搜索文件类型":
+  [36m<input[39m
+    [33maria-label[39m=[32m"搜索文件类型"[39m
+    [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+    [33mtype[39m=[32m"search"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "关联列表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"关联列表"[39m
+    [33mclass[39m=[32m"association-list"[39m
+    [33mrole[39m=[32m"region"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[39m
+    [33mclass[39m=[32m"browser-footer"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+ ✓ src/App.regressions.test.tsx > a newly ambiguous source requires an explicit type choice and still unresolved sources remain query-disabled 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.regressions.test.tsx > manual reparse restores the previously selected identity when its source also resolves to another type
+TestingLibraryElementError: Unable to find an accessible element with the role "dialog" and name "Saved type"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"global-header"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"app-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "浏览入口":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"浏览入口"[39m
+    [33mclass[39m=[32m"view-navigation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "应用":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"app"[39m
+  [36m/>[39m
+
+  Name "文件类型":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mdata-view[39m=[32m"file"[39m
+  [36m/>[39m
+
+  Name "URL 协议":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"scheme"[39m
+  [36m/>[39m
+
+  Name "手动补充…":
+  [36m<button />[39m
+
+  Name "重新扫描应用":
+  [36m<button />[39m
+
+  Name "Other type fixture.first":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Other type fixture.first"[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"file:fixture.first"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "查看 Other type 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 Other type 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "Saved type fixture.second":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Saved type fixture.second"[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"file:fixture.second"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  Name "查看 Saved type 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 Saved type 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"-1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"workspace"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "文件类型":
+  [36m<h1 />[39m
+
+  Name "关联目录":
+  [36m<h2 />[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  [36m<p[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "搜索文件类型":
+  [36m<input[39m
+    [33maria-label[39m=[32m"搜索文件类型"[39m
+    [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+    [33mtype[39m=[32m"search"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "关联列表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"关联列表"[39m
+    [33mclass[39m=[32m"association-list"[39m
+    [33mrole[39m=[32m"region"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[39m
+    [33mclass[39m=[32m"browser-footer"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.regressions.test.tsx:171:22
+    169|  vi.mocked(StartScan).mockResolvedValue({...initial,version:3,entries:…
+    170|  await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
+    171|  const detail=screen.getByRole('dialog',{name:'Saved type'})
+       |                      ^
+    172|  expect(detail).toHaveTextContent('fixture.second')
+    173|  expect(detail).not.toHaveTextContent('fixture.first')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  21:27:23
+   Duration  1.02s (tests 75%, environment 16%, setup 4%, transform 3%, import 2%)
+
