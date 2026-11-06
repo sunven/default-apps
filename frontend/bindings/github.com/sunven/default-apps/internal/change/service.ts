@@ -25,6 +25,10 @@ export function Query(a: association$0.Association): $CancellablePromise<associa
     return $Call.ByID(3233615384, a);
 }
 
+export function ReconcileSubmission($in: $models.Submission): $CancellablePromise<$models.Reconciliation> {
+    return $Call.ByID(3692139412, $in);
+}
+
 /**
  * Requery is read-only; it never dispatches or replays a setter.
  */

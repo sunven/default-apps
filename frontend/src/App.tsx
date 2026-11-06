@@ -68,16 +68,16 @@ export default function App() {
  const applicationMatches=useMemo(()=>{
   const term=appQuery.trim().toLocaleLowerCase()
   const index=new Map(entries.map(entry=>[entry.id,entry]))
-  return (snapshot?.apps ?? []).map(item=>{
+  return (snapshot?.apps ?? []).filter(item=>!item.unavailable).map(item=>{
    const metadataMatch=!term || [item.app.name,item.app.version,item.app.path,item.app.displayPath,item.app.bundleID].join(' ').toLocaleLowerCase().includes(term)
    const declarations=(item.associationIDs ?? []).flatMap(id=>index.get(id) ?? [])
    return {item,metadataMatch,entries:metadataMatch ? declarations : declarations.filter(entry=>entryText(entry).includes(term))}
   }).filter(match=>match.metadataMatch || match.entries.length)
  },[snapshot,entries,appQuery])
- const missingAppPath=selectedAppPath && snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>item.app.path===selectedAppPath) ? selectedAppPath : null
- const selectedMatch=missingAppPath ? undefined : applicationMatches.find(match=>match.item.app.path===selectedAppPath) ?? applicationMatches[0]
+ const missingAppPath=selectedAppPath && snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>!item.unavailable&&item.app.path===selectedAppPath) ? selectedAppPath : null
+ const selectedMatch=missingAppPath ? undefined : (selectedAppPath?applicationMatches.find(match=>match.item.app.path===selectedAppPath):applicationMatches[0])
  const selectedApp=selectedMatch?.item
- useEffect(()=>{if(kind==='app' && selectedApp && selectedAppPath!==selectedApp.app.path)setSelectedAppPath(selectedApp.app.path)},[kind,selectedApp,selectedAppPath])
+ useLayoutEffect(()=>{if(kind==='app' && selectedApp && selectedAppPath!==selectedApp.app.path)setSelectedAppPath(selectedApp.app.path)},[kind,selectedApp,selectedAppPath])
  const visibleEntries=useMemo(()=> (kind==='app' ? selectedMatch?.entries ?? [] : entries.filter(entry=>entry.association.kind===kind)).filter(entry=>entryText(entry).includes(filter.trim().toLocaleLowerCase())).sort((a,b)=>Number(b.sources?.some(s=>s.kind==='common'))-Number(a.sources?.some(s=>s.kind==='common'))),[kind,selectedMatch,entries,filter])
  const selected=visibleEntries.find(entry=>entry.id===selectedID) ?? visibleEntries[0]
  useEffect(()=>{if(!selected){setDetailOpen(false);setInspectedCopy(null)}},[selected])
@@ -98,7 +98,7 @@ export default function App() {
   scanVersion.current=value.version
   for(const item of value.apps ?? [])discoveredPaths.current.add(item.app.path)
   setSnapshot(previous=>value.scanning && previous?.apps?.length ? {...value,apps:[...new Map([...(previous.apps ?? []),...(value.apps ?? [])].map(item=>[item.app.path,item])).values()]} : value)
-  if(value.entries?.length)setEntries(value.entries)
+  setEntries(previous=>value.scanning? [...new Map([...previous,...(value.entries??[])].map(entry=>[entry.id,entry])).values()]:value.entries??[])
  },[])
  const scan=useCallback(async()=>{try{acceptSnapshot(await StartScan())}catch(error){setCatalogError(String(error))}},[acceptSnapshot])
  const refresh=useCallback(async()=>{
@@ -107,7 +107,7 @@ export default function App() {
   if(selected)setRowErrors(previous=>{const next={...previous};delete next[selected.id];return next})
   if(!selected?.resolved){setLoading(false);return}
   setLoading(true)
-  try{const value=await Query(selected.association);if(version===requestVersion.current)setObservations(previous=>!previous[selected.id]||value.version>=previous[selected.id].version?{...previous,[selected.id]:value}:previous)}
+  try{const value=await Query(selected.association);if(version===requestVersion.current&&!value.superseded)setObservations(previous=>!previous[selected.id]||value.version>=previous[selected.id].version?{...previous,[selected.id]:value}:previous)}
   catch(error){if(version===requestVersion.current){const message=error instanceof Error ? error.message : String(error);setTransportError(message);setRowErrors(previous=>({...previous,[selected.id]:message}))}}
   finally{if(version===requestVersion.current)setLoading(false)}
  },[selected])
@@ -123,10 +123,23 @@ export default function App() {
  useEffect(()=>{
   let active=true,cursor=0
   const pending=visibleEntries.filter(entry=>entry.resolved && entry.id!==selected?.id && !observations[entry.id])
-  const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];try{const value=await Query(entry.association);if(active)setObservations(previous=>!previous[entry.id]||value.version>=previous[entry.id].version?{...previous,[entry.id]:value}:previous)}catch(error){if(active)setRowErrors(previous=>({...previous,[entry.id]:String(error)}))}}}
+  const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];try{const value=await Query(entry.association);if(active&&!value.superseded)setObservations(previous=>!previous[entry.id]||value.version>=previous[entry.id].version?{...previous,[entry.id]:value}:previous)}catch(error){if(active)setRowErrors(previous=>({...previous,[entry.id]:String(error)}))}}}
   void Promise.all(Array.from({length:Math.min(4,pending.length)},worker))
   return()=>{active=false}
  },[visibleEntries])
+ const visibleRefresh=useRef(()=>{})
+ visibleRefresh.current=()=>{
+  const bounds=associationList.current?.getBoundingClientRect()
+  const ids=new Set<string>(selected?[selected.id]:[])
+  if(bounds&&bounds.height>0)for(const row of associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]')??[]){const rect=row.getBoundingClientRect();if(rect.bottom>bounds.top&&rect.top<bounds.bottom)ids.add(row.dataset.associationId!)}
+  void refresh()
+  for(const entry of visibleEntries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id){void Query(entry.association).then(value=>{if(!value.superseded)setObservations(previous=>!previous[entry.id]||value.version>previous[entry.id].version?{...previous,[entry.id]:value}:previous)}).catch(error=>setRowErrors(previous=>({...previous,[entry.id]:String(error)})))}
+ }
+ useEffect(()=>{
+  let timer:ReturnType<typeof setTimeout>|undefined
+  const off=Events.On('defaultapps:activated',()=>{if(timer!==undefined)return;timer=setTimeout(()=>{timer=undefined;visibleRefresh.current()},100)})
+  return()=>{off();if(timer!==undefined)clearTimeout(timer)}
+ },[])
  const selectApp=(path:string,focus=false)=>{
   setSelectedAppPath(path);setSelectedID(null);setDetailOpen(false);setInspectedCopy(null)
   if(associationList.current)associationList.current.scrollTop=0
@@ -214,7 +227,7 @@ export default function App() {
       {transportError ? <p role="alert" className="query-error">查询连接失败{visibleResult ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
       <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
        {visibleResult?.default.error ? <div className="query-error" role="status"><p>{visibleResult.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{visibleResult.default.error.message}</p></div> : null}
-       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={discoveredPaths.current.has(visibleResult.default.app.path) && !!snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>item.app.path===visibleResult.default.app?.path)} onSelect={setInspectedCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
+       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={discoveredPaths.current.has(visibleResult.default.app.path) && !!snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>!item.unavailable&&item.app.path===visibleResult.default.app?.path)} onSelect={setInspectedCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
        {visibleResult?.default.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.default.observedAt).toLocaleString()}</p> : null}
       </section>
       <section aria-labelledby="candidates-heading"><div className="section-heading"><h2 id="candidates-heading">系统候选应用</h2>{visibleResult?.candidates.known ? <span>{visibleResult.candidates.apps?.length ?? 0} 个应用副本</span> : null}</div>

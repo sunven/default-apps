@@ -1,0 +1,38 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/frontend
+
+ ❯ src/App.browser.test.tsx (9 tests | 1 failed) 681ms
+   × foreground activation coalesces refresh of visible associations while retaining browsing state 152ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > foreground activation coalesces refresh of visible associations while retaining browsing state
+AssertionError: expected 3 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 3
+
+ ❯ src/App.browser.test.tsx:188:45
+    186|  const before=vi.mocked(Query).mock.calls.length
+    187|  await act(async()=>{for(let i=0;i<5;i++)listeners.get('defaultapps:ac…
+    188|  expect(vi.mocked(Query).mock.calls.length).toBe(before+1)
+       |                                             ^
+    189|  expect(vi.mocked(Query).mock.calls.at(-1)?.[0]).toEqual(pdf.associati…
+    190|  expect(screen.getByRole('button',{name:'Reader 2.4 /Applications/Read…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  12:36:41
+   Duration  1.02s (tests 75%, environment 16%, setup 4%, transform 3%, import 2%)
+

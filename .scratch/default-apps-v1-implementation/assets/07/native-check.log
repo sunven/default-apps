@@ -1,0 +1,15 @@
+original UI submission held during atomic save
+reload reconciles in-flight original admission without dispatch
+same request accepted after reloaded caller left
+target observation during pending request preserves global gate and original target
+old query returning last cannot replace newer observation
+latest query failure keeps last valid path and independent error
+directory refresh preserves search selection and scroll
+selected manual copy disappears without substitution or declarations
+default observation still points at disappeared catalog copy
+late completion still resolves original request and original target
+duplicate and delayed typed events cannot restore older pending state
+reload restores last resolved session result without setter
+actual binding response lost after acceptance; authoritative event preserves identity
+lost reply plus reload completes same request with exactly one dispatch
+native synchronization passed 14

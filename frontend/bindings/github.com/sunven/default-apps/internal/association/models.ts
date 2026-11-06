@@ -40,4 +40,5 @@ export interface QueryResult {
     "default": DefaultObservation;
     "candidates": CandidateObservation;
     "version": number;
+    "superseded"?: boolean;
 }

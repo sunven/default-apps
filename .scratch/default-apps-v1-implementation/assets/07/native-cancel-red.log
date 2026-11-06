@@ -1,0 +1,5 @@
+--- FAIL: TestReconciliationRetainsRejectedAdmissionAfterCallerCancellation (0.00s)
+    service_test.go:604: {target_unavailable context canceled <nil> {2 false  [] [{{file com.adobe.pdf} {true 0x77815d90600 2026-11-06T05:04:15.337523Z <nil> false} {true [{/Applications/Old.app  Old  test.old } {/Applications/Target.app  Target  test.target }] 2026-11-06T05:04:15.337547Z <nil> false} 1 false}] [file] <nil>} <nil>}
+FAIL
+FAIL	github.com/sunven/default-apps/internal/change	2.894s
+FAIL

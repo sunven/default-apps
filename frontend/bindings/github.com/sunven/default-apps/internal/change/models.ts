@@ -44,6 +44,17 @@ export interface Readback {
 }
 
 /**
+ * Reconciliation never starts a native request. Missing IDs are closed before
+ * returning, so an original binding call arriving late cannot subsequently write.
+ * The original parameters are retained to detect accidental ID reuse.
+ */
+export interface Reconciliation {
+    "state": string;
+    "result": SubmitResult | null;
+    "snapshot": Snapshot;
+}
+
+/**
  * Recovery is an old process's durable uncertainty, never an active callback.
  */
 export interface Recovery {

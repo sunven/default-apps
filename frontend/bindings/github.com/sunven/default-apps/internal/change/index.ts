@@ -13,6 +13,7 @@ export type {
     PendingRecord,
     QuitState,
     Readback,
+    Reconciliation,
     Recovery,
     Request,
     Snapshot,

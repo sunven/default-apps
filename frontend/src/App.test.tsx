@@ -196,7 +196,7 @@ test('opens with installed copies, declared associations, and an independent def
 
 test('newer scan events win over a late snapshot and every declared type gets its own default', async () => {
  let callback!: (event:{data:Snapshot})=>void
- vi.mocked(Events.On).mockImplementation((_name,listener)=>{callback=listener as typeof callback;return ()=>{}})
+ vi.mocked(Events.On).mockImplementation((name,listener)=>{if(name==='defaultapps:catalog')callback=listener as typeof callback;return ()=>{}})
  let resolveSnapshot!: (value:Snapshot)=>void
  vi.mocked(GetSnapshot).mockReturnValue(new Promise(resolve=>{resolveSnapshot=resolve}) as ReturnType<typeof GetSnapshot>)
  const jpeg={...pdfEntry,id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG'}

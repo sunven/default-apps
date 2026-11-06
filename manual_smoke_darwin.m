@@ -12,6 +12,7 @@ static WKWebView *webview(NSView *view) {
 }
 char *manual_smoke_panel(const char *command,const char *path) {
  @autoreleasepool { @try {
+  if (strcmp(command,"deactivate")==0) {[NSApp deactivate];return report(@{@"active":@(NSApp.active)});}
   if (strcmp(command,"activate")==0) {
    [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];[NSApp unhide:nil];
    NSMutableArray *windows=[NSMutableArray array];

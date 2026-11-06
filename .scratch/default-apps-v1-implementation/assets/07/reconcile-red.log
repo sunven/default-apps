@@ -1,0 +1,4 @@
+# github.com/sunven/default-apps/internal/change_test [github.com/sunven/default-apps/internal/change.test]
+internal/change/service_test.go:512:14: svc.ReconcileSubmission undefined (type *change.Service has no field or method ReconcileSubmission)
+FAIL	github.com/sunven/default-apps/internal/change [build failed]
+FAIL

@@ -120,6 +120,7 @@ type Service struct {
 	loadOnce    sync.Once
 	loadError   error
 	admitting   *admission
+	decisions   map[string]admissionResult
 }
 
 func NewService(c *catalog.Service, q *association.Service, r ApplicationReader, store config.Repository, d Dispatcher, options Options) *Service {
@@ -211,6 +212,10 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		s.mu.Unlock()
 		return SubmitResult{Outcome: "exiting", Message: "应用正在退出，不再受理新修改。", Snapshot: v}
 	}
+	if decided := s.decidedLocked(in); decided != nil {
+		s.mu.Unlock()
+		return *decided
+	}
 	if previous, ok := s.submissions[in.RequestID]; ok {
 		if sameSubmission(previous, in) {
 			r := clone(s.findRequestLocked(in.RequestID))
@@ -280,6 +285,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		v := s.changedLocked()
 		result := SubmitResult{Outcome: out, Message: msg, Observation: obs, Snapshot: v}
 		attempt.result = clone(result)
+		s.decideLocked(in, result)
 		close(attempt.done)
 		s.mu.Unlock()
 		s.publish(v)
@@ -305,6 +311,12 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		return fail("invalid", "关联尚未解析，不能修改默认应用。", nil)
 	}
 	fresh, err := s.Query(ctx, in.Association)
+	if interrupted := ctx.Err(); interrupted != nil {
+		return fail("interrupted", interrupted.Error(), nil)
+	}
+	if fresh.Superseded {
+		return fail("preflight_error", "当前查询已被更新的查询替代，请查看最新默认后重新选择。", nil)
+	}
 	if err != nil || fresh.Default.Error != nil {
 		if err != nil {
 			return fail("preflight_error", err.Error(), nil)
@@ -321,6 +333,9 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		return fail("no_change", "目标已经是当前具体应用副本。", &fresh.Default)
 	}
 	bundle, err := s.reader.ReadApplication(ctx, in.TargetPath)
+	if interrupted := ctx.Err(); interrupted != nil {
+		return fail("interrupted", interrupted.Error(), nil)
+	}
 	if err != nil {
 		return fail("target_unavailable", err.Error(), nil)
 	}
@@ -471,6 +486,10 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 	if s.state.Quit.Exiting {
 		s.mu.Unlock()
 		return association.QueryResult{}, context.Canceled
+	}
+	if result.Superseded {
+		s.mu.Unlock()
+		return clone(result), nil
 	}
 	fresh := s.observeLocked(result)
 	if fresh {

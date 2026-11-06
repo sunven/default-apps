@@ -1,0 +1,35 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/Changes.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/frontend
+
+ ❯ src/Changes.test.tsx (7 tests | 1 failed) 99ms
+   × a newer accepted event ends reply uncertainty even while an older reconciliation is still pending 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/Changes.test.tsx > a newer accepted event ends reply uncertainty even while an older reconciliation is still pending
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <button>
+  查看原请求状态
+</button> instead
+ ❯ src/Changes.test.tsx:75:60
+     73|  await act(async()=>resolve({state:'pending',result:null,snapshot:empt…
+     74|  expect(screen.getByText('已受理 · 等待提交系统')).toBeVisible()
+     75|  expect(screen.queryByRole('button',{name:'查看原请求状态'})).not.toBeInTheDo…
+       |                                                            ^
+     76|  expect(screen.queryByText('原请求仍在核对受理条件，受理结果待确认。')).not.toBeInTheDocum…
+     77| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  12:41:42
+   Duration  678ms (environment 58%, tests 18%, setup 15%, transform 5%, import 4%)
+

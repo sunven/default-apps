@@ -1,0 +1,25 @@
+21437
+original UI request persisted and submitted before process interruption
+restart observes old target but keeps old result unknown with zero dispatch
+frontend reload preserves recovery without replay
+explicit replacement persists original input and recovery acknowledgement before held save
+reload reconciles held replacement using same acknowledged input with zero dispatch
+one accepted replacement owns completion after original frontend left
+common native close hook stay response preserves pending request
+held completion seconds 10.236
+held completion seconds 20.241
+held completion seconds 30.251
+held completion seconds 40.26
+held completion seconds 50.264
+held completion seconds 60.27
+held completion seconds 70.278
+held completion seconds 80.288
+held completion seconds 90.003
+completion remains pending beyond 90 seconds without timeout or repeat dispatch
+very late completion confirms the original replacement exactly once
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/.scratch/default-apps-v1-implementation/assets/07/check-native-crosscase.py", line 117, in <module>
+    assert TARGET in row and control()['starts']==1
+AssertionError
+external refresh updates status row and detail while preserving original confirmed result
+native crosscase passed 10

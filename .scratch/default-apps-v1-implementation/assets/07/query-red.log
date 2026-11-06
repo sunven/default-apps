@@ -1,0 +1,5 @@
+--- FAIL: TestLaterRefreshWinsEvenWhenOlderQueryReturnsLast (0.10s)
+    service_test.go:143: new refresh blocked behind obsolete query
+FAIL
+FAIL	github.com/sunven/default-apps/internal/association	0.547s
+FAIL
