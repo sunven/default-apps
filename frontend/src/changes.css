@@ -14,7 +14,7 @@
 
 .browser-workspace:not(.catalog-view) .column-labels,.browser-workspace:not(.catalog-view) .association-row{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 138px;gap:10px}
 .row-actions{flex-wrap:wrap}
-.change-row-state{width:100%;text-align:right}
+.change-row-state{width:100%;text-align:right;text-wrap:balance}
 
 .recovery-status{flex:none;padding:9px 24px;background:#f0f3f6;border-bottom:1px solid #dce1e7;font-size:12px;max-height:170px;overflow:auto;user-select:text}
 .recovery-status p,.lifecycle-explanation p{overflow-wrap:anywhere}
