@@ -1,0 +1,541 @@
+{
+  "status": "\u901a\u8fc7",
+  "serviceEqualsIndependent": [
+    {
+      "id": "file:com.adobe.pdf",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Books.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Books.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.plain-text",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Applications/Utilities/Script Editor.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Applications/Utilities/Script Editor.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.rtf",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.microsoft.ppt.export.rtf",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/TextEdit.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:net.daringfireball.markdown",
+      "equal": true,
+      "service": {
+        "current": "/Applications/WorkBuddy.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Orca.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/WorkBuddy.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Orca.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.jpeg",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.microsoft.ppt.export.ext.jpg",
+      "equal": true,
+      "service": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.png",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.microsoft.ppt.export.ext.png",
+      "equal": true,
+      "service": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.compuserve.gif",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.tiff",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.canon.tif-raw-image",
+      "equal": true,
+      "service": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      }
+    },
+    {
+      "id": "file:com.microsoft.ppt.export.ext.tiff",
+      "equal": true,
+      "service": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/QuickTime Player.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.heic",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Preview.app",
+        "candidates": [
+          "/Applications/WorkBuddy.app",
+          "/System/Applications/Preview.app",
+          "/System/Applications/Utilities/ColorSync Utility.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.svg-image",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.html",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/WorkBuddy.app",
+          "/Applications/Xcode.app",
+          "/Applications/wpsoffice.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "file:public.json",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Xcode.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Xcode.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/Applications/Xcode.app",
+          "/System/Applications/Notes.app",
+          "/System/Applications/TextEdit.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "scheme:http",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "scheme:https",
+      "equal": true,
+      "service": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      },
+      "independent": {
+        "current": "/Applications/Google Chrome.app",
+        "candidates": [
+          "/Applications/Google Chrome.app",
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app"
+        ]
+      }
+    },
+    {
+      "id": "scheme:mailto",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Mail.app",
+        "candidates": [
+          "/Applications/\u4f01\u4e1a\u5fae\u4fe1.app",
+          "/System/Applications/Mail.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Mail.app",
+        "candidates": [
+          "/Applications/\u4f01\u4e1a\u5fae\u4fe1.app",
+          "/System/Applications/Mail.app"
+        ]
+      }
+    },
+    {
+      "id": "scheme:webcal",
+      "equal": true,
+      "service": {
+        "current": "/System/Applications/Calendar.app",
+        "candidates": [
+          "/System/Applications/Calendar.app"
+        ]
+      },
+      "independent": {
+        "current": "/System/Applications/Calendar.app",
+        "candidates": [
+          "/System/Applications/Calendar.app"
+        ]
+      }
+    }
+  ],
+  "unchangedSince10Cleanup": true,
+  "nativeQueries": 21
+}

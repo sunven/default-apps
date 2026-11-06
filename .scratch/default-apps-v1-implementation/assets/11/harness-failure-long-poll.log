@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/check-combined.py", line 29, in <module>
+    control(action='submitted');wait('document.querySelector(".change-status")?.innerText.includes("已提交系统")')
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/native-client.py", line 18, in wait
+    def wait(condition):return js('for(let i=0;i<180;i++){if('+condition+')return true;await new Promise(r=>setTimeout(r,50))}throw Error("UI timeout: "+'+json.dumps(condition)+')')
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/native-client.py", line 15, in js
+    def js(code):return call('js_eval',js=code)
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/native-client.py", line 9, in call
+    result=json.load(urllib.request.urlopen(req,timeout=20))['result']
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 214, in urlopen
+    return opener.open(url, data, timeout)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 517, in open
+    response = self._open(req, data)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 534, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 494, in _call_chain
+    result = func(*args)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 1375, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 1350, in do_open
+    r = h.getresponse()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py", line 1349, in getresponse
+    response.begin()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py", line 316, in begin
+    version, status, reason = self._read_status()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py", line 277, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+socket.timeout: timed out

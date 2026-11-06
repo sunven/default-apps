@@ -1,0 +1,19 @@
+✓ Frozen final native UI — visual inspection only
+  file:///Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/frozen-native.html
+✓ Done
+- navigation "浏览入口" [ref=e2]
+  - button "应用" [ref=e8]
+  - button "文件类型" [ref=e9]
+  - button "URL 协议" [ref=e10]
+- button "手动补充…" [ref=e3]
+- button "重新扫描应用" [ref=e4]
+- region "修改请求状态" [ref=e1]
+  - button "返回请求项" [ref=e5]
+- heading "URL 协议" [level=1, ref=e11]
+- heading "关联目录" [level=2, ref=e6]
+- searchbox "搜索URL 协议" [ref=e12]: final11-scheme-0000
+- region "关联列表" [ref=e7]
+  - button "final11-scheme-0000 final11-scheme-0000" [ref=e13]
+  - button "查看 final11-scheme-0000 详情" [ref=e14]
+- button "扫描问题 · 2" [ref=e15]
+✓ Browser closed

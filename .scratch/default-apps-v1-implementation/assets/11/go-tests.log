@@ -1,0 +1,63 @@
+# github.com/sunven/default-apps.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/go.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000000.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000001.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000002.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000003.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000004.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000032.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000033.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000034.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000035.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000036.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000037.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000038.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000039.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000040.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000041.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000042.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000043.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000044.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000045.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000046.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000047.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000048.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-1004771378/000049.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/go.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000000.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000001.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000002.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000003.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000004.o) was built for newer 'macOS' version (13.0) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000005.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000006.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000007.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000008.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000009.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000010.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000011.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000012.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000013.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000014.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000015.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000043.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000044.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000045.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000046.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000047.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000048.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ld: warning: object file (/private/var/folders/38/s1qf24m11tn897xgx9khf2gm0000gn/T/go-link-901684724/000049.o) was built for newer 'macOS' version (27.2) than being linked (11.0)
+ok  	github.com/sunven/default-apps	1.621s
+?   	github.com/sunven/default-apps/build/android/scripts/deps	[no test files]
+?   	github.com/sunven/default-apps/build/ios	[no test files]
+?   	github.com/sunven/default-apps/build/ios/scripts/deps	[no test files]
+ok  	github.com/sunven/default-apps/internal/association	1.602s
+ok  	github.com/sunven/default-apps/internal/catalog	1.634s
+ok  	github.com/sunven/default-apps/internal/change	2.528s
+ok  	github.com/sunven/default-apps/internal/config	1.953s
+ok  	github.com/sunven/default-apps/internal/discovery	1.921s
+ok  	github.com/sunven/default-apps/internal/manual	1.762s
+ok  	github.com/sunven/default-apps/internal/native	1.764s

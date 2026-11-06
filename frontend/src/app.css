@@ -226,7 +226,7 @@ h2,h3 {
  flex:none}
 .column-labels,.association-row {
  display:grid;
- grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 74px;
+ grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 138px;
  gap:14px;
  align-items:center}
 .column-labels {

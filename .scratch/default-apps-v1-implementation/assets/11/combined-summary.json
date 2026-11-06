@@ -1,0 +1,19 @@
+{
+  "status": "通过",
+  "layer": "formal Wails + real native window/keys/pickers/discovery + controlled defaults/setter",
+  "checks": 14,
+  "keyboardSteps": 28,
+  "ordinarySystemSetters": 0,
+  "fixtureBundles": 102,
+  "fixtureDeclarations": 1000,
+  "content": [
+    1000,
+    700
+  ],
+  "DOM": [
+    1001,
+    701
+  ],
+  "nativeTitlebar": 32,
+  "finalConfigPending": null
+}

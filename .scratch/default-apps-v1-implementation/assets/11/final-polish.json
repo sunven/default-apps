@@ -1,0 +1,259 @@
+{
+  "status": "通过",
+  "geometry": {
+    "action": "geometry",
+    "content": [
+      1000,
+      700
+    ],
+    "menus": [
+      {
+        "title": "Default Apps",
+        "children": [
+          {
+            "title": "About Default Apps",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Services",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Hide Default Apps",
+            "key": "h"
+          },
+          {
+            "title": "Hide Others",
+            "key": "h"
+          },
+          {
+            "title": "Show All",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Quit Default Apps",
+            "key": "q"
+          }
+        ]
+      },
+      {
+        "title": "File",
+        "children": [
+          {
+            "title": "Close",
+            "key": "w"
+          },
+          {
+            "title": "Close All",
+            "key": "w"
+          }
+        ]
+      },
+      {
+        "title": "Edit",
+        "children": [
+          {
+            "title": "Undo",
+            "key": "z"
+          },
+          {
+            "title": "Redo",
+            "key": "z"
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Cut",
+            "key": "x"
+          },
+          {
+            "title": "Copy",
+            "key": "c"
+          },
+          {
+            "title": "Paste",
+            "key": "v"
+          },
+          {
+            "title": "Paste and Match Style",
+            "key": "v"
+          },
+          {
+            "title": "Delete",
+            "key": "\b"
+          },
+          {
+            "title": "Select All",
+            "key": "a"
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Speech",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "AutoFill",
+            "key": ""
+          },
+          {
+            "title": "Start Dictation…",
+            "key": ""
+          },
+          {
+            "title": "Start Dictation…",
+            "key": ""
+          },
+          {
+            "title": "Emoji & Symbols",
+            "key": " "
+          },
+          {
+            "title": "Emoji & Symbols",
+            "key": " "
+          },
+          {
+            "title": "Emoji & Symbols",
+            "key": "e"
+          }
+        ]
+      },
+      {
+        "title": "View",
+        "children": [
+          {
+            "title": "Reload",
+            "key": "r"
+          },
+          {
+            "title": "Force Reload",
+            "key": "r"
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Actual Size",
+            "key": "0"
+          },
+          {
+            "title": "Zoom In",
+            "key": "+"
+          },
+          {
+            "title": "Zoom Out",
+            "key": "-"
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Toggle Full Screen",
+            "key": "f"
+          },
+          {
+            "title": "Toggle Full Screen",
+            "key": "f"
+          }
+        ]
+      },
+      {
+        "title": "Window",
+        "children": [
+          {
+            "title": "Minimize",
+            "key": "m"
+          },
+          {
+            "title": "Zoom",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Bring All to Front",
+            "key": ""
+          },
+          {
+            "title": "",
+            "key": ""
+          },
+          {
+            "title": "Default Apps",
+            "key": ""
+          }
+        ]
+      },
+      {
+        "title": "Help",
+        "children": [
+          {
+            "title": "Learn More",
+            "key": ""
+          }
+        ]
+      }
+    ],
+    "frame": [
+      1000,
+      732
+    ],
+    "menuMatched": false,
+    "keyboardUIMode": null,
+    "key": "",
+    "tabFocusesLinks": false,
+    "minimumContent": [
+      1000,
+      700
+    ]
+  },
+  "DOM": {
+    "dialog": [],
+    "focus": null,
+    "overflow": 0,
+    "panes": [
+      null,
+      {
+        "client": 263,
+        "height": 263,
+        "scroll": 0,
+        "selector": ".association-list"
+      }
+    ],
+    "status": "已提交系统 · 等待系统返回\nfinal11-scheme-0000\n返回请求项\n\n目标：/Users/sunven/.codex/default-apps-implementation-20261105/final11-controlled/fixtures/Final Acceptance 000/Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 Long path with distinct application copies and complete metadata 0 /Final Acceptance 000.app",
+    "viewport": [
+      1001,
+      701
+    ]
+  },
+  "row": {
+    "actionsWidth": 138,
+    "height": 15,
+    "text": "已提交系统 · 等待系统返回",
+    "width": 138
+  }
+}

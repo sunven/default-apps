@@ -1,0 +1,35 @@
+{
+  "GoFiles": [
+    "change_environment.go",
+    "configuration.go",
+    "foreground.go",
+    "lifecycle_smoke_off.go",
+    "main.go",
+    "manual_smoke_off.go",
+    "native_picker.go"
+  ],
+  "CgoFiles": [],
+  "CFiles": [],
+  "MFiles": [],
+  "EmbedFiles": [
+    "frontend/dist/assets/index-Cxs8jDMq.js",
+    "frontend/dist/assets/index-oyPzwa4o.css",
+    "frontend/dist/index.html"
+  ],
+  "Imports": [
+    "context",
+    "embed",
+    "github.com/sunven/default-apps/internal/association",
+    "github.com/sunven/default-apps/internal/catalog",
+    "github.com/sunven/default-apps/internal/change",
+    "github.com/sunven/default-apps/internal/config",
+    "github.com/sunven/default-apps/internal/discovery",
+    "github.com/sunven/default-apps/internal/manual",
+    "github.com/sunven/default-apps/internal/native",
+    "github.com/wailsapp/wails/v3/pkg/application",
+    "github.com/wailsapp/wails/v3/pkg/events",
+    "log",
+    "os",
+    "path/filepath"
+  ]
+}

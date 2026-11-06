@@ -1,0 +1,298 @@
+{
+  "status": "通过",
+  "layer": "production service + real native query/discovery/window; observation tags only",
+  "checks": [
+    {
+      "check": "native read-only scan",
+      "pid": 39983,
+      "apps": 92,
+      "entries": 615,
+      "unresolved": 39,
+      "issues": [
+        {
+          "message": "文稿声明缺少角色，保留可解析关联",
+          "origin": "CFBundleDocumentTypes[0]",
+          "path": "/Applications/企业微信.app"
+        },
+        {
+          "message": "文稿声明缺少角色，保留可解析关联",
+          "origin": "CFBundleDocumentTypes[1]",
+          "path": "/Applications/企业微信.app"
+        }
+      ],
+      "geometry": {
+        "action": "geometry",
+        "content": [
+          1000,
+          700
+        ],
+        "menus": [
+          {
+            "title": "Default Apps",
+            "children": [
+              {
+                "title": "About Default Apps",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Services",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Hide Default Apps",
+                "key": "h"
+              },
+              {
+                "title": "Hide Others",
+                "key": "h"
+              },
+              {
+                "title": "Show All",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Quit Default Apps",
+                "key": "q"
+              }
+            ]
+          },
+          {
+            "title": "File",
+            "children": [
+              {
+                "title": "Close",
+                "key": "w"
+              },
+              {
+                "title": "Close All",
+                "key": "w"
+              }
+            ]
+          },
+          {
+            "title": "Edit",
+            "children": [
+              {
+                "title": "Undo",
+                "key": "z"
+              },
+              {
+                "title": "Redo",
+                "key": "z"
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Cut",
+                "key": "x"
+              },
+              {
+                "title": "Copy",
+                "key": "c"
+              },
+              {
+                "title": "Paste",
+                "key": "v"
+              },
+              {
+                "title": "Paste and Match Style",
+                "key": "v"
+              },
+              {
+                "title": "Delete",
+                "key": "\b"
+              },
+              {
+                "title": "Select All",
+                "key": "a"
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Speech",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "AutoFill",
+                "key": ""
+              },
+              {
+                "title": "Start Dictation…",
+                "key": ""
+              },
+              {
+                "title": "Start Dictation…",
+                "key": ""
+              },
+              {
+                "title": "Emoji & Symbols",
+                "key": " "
+              },
+              {
+                "title": "Emoji & Symbols",
+                "key": " "
+              },
+              {
+                "title": "Emoji & Symbols",
+                "key": "e"
+              }
+            ]
+          },
+          {
+            "title": "View",
+            "children": [
+              {
+                "title": "Reload",
+                "key": "r"
+              },
+              {
+                "title": "Force Reload",
+                "key": "r"
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Actual Size",
+                "key": "0"
+              },
+              {
+                "title": "Zoom In",
+                "key": "+"
+              },
+              {
+                "title": "Zoom Out",
+                "key": "-"
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Toggle Full Screen",
+                "key": "f"
+              },
+              {
+                "title": "Toggle Full Screen",
+                "key": "f"
+              }
+            ]
+          },
+          {
+            "title": "Window",
+            "children": [
+              {
+                "title": "Minimize",
+                "key": "m"
+              },
+              {
+                "title": "Zoom",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Bring All to Front",
+                "key": ""
+              },
+              {
+                "title": "",
+                "key": ""
+              },
+              {
+                "title": "Default Apps",
+                "key": ""
+              }
+            ]
+          },
+          {
+            "title": "Help",
+            "children": [
+              {
+                "title": "Learn More",
+                "key": ""
+              }
+            ]
+          }
+        ],
+        "frame": [
+          1000,
+          732
+        ],
+        "menuMatched": false,
+        "keyboardUIMode": null,
+        "key": "",
+        "tabFocusesLinks": false,
+        "minimumContent": [
+          1000,
+          700
+        ]
+      },
+      "DOM": {
+        "dialog": [],
+        "focus": null,
+        "overflow": 0,
+        "panes": [
+          {
+            "client": 436,
+            "height": 8102,
+            "scroll": 0,
+            "selector": ".application-list"
+          },
+          {
+            "client": 345,
+            "height": 345,
+            "scroll": 0,
+            "selector": ".association-list"
+          }
+        ],
+        "viewport": [
+          1001,
+          701
+        ]
+      },
+      "writableKinds": [
+        "file",
+        "scheme"
+      ]
+    },
+    {
+      "check": "local scan issues visible",
+      "text": "扫描问题\n关闭\n\n/Applications/企业微信.app\n\nCFBundleDocumentTypes[0] · 文稿声明缺少角色，保留可解析关联\n\n/Applications/企业微信.app\n\nCFBundleDocumentTypes[1] · 文稿声明缺少角色，保留可解析关联"
+    },
+    {
+      "check": "actual default and candidate detail",
+      "text": "PDF document\n\ncom.adobe.pdf\n\n关闭\n关联查询\n\n.pdf · com.adobe.pdf\n\n重新查询\n当前默认应用\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\n查看此副本\n\n最后有效查询：2026/11/6 20:09:25\n\n系统候选应用\n8 个应用副本\n\n最后有效查询：2026/11/6 20:09:25\n\n选择其他应用…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。\n\nGoogle Chrome\n版本 156.0.8078.81\n\n/Applications/Google Chrome.app\n\ncom.google.Chrome\n\n设为默认应用查看此副本\nWPS Office\n版本 12.1.26046\n\n/Applications/wpsoffice.app\n\ncom.kingsoft.wpsoffice.mac\n\n设为默认应用查看此副本\nPreview\n版本 11.0\n\n/System/Applications/Preview.app\n\ncom.apple.Preview\n\n设为默认应用查看此副本\nColorSync Utility\n版本 12.2.0\n\n/System/Applications/Utilities/ColorSync Utility.app\n\ncom.apple.ColorSyncUtility\n\n设为默认应用查看此副本\nBooks\n版本 9.0\n\n/System/Applications/Books.app\n\ncom.apple.iBooksX\n\n设为默认应用查看此副本\nGoogle Chrome for Testing\n版本 153.0.8010.12\n\n/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app\n\ncom.google.chrome.for.testing\n\n设为默认应用查看此副本\nWorkBuddy\n版本 5.9.3\n\n/Applications/WorkBuddy.app\n\ncom.tencent.workbuddy.mac\n\n设为默认应用查看此副本\nSafari\n版本 27.2\n\n/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app\n\ncom.apple.Safari\n\n设为默认应用查看此副本\n关联来源\n常用项 · PDF 文稿 · pdf\n应用声明 · Google Chrome · com.adobe.pdf · /Applications/Google Chrome.app · Viewer\n应用声明 · PDF document · pdf · /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app · Viewer / Alternate\n应用声明 · PDF document · application/pdf · /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app · Viewer / Alternate\n应用声明 · PDF Document · com.adobe.pdf · /Applications/WorkBuddy.app · Viewer / Alternate\n应用声明 · WorkBuddy Document · pdf · /Applications/WorkBuddy.app · Viewer / Alternate\n应用声明 · Adobe PDF (.pdf) · com.adobe.pdf · /Applications/wpsoffice.app · Editor / Owner\n应用声明 · Portable Document Format (PDF) · com.adobe.pdf · /System/Applications/Books.app · Viewer\n应用声明 · Preview · com.adobe.pdf · /System/Applications/Preview.app · Editor\n应用声明 · PDF Document · com.adobe.pdf · /System/Applications/Utilities/ColorSync Utility.app · Editor / Alternate\n\nMIME 标签：application/pdf"
+    },
+    {
+      "check": "manual resolved or ambiguous input displayed",
+      "text": "手动补充\n\n补充文件类型、URL 协议或其他位置的应用。\n\n关闭\n输入种类\n扩展名或协议\n解析输入\n\n扩展名可能对应多个文件类型。协议仅输入名称，不输入完整网址。\n\n找到多个类型，请明确选择一个：\n\nMPEG-2 Transport Stream\npublic.mpeg-2-transport-stream\n.ts\nscript\ncom.microsoft.typescript\n.ts · .tsx\n选择文件识别类型…\n保存手动关联\n\n文件仅用于识别整类类型；不会读取文件内容或改变该文件自己的默认应用。\n\n其他位置的应用\n添加应用位置…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。"
+    }
+  ],
+  "queryCount": 21,
+  "requestCount": 0,
+  "setters": 0
+}

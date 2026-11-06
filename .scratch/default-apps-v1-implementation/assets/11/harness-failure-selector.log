@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/check-combined.py", line 27, in <module>
+    js('document.querySelector(".association-row .row-change").click();return true')
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/native-client.py", line 15, in js
+    def js(code):return call('js_eval',js=code)
+  File "/Users/sunven/.codex/default-apps-implementation-20261105/worktrees/11/.scratch/default-apps-v1-implementation/assets/11/native-client.py", line 10, in call
+    if result.get('isError'):raise RuntimeError(result)
+RuntimeError: {'content': [{'text': 'javascript error: @wails://localhost/:769:55\nrun@wails://localhost/:734:33\nglobal code@wails://localhost/:768:22', 'type': 'text'}], 'isError': True}
