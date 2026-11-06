@@ -1,0 +1,594 @@
+{
+  "oldPID": 64676,
+  "newPID": 79019,
+  "saved": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "extension",
+          "value": "jpg",
+          "label": "jpg",
+          "source": "manual"
+        },
+        "selectedID": "file:public.jpeg"
+      },
+      {
+        "input": {
+          "kind": "scheme",
+          "value": " Manual+05: ",
+          "label": "Manual+05:",
+          "source": "manual"
+        },
+        "selectedID": "scheme:manual+05"
+      },
+      {
+        "input": {
+          "kind": "identifier",
+          "value": "public.plain-text",
+          "label": "public.plain-text",
+          "source": "manual",
+          "origin": "file"
+        },
+        "selectedID": "file:public.plain-text"
+      }
+    ],
+    "applications": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "1.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "2.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      }
+    ]
+  },
+  "restoredEntries": {
+    "file:public.plain-text": {
+      "association": {
+        "key": "public.plain-text",
+        "kind": "file"
+      },
+      "diagnosticIdentifiers": [],
+      "extensions": [
+        "text",
+        "txt"
+      ],
+      "id": "file:public.plain-text",
+      "mimeTypes": [
+        "text/plain"
+      ],
+      "name": "text",
+      "resolved": true,
+      "sources": [
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "纯文本",
+          "normalizedInput": "txt",
+          "rawInput": "txt"
+        },
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "纯文本",
+          "normalizedInput": "text",
+          "rawInput": "text"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "Plain text document",
+          "normalizedInput": "txt",
+          "origin": "CFBundleDocumentTypes[12]",
+          "rank": "Alternate",
+          "rawInput": "txt",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "Plain text document",
+          "normalizedInput": "text",
+          "origin": "CFBundleDocumentTypes[12]",
+          "rank": "Alternate",
+          "rawInput": "text",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "mime",
+          "kind": "declaration",
+          "label": "Plain text document",
+          "normalizedInput": "text/plain",
+          "origin": "CFBundleDocumentTypes[12]",
+          "rank": "Alternate",
+          "rawInput": "text/plain",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/WorkBuddy.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "WorkBuddy Document",
+          "normalizedInput": "txt",
+          "origin": "CFBundleDocumentTypes[34]",
+          "rank": "Alternate",
+          "rawInput": "txt",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/wpsoffice.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "Text",
+          "normalizedInput": "txt",
+          "origin": "CFBundleDocumentTypes[52]",
+          "rank": "Alternate",
+          "rawInput": "txt",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/TextEdit.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "NSStringPboardType",
+          "normalizedInput": "public.plain-text",
+          "origin": "CFBundleDocumentTypes[10]",
+          "rawInput": "public.plain-text",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/Console.app",
+          "inputKind": "mime",
+          "kind": "declaration",
+          "label": "Diagnostic Report",
+          "normalizedInput": "text/plain",
+          "origin": "CFBundleDocumentTypes[4]",
+          "rank": "Owner",
+          "rawInput": "text/plain",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/Console.app",
+          "inputKind": "mime",
+          "kind": "declaration",
+          "label": "ASL Database",
+          "normalizedInput": "text/plain",
+          "origin": "CFBundleDocumentTypes[12]",
+          "rank": "Default",
+          "rawInput": "text/plain",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/Script Editor.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "plain text",
+          "normalizedInput": "txt",
+          "origin": "CFBundleDocumentTypes[5]",
+          "rawInput": "txt",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/Script Editor.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "plain text",
+          "normalizedInput": "text",
+          "origin": "CFBundleDocumentTypes[5]",
+          "rawInput": "text",
+          "role": "Viewer"
+        },
+        {
+          "inputKind": "identifier",
+          "kind": "manual",
+          "label": "public.plain-text",
+          "normalizedInput": "public.plain-text",
+          "origin": "file",
+          "rawInput": "public.plain-text"
+        }
+      ],
+      "unresolvedReason": ""
+    },
+    "file:public.jpeg": {
+      "association": {
+        "key": "public.jpeg",
+        "kind": "file"
+      },
+      "diagnosticIdentifiers": [],
+      "extensions": [
+        "jpeg",
+        "jpg",
+        "jpe"
+      ],
+      "id": "file:public.jpeg",
+      "mimeTypes": [
+        "image/jpeg",
+        "image/jpg"
+      ],
+      "name": "JPEG image",
+      "resolved": true,
+      "sources": [
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "JPEG 图像",
+          "normalizedInput": "jpg",
+          "rawInput": "jpg"
+        },
+        {
+          "inputKind": "extension",
+          "kind": "common",
+          "label": "JPEG 图像",
+          "normalizedInput": "jpeg",
+          "rawInput": "jpeg"
+        },
+        {
+          "appPath": "/Applications/Google Chrome.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "Google Chrome",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[4]",
+          "rawInput": "public.jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "jpg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "jpg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "jpeg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "inputKind": "mime",
+          "kind": "declaration",
+          "label": "JPEG image",
+          "normalizedInput": "image/jpeg",
+          "origin": "CFBundleDocumentTypes[11]",
+          "rank": "Alternate",
+          "rawInput": "image/jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/WorkBuddy.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "WorkBuddy Document",
+          "normalizedInput": "jpg",
+          "origin": "CFBundleDocumentTypes[35]",
+          "rank": "Alternate",
+          "rawInput": "jpg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/Applications/WorkBuddy.app",
+          "inputKind": "extension",
+          "kind": "declaration",
+          "label": "WorkBuddy Document",
+          "normalizedInput": "jpeg",
+          "origin": "CFBundleDocumentTypes[36]",
+          "rank": "Alternate",
+          "rawInput": "jpeg",
+          "role": "Viewer"
+        },
+        {
+          "appPath": "/System/Applications/Preview.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "Preview",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[6]",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/QuickTime Player.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "QuickTime Player",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[17]",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "appPath": "/System/Applications/Utilities/ColorSync Utility.app",
+          "inputKind": "identifier",
+          "kind": "declaration",
+          "label": "JPEG Image",
+          "normalizedInput": "public.jpeg",
+          "origin": "CFBundleDocumentTypes[3]",
+          "rank": "Alternate",
+          "rawInput": "public.jpeg",
+          "role": "Editor"
+        },
+        {
+          "inputKind": "extension",
+          "kind": "manual",
+          "label": "jpg",
+          "normalizedInput": "jpg",
+          "rawInput": "jpg"
+        }
+      ],
+      "unresolvedReason": ""
+    },
+    "scheme:manual+05": {
+      "association": {
+        "key": "manual+05",
+        "kind": "scheme"
+      },
+      "diagnosticIdentifiers": [],
+      "extensions": [],
+      "id": "scheme:manual+05",
+      "mimeTypes": [],
+      "name": "manual+05",
+      "resolved": true,
+      "sources": [
+        {
+          "inputKind": "scheme",
+          "kind": "manual",
+          "label": "Manual+05:",
+          "normalizedInput": "manual+05",
+          "rawInput": " Manual+05: "
+        }
+      ],
+      "unresolvedReason": ""
+    }
+  },
+  "manualApps": [
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "version": "1.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [],
+      "manual": true
+    },
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "version": "2.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [],
+      "manual": true
+    }
+  ],
+  "queries": {
+    "file:public.jpeg": {
+      "association": {
+        "key": "public.jpeg",
+        "kind": "file"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.Preview",
+            "displayPath": "/System/Applications/Preview.app",
+            "name": "Preview",
+            "path": "/System/Applications/Preview.app",
+            "version": "11.0"
+          },
+          {
+            "bundleID": "com.apple.QuickTimePlayerX",
+            "displayPath": "/System/Applications/QuickTime Player.app",
+            "name": "QuickTime Player",
+            "path": "/System/Applications/QuickTime Player.app",
+            "version": "10.5"
+          },
+          {
+            "bundleID": "com.apple.ColorSyncUtility",
+            "displayPath": "/System/Applications/Utilities/ColorSync Utility.app",
+            "name": "ColorSync Utility",
+            "path": "/System/Applications/Utilities/ColorSync Utility.app",
+            "version": "12.2.0"
+          },
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          },
+          {
+            "bundleID": "com.google.chrome.for.testing",
+            "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "name": "Google Chrome for Testing",
+            "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "version": "153.0.8010.12"
+          },
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          },
+          {
+            "bundleID": "com.tencent.workbuddy.mac",
+            "displayPath": "/Applications/WorkBuddy.app",
+            "name": "WorkBuddy",
+            "path": "/Applications/WorkBuddy.app",
+            "version": "5.9.3"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.964203Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.Preview",
+          "displayPath": "/System/Applications/Preview.app",
+          "name": "Preview",
+          "path": "/System/Applications/Preview.app",
+          "version": "11.0"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.9642Z",
+        "stale": false
+      },
+      "version": 1
+    },
+    "scheme:manual+05": {
+      "association": {
+        "key": "manual+05",
+        "kind": "scheme"
+      },
+      "candidates": {
+        "apps": [],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.971682Z",
+        "stale": false
+      },
+      "default": {
+        "app": null,
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.971681Z",
+        "stale": false
+      },
+      "version": 2
+    },
+    "file:public.plain-text": {
+      "association": {
+        "key": "public.plain-text",
+        "kind": "file"
+      },
+      "candidates": {
+        "apps": [
+          {
+            "bundleID": "com.apple.TextEdit",
+            "displayPath": "/System/Applications/TextEdit.app",
+            "name": "TextEdit",
+            "path": "/System/Applications/TextEdit.app",
+            "version": "1.21"
+          },
+          {
+            "bundleID": "com.kingsoft.wpsoffice.mac",
+            "displayPath": "/Applications/wpsoffice.app",
+            "name": "WPS Office",
+            "path": "/Applications/wpsoffice.app",
+            "version": "12.1.26046"
+          },
+          {
+            "bundleID": "com.apple.dt.Instruments",
+            "displayPath": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+            "name": "Instruments",
+            "path": "/Applications/Xcode.app/Contents/Applications/Instruments.app",
+            "version": "27.0"
+          },
+          {
+            "bundleID": "com.apple.ScriptEditor2",
+            "displayPath": "/System/Applications/Utilities/Script Editor.app",
+            "name": "Script Editor",
+            "path": "/System/Applications/Utilities/Script Editor.app",
+            "version": "2.11"
+          },
+          {
+            "bundleID": "com.apple.Safari",
+            "displayPath": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "name": "Safari",
+            "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+            "version": "27.2"
+          },
+          {
+            "bundleID": "com.tencent.workbuddy.mac",
+            "displayPath": "/Applications/WorkBuddy.app",
+            "name": "WorkBuddy",
+            "path": "/Applications/WorkBuddy.app",
+            "version": "5.9.3"
+          },
+          {
+            "bundleID": "com.apple.dt.Xcode",
+            "displayPath": "/Applications/Xcode.app",
+            "name": "Xcode",
+            "path": "/Applications/Xcode.app",
+            "version": "27.0"
+          },
+          {
+            "bundleID": "com.google.Chrome",
+            "displayPath": "/Applications/Google Chrome.app",
+            "name": "Google Chrome",
+            "path": "/Applications/Google Chrome.app",
+            "version": "156.0.8078.81"
+          },
+          {
+            "bundleID": "com.google.chrome.for.testing",
+            "displayPath": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "name": "Google Chrome for Testing",
+            "path": "/Users/sunven/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app",
+            "version": "153.0.8010.12"
+          },
+          {
+            "bundleID": "com.apple.Notes",
+            "displayPath": "/System/Applications/Notes.app",
+            "name": "Notes",
+            "path": "/System/Applications/Notes.app",
+            "version": "4.13"
+          }
+        ],
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.979657Z",
+        "stale": false
+      },
+      "default": {
+        "app": {
+          "bundleID": "com.apple.TextEdit",
+          "displayPath": "/System/Applications/TextEdit.app",
+          "name": "TextEdit",
+          "path": "/System/Applications/TextEdit.app",
+          "version": "1.21"
+        },
+        "error": null,
+        "known": true,
+        "observedAt": "2026-11-06T01:50:47.979655Z",
+        "stale": false
+      },
+      "version": 1
+    }
+  },
+  "uiFreshQuery": "manual+05\n\nmanual+05\n\n重新查询\n当前默认应用\n\n系统未返回默认应用\n\n最后有效查询：2026/11/6 09:50:47\n\n系统候选应用\n0 个应用副本\n\n系统未返回候选应用\n\n最后有效查询：2026/11/6 09:50:47\n\n选择其他应用…\n\n保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。\n\n关联来源\n手动添加 · Manual+05: · Manual+05:"
+}

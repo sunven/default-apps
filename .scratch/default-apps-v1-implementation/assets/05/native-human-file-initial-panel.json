@@ -1,0 +1,14 @@
+{
+  "nameField": "Untitled",
+  "directory": "/Applications",
+  "found": true,
+  "packagesAsDirectories": false,
+  "title": "Open",
+  "files": true,
+  "action": "inspect",
+  "key": false,
+  "directories": false,
+  "URLs": [],
+  "responder": "NSRemoteView",
+  "class": "NSOpenPanel"
+}

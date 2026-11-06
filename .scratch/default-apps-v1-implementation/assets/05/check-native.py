@@ -22,7 +22,11 @@ def input_value(value):return js('const el=document.querySelector(".manual-value
 def service_id(package,method):
  source=pathlib.Path('frontend/bindings/github.com/sunven/default-apps/internal')/package/'service.ts'
  return int(re.search(r'export function '+method+r'\([^}]+?ByID\((\d+)',source.read_text(),re.S).group(1))
-def service(package,method,*args):return js("const {Call}=await import('/wails/runtime.js');return await Call.ByID("+str(service_id(package,method))+''.join(','+json.dumps(a) for a in args)+')')
+def service(package,method,*args):
+ # Importing a second runtime installs its own event dispatcher. Keep the
+ # dispatch function owned by the bundled React runtime and restore it before
+ # making a bridge call, so native catalog events still reach the real UI.
+ return js("const dispatch=window._wails.dispatchWailsEvent;const {Call}=await import('/wails/runtime.js');window._wails.dispatchWailsEvent=dispatch;return await Call.ByID("+str(service_id(package,method))+''.join(','+json.dumps(a) for a in args)+')')
 def config():return json.loads(CONFIG.read_text()) if CONFIG.exists() else None
 
 def panel(command,path=''):

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "associations": [
+    {
+      "input": {
+        "kind": "extension",
+        "value": "jpg",
+        "label": "jpg",
+        "source": "manual"
+      },
+      "selectedID": "file:public.jpeg"
+    },
+    {
+      "input": {
+        "kind": "scheme",
+        "value": " Manual+05: ",
+        "label": "Manual+05:",
+        "source": "manual"
+      },
+      "selectedID": "scheme:manual+05"
+    }
+  ],
+  "applications": []
+}

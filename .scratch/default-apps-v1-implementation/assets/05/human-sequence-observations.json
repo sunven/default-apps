@@ -1,0 +1,596 @@
+[
+  {
+    "phase": "unknown",
+    "observedAt": "2026-11-06T01:35:15.616587+00:00",
+    "nativePanels": [
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": false,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [
+          "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/selected.defaultappsunknown05"
+        ],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      }
+    ],
+    "dom": {
+      "busy": false,
+      "file": "所选文件：/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/selected.defaultappsunknown05",
+      "saveDisabled": true,
+      "unresolved": "未解析\n\n系统返回的类型未声明或为动态类型\n\ndyn.ah62d4rv4ge80k3pgqf4027dbsb2hg7psrr1g875sga4u"
+    },
+    "saved": {
+      "version": 1,
+      "associations": [
+        {
+          "input": {
+            "kind": "extension",
+            "value": "jpg",
+            "label": "jpg",
+            "source": "manual"
+          },
+          "selectedID": "file:public.jpeg"
+        },
+        {
+          "input": {
+            "kind": "scheme",
+            "value": " Manual+05: ",
+            "label": "Manual+05:",
+            "source": "manual"
+          },
+          "selectedID": "scheme:manual+05"
+        },
+        {
+          "input": {
+            "kind": "identifier",
+            "value": "public.plain-text",
+            "label": "public.plain-text",
+            "source": "manual",
+            "origin": "file"
+          },
+          "selectedID": "file:public.plain-text"
+        }
+      ],
+      "applications": []
+    },
+    "configBytesChanged": false
+  },
+  {
+    "phase": "first-app",
+    "observedAt": "2026-11-06T01:39:30.755034+00:00",
+    "nativePanels": [
+      {
+        "nameField": "Untitled",
+        "directory": "/Applications",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": false,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/opensource",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/work/code",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [
+          "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app"
+        ],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      }
+    ],
+    "dom": {
+      "busy": false,
+      "file": "所选文件：/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/selected.defaultappsunknown05",
+      "picked": "已保存应用位置 · Manual Reader\n版本 1.0 · com.sunven.defaultapps.manual05.fixture\n/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app\n尚未提出修改默认应用的请求。",
+      "saveDisabled": true,
+      "unresolved": "未解析\n\n系统返回的类型未声明或为动态类型\n\ndyn.ah62d4rv4ge80k3pgqf4027dbsb2hg7psrr1g875sga4u"
+    },
+    "saved": {
+      "version": 1,
+      "associations": [
+        {
+          "input": {
+            "kind": "extension",
+            "value": "jpg",
+            "label": "jpg",
+            "source": "manual"
+          },
+          "selectedID": "file:public.jpeg"
+        },
+        {
+          "input": {
+            "kind": "scheme",
+            "value": " Manual+05: ",
+            "label": "Manual+05:",
+            "source": "manual"
+          },
+          "selectedID": "scheme:manual+05"
+        },
+        {
+          "input": {
+            "kind": "identifier",
+            "value": "public.plain-text",
+            "label": "public.plain-text",
+            "source": "manual",
+            "origin": "file"
+          },
+          "selectedID": "file:public.plain-text"
+        }
+      ],
+      "applications": [
+        {
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "name": "Manual Reader",
+          "version": "1.0",
+          "bundleID": "com.sunven.defaultapps.manual05.fixture"
+        }
+      ]
+    },
+    "configBytesChanged": true
+  },
+  {
+    "phase": "alias-app",
+    "observedAt": "2026-11-06T01:39:55.856540+00:00",
+    "nativePanels": [
+      {
+        "nameField": "Untitled",
+        "directory": "/Applications",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [
+          "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app"
+        ],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      }
+    ],
+    "dom": {
+      "busy": false,
+      "file": "所选文件：/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/selected.defaultappsunknown05",
+      "picked": "已保存应用位置 · Manual Reader\n版本 1.0 · com.sunven.defaultapps.manual05.fixture\n/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app\n尚未提出修改默认应用的请求。",
+      "saveDisabled": true,
+      "unresolved": "未解析\n\n系统返回的类型未声明或为动态类型\n\ndyn.ah62d4rv4ge80k3pgqf4027dbsb2hg7psrr1g875sga4u"
+    },
+    "saved": {
+      "version": 1,
+      "associations": [
+        {
+          "input": {
+            "kind": "extension",
+            "value": "jpg",
+            "label": "jpg",
+            "source": "manual"
+          },
+          "selectedID": "file:public.jpeg"
+        },
+        {
+          "input": {
+            "kind": "scheme",
+            "value": " Manual+05: ",
+            "label": "Manual+05:",
+            "source": "manual"
+          },
+          "selectedID": "scheme:manual+05"
+        },
+        {
+          "input": {
+            "kind": "identifier",
+            "value": "public.plain-text",
+            "label": "public.plain-text",
+            "source": "manual",
+            "origin": "file"
+          },
+          "selectedID": "file:public.plain-text"
+        }
+      ],
+      "applications": [
+        {
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "name": "Manual Reader",
+          "version": "1.0",
+          "bundleID": "com.sunven.defaultapps.manual05.fixture"
+        }
+      ]
+    },
+    "configBytesChanged": false
+  },
+  {
+    "phase": "second-app",
+    "observedAt": "2026-11-06T01:44:07.517612+00:00",
+    "nativePanels": [
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": false,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": false,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": false,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      },
+      {
+        "nameField": "Untitled",
+        "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two",
+        "found": true,
+        "packagesAsDirectories": false,
+        "title": "Open",
+        "files": true,
+        "action": "inspect",
+        "key": true,
+        "directories": false,
+        "URLs": [
+          "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app"
+        ],
+        "responder": "NSRemoteView",
+        "class": "NSOpenPanel"
+      }
+    ],
+    "dom": {
+      "busy": false,
+      "file": "所选文件：/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/selected.defaultappsunknown05",
+      "picked": "已保存应用位置 · Manual Reader\n版本 2.0 · com.sunven.defaultapps.manual05.fixture\n/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app\n尚未提出修改默认应用的请求。",
+      "saveDisabled": true,
+      "unresolved": "未解析\n\n系统返回的类型未声明或为动态类型\n\ndyn.ah62d4rv4ge80k3pgqf4027dbsb2hg7psrr1g875sga4u"
+    },
+    "saved": {
+      "version": 1,
+      "associations": [
+        {
+          "input": {
+            "kind": "extension",
+            "value": "jpg",
+            "label": "jpg",
+            "source": "manual"
+          },
+          "selectedID": "file:public.jpeg"
+        },
+        {
+          "input": {
+            "kind": "scheme",
+            "value": " Manual+05: ",
+            "label": "Manual+05:",
+            "source": "manual"
+          },
+          "selectedID": "scheme:manual+05"
+        },
+        {
+          "input": {
+            "kind": "identifier",
+            "value": "public.plain-text",
+            "label": "public.plain-text",
+            "source": "manual",
+            "origin": "file"
+          },
+          "selectedID": "file:public.plain-text"
+        }
+      ],
+      "applications": [
+        {
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+          "name": "Manual Reader",
+          "version": "1.0",
+          "bundleID": "com.sunven.defaultapps.manual05.fixture"
+        },
+        {
+          "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+          "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+          "name": "Manual Reader",
+          "version": "2.0",
+          "bundleID": "com.sunven.defaultapps.manual05.fixture"
+        }
+      ]
+    },
+    "configBytesChanged": true
+  }
+]

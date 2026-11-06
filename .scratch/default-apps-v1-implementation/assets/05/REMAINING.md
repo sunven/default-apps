@@ -1,6 +1,6 @@
-# Ticket 05 remaining formal-window acceptance
+# Ticket 05 continuation and integration history
 
-Ticket is **claimed**, not resolved. Product/service/storage implementation and deterministic tests pass, but native picker **success** and manual-app **native** restart evidence remain unobserved. Do not promote cancellation or injected metadata tests to picker success.
+The previously pending native acceptance below was completed on 2026-11-06 using genuine human-operated NSOpenPanel selections. See `README.md` and `human-*.json`: known and unknown file success, first app/alias/second copy, separate association chooser, actual new-PID restart, original-path unavailable/reappearing UI, and unchanged independent defaults all passed. This file preserves the earlier continuation instructions and automation limitations. Ticket 04 layout composition is still a separate integration check.
 
 ## Current evidence
 
