@@ -38,6 +38,9 @@ func (s *Service) ReconcileSubmission(in Submission) Reconciliation {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	snapshot := clone(s.state)
+	if s.state.Quit.Exiting {
+		return Reconciliation{State: "decided", Result: &SubmitResult{Outcome: "exiting", Message: "应用正在退出，不再受理新修改。", Snapshot: snapshot}, Snapshot: snapshot}
+	}
 	if previous := s.decidedLocked(in); previous != nil {
 		return Reconciliation{State: "decided", Result: previous, Snapshot: snapshot}
 	}

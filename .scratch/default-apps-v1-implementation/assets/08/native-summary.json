@@ -1,0 +1,7 @@
+{
+  "layer": "formal Wails app + controlled adapter; AppKit synthesized native menu/key/window actions",
+  "checks": 26,
+  "processes": 7,
+  "dailySystemSetters": 0,
+  "status": "passed"
+}

@@ -19,10 +19,11 @@ type ExpectedDefault struct {
 	Path  string `json:"path"`
 }
 type Submission struct {
-	RequestID   string                  `json:"requestID"`
-	Association association.Association `json:"association"`
-	TargetPath  string                  `json:"targetPath"`
-	Expected    ExpectedDefault         `json:"expected"`
+	RequestID         string                  `json:"requestID"`
+	Association       association.Association `json:"association"`
+	TargetPath        string                  `json:"targetPath"`
+	Expected          ExpectedDefault         `json:"expected"`
+	RecoveryRequestID string                  `json:"recoveryRequestID"`
 }
 type NativeError struct {
 	Domain      string `json:"domain"`
@@ -66,6 +67,8 @@ type Snapshot struct {
 	Observations    []association.QueryResult `json:"observations"`
 	WritableKinds   []string                  `json:"writableKinds"`
 	StorageError    *StorageIssue             `json:"storageError"`
+	Recovery        *Recovery                 `json:"recovery"`
+	Quit            QuitState                 `json:"quit"`
 }
 type SubmitResult struct {
 	Outcome     string                          `json:"outcome"`
@@ -96,6 +99,7 @@ func (DisabledDispatcher) Dispatch(_ association.Association, _ association.AppC
 type Options struct {
 	WritableKinds []string
 	Publish       func(Snapshot)
+	Quit          func()
 }
 type admission struct {
 	input  Submission
@@ -131,6 +135,12 @@ func clone[T any](v T) T {
 }
 func (s *Service) changedLocked() Snapshot { s.state.Version++; return clone(s.state) }
 func (s *Service) publish(v Snapshot) {
+	s.mu.Lock()
+	exiting := s.state.Quit.Exiting
+	s.mu.Unlock()
+	if exiting {
+		return
+	}
 	if s.options.Publish != nil {
 		s.options.Publish(clone(v))
 	}
@@ -145,8 +155,7 @@ func (s *Service) GetSnapshot() Snapshot {
 	return clone(s.state)
 }
 
-// Load old disk facts once. Ticket 08 adds the explicit recovery interaction;
-// until then they conservatively block writes without restoring any callback.
+// Load old disk facts once without restoring a callback or replaying a setter.
 func (s *Service) ensureLoaded(_ context.Context) error {
 	s.loadOnce.Do(func() {
 		doc, err := s.store.Load(context.Background())
@@ -170,7 +179,7 @@ func (s *Service) ensureLoaded(_ context.Context) error {
 		s.mu.Lock()
 		defer s.mu.Unlock()
 		s.state.Requests = []Request{{PendingRecord: pending, Readback: Readback{State: "unknown"}}}
-		s.state.ActiveRequestID = pending.RequestID
+		s.state.Recovery = &Recovery{Record: pending}
 		s.state.Busy = true
 		s.state.Version++
 	})
@@ -185,7 +194,7 @@ func (s *Service) findRequestLocked(id string) *Request {
 	return nil
 }
 func sameSubmission(a, b Submission) bool {
-	return a.RequestID == b.RequestID && a.Association == b.Association && a.TargetPath == b.TargetPath && a.Expected == b.Expected
+	return a.RequestID == b.RequestID && a.Association == b.Association && a.TargetPath == b.TargetPath && a.Expected == b.Expected && a.RecoveryRequestID == b.RecoveryRequestID
 }
 func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if in.RequestID == "" || in.Association.Kind == "" || in.Association.Key == "" || in.TargetPath == "" {
@@ -198,6 +207,11 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		return SubmitResult{Outcome: "unavailable", Message: "此版本尚未接入系统写入适配器。"}
 	}
 	s.mu.Lock()
+	if s.state.Quit.Exiting {
+		v := clone(s.state)
+		s.mu.Unlock()
+		return SubmitResult{Outcome: "exiting", Message: "应用正在退出，不再受理新修改。", Snapshot: v}
+	}
 	if decided := s.decidedLocked(in); decided != nil {
 		s.mu.Unlock()
 		return *decided
@@ -212,6 +226,17 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		v := clone(s.state)
 		s.mu.Unlock()
 		return SubmitResult{Outcome: "conflict", Message: "请求标识已用于另一项修改。", Snapshot: v}
+	}
+	// Recovered IDs remain queryable but can never become a new native request,
+	// including after a later explicit request replaces their durable record.
+	if recovered := s.findRequestLocked(in.RequestID); recovered != nil {
+		v, request := clone(s.state), clone(recovered)
+		matches := recovered.Association == in.Association && recovered.Target.Path == in.TargetPath && recovered.Preflight.Known == in.Expected.Known && appPath(recovered.Preflight.App) == in.Expected.Path
+		s.mu.Unlock()
+		if !matches {
+			return SubmitResult{Outcome: "conflict", Message: "请求标识已用于上次修改。", Snapshot: v}
+		}
+		return SubmitResult{Outcome: "existing", Request: request, Snapshot: v}
 	}
 	if pending := s.admitting; pending != nil && pending.input.RequestID == in.RequestID {
 		if !sameSubmission(pending.input, in) {
@@ -231,6 +256,19 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 			return SubmitResult{Outcome: "interrupted", Message: "等待受理应答已中断，请用同一请求标识查看状态。", Snapshot: s.GetSnapshot()}
 		}
 	}
+	if recovery := s.state.Recovery; recovery != nil {
+		outcome, message := "", ""
+		if !recovery.Ready {
+			outcome, message = "recovery_query_required", "请先重新查询上次修改关联的当前默认。"
+		} else if in.RecoveryRequestID != recovery.Record.RequestID {
+			outcome, message = "recovery_ack_required", "上次修改仍可能完成；请阅读旧目标说明后明确提交新修改。"
+		}
+		if outcome != "" {
+			v := clone(s.state)
+			s.mu.Unlock()
+			return SubmitResult{Outcome: outcome, Message: message, Snapshot: v}
+		}
+	}
 	if s.state.Busy {
 		v := clone(s.state)
 		s.mu.Unlock()
@@ -242,7 +280,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	s.mu.Unlock()
 	fail := func(out, msg string, obs *association.DefaultObservation) SubmitResult {
 		s.mu.Lock()
-		s.state.Busy = false
+		s.state.Busy = s.state.Recovery != nil && !s.state.Recovery.Ready
 		s.admitting = nil
 		v := s.changedLocked()
 		result := SubmitResult{Outcome: out, Message: msg, Observation: obs, Snapshot: v}
@@ -308,6 +346,16 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if err := ctx.Err(); err != nil {
 		return fail("interrupted", err.Error(), nil)
 	}
+	s.mu.Lock()
+	exiting := s.state.Quit.Exiting
+	recoveryReady := s.state.Recovery == nil || s.state.Recovery.Ready
+	s.mu.Unlock()
+	if exiting {
+		return fail("exiting", "应用正在退出，不再受理新修改。", nil)
+	}
+	if !recoveryReady {
+		return fail("recovery_query_required", "上次修改关联的当前查询已失败，请重新查询后再明确提交。", nil)
+	}
 	err = s.store.Update(context.Background(), func(doc *config.Document) error {
 		data, e := json.Marshal(req.PendingRecord)
 		if e != nil {
@@ -320,8 +368,13 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		return fail("storage_error", "未提交：保存未定记录失败。"+err.Error(), nil)
 	}
 	s.mu.Lock()
+	if s.state.Quit.Exiting {
+		s.mu.Unlock()
+		return fail("exiting", "应用正在退出；已保存未定记录，不再调度系统修改。", nil)
+	}
 	s.state.Requests = append(s.state.Requests, req)
 	s.state.ActiveRequestID = in.RequestID
+	s.state.Recovery = nil
 	s.submissions[in.RequestID] = in
 	s.admitting = nil
 	v := s.changedLocked()
@@ -358,7 +411,7 @@ func appPath(a *association.AppCopy) string {
 func (s *Service) submitted(id string) {
 	s.mu.Lock()
 	r := s.findRequestLocked(id)
-	if r == nil || r.SubmittedAt != "" || r.Completion.Known {
+	if s.state.Quit.Exiting || r == nil || r.SubmittedAt != "" || r.Completion.Known {
 		s.mu.Unlock()
 		return
 	}
@@ -371,7 +424,7 @@ func (s *Service) submitted(id string) {
 func (s *Service) completed(id string, nativeErr *NativeError) {
 	s.mu.Lock()
 	r := s.findRequestLocked(id)
-	if r == nil || r.Completion.Known {
+	if s.state.Quit.Exiting || r == nil || r.Completion.Known {
 		s.mu.Unlock()
 		return
 	}
@@ -385,7 +438,7 @@ func (s *Service) completed(id string, nativeErr *NativeError) {
 func (s *Service) finishReadback(id string) {
 	s.mu.Lock()
 	r := s.findRequestLocked(id)
-	if r == nil || s.state.ActiveRequestID != id || r.Phase == "resolved" {
+	if s.state.Quit.Exiting || r == nil || s.state.ActiveRequestID != id || r.Phase == "resolved" {
 		s.mu.Unlock()
 		return
 	}
@@ -416,6 +469,10 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 	// Configuration errors block writes but cannot prevent read-only browsing.
 	_ = s.ensureLoaded(ctx)
 	s.mu.Lock()
+	if s.state.Quit.Exiting {
+		s.mu.Unlock()
+		return association.QueryResult{}, context.Canceled
+	}
 	settleID := ""
 	if r := s.findRequestLocked(s.state.ActiveRequestID); r != nil && r.Association == a && r.Completion.Known && r.Phase != "resolved" {
 		settleID = r.RequestID
@@ -426,11 +483,18 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 		return result, err
 	}
 	s.mu.Lock()
+	if s.state.Quit.Exiting {
+		s.mu.Unlock()
+		return association.QueryResult{}, context.Canceled
+	}
 	if result.Superseded {
 		s.mu.Unlock()
 		return clone(result), nil
 	}
 	fresh := s.observeLocked(result)
+	if fresh {
+		s.observeRecoveryLocked(result)
+	}
 	clearID := ""
 	if r := s.findRequestLocked(settleID); fresh && r != nil && s.state.ActiveRequestID == settleID && r.Phase != "resolved" {
 		r.Readback = Readback{State: "failed", Observation: clone(result.Default)}
@@ -447,6 +511,10 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 	if clearID != "" {
 		clearErr := s.clearPending(clearID)
 		s.mu.Lock()
+		if s.state.Quit.Exiting {
+			s.mu.Unlock()
+			return association.QueryResult{}, context.Canceled
+		}
 		if r := s.findRequestLocked(clearID); r != nil && clearErr != nil {
 			r.StorageError = &StorageIssue{Operation: "clear", Message: clearErr.Error()}
 		}

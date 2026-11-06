@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Dialog } from './Dialog'
+import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
 import { ChangeStatus, useChanges, requestLabel } from './Changes'
 import { ManualActions, ManualApplicationAction } from './ManualActions'
 import { Events } from '@wailsio/runtime'
@@ -41,6 +42,7 @@ function focusElement(element:HTMLElement|null|undefined) { element?.focus({prev
 
 export default function App() {
  const changes=useChanges()
+ const recovery=useRecoveryAction(changes)
  const [entries,setEntries] = useState<Entry[]>([])
  const [kind,setKind] = useState<View>('app')
  const [appQuery,setAppQuery] = useState('')
@@ -81,7 +83,7 @@ export default function App() {
  useEffect(()=>{if(!selected){setDetailOpen(false);setInspectedCopy(null)}},[selected])
  const visibleResult=selected ? observations[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&!!observations[entry.id]?.default.known&&!observations[entry.id]?.default.error&&!observations[entry.id]?.default.stale
- const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;void changes.submit(entry.association,app,observed);setDetailOpen(false);setInspectedCopy(null)}
+ const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);setDetailOpen(false);setInspectedCopy(null)}
  useEffect(()=>{if(!changes.state)return;setObservations(previous=>{const next={...previous};for(const value of changes.state?.observations??[]){const id=`${value.association.kind}:${value.association.key}`;if(!next[id]||value.version>=next[id].version)next[id]=value}return next})},[changes.state])
 
  const refreshCatalog=useCallback(async()=>{
@@ -183,6 +185,7 @@ export default function App() {
    <nav className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><button key={view} data-view={view} aria-pressed={kind===view} onClick={()=>switchView(view)}>{viewNames[view]}</button>)}</nav>
    <div className="header-actions"><ManualActions/><button disabled={snapshot?.scanning} onClick={()=>void scan()}>{snapshot?.scanning ? '正在扫描…' : '重新扫描应用'}</button></div>
   </header>
+  <LifecycleStatus changes={changes}/>{recovery.dialog}
   <ChangeStatus changes={changes} onReturn={association=>{setKind(association.kind as View);setFilter('');setSelectedID(`${association.kind}:${association.key}`);setDetailOpen(true);setInspectedCopy(null)}}/>
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">

@@ -22,6 +22,22 @@ export interface NativeError {
     "description": string;
 }
 
+export interface PendingRecord {
+    "requestID": string;
+    "association": association$0.Association;
+    "target": association$0.AppCopy;
+    "preflight": association$0.DefaultObservation;
+    "phase": string;
+    "acceptedAt": string;
+    "submittedAt": string;
+}
+
+export interface QuitState {
+    "promptID": number;
+    "prompt": boolean;
+    "exiting": boolean;
+}
+
 export interface Readback {
     "state": string;
     "observation": association$0.DefaultObservation;
@@ -36,6 +52,14 @@ export interface Reconciliation {
     "state": string;
     "result": SubmitResult | null;
     "snapshot": Snapshot;
+}
+
+/**
+ * Recovery is an old process's durable uncertainty, never an active callback.
+ */
+export interface Recovery {
+    "record": PendingRecord;
+    "ready": boolean;
 }
 
 export interface Request {
@@ -60,6 +84,8 @@ export interface Snapshot {
     "observations": association$0.QueryResult[] | null;
     "writableKinds": string[] | null;
     "storageError": StorageIssue | null;
+    "recovery": Recovery | null;
+    "quit": QuitState;
 }
 
 export interface StorageIssue {
@@ -72,6 +98,7 @@ export interface Submission {
     "association": association$0.Association;
     "targetPath": string;
     "expected": ExpectedDefault;
+    "recoveryRequestID": string;
 }
 
 export interface SubmitResult {

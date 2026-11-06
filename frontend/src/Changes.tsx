@@ -38,7 +38,7 @@ export function useChanges(){
  // endpoint can close a never-arrived request; it never invokes the setter.
  useEffect(()=>{if(!sending&&pending)void recoverReply()},[state?.version,sending,pending,recoverReply])
  const submit=async(association:Association,target:AppCopy,observed:DefaultObservation,recoveryRequestID='')=>{
-  if(inFlight.current||state?.busy||pending)return
+  if(inFlight.current||state?.busy||state?.quit?.exiting||pending)return
   const input={requestID:crypto.randomUUID(),recoveryRequestID,association,targetPath:target.path,expected:{known:observed.known&&!observed.stale&&!observed.error,path:observed.app?.path??''}}
   try{sessionStorage.setItem(pendingKey,JSON.stringify({version:1,input}))}catch{setMessage('无法保存原请求标识，请恢复会话存储后再修改。');return}
   inFlight.current=true;pendingRef.current=input;setPending(input);setSending(true);setMessage('')
@@ -47,7 +47,7 @@ export function useChanges(){
   finally{inFlight.current=false;if(mounted.current)setSending(false)}
  }
  const retry=async(association:Association)=>{try{accept(await Requery(association));setMessage('')}catch(error){setMessage(`重新查询失败：${String(error)}`)}}
- return {state,message,sending,uncertain:pending?.requestID??null,pending,blocked:!state||state.busy||sending||!!pending,submit,retry,recoverReply}
+ return {state,message,sending,uncertain:pending?.requestID??null,pending,blocked:!state||state.busy||!!state.quit?.exiting||sending||!!pending,submit,retry,recoverReply}
 }
 export type Changes=ReturnType<typeof useChanges>
 export function requestLabel(request:Request){
@@ -57,7 +57,8 @@ export function requestLabel(request:Request){
  return request.phase==='submitted'?'已提交系统 · 等待系统返回':'已受理 · 等待提交系统'
 }
 export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(association:Association)=>void}){
- const request=changes.state?.requests?.find(r=>r.requestID===changes.state?.activeRequestID)??(changes.state?.requests?.length?changes.state.requests[changes.state.requests.length-1]:undefined)
+ const requests=changes.state?.requests?.filter(r=>r.phase!=='recovered')
+ const request=requests?.find(r=>r.requestID===changes.state?.activeRequestID)??requests?.[requests.length-1]
  if(!request&&!changes.pending&&!changes.message&&!changes.state?.storageError)return null
  return <section className="change-status" aria-label="修改请求状态" aria-live="polite">
   {request?<><div className="change-summary"><strong>{requestLabel(request)}</strong><span>{request.association.key}</span><button onClick={()=>onReturn(request.association)}>返回请求项</button>{request.readback.state==='failed'?<button onClick={()=>void changes.retry(request.association)}>重新回读</button>:null}</div>

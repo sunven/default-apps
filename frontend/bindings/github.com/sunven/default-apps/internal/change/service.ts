@@ -36,6 +36,22 @@ export function Requery(a: association$0.Association): $CancellablePromise<$mode
     return $Call.ByID(2260118331, a);
 }
 
+/**
+ * RequestQuit is the shared native ShouldQuit / WindowClosing guard. It never
+ * loads storage, queries the system, waits for completion, or waits for the UI.
+ */
+export function RequestQuit(): $CancellablePromise<boolean> {
+    return $Call.ByID(2163944630);
+}
+
+/**
+ * RespondQuit accepts only the currently displayed prompt. Closing or Escape is
+ * the same as staying. A deliberate exit closes admission before calling Quit.
+ */
+export function RespondQuit(promptID: number, exit: boolean): $CancellablePromise<$models.Snapshot> {
+    return $Call.ByID(3386273962, promptID, exit);
+}
+
 export function Submit($in: $models.Submission): $CancellablePromise<$models.SubmitResult> {
     return $Call.ByID(9070636, $in);
 }
