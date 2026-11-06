@@ -1,0 +1,278 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 176ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 164ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 17ms
+ ✓ src/App.regressions.test.tsx > fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them 64ms
+ ✓ src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session 99ms
+ × src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved common source without dropping neighbors 30ms
+   → Unable to find an element with the text: /正在扫描应用/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+ × src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved declaration source without dropping neighbors 25ms
+   → Unable to find an element with the text: /正在扫描应用/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+ × src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved manual source without dropping neighbors 25ms
+   → Unable to find an element with the text: /正在扫描应用/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved common source without dropping neighbors
+ FAIL  src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved declaration source without dropping neighbors
+ FAIL  src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved manual source without dropping neighbors
+TestingLibraryElementError: Unable to find an element with the text: /正在扫描应用/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m<...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.regressions.test.tsx:144:16
+    142|  vi.mocked(List).mockResolvedValue([resolved,https])
+    143|  await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
+    144|  expect(screen.getByText(/正在扫描应用/)).toBeVisible()
+       |                ^
+    145|  expect(screen.getByRole('dialog',{name:'PDF 文稿'})).toHaveTextContent(…
+    146|  expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeI…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 5 passed (8)
+   Start at  21:26:09
+   Duration  946ms (tests 72%, environment 18%, setup 4%, transform 3%, import 2%)
+

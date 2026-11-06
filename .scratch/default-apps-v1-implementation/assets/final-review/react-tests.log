@@ -1,0 +1,69 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/Lifecycle.test.tsx > recovered current observation stays separate and Escape never submits a replacement 66ms
+ ✓ src/Changes.test.tsx > explicit action sends one canonical copy and shows accepted separately from submitted 54ms
+ ✓ src/Changes.test.tsx > native error and failed readback preserve actual facts and retry never submits again: file 17ms
+ ✓ src/Changes.test.tsx > native error and failed readback preserve actual facts and retry never submits again: scheme 12ms
+ ✓ src/Changes.test.tsx > known success and separate clear error survive an older event 4ms
+ ✓ src/App.test.tsx > shows the PDF current default and independently returned candidate copies 84ms
+ ✓ src/Lifecycle.test.tsx > explicit replacement supplies old request identity once and failed query blocks the action 38ms
+ ✓ src/Lifecycle.test.tsx > one quit prompt supports Escape stay and explicit exit by current prompt identity 17ms
+ ✓ src/Lifecycle.test.tsx > completion updates the open quit explanation without another prompt or automatic exit 8ms
+ ✓ src/Changes.test.tsx > save and preflight rejection show not submitted and keep explicit action available 14ms
+ ✓ src/Changes.test.tsx > one missing snapshot after a lost submit reply cannot permit a duplicate action 18ms
+ ✓ src/Changes.test.tsx > reload reconciles the original parameters without a second submission 12ms
+ ✓ src/Changes.test.tsx > a newer accepted event ends reply uncertainty even while an older reconciliation is still pending 7ms
+ ✓ src/Changes.test.tsx > an immediate completion event survives the later initial snapshot and duplicate notifications 1ms
+ ✓ src/Changes.test.tsx > external refresh updates the displayed actual default while preserving the original completed request 3ms
+ ✓ src/Changes.test.tsx > scheme submission and reload preserve its identity and block file and other scheme writes until readback 21ms
+ ✓ src/App.test.tsx > distinguishes a successful missing default from an empty candidate list 26ms
+ ✓ src/App.test.tsx > refresh keeps the last default visible and marks a failed update while candidates succeed 33ms
+ ✓ src/App.test.tsx > shows independent initial errors and allows retry to a valid empty observation 32ms
+ ✓ src/ManualActions.test.tsx > requires explicit choice for ambiguous extension before saving and returns focus to its trigger 119ms
+ ✓ src/ManualActions.test.tsx > unresolved input offers native recognition, cancellation keeps the draft and saves nothing 44ms
+ ✓ src/ManualActions.test.tsx > recognizes a file as a type and reports a failed save without success 27ms
+ ✓ src/ManualActions.test.tsx > clears a previously resolved choice when the input changes 38ms
+ ✓ src/ManualActions.test.tsx > shows stored application path without claiming a default change and makes cancellation silent 23ms
+ ✓ src/ManualActions.test.tsx > reports preserved corrupt configuration and disables actions that would overwrite it 11ms
+ ✓ src/ManualActions.test.tsx > association other-application entry preserves the concrete selected copy 8ms
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 190ms
+ ✓ src/App.test.tsx > shows loading without inventing an empty default, then retains data during a refresh 29ms
+ ✓ src/App.test.tsx > keyboard users can focus the scrollable results after the refresh control 26ms
+ ✓ src/App.test.tsx > browses ambiguous file identities and separate HTTP and HTTPS associations 70ms
+ ✓ src/App.browser.test.tsx > application metadata matches show all declarations, declaration matches narrow them, and the right filter narrows again 223ms
+ ✓ src/App.browser.test.tsx > association details are closed by default and nested copy dialogs return focus through their triggers 41ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 161ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 10ms
+ ✓ src/App.test.tsx > unresolved inputs explain the file identification path without querying a fabricated type 18ms
+ ✓ src/App.test.tsx > catalog failure has a retry and an empty protocol view hides previous details 36ms
+ ✓ src/App.test.tsx > returning to a type after a transport failure keeps that types own last observation 47ms
+ ✓ src/App.browser.test.tsx > keyboard traverses only the active list, opens details, and does not intercept composing or modified arrows 92ms
+ ✓ src/App.test.tsx > opens with installed copies, declared associations, and an independent default outside the scan 43ms
+ ✓ src/App.test.tsx > newer scan events win over a late snapshot and every declared type gets its own default 8ms
+ ✓ src/App.test.tsx > a declaration row reports a failed default query without turning it into no default 4ms
+ ✓ src/App.regressions.test.tsx > fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them 58ms
+ ✓ src/App.browser.test.tsx > each view restores its own search, association identity and scroll position while application changes select the first visible association 130ms
+ ✓ src/App.browser.test.tsx > no matches clear old details, and a vanished selected copy retains its path without selecting its same-name sibling 51ms
+ ✓ src/App.browser.test.tsx > progress snapshots keep the selected copy until the completed scan confirms it has disappeared 9ms
+ ✓ src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session 113ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved common source without dropping neighbors 36ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved declaration source without dropping neighbors 36ms
+ ✓ src/App.browser.test.tsx > a current default pointing to a vanished copy keeps the observed path and separately marks its catalog absence 27ms
+ ✓ src/App.browser.test.tsx > scan progress keeps old declarations, search, selection and scroll until authoritative replacement 39ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved manual source without dropping neighbors 31ms
+ ✓ src/App.regressions.test.tsx > manual reparse restores the previously selected identity when its source also resolves to another type 24ms
+ ✓ src/App.regressions.test.tsx > a newly ambiguous source requires an explicit type choice and still unresolved sources remain query-disabled 42ms
+ ✓ src/App.browser.test.tsx > foreground activation coalesces refresh of visible associations while retaining browsing state 149ms
+ ✓ src/App.browser.test.tsx > an unavailable saved copy leaves the usable list but keeps its original path notice 6ms
+
+ Test Files  6 passed (6)
+      Tests  55 passed (55)
+   Start at  21:28:25
+   Duration  1.43s (tests 45%, environment 34%, setup 11%, import 5%, transform 4%)
+

@@ -1,0 +1,43 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ × src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 185ms
+   → expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <div
+  class="declared-default"
+>
+  查询连接失败
+</div> instead
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <div
+  class="declared-default"
+>
+  查询连接失败
+</div> instead
+ ❯ src/App.regressions.test.tsx:45:43
+     43|  fail=false
+     44|  await act(async()=>{listeners.get('defaultapps:activated')?.({data:tr…
+     45|  expect(screen.queryByText('查询连接失败')).not.toBeInTheDocument()
+       |                                           ^
+     46| })
+     47|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  21:19:45
+   Duration  572ms (tests 41%, environment 34%, transform 11%, setup 11%, import 3%)
+

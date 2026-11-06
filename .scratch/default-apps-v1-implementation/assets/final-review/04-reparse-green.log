@@ -1,0 +1,22 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 187ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 170ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 21ms
+ ✓ src/App.regressions.test.tsx > fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them 67ms
+ ✓ src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session 94ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved common source without dropping neighbors 31ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved declaration source without dropping neighbors 31ms
+ ✓ src/App.regressions.test.tsx > reparse refreshes the full catalog and follows a resolved manual source without dropping neighbors 27ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  21:26:38
+   Duration  1.26s (tests 55%, environment 29%, setup 8%, import 4%, transform 4%)
+

@@ -1,0 +1,1382 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --reporter=verbose src/App.regressions.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/final-fixes/frontend
+
+ ✓ src/App.regressions.test.tsx > successful foreground requery must clear a prior row transport error 179ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer foreground query observation 169ms
+ ✓ src/App.regressions.test.tsx > an older background rejection cannot replace a newer change snapshot observation 19ms
+ ✓ src/App.regressions.test.tsx > fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them 85ms
+ × src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session 58ms
+   → Unable to find an accessible element with the role "dialog" and name "custom-review-scheme"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"global-header"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"app-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "浏览入口":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"浏览入口"[39m
+    [33mclass[39m=[32m"view-navigation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "应用":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"app"[39m
+  [36m/>[39m
+
+  Name "文件类型":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"file"[39m
+  [36m/>[39m
+
+  Name "URL 协议":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mdata-view[39m=[32m"scheme"[39m
+  [36m/>[39m
+
+  Name "手动补充…":
+  [36m<button />[39m
+
+  Name "重新扫描应用":
+  [36m<button />[39m
+
+  Name "返回请求项":
+  [36m<button />[39m
+
+  Name "https https":
+  [36m<button[39m
+    [33maria-label[39m=[32m"https https"[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"scheme:https"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "查看 https 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 https 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "修改请求状态":
+  [36m<section[39m
+    [33maria-label[39m=[32m"修改请求状态"[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"change-status"[39m
+  [36m/>[39m
+
+  Name "关联列表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"关联列表"[39m
+    [33mclass[39m=[32m"association-list"[39m
+    [33mrole[39m=[32m"region"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"change-target"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"workspace"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "URL 协议":
+  [36m<h1 />[39m
+
+  Name "关联目录":
+  [36m<h2 />[39m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "搜索URL 协议":
+  [36m<input[39m
+    [33maria-label[39m=[32m"搜索URL 协议"[39m
+    [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+    [33mtype[39m=[32m"search"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[39m
+    [33mclass[39m=[32m"browser-footer"[39m
+  [36m/>[39m
+
+  --------------------------------------------------dialog:
+
+  Name "https":
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m":r1:"[39m
+    [33mclass[39m=[32m"detail-dialog"[39m
+    [33mopen[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "https":
+  [36m<h2[39m
+    [33mid[39m=[32m":r1:"[39m
+  [36m/>[39m
+
+  Name "关联查询":
+  [36m<h3 />[39m
+
+  Name "当前默认应用":
+  [36m<h2[39m
+    [33mid[39m=[32m"current-heading"[39m
+  [36m/>[39m
+
+  Name "系统候选应用":
+  [36m<h2[39m
+    [33mid[39m=[32m"candidates-heading"[39m
+  [36m/>[39m
+
+  Name "关联来源":
+  [36m<h2[39m
+    [33mid[39m=[32m"source-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"copy-path"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"copy-bundle"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"query-error"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"freshness"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"freshness"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"manual-help"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "关闭https":
+  [36m<button[39m
+    [33maria-label[39m=[32m"关闭https"[39m
+    [33mdata-dialog-close[39m=[32m"true"[39m
+  [36m/>[39m
+
+  Name "重新查询":
+  [36m<button />[39m
+
+  Name "查看此副本 /Applications/Reader.app":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看此副本 /Applications/Reader.app"[39m
+    [33mclass[39m=[32m"copy-select"[39m
+  [36m/>[39m
+
+  Name "选择其他应用…":
+  [36m<button />[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "https 查询结果":
+  [36m<div[39m
+    [33maria-busy[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"https 查询结果"[39m
+    [33mclass[39m=[32m"query-content"[39m
+    [33mrole[39m=[32m"region"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "当前默认应用":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"current-heading"[39m
+  [36m/>[39m
+
+  Name "系统候选应用":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"candidates-heading"[39m
+  [36m/>[39m
+
+  Name "关联来源":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"source-heading"[39m
+    [33mclass[39m=[32m"sources"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"candidate-list"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul />[39m
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  [36m<li />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"修改请求状态"[39m
+        [33maria-live[39m=[32m"polite"[39m
+        [33mclass[39m=[32m"change-status"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"change-summary"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m已提交系统 · 等待系统返回[0m
+          [36m</strong>[39m
+          [36m<span>[39m
+            [0mcustom-review-scheme[0m
+          [36m</span>[39m
+          [36m<button>[39m
+            [0m返回请求项[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"change-target"[39m
+        [36m>[39m
+          [0m目标：[0m
+          [36m<span>[39m
+            [0m/Applications/Reader.app[0m
+          [36m</span>[39m
+        [36m</p>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"browser-workspace catalog-view"[39m
+      [36m>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"workspace"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"app-heading"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<h1>[39m
+                [0mURL 协议[0m
+              [36m</h1>[39m
+              [36m<p>[39m
+                [0m这台 Mac 的实际默认与系统候选[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"association-toolbar"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<h2>[39m
+                [0m关联目录[0m
+              [36m</h2>[39m
+              [36m<p>[39m
+                [0m1[0m
+                [0m 个关联 · [0m
+                [0m常用关联优先[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<label[39m
+              [33mclass[39m=[32m"search-field"[39m
+            [36m>[39m
+              [0m搜索URL 协议[0m
+              [36m<input[39m
+                [33maria-label[39m=[32m"搜索URL 协议"[39m
+                [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+                [33mtype[39m=[32m"search"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</label>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"column-labels"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m关联项[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m当前默认应用[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m操作[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"关联列表"[39m
+            [33mclass[39m=[32m"association-list"[39m
+            [33mrole[39m=[32m"region"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"association-row"[39m
+              [33mdata-selected[39m=[32m"true"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"https https"[39m
+                [33maria-pressed[39m=[32m"true"[39m
+                [33mclass[39m=[32m"association-name"[39m
+                [33mdata-association-id[39m=[32m"scheme:https"[39m
+                [33mtabindex[39m=[32m"0"[39m
+              [36m>[39m
+                [36m<strong>[39m
+                  [0mhttps[0m
+                [36m</strong>[39m
+                [36m<span />[39m
+                [36m<span>[39m
+                  [0mhttps[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"declared-default"[39m
+              [36m>[39m
+                [36m<strong>[39m
+                  [0mhttps[0m
+                [36m</strong>[39m
+                [36m<span>[39m
+                  [0m版本 [0m
+                  [0m2.4[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"row-path"[39m
+                  [33mtitle[39m=[32m"/Applications/Reader.app"[39m
+                [36m>[39m
+                  [0m/Applications/Reader.app[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"row-actions"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"查看 https 详情"[39m
+                  [33mclass[39m=[32m"row-detail"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0m详情…[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<footer[39m
+            [33mclass[39m=[32m"browser-footer"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m默认应用由系统独立查询[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m⌘1 / 2 / 3 切换入口[0m
+            [36m</span>[39m
+          [36m</footer>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m":r1:"[39m
+    [33mclass[39m=[32m"detail-dialog"[39m
+    [33mopen[39m=[32m""[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"dialog-heading"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<h2[39m
+          [33mid[39m=[32m":r1:"[39m
+        [36m>[39m
+          [0mhttps[0m
+        [36m</h2>[39m
+        [36m<p>[39m
+          [0mhttps[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<button[39m
+        [33maria-label[39m=[32m"关闭https"[39m
+        [33mdata-dialog-close[39m=[32m"true"[39m
+      [36m>[39m
+        [0m关闭[0m
+      [36m</button>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"dialog-body"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page-heading"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<h3>[39m
+            [0m关联查询[0m
+          [36m</h3>[39m
+          [36m<p>[39m
+            [0mhttps[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<button>[39m
+          [0m重新查询[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-busy[39m=[32m"false"[39m
+        [33maria-label[39m=[32m"https 查询结果"[39m
+        [33mclass[39m=[32m"query-content"[39m
+        [33mrole[39m=[32m"region"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"current-heading"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mid[39m=[32m"current-heading"[39m
+          [36m>[39m
+            [0m当前默认应用[0m
+          [36m</h2>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"application-copy"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"copy-heading"[39m
+            [36m>[39m
+              [36m<strong>[39m
+                [0mhttps[0m
+              [36m</strong>[39m
+              [36m<span>[39m
+                [0m版本 [0m
+                [0m2.4[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"copy-path"[39m
+            [36m>[39m
+              [0m/Applications/Reader.app[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"copy-bundle"[39m
+            [36m>[39m
+              [0mtest.reader[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"query-error"[39m
+            [36m>[39m
+              [0m目录中已找不到此副本；以上仍是系统实际查询结果。[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"查看此副本 /Applications/Reader.app"[39m
+              [33mclass[39m=[32m"copy-select"[39m
+            [36m>[39m
+              [0m查看此副本[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"freshness"[39m
+          [36m>[39m
+            [0m最后有效查询：[0m
+            [0m11/6/2026, 6:00:00 PM[0m
+          [36m</p>[39m
+        [36m</section>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"candidates-heading"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"section-heading"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mid[39m=[32m"candidates-heading"[39m
+            [36m>[39m
+              [0m系统候选应用[0m
+            [36m</h2>[39m
+            [36m<span>[39m
+              [0m0[0m
+              [0m 个应用副本[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0m系统未返回候选应用[0m
+          [36m</p>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"freshness"[39m
+          [36m>[39m
+            [0m最后有效查询：[0m
+            [0m11/6/2026, 6:00:00 PM[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"manual-application"[39m
+          [36m>[39m
+            [36m<button>[39m
+              [0m选择其他应用…[0m
+            [36m</button>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"manual-help"[39m
+            [36m>[39m
+              [0m保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<ul[39m
+            [33mclass[39m=[32m"candidate-list"[39m
+          [36m/>[39m
+        [36m</section>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"source-heading"[39m
+          [33mclass[39m=[32m"sources"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mid[39m=[32m"source-heading"[39m
+          [36m>[39m
+            [0m关联来源[0m
+          [36m</h2>[39m
+          [36m<ul>[39m
+            [36m<li>[39m
+              [0m常用项[0m
+              [0m · [0m
+              [0mhttps[0m
+              [0m · [0m
+              [0mhttps[0m
+            [36m</li>[39m
+          [36m</ul>[39m
+        [36m</section>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</dialog>[39m
+[36m</body>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.regressions.test.tsx > returning to a request whose sole declaration disappeared keeps the original association and browser session
+TestingLibraryElementError: Unable to find an accessible element with the role "dialog" and name "custom-review-scheme"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"global-header"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<header[39m
+    [33mclass[39m=[32m"app-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  navigation:
+
+  Name "浏览入口":
+  [36m<nav[39m
+    [33maria-label[39m=[32m"浏览入口"[39m
+    [33mclass[39m=[32m"view-navigation"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "应用":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"app"[39m
+  [36m/>[39m
+
+  Name "文件类型":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"false"[39m
+    [33mdata-view[39m=[32m"file"[39m
+  [36m/>[39m
+
+  Name "URL 协议":
+  [36m<button[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mdata-view[39m=[32m"scheme"[39m
+  [36m/>[39m
+
+  Name "手动补充…":
+  [36m<button />[39m
+
+  Name "重新扫描应用":
+  [36m<button />[39m
+
+  Name "返回请求项":
+  [36m<button />[39m
+
+  Name "https https":
+  [36m<button[39m
+    [33maria-label[39m=[32m"https https"[39m
+    [33maria-pressed[39m=[32m"true"[39m
+    [33mclass[39m=[32m"association-name"[39m
+    [33mdata-association-id[39m=[32m"scheme:https"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "查看 https 详情":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看 https 详情"[39m
+    [33mclass[39m=[32m"row-detail"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "修改请求状态":
+  [36m<section[39m
+    [33maria-label[39m=[32m"修改请求状态"[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"change-status"[39m
+  [36m/>[39m
+
+  Name "关联列表":
+  [36m<div[39m
+    [33maria-label[39m=[32m"关联列表"[39m
+    [33mclass[39m=[32m"association-list"[39m
+    [33mrole[39m=[32m"region"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"change-target"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[39m
+    [33mclass[39m=[32m"workspace"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "URL 协议":
+  [36m<h1 />[39m
+
+  Name "关联目录":
+  [36m<h2 />[39m
+
+  --------------------------------------------------
+  searchbox:
+
+  Name "搜索URL 协议":
+  [36m<input[39m
+    [33maria-label[39m=[32m"搜索URL 协议"[39m
+    [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+    [33mtype[39m=[32m"search"[39m
+    [33mvalue[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[39m
+    [33mclass[39m=[32m"browser-footer"[39m
+  [36m/>[39m
+
+  --------------------------------------------------dialog:
+
+  Name "https":
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m":r1:"[39m
+    [33mclass[39m=[32m"detail-dialog"[39m
+    [33mopen[39m=[32m""[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "https":
+  [36m<h2[39m
+    [33mid[39m=[32m":r1:"[39m
+  [36m/>[39m
+
+  Name "关联查询":
+  [36m<h3 />[39m
+
+  Name "当前默认应用":
+  [36m<h2[39m
+    [33mid[39m=[32m"current-heading"[39m
+  [36m/>[39m
+
+  Name "系统候选应用":
+  [36m<h2[39m
+    [33mid[39m=[32m"candidates-heading"[39m
+  [36m/>[39m
+
+  Name "关联来源":
+  [36m<h2[39m
+    [33mid[39m=[32m"source-heading"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"copy-path"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"copy-bundle"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"query-error"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"freshness"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"freshness"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"manual-help"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "关闭https":
+  [36m<button[39m
+    [33maria-label[39m=[32m"关闭https"[39m
+    [33mdata-dialog-close[39m=[32m"true"[39m
+  [36m/>[39m
+
+  Name "重新查询":
+  [36m<button />[39m
+
+  Name "查看此副本 /Applications/Reader.app":
+  [36m<button[39m
+    [33maria-label[39m=[32m"查看此副本 /Applications/Reader.app"[39m
+    [33mclass[39m=[32m"copy-select"[39m
+  [36m/>[39m
+
+  Name "选择其他应用…":
+  [36m<button />[39m
+
+  --------------------------------------------------
+  region:
+
+  Name "https 查询结果":
+  [36m<div[39m
+    [33maria-busy[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"https 查询结果"[39m
+    [33mclass[39m=[32m"query-content"[39m
+    [33mrole[39m=[32m"region"[39m
+    [33mtabindex[39m=[32m"0"[39m
+  [36m/>[39m
+
+  Name "当前默认应用":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"current-heading"[39m
+  [36m/>[39m
+
+  Name "系统候选应用":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"candidates-heading"[39m
+  [36m/>[39m
+
+  Name "关联来源":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"source-heading"[39m
+    [33mclass[39m=[32m"sources"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  strong:
+
+  Name "":
+  [36m<strong />[39m
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"candidate-list"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul />[39m
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  [36m<li />[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"global-header"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"product"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mviewBox[39m=[32m"0 0 28 28"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<span>[39m
+            [0mDefault Apps[0m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"浏览入口"[39m
+          [33mclass[39m=[32m"view-navigation"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"app"[39m
+          [36m>[39m
+            [0m应用[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mdata-view[39m=[32m"file"[39m
+          [36m>[39m
+            [0m文件类型[0m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-pressed[39m=[32m"true"[39m
+            [33mdata-view[39m=[32m"scheme"[39m
+          [36m>[39m
+            [0mURL 协议[0m
+          [36m</button>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"header-actions"[39m
+        [36m>[39m
+          [36m<button>[39m
+            [0m手动补充…[0m
+          [36m</button>[39m
+          [36m<button>[39m
+            [0m重新扫描应用[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"修改请求状态"[39m
+        [33maria-live[39m=[32m"polite"[39m
+        [33mclass[39m=[32m"change-status"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"change-summary"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m已提交系统 · 等待系统返回[0m
+          [36m</strong>[39m
+          [36m<span>[39m
+            [0mcustom-review-scheme[0m
+          [36m</span>[39m
+          [36m<button>[39m
+            [0m返回请求项[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"change-target"[39m
+        [36m>[39m
+          [0m目标：[0m
+          [36m<span>[39m
+            [0m/Applications/Reader.app[0m
+          [36m</span>[39m
+        [36m</p>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"browser-workspace catalog-view"[39m
+      [36m>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"workspace"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"app-heading"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<h1>[39m
+                [0mURL 协议[0m
+              [36m</h1>[39m
+              [36m<p>[39m
+                [0m这台 Mac 的实际默认与系统候选[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"association-toolbar"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<h2>[39m
+                [0m关联目录[0m
+              [36m</h2>[39m
+              [36m<p>[39m
+                [0m1[0m
+                [0m 个关联 · [0m
+                [0m常用关联优先[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<label[39m
+              [33mclass[39m=[32m"search-field"[39m
+            [36m>[39m
+              [0m搜索URL 协议[0m
+              [36m<input[39m
+                [33maria-label[39m=[32m"搜索URL 协议"[39m
+                [33mplaceholder[39m=[32m"名称、扩展名或类型身份"[39m
+                [33mtype[39m=[32m"search"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</label>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"column-labels"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m关联项[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m当前默认应用[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m操作[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"关联列表"[39m
+            [33mclass[39m=[32m"association-list"[39m
+            [33mrole[39m=[32m"region"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"association-row"[39m
+              [33mdata-selected[39m=[32m"true"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"https https"[39m
+                [33maria-pressed[39m=[32m"true"[39m
+                [33mclass[39m=[32m"association-name"[39m
+                [33mdata-association-id[39m=[32m"scheme:https"[39m
+                [33mtabindex[39m=[32m"0"[39m
+              [36m>[39m
+                [36m<strong>[39m
+                  [0mhttps[0m
+                [36m</strong>[39m
+                [36m<span />[39m
+                [36m<span>[39m
+                  [0mhttps[0m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"declared-default"[39m
+              [36m>[39m
+                [36m<strong>[39m
+                  [0mhttps[0m
+                [36m</strong>[39m
+                [36m<span>[39m
+                  [0m版本 [0m
+                  [0m2.4[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"row-path"[39m
+                  [33mtitle[39m=[32m"/Applications/Reader.app"[39m
+                [36m>[39m
+                  [0m/Applications/Reader.app[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"row-actions"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"查看 https 详情"[39m
+                  [33mclass[39m=[32m"row-detail"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0m详情…[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<footer[39m
+            [33mclass[39m=[32m"browser-footer"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m默认应用由系统独立查询[0m
+            [36m</span>[39m
+            [36m<span>[39m
+              [0m⌘1 / 2 / 3 切换入口[0m
+            [36m</span>[39m
+          [36m</footer>[39m
+        [36m</main>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<dialog[39m
+    [33maria-labelledby[39m=[32m":r1:"[39m
+    [33mclass[39m=[32m"detail-dialog"[39m
+    [33mopen[39m=[32m""[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"dialog-heading"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<h2[39m
+          [33mid[39m=[32m":r1:"[39m
+        [36m>[39m
+          [0mhttps[0m
+        [36m</h2>[39m
+        [36m<p>[39m
+          [0mhttps[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<button[39m
+        [33maria-label[39m=[32m"关闭https"[39m
+        [33mdata-dialog-close[39m=[32m"true"[39m
+      [36m>[39m
+        [0m关闭[0m
+      [36m</button>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"dialog-body"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"page-heading"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<h3>[39m
+            [0m关联查询[0m
+          [36m</h3>[39m
+          [36m<p>[39m
+            [0mhttps[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<button>[39m
+          [0m重新查询[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33maria-busy[39m=[32m"false"[39m
+        [33maria-label[39m=[32m"https 查询结果"[39m
+        [33mclass[39m=[32m"query-content"[39m
+        [33mrole[39m=[32m"region"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"current-heading"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mid[39m=[32m"current-heading"[39m
+          [36m>[39m
+            [0m当前默认应用[0m
+          [36m</h2>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"application-copy"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"copy-heading"[39m
+            [36m>[39m
+              [36m<strong>[39m
+                [0mhttps[0m
+              [36m</strong>[39m
+              [36m<span>[39m
+                [0m版本 [0m
+                [0m2.4[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"copy-path"[39m
+            [36m>[39m
+              [0m/Applications/Reader.app[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"copy-bundle"[39m
+            [36m>[39m
+              [0mtest.reader[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"query-error"[39m
+            [36m>[39m
+              [0m目录中已找不到此副本；以上仍是系统实际查询结果。[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"查看此副本 /Applications/Reader.app"[39m
+              [33mclass[39m=[32m"copy-select"[39m
+            [36m>[39m
+              [0m查看此副本[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"freshness"[39m
+          [36m>[39m
+            [0m最后有效查询：[0m
+            [0m11/6/2026, 6:00:00 PM[0m
+          [36m</p>[39m
+        [36m</section>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"candidates-heading"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"section-heading"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mid[39m=[32m"candidates-heading"[39m
+            [36m>[39m
+              [0m系统候选应用[0m
+            [36m</h2>[39m
+            [36m<span>[39m
+              [0m0[0m
+              [0m 个应用副本[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0m系统未返回候选应用[0m
+          [36m</p>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"freshness"[39m
+          [36m>[39m
+            [0m最后有效查询：[0m
+            [0m11/6/2026, 6:00:00 PM[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"manual-application"[39m
+          [36m>[39m
+            [36m<button>[39m
+              [0m选择其他应用…[0m
+            [36m</button>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"manual-help"[39m
+            [36m>[39m
+              [0m保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<ul[39m
+            [33mclass[39m=[32m"candidate-list"[39m
+          [36m/>[39m
+        [36m</section>[39m
+        [36m<section[39m
+          [33maria-labelledby[39m=[32m"source-heading"[39m
+          [33mclass[39m=[32m"sources"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mid[39m=[32m"source-heading"[39m
+          [36m>[39m
+            [0m关联来源[0m
+          [36m</h2>[39m
+          [36m<ul>[39m
+            [36m<li>[39m
+              [0m常用项[0m
+              [0m · [0m
+              [0mhttps[0m
+              [0m · [0m
+              [0mhttps[0m
+            [36m</li>[39m
+          [36m</ul>[39m
+        [36m</section>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</dialog>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.regressions.test.tsx:107:22
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  21:23:17
+   Duration  858ms (tests 68%, environment 19%, setup 5%, import 4%, transform 3%)
+
