@@ -163,3 +163,39 @@ test('a current default pointing to a vanished copy keeps the observed path and 
  expect(current).toHaveTextContent('/Applications/Reader.app')
  expect(current).toHaveTextContent('目录中已找不到此副本；以上仍是系统实际查询结果。')
 })
+
+test('scan progress keeps old declarations, search, selection and scroll until authoritative replacement',async()=>{
+ render(<App/>);const search=await screen.findByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})
+ await userEvent.type(search,'Reader')
+ const rows=screen.getByRole('region',{name:'声明关联列表'});rows.scrollTop=94
+ await userEvent.click(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'}));await userEvent.keyboard('{Escape}')
+ await act(async()=>publish({data:{...snapshot,version:3,scanning:true,apps:[],entries:[https]}}))
+ expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toHaveAttribute('tabindex','0')
+ expect(rows.scrollTop).toBe(94);expect(search).toHaveValue('Reader')
+ expect(screen.getByText(/正在扫描应用/)).toBeVisible()
+ await act(async()=>publish({data:{...snapshot,version:4}}))
+ expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toHaveAttribute('tabindex','0')
+ expect(rows.scrollTop).toBe(94);expect(search).toHaveValue('Reader')
+})
+
+test('foreground activation coalesces refresh of visible associations while retaining browsing state',async()=>{
+ const listeners=new Map<string,(event:any)=>void>()
+ vi.mocked(Events.On).mockImplementation((name,listener)=>{listeners.set(name,listener);return ()=>{listeners.delete(name)}})
+ render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
+ await act(async()=>{})
+ const before=vi.mocked(Query).mock.calls.length
+ await act(async()=>{for(let i=0;i<5;i++)listeners.get('defaultapps:activated')?.({data:true});await new Promise(resolve=>setTimeout(resolve,140))})
+ expect(vi.mocked(Query).mock.calls.length).toBe(before+1)
+ expect(vi.mocked(Query).mock.calls[before]?.[0]).toEqual(pdf.association)
+ expect(screen.getByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})).toHaveAttribute('aria-pressed','true')
+})
+
+test('an unavailable saved copy leaves the usable list but keeps its original path notice',async()=>{
+ render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
+ await act(async()=>publish({data:{...snapshot,version:3,apps:[{...snapshot.apps![0],manual:true,unavailable:true,associationIDs:[]},snapshot.apps![1]]}}))
+ expect(screen.queryByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})).not.toBeInTheDocument()
+ expect(screen.getByText('原应用副本已不在目录中')).toBeVisible()
+ expect(screen.getByRole('status')).toHaveTextContent('/Applications/Reader.app')
+ expect(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})).toHaveAttribute('aria-pressed','false')
+ expect(screen.queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
+})

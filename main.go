@@ -54,6 +54,7 @@ func main() {
 	})
 	picker.App, picker.Window = app, window
 	setupManualSmoke(app, window)
+	setupForegroundRefresh(app)
 	window.OnWindowEvent(events.Common.WindowRuntimeReady, func(*application.WindowEvent) {
 		application.InvokeAsync(func() { native.SetContentMinimum(window.NativeWindow(), 1000, 700) })
 	})

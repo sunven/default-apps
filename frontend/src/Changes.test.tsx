@@ -2,10 +2,10 @@ import {act,render,screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach,expect,test,vi} from 'vitest'
 import {Events} from '@wailsio/runtime'
-import {GetSnapshot,Submit,Requery} from '../bindings/github.com/sunven/default-apps/internal/change/service'
+import {GetSnapshot,Submit,Requery,ReconcileSubmission} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {Snapshot,Request} from '../bindings/github.com/sunven/default-apps/internal/change/models'
 import {ChangeStatus,useChanges} from './Changes'
-vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service',()=>({GetSnapshot:vi.fn(),Submit:vi.fn(),Requery:vi.fn()}))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service',()=>({GetSnapshot:vi.fn(),Submit:vi.fn(),Requery:vi.fn(),ReconcileSubmission:vi.fn()}))
 vi.mock('@wailsio/runtime',()=>({Events:{On:vi.fn()}}))
 const copy={path:'/Applications/Reader.app',displayPath:'/Applications/Reader.app',name:'Reader',version:'2',bundleID:'test.reader'}
 const association={kind:'file',key:'com.adobe.pdf'}
@@ -13,7 +13,7 @@ const observation={known:true,app:null,observedAt:'2026-11-06T00:00:00Z',error:n
 const empty:Snapshot={version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file','scheme'],storageError:null}
 const request:Request={requestID:'one',association,target:copy,preflight:observation,phase:'accepted',acceptedAt:'now',submittedAt:'',completion:{known:false,error:null,completedAt:''},readback:{state:'pending',observation},confirmed:false,storageError:null}
 let notify:(event:{data:Snapshot})=>void
-beforeEach(()=>{vi.resetAllMocks();vi.mocked(GetSnapshot).mockResolvedValue(empty);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})
+beforeEach(()=>{vi.resetAllMocks();sessionStorage.clear();vi.mocked(GetSnapshot).mockResolvedValue(empty);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})
 function Screen(){const changes=useChanges();return <><button disabled={changes.blocked} onClick={()=>void changes.submit(association,copy,observation)}>修改</button><ChangeStatus changes={changes} onReturn={()=>{}}/></>}
 test('explicit action sends one canonical copy and shows accepted separately from submitted',async()=>{
  vi.mocked(Submit).mockResolvedValue({outcome:'accepted',message:'',request,snapshot:{...empty,version:2,busy:true,activeRequestID:'one',requests:[request]},observation:null})
@@ -47,4 +47,42 @@ test('one missing snapshot after a lost submit reply cannot permit a duplicate a
  vi.mocked(Submit).mockRejectedValue(new Error('transport disconnected'))
  render(<Screen/>);await userEvent.click(screen.getByRole('button',{name:'修改'}));await userEvent.click(await screen.findByRole('button',{name:'查看原请求状态'}))
  expect(screen.getByRole('button',{name:'修改'})).toBeDisabled();expect(screen.getByRole('button',{name:'查看原请求状态'})).toBeVisible();expect(Submit).toHaveBeenCalledTimes(1)
+})
+
+test('reload reconciles the original parameters without a second submission',async()=>{
+ vi.mocked(Submit).mockRejectedValue(new Error('reply lost'))
+ vi.mocked(ReconcileSubmission).mockResolvedValue({state:'pending',result:null,snapshot:empty})
+ const first=render(<Screen/>);await userEvent.click(screen.getByRole('button',{name:'修改'}))
+ const original=vi.mocked(Submit).mock.calls[0][0]
+ expect(await screen.findByRole('button',{name:'查看原请求状态'})).toBeVisible()
+ first.unmount()
+ const restored={...empty,version:10,busy:true,activeRequestID:original.requestID,requests:[{...request,requestID:original.requestID}]}
+ vi.mocked(ReconcileSubmission).mockResolvedValue({state:'decided',result:{outcome:'existing',message:'',request:{...request,requestID:original.requestID},snapshot:restored,observation:null},snapshot:restored})
+ render(<Screen/>);expect(await screen.findByText('已受理 · 等待提交系统')).toBeVisible()
+ expect(ReconcileSubmission).toHaveBeenLastCalledWith(original);expect(Submit).toHaveBeenCalledTimes(1)
+ expect(screen.queryByRole('button',{name:'查看原请求状态'})).not.toBeInTheDocument()
+})
+
+test('a newer accepted event ends reply uncertainty even while an older reconciliation is still pending',async()=>{
+ let resolve!:(value:any)=>void
+ vi.mocked(Submit).mockRejectedValue(new Error('reply lost'))
+ vi.mocked(ReconcileSubmission).mockReturnValue(new Promise(r=>{resolve=r}) as ReturnType<typeof ReconcileSubmission>)
+ render(<Screen/>);await userEvent.click(screen.getByRole('button',{name:'修改'}))
+ const original=vi.mocked(Submit).mock.calls[0][0]
+ await act(async()=>notify({data:{...empty,version:8,busy:true,activeRequestID:original.requestID,requests:[{...request,requestID:original.requestID}]}}))
+ await act(async()=>resolve({state:'pending',result:null,snapshot:empty}))
+ expect(screen.getByText('已受理 · 等待提交系统')).toBeVisible()
+ expect(screen.queryByRole('button',{name:'查看原请求状态'})).not.toBeInTheDocument()
+ expect(screen.queryByText('原请求仍在核对受理条件，受理结果待确认。')).not.toBeInTheDocument()
+})
+
+test('an immediate completion event survives the later initial snapshot and duplicate notifications',async()=>{
+ let finish!:(value:Snapshot)=>void
+ vi.mocked(GetSnapshot).mockReturnValue(new Promise(resolve=>{finish=resolve}) as ReturnType<typeof GetSnapshot>)
+ const confirmed={...request,phase:'resolved',confirmed:true,completion:{known:true,error:null,completedAt:'now'},readback:{state:'valid',observation:{...observation,app:copy}}}
+ render(<Screen/>)
+ await act(async()=>notify({data:{...empty,version:12,requests:[confirmed]}}))
+ await act(async()=>{finish({...empty,version:3,busy:true,activeRequestID:'one',requests:[request]});notify({data:{...empty,version:12,requests:[confirmed]}})})
+ expect(screen.getByText('已确认本次修改')).toBeVisible();expect(screen.queryByText('已受理 · 等待提交系统')).not.toBeInTheDocument()
+ expect(screen.getByRole('button',{name:'修改'})).toBeEnabled();expect(Submit).not.toHaveBeenCalled()
 })

@@ -46,6 +46,7 @@ type QueryResult struct {
 	Default     DefaultObservation   `json:"default"`
 	Candidates  CandidateObservation `json:"candidates"`
 	Version     uint64               `json:"version"`
+	Superseded  bool                 `json:"superseded,omitempty"`
 }
 
 // SystemAdapter returns Go-owned data. Path is the canonical bundle identity;
@@ -58,6 +59,7 @@ type SystemAdapter interface {
 type queryEntry struct {
 	mu     sync.Mutex
 	result QueryResult
+	issued uint64
 }
 
 type Service struct {
@@ -78,13 +80,23 @@ func (s *Service) Query(ctx context.Context, a Association) (QueryResult, error)
 		s.entries[a] = entry
 	}
 	s.mu.Unlock()
-	// Serialize observations for one association; unrelated associations remain independent.
+	// Fence at issuance, not completion: a slow obsolete query cannot block or
+	// overwrite a newer refresh (including its error and last valid value).
 	entry.mu.Lock()
-	defer entry.mu.Unlock()
+	entry.issued++
+	issued := entry.issued
+	entry.mu.Unlock()
 	current, currentErr := s.system.CurrentDefault(ctx, a)
 	candidates, candidatesErr := s.system.CandidateApplications(ctx, a)
+	entry.mu.Lock()
+	defer entry.mu.Unlock()
+	if issued != entry.issued {
+		fallback := copyResult(entry.result)
+		fallback.Superseded = true
+		return fallback, nil
+	}
 	result := entry.result
-	result.Version++
+	result.Version = issued
 	if currentErr == nil {
 		result.Default = DefaultObservation{Known: true, App: copyApp(current), ObservedAt: time.Now().UTC().Format(time.RFC3339Nano)}
 	} else {

@@ -15,6 +15,7 @@ import type * as discovery$0 from "../../../../sunven/default-apps/internal/disc
 declare module "@wailsio/runtime" {
     namespace Events {
         interface CustomEvents {
+            "defaultapps:activated": boolean;
             "defaultapps:catalog": discovery$0.Snapshot;
             "defaultapps:change": change$0.Snapshot;
         }

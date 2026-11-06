@@ -3,7 +3,9 @@ package association_test
 import (
 	"context"
 	"errors"
+	"sync"
 	"testing"
+	"time"
 
 	"github.com/sunven/default-apps/internal/association"
 )
@@ -113,5 +115,88 @@ func TestLastValidObservationOwnsItsCopyMetadata(t *testing.T) {
 	again, _ := service.Query(context.Background(), pdf)
 	if again.Default.App.Name != "Reader" || again.Candidates.Apps[0].Name != "Reader" {
 		t.Fatalf("the last observation must survive later mutation outside the service: %#v %#v", again.Default.App, again.Candidates.Apps)
+	}
+}
+
+// An old slow query must not hold up or replace an observation requested later.
+type orderedSystem struct {
+	mu      sync.Mutex
+	calls   int
+	started chan struct{}
+	release chan struct{}
+}
+
+func (s *orderedSystem) CurrentDefault(context.Context, association.Association) (*association.AppCopy, error) {
+	s.mu.Lock()
+	s.calls++
+	call := s.calls
+	s.mu.Unlock()
+	if call == 1 {
+		close(s.started)
+		<-s.release
+		return &association.AppCopy{Path: "/Old.app"}, nil
+	}
+	return &association.AppCopy{Path: "/New.app"}, nil
+}
+func (*orderedSystem) CandidateApplications(context.Context, association.Association) ([]association.AppCopy, error) {
+	return nil, nil
+}
+func TestLaterRefreshWinsEvenWhenOlderQueryReturnsLast(t *testing.T) {
+	system := &orderedSystem{started: make(chan struct{}), release: make(chan struct{})}
+	service := association.NewService(system)
+	oldResult := make(chan association.QueryResult, 1)
+	go func() { v, _ := service.Query(context.Background(), pdf); oldResult <- v }()
+	<-system.started
+	newResult := make(chan association.QueryResult, 1)
+	go func() { v, _ := service.Query(context.Background(), pdf); newResult <- v }()
+	var latest association.QueryResult
+	select {
+	case latest = <-newResult:
+	case <-time.After(100 * time.Millisecond):
+		close(system.release)
+		t.Fatal("new refresh blocked behind obsolete query")
+	}
+	close(system.release)
+	late := <-oldResult
+	if latest.Default.App.Path != "/New.app" || late.Default.App.Path != "/New.app" || late.Version != latest.Version {
+		t.Fatalf("older query replaced latest observation: latest=%+v late=%+v", latest, late)
+	}
+}
+
+type queryResponse struct {
+	app *association.AppCopy
+	err error
+}
+type controlledQueries struct{ calls chan chan queryResponse }
+
+func (s controlledQueries) CurrentDefault(context.Context, association.Association) (*association.AppCopy, error) {
+	response := make(chan queryResponse, 1)
+	s.calls <- response
+	value := <-response
+	return value.app, value.err
+}
+func (s controlledQueries) CandidateApplications(context.Context, association.Association) ([]association.AppCopy, error) {
+	return nil, nil
+}
+func TestNewerFailureKeepsLastValidValueWhenObsoleteSuccessArrives(t *testing.T) {
+	adapter := controlledQueries{calls: make(chan chan queryResponse, 3)}
+	service := association.NewService(adapter)
+	query := func() chan association.QueryResult {
+		result := make(chan association.QueryResult, 1)
+		go func() { v, _ := service.Query(context.Background(), pdf); result <- v }()
+		return result
+	}
+	initial := query()
+	(<-adapter.calls) <- queryResponse{app: &association.AppCopy{Path: "/Initial.app"}}
+	<-initial
+	old := query()
+	oldResponse := <-adapter.calls
+	latest := query()
+	(<-adapter.calls) <- queryResponse{err: errors.New("latest query unavailable")}
+	failed := <-latest
+	oldResponse <- queryResponse{app: &association.AppCopy{Path: "/Obsolete.app"}}
+	obsolete := <-old
+	if !failed.Default.Stale || failed.Default.App.Path != "/Initial.app" || failed.Default.Error.Message != "latest query unavailable" || !obsolete.Superseded || obsolete.Default.App.Path != "/Initial.app" || obsolete.Default.Error.Message != "latest query unavailable" {
+		t.Fatalf("obsolete success erased newer error: %+v %+v", failed, obsolete)
 	}
 }

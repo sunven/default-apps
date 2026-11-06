@@ -11,6 +11,7 @@ export type {
     ExpectedDefault,
     NativeError,
     Readback,
+    Reconciliation,
     Request,
     Snapshot,
     StorageIssue,

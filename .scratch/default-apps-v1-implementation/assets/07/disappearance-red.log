@@ -1,0 +1,56 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/frontend
+
+ ❯ src/App.browser.test.tsx (10 tests | 1 failed) 695ms
+   × an unavailable saved copy leaves the usable list but keeps its original path notice 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.browser.test.tsx > an unavailable saved copy leaves the usable list but keeps its original path notice
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <button
+  aria-label="Reader 2.4 /Applications/Reader.app"
+  aria-pressed="true"
+  class="application-row"
+  data-app-path="/Applications/Reader.app"
+  tabindex="0"
+>
+  <strong>
+    Reader
+  </strong>
+  <span>
+    版本 
+    2.4
+     · 
+    0
+     个声明关联
+  </span>
+  <span
+    class="app-list-path"
+    title="/Applications/Reader.app"
+  >
+    /Applications/Reader.app
+  </span>
+</button> instead
+ ❯ src/App.browser.test.tsx:196:88
+    194|  render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Ap…
+    195|  await act(async()=>publish({data:{...snapshot,version:3,apps:[{...sna…
+    196|  expect(screen.queryByRole('button',{name:'Reader 2.4 /Applications/Re…
+       |                                                                                        ^
+    197|  expect(screen.getByText('原应用副本已不在目录中')).toBeVisible()
+    198|  expect(screen.getByRole('status')).toHaveTextContent('/Applications/R…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  12:42:48
+   Duration  1.27s (tests 60%, environment 27%, setup 7%, import 3%, transform 3%)
+

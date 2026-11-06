@@ -31,6 +31,13 @@ type smokeSystem struct {
 	complete                                       func(*change.NativeError)
 	pendingAtDispatch                              config.Document
 	store                                          *config.Store
+	querySequence                                  int
+	queryCalls                                     []association.Association
+	holdAssociation                                *association.Association
+	heldQueries                                    map[int]chan struct{}
+	holdSave                                       bool
+	saving                                         bool
+	saveRelease                                    chan struct{}
 }
 
 func changeEnvironment(_ string) (*config.Store, association.SystemAdapter, change.ApplicationReader, change.Dispatcher, []string) {
@@ -47,7 +54,21 @@ func changeEnvironment(_ string) (*config.Store, association.SystemAdapter, chan
 		_ = json.Unmarshal(data, &doc)
 		sys.mu.Lock()
 		fail := (sys.saveError && len(doc.Pending) > 0) || (sys.clearError && len(doc.Pending) == 0)
+		hold := sys.holdSave && len(doc.Pending) > 0
+		var release chan struct{}
+		if hold {
+			sys.holdSave = false
+			sys.saving = true
+			sys.saveRelease = make(chan struct{})
+			release = sys.saveRelease
+		}
 		sys.mu.Unlock()
+		if hold {
+			<-release
+			sys.mu.Lock()
+			sys.saving = false
+			sys.mu.Unlock()
+		}
 		if fail {
 			return errors.New("controlled storage denied")
 		}
@@ -64,17 +85,34 @@ func changeEnvironment(_ string) (*config.Store, association.SystemAdapter, chan
 	go func() { _ = http.Serve(listener, mux) }()
 	return store, sys, sys, sys, []string{"file", "scheme"}
 }
-func (s *smokeSystem) CurrentDefault(context.Context, association.Association) (*association.AppCopy, error) {
+func (s *smokeSystem) CurrentDefault(_ context.Context, a association.Association) (*association.AppCopy, error) {
 	s.mu.Lock()
-	defer s.mu.Unlock()
-	if s.queryError {
+	s.querySequence++
+	sequence := s.querySequence
+	s.queryCalls = append(s.queryCalls, a)
+	var release chan struct{}
+	if s.holdAssociation != nil && *s.holdAssociation == a {
+		s.holdAssociation = nil
+		release = make(chan struct{})
+		if s.heldQueries == nil {
+			s.heldQueries = make(map[int]chan struct{})
+		}
+		s.heldQueries[sequence] = release
+	}
+	queryError := s.queryError
+	var value *association.AppCopy
+	if s.current != nil {
+		copy := *s.current
+		value = &copy
+	}
+	s.mu.Unlock()
+	if release != nil {
+		<-release
+	}
+	if queryError {
 		return nil, errors.New("controlled readback unavailable")
 	}
-	if s.current == nil {
-		return nil, nil
-	}
-	v := *s.current
-	return &v, nil
+	return value, nil
 }
 func (s *smokeSystem) CandidateApplications(context.Context, association.Association) ([]association.AppCopy, error) {
 	s.mu.Lock()
@@ -112,13 +150,16 @@ func (s *smokeSystem) Dispatch(_ association.Association, _ association.AppCopy,
 }
 func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 	var command struct {
-		Action      string              `json:"action"`
-		Path        *string             `json:"path"`
-		QueryError  *bool               `json:"queryError"`
-		Unavailable *bool               `json:"unavailable"`
-		SaveError   *bool               `json:"saveError"`
-		ClearError  *bool               `json:"clearError"`
-		Error       *change.NativeError `json:"error"`
+		Action          string                   `json:"action"`
+		Path            *string                  `json:"path"`
+		QueryError      *bool                    `json:"queryError"`
+		Unavailable     *bool                    `json:"unavailable"`
+		SaveError       *bool                    `json:"saveError"`
+		ClearError      *bool                    `json:"clearError"`
+		Error           *change.NativeError      `json:"error"`
+		HoldAssociation *association.Association `json:"holdAssociation"`
+		ReleaseQuery    int                      `json:"releaseQuery"`
+		HoldSave        *bool                    `json:"holdSave"`
 	}
 	if r.Method == http.MethodPost {
 		if err := json.NewDecoder(r.Body).Decode(&command); err != nil {
@@ -149,8 +190,26 @@ func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 	if command.ClearError != nil {
 		s.clearError = *command.ClearError
 	}
+	if command.HoldAssociation != nil {
+		s.holdAssociation = command.HoldAssociation
+	}
+	if release := s.heldQueries[command.ReleaseQuery]; release != nil {
+		close(release)
+		delete(s.heldQueries, command.ReleaseQuery)
+	}
+	if command.HoldSave != nil {
+		s.holdSave = *command.HoldSave
+	}
+	if command.Action == "release-save" && s.saveRelease != nil {
+		close(s.saveRelease)
+		s.saveRelease = nil
+	}
+	held := []int{}
+	for id := range s.heldQueries {
+		held = append(held, id)
+	}
 	submitted, complete := s.submitted, s.complete
-	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "current": s.current, "pendingAtDispatch": s.pendingAtDispatch}
+	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "current": s.current, "pendingAtDispatch": s.pendingAtDispatch, "queries": s.queryCalls, "querySequence": s.querySequence, "heldQueries": held, "saving": s.saving}
 	s.mu.Unlock()
 	if command.Action == "submitted" && submitted != nil {
 		submitted()

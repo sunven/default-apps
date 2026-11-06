@@ -505,3 +505,157 @@ func TestProductionCapabilityDoesNotAdmitWrites(t *testing.T) {
 		t.Fatal(got, doc)
 	}
 }
+
+func TestLostSubmissionCanBeReconciledWithoutDispatchOrLaterReplay(t *testing.T) {
+	svc, sys, _ := fixture(t)
+	in := input("lost-before-arrival")
+	result := svc.ReconcileSubmission(in)
+	if result.State != "decided" || result.Result == nil || result.Result.Outcome != "interrupted" {
+		t.Fatalf("missing submission must be closed without dispatch: %+v", result)
+	}
+	late := svc.Submit(ctx, in)
+	if late.Outcome != "interrupted" || svc.GetSnapshot().Busy {
+		t.Fatalf("delayed binding call was admitted after reconciliation: %+v", late)
+	}
+	sys.mu.Lock()
+	starts := sys.starts
+	sys.mu.Unlock()
+	if starts != 0 {
+		t.Fatalf("query-only reconciliation dispatched %d setters", starts)
+	}
+	changed := in
+	changed.TargetPath = "/Other.app"
+	if svc.Submit(ctx, changed).Outcome != "conflict" {
+		t.Fatal("reconciled ID lost parameter identity")
+	}
+}
+
+// Three overlapping refreshes: only the newest post-completion observation may
+// resolve the request; cached pre-completion fallback from a superseded call cannot.
+type scheduledSystem struct {
+	*system
+	queries chan chan struct{}
+}
+
+func (s scheduledSystem) CurrentDefault(c context.Context, a association.Association) (*association.AppCopy, error) {
+	release := make(chan struct{})
+	s.queries <- release
+	<-release
+	return s.system.CurrentDefault(c, a)
+}
+func TestSupersededReadbackCannotSettleFromPreCompletionCache(t *testing.T) {
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	base := &system{current: &old, start: make(chan struct{}, 10), store: store}
+	sys := scheduledSystem{system: base, queries: make(chan chan struct{}, 10)}
+	queries := association.NewService(sys)
+	svc := change.NewService(catalog.NewService(sys), queries, sys, store, sys, change.Options{WritableKinds: []string{"file"}})
+	submitted := make(chan change.SubmitResult, 1)
+	go func() { submitted <- svc.Submit(ctx, input("ordered-readback")) }()
+	close(<-sys.queries)
+	if r := <-submitted; r.Outcome != "accepted" {
+		t.Fatal(r)
+	}
+	waitStart(t, base)
+	// A public association read has cached a newer value before completion,
+	// without publishing a change snapshot.
+	base.mu.Lock()
+	base.current = &target
+	base.mu.Unlock()
+	cached := make(chan struct{})
+	go func() { queries.Query(ctx, pdf); close(cached) }()
+	close(<-sys.queries)
+	<-cached
+	base.finish(&target, nil)
+	completionReadback := <-sys.queries
+	newer := make(chan association.QueryResult, 1)
+	go func() { v, _ := svc.Query(ctx, pdf); newer <- v }()
+	latest := <-sys.queries
+	close(completionReadback)
+	// The obsolete completion query has returned, but its cached old default
+	// must not end the pending request while the newer read is still running.
+	time.Sleep(20 * time.Millisecond)
+	if v := svc.GetSnapshot(); !v.Busy || v.Requests[0].Readback.State == "valid" {
+		t.Fatalf("superseded query settled request: %+v", v)
+	}
+	close(latest)
+	<-newer
+	final := waitState(t, svc, func(v change.Snapshot) bool { return !v.Busy })
+	if !final.Requests[0].Confirmed {
+		t.Fatal(final)
+	}
+}
+
+func TestReconciliationRetainsRejectedAdmissionAfterCallerCancellation(t *testing.T) {
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	base := &system{current: &old, start: make(chan struct{}, 10), store: store}
+	sys := scheduledSystem{system: base, queries: make(chan chan struct{}, 10)}
+	svc := change.NewService(catalog.NewService(sys), association.NewService(sys), sys, store, sys, change.Options{WritableKinds: []string{"file"}})
+	caller, cancel := context.WithCancel(ctx)
+	replies := make(chan change.SubmitResult, 1)
+	in := input("cancel-before-admission")
+	go func() { replies <- svc.Submit(caller, in) }()
+	preflight := <-sys.queries
+	if got := svc.ReconcileSubmission(in); got.State != "pending" || got.Result != nil {
+		t.Fatal(got)
+	}
+	cancel()
+	close(preflight)
+	if got := <-replies; got.Outcome != "interrupted" {
+		t.Fatal(got)
+	}
+	if got := svc.ReconcileSubmission(in); got.State != "decided" || got.Result.Outcome != "interrupted" || got.Snapshot.Busy {
+		t.Fatal(got)
+	}
+	if got := svc.Submit(ctx, in); got.Outcome != "interrupted" {
+		t.Fatal("rejected original ID unexpectedly retried", got)
+	}
+	base.mu.Lock()
+	defer base.mu.Unlock()
+	if base.starts != 0 {
+		t.Fatal("cancelled admission dispatched setter")
+	}
+}
+func TestCancellationRacingDurableAcceptanceKeepsOriginalNativeLifetime(t *testing.T) {
+	saving, release := make(chan struct{}), make(chan struct{})
+	var once sync.Once
+	store := config.NewStoreWithWriter(filepath.Join(t.TempDir(), "config.json"), func(path string, data []byte) error {
+		once.Do(func() { close(saving); <-release })
+		return config.AtomicWrite(path, data)
+	})
+	sys := &system{current: &old, start: make(chan struct{}, 10), store: store}
+	svc := change.NewService(catalog.NewService(sys), association.NewService(sys), sys, store, sys, change.Options{WritableKinds: []string{"file"}})
+	caller, cancel := context.WithCancel(ctx)
+	in := input("cancel-during-save")
+	reply := make(chan change.SubmitResult, 1)
+	go func() { reply <- svc.Submit(caller, in) }()
+	<-saving
+	cancel()
+	if got := svc.ReconcileSubmission(in); got.State != "pending" {
+		t.Fatal(got)
+	}
+	close(release)
+	if got := <-reply; got.Outcome != "accepted" {
+		t.Fatal(got)
+	}
+	waitStart(t, sys)
+	if got := svc.ReconcileSubmission(in); got.State != "decided" || got.Result.Outcome != "existing" || got.Result.Request.RequestID != in.RequestID {
+		t.Fatal(got)
+	}
+	sys.finish(&target, nil)
+	final := waitState(t, svc, func(v change.Snapshot) bool { return !v.Busy })
+	if !final.Requests[0].Confirmed {
+		t.Fatal(final)
+	}
+	sys.mu.Lock()
+	defer sys.mu.Unlock()
+	if sys.starts != 1 {
+		t.Fatalf("setter count %d", sys.starts)
+	}
+}
+
+func (s scheduledSystem) ReadApplication(c context.Context, path string) (discovery.Bundle, error) {
+	if err := c.Err(); err != nil {
+		return discovery.Bundle{}, err
+	}
+	return s.system.ReadApplication(c, path)
+}

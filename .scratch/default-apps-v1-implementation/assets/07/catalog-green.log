@@ -1,0 +1,14 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 test
+> vitest run --run src/App.browser.test.tsx
+
+
+ RUN  v5.1.0 /Users/sunven/.codex/default-apps-implementation-20261105/worktrees/07/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  12:35:58
+   Duration  919ms (tests 67%, environment 21%, setup 5%, transform 4%, import 3%)
+

@@ -27,6 +27,17 @@ export interface Readback {
     "observation": association$0.DefaultObservation;
 }
 
+/**
+ * Reconciliation never starts a native request. Missing IDs are closed before
+ * returning, so an original binding call arriving late cannot subsequently write.
+ * The original parameters are retained to detect accidental ID reuse.
+ */
+export interface Reconciliation {
+    "state": string;
+    "result": SubmitResult | null;
+    "snapshot": Snapshot;
+}
+
 export interface Request {
     "requestID": string;
     "association": association$0.Association;
