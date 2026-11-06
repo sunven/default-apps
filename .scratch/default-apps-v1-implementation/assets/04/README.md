@@ -27,3 +27,10 @@
 - 生产样式检查：用同一测试配置构建到仓库外 `/tmp/default-apps-ticket04-scale`，静态服务端口 9246，运行 design-taste `inspect.mjs --app --widths 1440,1280,1000`。正式 frontend 构建从不使用测试配置或夹具。
 
 05 组合边界：`Dialog` 导出 `{title, subtitle?, onClose, children}`，仅打开时挂载；Header 的 `header-actions` 中预留 `ManualActions`。05 自有手动组件插入此槽位、未解析文件识别入口和候选段尾，沿用本对话框，不再添加永久详情或重复全局 Dialog CSS。
+
+
+## 04 与 05 合并核对
+
+在 04 实现提交 `ade4ae7` 上合并 `integration/default-apps-v1` 的 `33bfcc9`（含已验收 05）。保留 04 双列表布局与 Dialog 的普通标题容器，将 `ManualActions` 放入固定顶部操作区和未解析类型详情，将 `ManualApplicationAction` 放入候选段，并保留手动不可用副本的原路径提示。删除 `manual.css` 重复的全局对话框／header-actions 样式，使共享布局只有一份定义。
+
+组合后 [27 个 React 测试](combined-frontend-test.log)全部通过，[TypeScript／生产前端构建](combined-frontend-build.log)通过。此前 04 原生键盘／尺寸和05原生选择器证据保留各自边界，本次组合没有重复运行已通过的原生流程。06/08/11仍负责新增等待条与退出提示后的组合可达性。

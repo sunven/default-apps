@@ -1,0 +1,37 @@
+{
+  "buttons": [
+    {
+      "disabled": false,
+      "text": "关闭"
+    },
+    {
+      "disabled": false,
+      "text": "解析输入"
+    },
+    {
+      "disabled": false,
+      "text": "选择文件识别类型…"
+    },
+    {
+      "disabled": true,
+      "text": "保存手动关联"
+    },
+    {
+      "disabled": false,
+      "text": "添加应用位置…"
+    }
+  ],
+  "dialog": {
+    "height": 636,
+    "width": 700,
+    "x": 150.5,
+    "y": 32
+  },
+  "dialogBody": {
+    "client": 548,
+    "scroll": 588
+  },
+  "height": 700,
+  "overflow": 0,
+  "width": 1001
+}

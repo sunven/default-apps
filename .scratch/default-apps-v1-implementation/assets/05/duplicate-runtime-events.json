@@ -1,0 +1,50 @@
+{
+  "events": [
+    {
+      "s": true,
+      "v": 26
+    },
+    {
+      "s": true,
+      "v": 27
+    },
+    {
+      "s": true,
+      "v": 28
+    },
+    {
+      "s": true,
+      "v": 29
+    },
+    {
+      "s": true,
+      "v": 30
+    },
+    {
+      "s": true,
+      "v": 31
+    },
+    {
+      "s": true,
+      "v": 32
+    },
+    {
+      "s": true,
+      "v": 33
+    },
+    {
+      "s": true,
+      "v": 34
+    },
+    {
+      "s": true,
+      "v": 35
+    },
+    {
+      "s": false,
+      "v": 36
+    }
+  ],
+  "uiApp": "Manual Reader\n\n版本 1.0 · com.sunven.defaultapps.manual05.fixture\n\n/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+  "uiScan": "正在扫描应用…已发现 94 份"
+}

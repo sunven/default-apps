@@ -9,6 +9,8 @@ import * as association$0 from "../association/models.js";
 import * as catalog$0 from "../catalog/models.js";
 
 export interface Application {
+    "manual"?: boolean;
+    "unavailable"?: boolean;
     "app": association$0.AppCopy;
     "associationIDs": string[] | null;
     "issues": Issue[] | null;

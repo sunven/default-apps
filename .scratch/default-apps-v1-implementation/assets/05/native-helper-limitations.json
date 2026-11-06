@@ -1,0 +1,39 @@
+{
+  "nativeActivation": {
+    "windows": [
+      {
+        "key": false,
+        "title": "Default Apps",
+        "class": "WebviewWindow",
+        "visible": true
+      },
+      {
+        "key": false,
+        "title": "",
+        "class": "TUINSWindow",
+        "visible": false
+      }
+    ],
+    "policy": 0,
+    "active": false,
+    "hidden": false
+  },
+  "wailsWindow": [
+    {
+      "focused": false,
+      "fullscreen": false,
+      "height": 731,
+      "id": 1,
+      "maximised": false,
+      "minimised": false,
+      "name": "main",
+      "visible": false,
+      "width": 1000,
+      "x": 370,
+      "y": 109,
+      "zoom": 1
+    }
+  ],
+  "known": "native panel cancellation works; path/nameField and in-process keyboard selection did not select any URLs",
+  "successNotClaimed": true
+}

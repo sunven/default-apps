@@ -1,0 +1,83 @@
+{
+  "pid": 64676,
+  "saved": {
+    "version": 1,
+    "associations": [
+      {
+        "input": {
+          "kind": "extension",
+          "value": "jpg",
+          "label": "jpg",
+          "source": "manual"
+        },
+        "selectedID": "file:public.jpeg"
+      },
+      {
+        "input": {
+          "kind": "scheme",
+          "value": " Manual+05: ",
+          "label": "Manual+05:",
+          "source": "manual"
+        },
+        "selectedID": "scheme:manual+05"
+      },
+      {
+        "input": {
+          "kind": "identifier",
+          "value": "public.plain-text",
+          "label": "public.plain-text",
+          "source": "manual",
+          "origin": "file"
+        },
+        "selectedID": "file:public.plain-text"
+      }
+    ],
+    "applications": [
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "1.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      },
+      {
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "version": "2.0",
+        "bundleID": "com.sunven.defaultapps.manual05.fixture"
+      }
+    ]
+  },
+  "manualApps": [
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-one/Manual Reader.app",
+        "version": "1.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [],
+      "manual": true
+    },
+    {
+      "app": {
+        "bundleID": "com.sunven.defaultapps.manual05.fixture",
+        "displayPath": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "name": "Manual Reader",
+        "path": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native/outside-two/Manual Reader.app",
+        "version": "2.0"
+      },
+      "associationIDs": [],
+      "declarations": [],
+      "definitions": [],
+      "issues": [],
+      "manual": true
+    }
+  ],
+  "snapshotVersion": 72
+}

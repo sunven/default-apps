@@ -7,15 +7,18 @@
 | [01：正式窗口与 PDF 默认查询](issues/01-product-window-pdf-query.md) | resolved，已合并 | 实现 `fe75e19`，合并 `007ad10`；[验收记录](assets/01/README.md) |
 | [02：常用文件类型与协议目录](issues/02-common-association-catalog.md) | resolved，已合并 | 实现 `86bf7f6`，合并 `30f54ed`；[验收记录](assets/02/README.md) |
 | [03：从已安装应用浏览关联](issues/03-app-first-discovery.md) | resolved，已合并 | 实现 `234233e`，合并 `116d339`；[验收记录](assets/03/README.md) |
-| [04：完整桌面搜索与键盘浏览](issues/04-desktop-search-keyboard.md) | 当前可开始 | 03 前置已满足；可与 05 分别推进 |
-| [05：手动补充并跨启动保存](issues/05-manual-items-persistence.md) | 当前可开始 | 03 前置已满足；其余依赖见[实施入口](spec.md) |
+| [04：完整桌面搜索与键盘浏览](issues/04-desktop-search-keyboard.md) | 实施中 | 独立工作树继续布局、搜索与键盘验收；合入 05 时保留新布局并接入手动入口 |
+| [05：手动补充并跨启动保存](issues/05-manual-items-persistence.md) | resolved，已合并 | 实现 `a847e67`，合并 `68ddfca`；[验收记录](assets/05/README.md)、[存储与原生验收交接](assets/05/HANDOFF.md) |
+| [06：单项修改的完整请求流程](issues/06-single-change-lifecycle.md) | 当前可开始 | 05 前置已满足；与 04 分别推进，其余依赖见[实施入口](spec.md) |
 
-01 建立的服务边界在 `internal/association/service.go`，可替换 `SystemAdapter` 分别返回默认和候选；规范应用包路径是副本身份。02 的 `internal/catalog/service.go` 通过可替换 `TypeResolver` 解析全部常用种子，合并同一身份的标签与来源，保留歧义及未解析项。03 的 `internal/discovery` 后台扫描三个常规目录，读取声明并发布独立版本快照；`internal/native` 负责公共 macOS 解析、两类关联查询与主线程／内存边界。`frontend/src/App.tsx` 通过生成绑定和目录事件提供应用优先入口、声明逐项默认、文件类型／协议浏览以及目录外副本详情。当前产品只有只读能力。
+01 建立的服务边界在 `internal/association/service.go`，可替换 `SystemAdapter` 分别返回默认和候选；规范应用包路径是副本身份。02 的 `internal/catalog/service.go` 通过可替换 `TypeResolver` 解析全部常用种子，合并同一身份的标签与来源，保留歧义及未解析项。03 的 `internal/discovery` 后台扫描三个常规目录，读取声明并发布独立版本快照；`internal/native` 负责公共 macOS 解析、两类关联查询与主线程／内存边界。05 的 `internal/manual` 通过正式原生选择器补充关联和应用副本，`internal/config.Repository` 在版本化 JSON 中原子保存手动项并为单条未定记录保留不透明字段；发现服务按已选身份恢复手动来源和不可用路径。`frontend/src/App.tsx` 通过生成绑定和目录事件提供应用优先入口、声明逐项默认、文件类型／协议浏览、目录外副本详情和手动补充。当前可保存本应用配置，系统默认查询仍为只读。
 
 01 合并核对已检查工单全部完成项、原生查询与独立 Swift 查询的路径一致性、两份 app 的产品身份／ad-hoc 签名／13.0 构建下限、实际内容尺寸以及测试日志。02 再核对全部种子别名、类型／协议身份、来源合并、未解析与查询状态，以及 10 个 Go 服务测试的 race 日志和 10 个 React 交互测试。正式 Wails UI 与独立原生查询的全部 21 项对应，前后默认与候选未变；内容 1001×700、横向溢出 0 和双区滚动证据已核对。普通 app 的签名、产品身份和构建下限继续通过。两次均无冲突合并，合并阶段未重复已经通过的全套验收。
 
 03 合并核对源码、15 个 Go/race 测试（含真实 plist 夹具）、13 个 React 测试及普通签名 app 构建证据。直接复核原始 JSON 得到 92 份规范路径唯一的应用、615 个关联、39 个未解析项、2 条局部问题；21 项独立原生查询一致，前后默认和候选未变。扫描进度快照复用可变切片的问题已有 red／green 测试及正式窗口刷新复跑证据。实现分支先无冲突合入 `a956fbe`，再以非快进合并进入集成分支；合并阶段未扩大范围或重复全套验收。
 
+05 合并核对源码、存储／手动／发现／原生边界的 Go race 日志、20 个 React 交互测试、普通构建和正式签名测试 app。直接对原始 JSON 断言：文件识别在明确保存前不改配置；PID 64676 退出后新 PID 79019 恢复三条关联和两份同 ID 不同位置应用；原路径失效保留身份并清空声明，恢复后重新可用，配置字节不变。别名选择不增加副本，21 项独立默认／候选及扩展名解析前后 JSON 完全相同。真实选择器成功由人工操作，返回 URL、UI 和配置提供独立证据；原自动化失败及重复 runtime 导入导致的验收工具事件故障均保留记录。`a847e67` 包含集成前置 `65cc0ae`，非快进合并 `68ddfca` 无冲突；合并阶段通过源码差异检查和原始证据断言，未重复已通过的广泛测试。
+
 `git diff --check c3ec320 007ad10` 仅报告原始采集文件 `assets/01/frontend-test.log` 的末尾空行及 `assets/01/rendered-window.html` 的空白行；`git diff --check b7c310d 30f54ed` 同样仅报告 `assets/02/frontend-test.log` 的末尾空行和三个 `*-window.html` 原始 DOM 文件的空白行。采集记录原样保留。03 排除原始采集资产后也通过源码与工单差异检查，新增验收 README 单独通过。构建日志、截图、静态视觉检查和原生操作证据的边界见各工单验收记录。
 
-下一步由 04 完成桌面搜索／键盘浏览，05 接入手动项、原生选择器和持久化，两者前置均已满足。当前完成范围不代表其余 8 个工单或完整首版已验收。
+下一步由 04 继续桌面搜索／键盘浏览，06 开始单项修改请求流程。04 合入本次产品代码时保留其新布局，接入手动补充、未解析文件识别、其他应用选择及不可用位置提示，并去掉重复对话框 CSS；05 截图尚未覆盖 04 新布局，组合检查仍需完成。06 使用同一个原子存储实例，任何保存错误均不得提交 setter；原生验收须遵循交接说明，避免第二个 Wails runtime 覆盖页面事件分发器。当前完成范围不代表其余 7 个工单或完整首版已验收。

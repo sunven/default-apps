@@ -1,0 +1,14 @@
+{
+  "nameField": "Untitled",
+  "directory": "/Users/sunven/.codex/default-apps-implementation-20261105/manual05-native",
+  "found": true,
+  "packagesAsDirectories": false,
+  "title": "Open",
+  "files": true,
+  "action": "inspect",
+  "key": false,
+  "directories": false,
+  "URLs": [],
+  "responder": "NSRemoteView",
+  "class": "NSOpenPanel"
+}
