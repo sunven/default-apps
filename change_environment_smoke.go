@@ -27,6 +27,8 @@ type smokeSystem struct {
 	target                                         association.AppCopy
 	queryError, unavailable, saveError, clearError bool
 	starts                                         int
+	actualStarts                                   int
+	initiated                                      bool
 	submitted                                      func()
 	complete                                       func(*change.NativeError)
 	pendingAtDispatch                              config.Document
@@ -54,6 +56,13 @@ func changeEnvironment(_ string) (*config.Store, association.SystemAdapter, chan
 		return config.AtomicWrite(path, data)
 	})
 	sys.store = store
+	if path := os.Getenv("DEFAULT_APPS_CHANGE_SMOKE_CURRENT"); path != "" {
+		copy := sys.target
+		copy.Path = path
+		copy.DisplayPath = path
+		sys.current = &copy
+	}
+	sys.queryError = os.Getenv("DEFAULT_APPS_CHANGE_SMOKE_QUERY_ERROR") == "1"
 	listener, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		panic(err)
@@ -105,6 +114,7 @@ func (s *smokeSystem) Dispatch(_ association.Association, _ association.AppCopy,
 	doc, _ := s.store.Load(context.Background())
 	s.mu.Lock()
 	s.starts++
+	s.initiated = false
 	s.submitted = submitted
 	s.complete = complete
 	s.pendingAtDispatch = doc
@@ -150,9 +160,15 @@ func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 		s.clearError = *command.ClearError
 	}
 	submitted, complete := s.submitted, s.complete
-	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "current": s.current, "pendingAtDispatch": s.pendingAtDispatch}
+	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "actualStarts": s.actualStarts, "current": s.current, "pendingAtDispatch": s.pendingAtDispatch}
 	s.mu.Unlock()
 	if command.Action == "submitted" && submitted != nil {
+		s.mu.Lock()
+		if !s.initiated {
+			s.actualStarts++
+			s.initiated = true
+		}
+		s.mu.Unlock()
 		submitted()
 	}
 	if command.Action == "complete" && complete != nil {
