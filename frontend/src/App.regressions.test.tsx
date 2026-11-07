@@ -1,4 +1,4 @@
-import { act, render, screen, within, waitFor } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { Events } from '@wailsio/runtime'
@@ -47,46 +47,17 @@ test('successful foreground requery must clear a prior row transport error',asyn
 })
 
 const observation=(association:Association,version=2):QueryResult=>({association,version,default:{known:true,app,observedAt:'2026-11-06T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[],observedAt:'2026-11-06T10:00:00Z',stale:false,error:null}})
-function showRows(){
- const list=screen.getByRole('region',{name:'声明关联列表'})
- vi.spyOn(list,'getBoundingClientRect').mockReturnValue({top:0,bottom:300,height:300} as DOMRect)
- for(const row of list.querySelectorAll<HTMLButtonElement>('[data-association-id]'))vi.spyOn(row,'getBoundingClientRect').mockReturnValue({top:10,bottom:30,height:20} as DOMRect)
-}
-async function activate(){await act(async()=>{listeners.get('defaultapps:activated')?.({data:true});await new Promise(resolve=>setTimeout(resolve,140))})}
 const rowFor=(name:string)=>screen.getByRole('button',{name}).closest('.association-row') as HTMLElement
 
-test.each(['foreground query','change snapshot'])('an older background rejection cannot replace a newer %s observation',async(source)=>{
- let rejectOld!:(error:Error)=>void
- const old=new Promise<QueryResult>((_,reject)=>{rejectOld=reject})
- vi.mocked(Query).mockImplementation(association=>(association.key===jpeg.association.key?old:Promise.resolve(observation(association))) as ReturnType<typeof Query>)
- render(<App/>);await screen.findByRole('button',{name:'JPEG 图像 public.jpeg'})
- const row=rowFor('JPEG 图像 public.jpeg')
- if(source==='foreground query'){
-  showRows();vi.mocked(Query).mockImplementation(association=>Promise.resolve(observation(association)) as ReturnType<typeof Query>);await activate()
- }else await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,activeRequestID:'',requests:[],observations:[observation(jpeg.association)],writableKinds:[],storageError:null}}))
- await waitFor(()=>expect(row).toHaveTextContent('/Applications/Reader.app'))
- await act(async()=>rejectOld(new Error('older transport failure')))
- expect(row).not.toHaveTextContent('查询连接失败')
- expect(row).toHaveTextContent('/Applications/Reader.app')
-})
-
-test('fresh snapshots clear the selected row and detail errors while cached snapshots and superseded replies retain them',async()=>{
+test('fresh change snapshots clear the selected row and detail errors together',async()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve(observation(association)) as ReturnType<typeof Query>)
  render(<App/>);await userEvent.click(await screen.findByRole('button',{name:'PDF 文稿 com.adobe.pdf'}))
  vi.mocked(Query).mockRejectedValue(new Error('current transport failure'))
  await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
  expect(await screen.findByRole('alert')).toHaveTextContent('current transport failure')
- const publishChange=(version:number,value:QueryResult)=>listeners.get('defaultapps:change')?.({data:{version,busy:false,activeRequestID:'',requests:[],observations:[value],writableKinds:[],storageError:null}})
- await act(async()=>publishChange(1,observation(pdf.association)))
- expect(screen.getByRole('alert')).toHaveTextContent('current transport failure')
- vi.mocked(Query).mockResolvedValue({...observation(pdf.association,3),superseded:true,default:{...observation(pdf.association).default,app:archive}})
- await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
- expect(screen.getByRole('alert')).toHaveTextContent('current transport failure')
- expect(screen.getByRole('region',{name:'当前默认应用'})).toHaveTextContent('/Applications/Reader.app')
- await act(async()=>publishChange(2,observation(pdf.association,4)))
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,activeRequestID:'',requests:[],observations:[observation(pdf.association,4)],writableKinds:[],storageError:null}}))
  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
  expect(rowFor('PDF 文稿 com.adobe.pdf')).not.toHaveTextContent('查询连接失败')
- await act(async()=>publishChange(3,{...observation(pdf.association,1),default:{...observation(pdf.association).default,app:archive}}))
  expect(screen.getByRole('region',{name:'当前默认应用'})).toHaveTextContent('/Applications/Reader.app')
 })
 

@@ -1,6 +1,9 @@
-import {useCallback,useReducer,useRef} from 'react'
+import {useCallback,useEffect,useReducer,useRef,useState} from 'react'
+import {Events} from '@wailsio/runtime'
+import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
 import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import {message} from './errors'
 
 // Trustworthy mirrors association.DefaultObservation.Trustworthy in Go.
@@ -37,15 +40,52 @@ function reduce(state:State,action:Action):State {
  return {...state,observations:{...state.observations,[id]:value},rowErrors:errors}
 }
 
-export function useAssociationQueries(){
+type QueryEntry=Pick<Entry,'id'|'association'|'resolved'>
+type Options={
+ selected?:QueryEntry
+ entries:QueryEntry[]
+ snapshotObservations?:QueryResult[]|null
+ getVisibleAssociationIDs:()=>Set<string>
+}
+
+// The caller owns browsing and viewport measurement; this hook owns query timing.
+export function useAssociationQueries({selected,entries,snapshotObservations,getVisibleAssociationIDs}:Options){
  const [state,dispatch]=useReducer(reduce,{observations:{},rowErrors:{},issued:{}})
- const sequence=useRef(0)
- const acceptObservation=useCallback((value:QueryResult)=>dispatch({type:'result',value}),[])
+ const [loading,setLoading]=useState(false)
+ const sequence=useRef(0),requestVersion=useRef(0)
+ useEffect(()=>{for(const value of snapshotObservations??[])dispatch({type:'result',value})},[snapshotObservations])
  const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true)=>{
   const token=++sequence.current,id=`${association.kind}:${association.key}`
   dispatch({type:'started',id,token})
   try{const value=await Query(association);if(isCurrent())dispatch({type:'result',value,token})}
   catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:message(error)})}
  },[])
- return {observations:state.observations,rowErrors:state.rowErrors,query,acceptObservation}
+ const refresh=useCallback(async()=>{
+  const version=++requestVersion.current
+  if(!selected?.resolved){setLoading(false);return}
+  setLoading(true)
+  try{await query(selected.association,()=>version===requestVersion.current)}
+  finally{if(version===requestVersion.current)setLoading(false)}
+ },[selected,query])
+ useEffect(()=>{void refresh();return()=>{++requestVersion.current}},[refresh])
+ // A list change starts a new prefetch round; accepted observations do not.
+ useEffect(()=>{
+  let active=true,cursor=0
+  const pending=entries.filter(entry=>entry.resolved && entry.id!==selected?.id && !state.observations[entry.id])
+  const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];await query(entry.association,()=>active)}}
+  void Promise.all(Array.from({length:Math.min(4,pending.length)},worker))
+  return()=>{active=false}
+ },[entries,query])
+ const visibleRefresh=useRef(()=>{})
+ visibleRefresh.current=()=>{
+  const ids=getVisibleAssociationIDs()
+  void refresh()
+  for(const entry of entries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id)void query(entry.association)
+ }
+ useEffect(()=>{
+  let timer:ReturnType<typeof setTimeout>|undefined
+  const off=Events.On('defaultapps:activated',()=>{if(timer!==undefined)return;timer=setTimeout(()=>{timer=undefined;visibleRefresh.current()},100)})
+  return()=>{off();if(timer!==undefined)clearTimeout(timer)}
+ },[])
+ return {observations:state.observations,rowErrors:state.rowErrors,loading,refresh}
 }

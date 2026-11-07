@@ -79,9 +79,7 @@ export default function App() {
  const [catalogError,setCatalogError] = useState<string|null>(null)
  const [reparseNotice,setReparseNotice] = useState<string|null>(null)
  const reparseAnchor=useRef<{entry:Entry;version:number}|null>(null)
- const {observations,rowErrors,query,acceptObservation}=useAssociationQueries()
- const [loading,setLoading] = useState(false)
- const scanVersion=useRef(0),catalogVersion=useRef(0),requestVersion=useRef(0)
+ const scanVersion=useRef(0),catalogVersion=useRef(0)
  const appSearch=useRef<HTMLInputElement>(null),associationSearch=useRef<HTMLInputElement>(null)
  const appList=useRef<HTMLDivElement>(null),associationList=useRef<HTMLDivElement>(null)
  const sessions=useRef<Record<View,{query:string;selectedID:string|null;scroll:number}>>({app:{query:'',selectedID:null,scroll:0},file:{query:'',selectedID:null,scroll:0},scheme:{query:'',selectedID:null,scroll:0}})
@@ -106,12 +104,18 @@ export default function App() {
  const visibleEntries=useMemo(()=> (kind==='app' ? selectedMatch?.entries ?? [] : entries.filter(entry=>entry.association.kind===kind)).filter(entry=>entryText(entry).includes(filter.trim().toLocaleLowerCase())).sort((a,b)=>Number(b.sources?.some(s=>s.kind==='common'))-Number(a.sources?.some(s=>s.kind==='common'))),[kind,selectedMatch,entries,filter])
  const browsedSelected=visibleEntries.find(entry=>entry.id===selectedID) ?? visibleEntries[0]
  const selected=requestEntry ?? browsedSelected
+ const getVisibleAssociationIDs=useCallback(()=>{
+  const bounds=associationList.current?.getBoundingClientRect()
+  const ids=new Set<string>()
+  if(bounds&&bounds.height>0)for(const row of associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]')??[]){const rect=row.getBoundingClientRect();if(rect.bottom>bounds.top&&rect.top<bounds.bottom)ids.add(row.dataset.associationId!)}
+  return ids
+ },[])
+ const {observations,rowErrors,loading,refresh}=useAssociationQueries({selected,entries:visibleEntries,snapshotObservations:changes.state?.observations,getVisibleAssociationIDs})
  useEffect(()=>{if(!selected){setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}},[selected])
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}
- useEffect(()=>{for(const value of changes.state?.observations??[])acceptObservation(value)},[changes.state,acceptObservation])
 
  const refreshCatalog=useCallback(async()=>{
   const version=++catalogVersion.current
@@ -137,13 +141,6 @@ export default function App() {
  },[])
  const scan=useCallback(async()=>{setCatalogError(null);try{acceptSnapshot(await StartScan())}catch(error){reparseAnchor.current=null;setCatalogError(String(error))}},[acceptSnapshot])
  const reparse=()=>{if(!selected)return;reparseAnchor.current={entry:selected,version:scanVersion.current};setReparseNotice(null);void scan()}
- const refresh=useCallback(async()=>{
-  const version=++requestVersion.current
-  if(!selected?.resolved){setLoading(false);return}
-  setLoading(true)
-  try{await query(selected.association,()=>version===requestVersion.current)}
-  finally{if(version===requestVersion.current)setLoading(false)}
- },[selected,query])
  useEffect(()=>{
   let active=true
   const off=Events.On('defaultapps:catalog',event=>{if(active)acceptSnapshot(event.data)})
@@ -152,27 +149,6 @@ export default function App() {
   return()=>{active=false;off()}
  },[acceptSnapshot,scan])
  useEffect(()=>{void refreshCatalog();return()=>{++catalogVersion.current}},[refreshCatalog])
- useEffect(()=>{void refresh();return()=>{++requestVersion.current}},[refresh])
- useEffect(()=>{
-  let active=true,cursor=0
-  const pending=visibleEntries.filter(entry=>entry.resolved && entry.id!==selected?.id && !observations[entry.id])
-  const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];await query(entry.association,()=>active)}}
-  void Promise.all(Array.from({length:Math.min(4,pending.length)},worker))
-  return()=>{active=false}
- },[visibleEntries,query])
- const visibleRefresh=useRef(()=>{})
- visibleRefresh.current=()=>{
-  const bounds=associationList.current?.getBoundingClientRect()
-  const ids=new Set<string>(selected?[selected.id]:[])
-  if(bounds&&bounds.height>0)for(const row of associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]')??[]){const rect=row.getBoundingClientRect();if(rect.bottom>bounds.top&&rect.top<bounds.bottom)ids.add(row.dataset.associationId!)}
-  void refresh()
-  for(const entry of visibleEntries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id)void query(entry.association)
- }
- useEffect(()=>{
-  let timer:ReturnType<typeof setTimeout>|undefined
-  const off=Events.On('defaultapps:activated',()=>{if(timer!==undefined)return;timer=setTimeout(()=>{timer=undefined;visibleRefresh.current()},100)})
-  return()=>{off();if(timer!==undefined)clearTimeout(timer)}
- },[])
  const selectApp=(path:string,focus=false)=>{
   reparseAnchor.current=null
   setSelectedAppPath(path);setSelectedID(null);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)
