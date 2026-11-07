@@ -3,6 +3,7 @@ import type {AppCopy,Association,DefaultObservation} from '../bindings/github.co
 import {RespondQuit} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import {Dialog} from './Dialog'
 import type {Changes} from './Changes'
+import {observationFor} from './useAssociationQueries'
 
 type Choice={association:Association;target:AppCopy;observed:DefaultObservation;oldRequestID:string;oldTarget:string}
 export function useRecoveryAction(changes:Changes){
@@ -30,7 +31,7 @@ export function LifecycleStatus({changes}:{changes:Changes}){
  useEffect(()=>{
   if(recovery&&requested.current!==recovery.record.requestID){requested.current=recovery.record.requestID;void changes.retry(recovery.record.association)}
  },[recovery?.record.requestID,changes.retry])
- const current=recovery?changes.state?.observations?.find(value=>value.association.kind===recovery.record.association.kind&&value.association.key===recovery.record.association.key)?.default:undefined
+ const current=recovery?observationFor(changes.state,recovery.record.association):undefined
  const quit=changes.state?.quit
  const resultKnown=!!changes.state&&!changes.state.busy&&!recovery
  const respond=async(exit:boolean)=>{if(!quit?.prompt)return;try{setQuitError('');await RespondQuit(quit.promptID,exit)}catch(error){setQuitError(`退出选择未送达，请重试：${String(error)}`)}}

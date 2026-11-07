@@ -7,9 +7,10 @@ import { Events } from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
 import { GetSnapshot, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
-import { useAssociationQueries } from './useAssociationQueries'
+import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
+import { isComposing, plainKey } from './keyboard'
 import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
-import type { AppCopy } from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 
 function ApplicationCopy({ app, onSelect, missing=false, onSubmit, disabled=false }: { app: AppCopy; onSelect?: (app:AppCopy) => void; missing?:boolean; onSubmit?:(app:AppCopy)=>void; disabled?:boolean }) {
@@ -33,11 +34,21 @@ function Sources({ entry }: { entry: Entry }) {
  </section>
 }
 
+function DefaultCell({ entry, rowError, observation }: { entry: Entry; rowError?: string; observation?: QueryResult }) {
+ if (!entry.resolved) return <>未解析</>
+ if (rowError) return <>查询连接失败</>
+ const value = observation?.default
+ if (value?.error) return <>默认查询失败</>
+ if (!value?.known) return <>尚未查询</>
+ const app = value.app
+ if (!app) return <>无默认应用</>
+ return <><strong>{app.name}</strong><span>版本 {app.version || '未知'}</span><span className="row-path" title={app.path}>{app.path}</span></>
+}
+
 type View = 'app' | 'file' | 'scheme'
 const viewNames:Record<View,string> = {app:'应用',file:'文件类型',scheme:'URL 协议'}
 const entryName = (entry:Entry) => entry.name || entry.sources?.[0]?.rawInput || '关联'
 const entryText = (entry:Entry) => [entry.name,entry.association.key,...(entry.extensions ?? []).map(value=>'.'+value),...(entry.mimeTypes ?? []),...(entry.sources ?? []).flatMap(source=>[source.rawInput,source.label])].join(' ').toLocaleLowerCase()
-const plainKey = (event:KeyboardEvent) => !event.nativeEvent.isComposing && event.keyCode!==229 && !event.altKey && !event.ctrlKey && !event.metaKey
 function focusElement(element:HTMLElement|null|undefined) { element?.focus({preventScroll:true});element?.scrollIntoView?.({block:'nearest'}) }
 
 export default function App() {
@@ -75,9 +86,12 @@ export default function App() {
    return {item,metadataMatch,entries:metadataMatch ? declarations : declarations.filter(entry=>entryText(entry).includes(term))}
   }).filter(match=>match.metadataMatch || match.entries.length)
  },[snapshot,entries,appQuery])
- const missingAppPath=selectedAppPath && snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>!item.unavailable&&item.app.path===selectedAppPath) ? selectedAppPath : null
+ const catalogSettled=!!snapshot&&!snapshot.scanning
+ const inCatalog=(path:string)=>!!snapshot?.apps?.some(item=>!item.unavailable&&item.app.path===path)
+ const missingAppPath=selectedAppPath&&catalogSettled&&!inCatalog(selectedAppPath)?selectedAppPath:null
  const selectedMatch=missingAppPath ? undefined : (selectedAppPath?applicationMatches.find(match=>match.item.app.path===selectedAppPath):applicationMatches[0])
  const selectedApp=selectedMatch?.item
+ const emptyHeadline=()=>{if(kind!=='app')return catalogLoading?'正在加载关联目录':catalogError?'关联目录暂时不可用':filter?'没有匹配的关联项':'此入口暂无关联';if(missingAppPath)return '此副本的关联详情已清空';if(selectedApp)return selectedApp.associationIDs?.length?'没有匹配的关联项':'此应用未声明可处理的文件类型或 URL 协议';if(appQuery)return '没有匹配的应用';return snapshot?.scanning?'正在发现应用':'未发现应用'}
  useLayoutEffect(()=>{if(kind==='app' && selectedApp && selectedAppPath!==selectedApp.app.path)setSelectedAppPath(selectedApp.app.path)},[kind,selectedApp,selectedAppPath])
  const visibleEntries=useMemo(()=> (kind==='app' ? selectedMatch?.entries ?? [] : entries.filter(entry=>entry.association.kind===kind)).filter(entry=>entryText(entry).includes(filter.trim().toLocaleLowerCase())).sort((a,b)=>Number(b.sources?.some(s=>s.kind==='common'))-Number(a.sources?.some(s=>s.kind==='common'))),[kind,selectedMatch,entries,filter])
  const browsedSelected=visibleEntries.find(entry=>entry.id===selectedID) ?? visibleEntries[0]
@@ -85,7 +99,7 @@ export default function App() {
  useEffect(()=>{if(!selected){setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}},[selected])
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
- const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&!!observations[entry.id]?.default.known&&!observations[entry.id]?.default.error&&!observations[entry.id]?.default.stale
+ const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}
  useEffect(()=>{for(const value of changes.state?.observations??[])acceptObservation(value)},[changes.state,acceptObservation])
 
@@ -170,7 +184,7 @@ export default function App() {
  useLayoutEffect(()=>{if(associationList.current)associationList.current.scrollTop=sessions.current[kind].scroll;if(kind==='app' && appList.current)appList.current.scrollTop=appScroll.current},[kind])
  useEffect(()=>{
   const keydown=(event:globalThis.KeyboardEvent)=>{
-   if(event.isComposing || event.keyCode===229 || document.querySelector('dialog[open]') || !event.metaKey || event.altKey || event.ctrlKey)return
+   if(isComposing(event) || document.querySelector('dialog[open]') || !event.metaKey || event.altKey || event.ctrlKey)return
    if(event.key.toLowerCase()==='f'){event.preventDefault();(kind==='app' ? appSearch : associationSearch).current?.focus()}
    if(['1','2','3'].includes(event.key)){event.preventDefault();switchView((['app','file','scheme'] as View[])[Number(event.key)-1],true)}
   }
@@ -226,13 +240,15 @@ export default function App() {
     <div className="association-toolbar"><div><h2>{kind==='app' ? '声明支持' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配声明' : '常用关联优先'}</p></div><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<input ref={associationSearch} type="search" aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder="名称、扩展名或类型身份" onChange={event=>{setFilter(event.target.value);if(associationList.current)associationList.current.scrollTop=0}} onKeyDown={event=>searchKey(event)}/></label></div>
     <div className="column-labels"><span>关联项</span><span>当前默认应用</span><span>操作</span></div>
     <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '声明关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
-     {visibleEntries.map(entry=><div className="association-row" data-selected={browsedSelected?.id===entry.id} key={entry.id}>
+     {visibleEntries.map(entry=>{
+      const isDefault=observations[entry.id]?.default.app?.path===selectedApp?.app.path
+      return <div className="association-row" data-selected={browsedSelected?.id===entry.id} key={entry.id}>
       <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}><strong>{entryName(entry)}</strong><span>{entry.extensions?.map(value=>`.${value}`).join(' · ')}</span><span>{entry.association.key || entry.sources?.[0]?.rawInput}</span></button>
-      <div className="declared-default">{!entry.resolved ? '未解析' : rowErrors[entry.id] ? '查询连接失败' : observations[entry.id]?.default.error ? '默认查询失败' : observations[entry.id]?.default.known ? observations[entry.id].default.app ? <><strong>{observations[entry.id].default.app!.name}</strong><span>版本 {observations[entry.id].default.app!.version || '未知'}</span><span className="row-path" title={observations[entry.id].default.app!.path}>{observations[entry.id].default.app!.path}</span></> : '无默认应用' : '尚未查询'}</div>
-      <div className="row-actions"><button className="row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}>详情…</button>{kind==='app'&&selectedApp?<button className="row-submit" aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||observations[entry.id]?.default.app?.path===selectedApp.app.path} onClick={()=>submitCopy(entry,selectedApp.app)}>{observations[entry.id]?.default.app?.path===selectedApp.app.path?'已是默认':'设为默认'}</button>:null}
+      <div className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></div>
+      <div className="row-actions"><button className="row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}>详情…</button>{kind==='app'&&selectedApp?<button className="row-submit" aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?'已是默认':'设为默认'}</button>:null}
       {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><span key={r.requestID} className="change-row-state">{requestLabel(r)}</span>)}</div>
-     </div>)}
-     {!visibleEntries.length ? <div className="empty-workspace"><h2>{kind==='app' ? missingAppPath ? '此副本的关联详情已清空' : selectedApp ? !selectedApp.associationIDs?.length ? '此应用未声明可处理的文件类型或 URL 协议' : '没有匹配的关联项' : appQuery ? '没有匹配的应用' : snapshot?.scanning ? '正在发现应用' : '未发现应用' : catalogLoading ? '正在加载关联目录' : catalogError ? '关联目录暂时不可用' : filter ? '没有匹配的关联项' : '此入口暂无关联'}</h2><p>可清除搜索，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button onClick={clearSearch}>清除搜索</button>{kind!=='file' ? <button onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
+     </div>})}
+     {!visibleEntries.length ? <div className="empty-workspace"><h2>{emptyHeadline()}</h2><p>可清除搜索，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button onClick={clearSearch}>清除搜索</button>{kind!=='file' ? <button onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
     </div>
     <footer className="browser-footer"><span>默认应用由系统独立查询</span>{snapshot?.issues?.length ? <button onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span>⌘1 / 2 / 3 切换入口</span></footer>
    </main>
@@ -247,7 +263,7 @@ export default function App() {
       {transportError ? <p role="alert" className="query-error">查询连接失败{visibleResult ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
       <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
        {visibleResult?.default.error ? <div className="query-error" role="status"><p>{visibleResult.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{visibleResult.default.error.message}</p></div> : null}
-       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={discoveredPaths.current.has(visibleResult.default.app.path) && !!snapshot && !snapshot.scanning && !snapshot.apps?.some(item=>!item.unavailable&&item.app.path===visibleResult.default.app?.path)} onSelect={setInspectedCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
+       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={discoveredPaths.current.has(visibleResult.default.app.path) && catalogSettled && !inCatalog(visibleResult.default.app.path)} onSelect={setInspectedCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
        {visibleResult?.default.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.default.observedAt).toLocaleString()}</p> : null}
       </section>
       <section aria-labelledby="candidates-heading"><div className="section-heading"><h2 id="candidates-heading">系统候选应用</h2>{visibleResult?.candidates.known ? <span>{visibleResult.candidates.apps?.length ?? 0} 个应用副本</span> : null}</div>

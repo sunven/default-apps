@@ -44,7 +44,7 @@ func TestNativeDiscoveryReadsRealPlistsCopiesAliasesAndLocalFailures(t *testing.
 	}
 	defer os.Chmod(filepath.Join(root, "Unreadable"), 0755)
 	adapter := native.Adapter{}
-	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil)
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, nil)
 	if !service.StartScan().Scanning {
 		t.Fatal("native scan did not return acceptance")
 	}

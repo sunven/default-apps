@@ -4,6 +4,7 @@ import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata
 import {GetSnapshot,Submit,Requery,ReconcileSubmission} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {Snapshot,Request,Submission} from '../bindings/github.com/sunven/default-apps/internal/change/models'
 import type {AppCopy,Association,DefaultObservation} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import {observationFor} from './useAssociationQueries'
 import './changes.css'
 
 const pendingKey='defaultapps.submission.v1'
@@ -47,7 +48,7 @@ export function useChanges(){
   finally{inFlight.current=false;if(mounted.current)setSending(false)}
  }
  const retry=async(association:Association)=>{try{accept(await Requery(association));setMessage('')}catch(error){setMessage(`重新查询失败：${String(error)}`)}}
- return {state,message,sending,uncertain:pending?.requestID??null,pending,blocked:!state||state.busy||!!state.quit?.exiting||sending||!!pending,submit,retry,recoverReply}
+ return {state,message,sending,pending,blocked:!state||state.busy||!!state.quit?.exiting||sending||!!pending,submit,retry,recoverReply}
 }
 export type Changes=ReturnType<typeof useChanges>
 export function requestLabel(request:Request){
@@ -59,7 +60,7 @@ export function requestLabel(request:Request){
 export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(association:Association)=>void}){
  const requests=changes.state?.requests?.filter(r=>r.phase!=='recovered')
  const request=requests?.find(r=>r.requestID===changes.state?.activeRequestID)??requests?.[requests.length-1]
- const actual=request?changes.state?.observations?.find(value=>value.association.kind===request.association.kind&&value.association.key===request.association.key)?.default??request.readback.observation:undefined
+ const actual=request?observationFor(changes.state,request.association)??request.readback.observation:undefined
  if(!request&&!changes.pending&&!changes.message&&!changes.state?.storageError)return null
  return <section className="change-status" aria-label="修改请求状态" aria-live="polite">
   {request?<><div className="change-summary"><strong>{requestLabel(request)}</strong><span>{request.association.key}</span><button onClick={()=>onReturn(request.association)}>返回请求项</button>{request.readback.state==='failed'?<button onClick={()=>void changes.retry(request.association)}>重新回读</button>:null}</div>
@@ -70,7 +71,7 @@ export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(assoc
   {request.storageError?<p className="change-error">系统结果与回读已知；未定记录清除失败：{request.storageError.message}</p>:null}</>:null}
   {changes.pending&&!request?<p>正在核对原修改请求 · {changes.pending.association.key}<br/>目标：{changes.pending.targetPath}</p>:null}
   {changes.message?<p role="status">{changes.message}</p>:null}
-  {changes.uncertain?<button onClick={()=>void changes.recoverReply()}>查看原请求状态</button>:null}
+  {changes.pending?<button onClick={()=>void changes.recoverReply()}>查看原请求状态</button>:null}
   {changes.state?.storageError?<p className="change-error">配置读取失败：{changes.state.storageError.message}</p>:null}
  </section>
 }

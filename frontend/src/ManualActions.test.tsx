@@ -11,8 +11,6 @@ beforeEach(()=>{
  vi.resetAllMocks()
  vi.mocked(GetStatus).mockResolvedValue({error:'',associations:0,applications:0})
  vi.mocked(ResolveInput).mockResolvedValue({entries:[jpeg,{...jpeg,id:'file:other.jpg',association:{kind:'file',key:'other.jpg'},name:'Other JPG'}],cancelled:false,fileName:''})
- HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','')}
- HTMLDialogElement.prototype.close=function(){this.removeAttribute('open')}
 })
 test('requires explicit choice for ambiguous extension before saving and returns focus to its trigger',async()=>{
  const user=userEvent.setup();render(<ManualActions />)

@@ -4,7 +4,6 @@ package manual
 import (
 	"context"
 	"fmt"
-	"path/filepath"
 	"strings"
 	"sync"
 
@@ -145,14 +144,14 @@ func (s *Service) PickApplication(ctx context.Context) (Result, error) {
 	if path == "" {
 		return Result{Cancelled: true}, nil
 	}
-	if !strings.EqualFold(filepath.Ext(path), ".app") {
+	if !association.IsApplicationBundlePath(path) {
 		return Result{}, fmt.Errorf("请选择 .app 应用包")
 	}
 	bundle, err := s.system.ReadApplication(ctx, path)
 	if err != nil {
 		return Result{}, err
 	}
-	if bundle.App.Path == "" || !strings.EqualFold(filepath.Ext(bundle.App.Path), ".app") || bundle.App.MetadataError != "" {
+	if !bundle.App.Usable() || !association.IsApplicationBundlePath(bundle.App.Path) {
 		return Result{}, fmt.Errorf("所选应用不可用：%s", bundle.App.MetadataError)
 	}
 	err = s.store.Update(ctx, func(doc *config.Document) error {

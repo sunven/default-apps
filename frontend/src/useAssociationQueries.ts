@@ -1,6 +1,14 @@
 import {useCallback,useReducer,useRef} from 'react'
 import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/service'
-import type {Association,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type {Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import {message} from './errors'
+
+// Trustworthy mirrors association.DefaultObservation.Trustworthy in Go.
+export const isTrustworthy=(observation:DefaultObservation|undefined)=>!!observation?.known&&!observation.error&&!observation.stale
+
+export function observationFor(state:{observations?:QueryResult[]|null}|null|undefined,association:Association):DefaultObservation|undefined {
+ return state?.observations?.find(value=>value.association.kind===association.kind&&value.association.key===association.key)?.default
+}
 
 type State={
  observations:Record<string,QueryResult>
@@ -37,7 +45,7 @@ export function useAssociationQueries(){
   const token=++sequence.current,id=`${association.kind}:${association.key}`
   dispatch({type:'started',id,token})
   try{const value=await Query(association);if(isCurrent())dispatch({type:'result',value,token})}
-  catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:error instanceof Error?error.message:String(error)})}
+  catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:message(error)})}
  },[])
  return {observations:state.observations,rowErrors:state.rowErrors,query,acceptObservation}
 }

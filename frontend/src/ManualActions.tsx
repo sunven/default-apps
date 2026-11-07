@@ -3,9 +3,10 @@ import type { AppCopy, Association } from '../bindings/github.com/sunven/default
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import { AddIdentifiedType, AddInput, GetStatus, IdentifyFile, PickApplication, ResolveInput } from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import { Dialog } from './Dialog'
+import { message } from './errors'
+import { isComposing } from './keyboard'
 import './manual.css'
 
-const message=(error:unknown)=>error instanceof Error ? error.message : String(error)
 export function ManualActions({onCatalogChanged,label="手动补充…",showStorageWarning=true}:{onCatalogChanged?:()=>void;label?:string;showStorageWarning?:boolean}) {
  const [open,setOpen]=useState(false)
  const [storageError,setStorageError]=useState('')
@@ -38,7 +39,7 @@ function ManualDialog({onClose,onCatalogChanged,storageError}:{onClose:()=>void;
  }
  return <Dialog title="手动补充" subtitle="补充文件类型、URL 协议或其他位置的应用。" onClose={onClose}>
   <section className="manual-section" aria-label="补充关联">
-   <div className="manual-input-row"><label>输入种类<select value={kind} disabled={busy} onChange={event=>{setKind(event.target.value);invalidate()}}><option value="extension">扩展名</option><option value="scheme">URL 协议</option></select></label><label className="manual-value">扩展名或协议<input value={value} disabled={busy} onChange={event=>{setValue(event.target.value);invalidate()}} placeholder={kind==='extension'?'例如 jpg 或 .pdf':'例如 mailto'} onKeyDown={event=>{if(event.key==='Enter'&&!event.nativeEvent.isComposing){event.preventDefault();void resolve()}}}/></label><button disabled={busy||!value.trim()} onClick={()=>void resolve()}>解析输入</button></div>
+   <div className="manual-input-row"><label>输入种类<select value={kind} disabled={busy} onChange={event=>{setKind(event.target.value);invalidate()}}><option value="extension">扩展名</option><option value="scheme">URL 协议</option></select></label><label className="manual-value">扩展名或协议<input value={value} disabled={busy} onChange={event=>{setValue(event.target.value);invalidate()}} placeholder={kind==='extension'?'例如 jpg 或 .pdf':'例如 mailto'} onKeyDown={event=>{if(event.key==='Enter'&&!isComposing(event)){event.preventDefault();void resolve()}}}/></label><button disabled={busy||!value.trim()} onClick={()=>void resolve()}>解析输入</button></div>
    <p className="manual-help">扩展名可能对应多个文件类型。协议仅输入名称，不输入完整网址。</p>
    {entries.length>1 ? <p>找到多个类型，请明确选择一个：</p> : null}
    <div className="manual-matches">{entries.map(entry=>entry.resolved ? <label key={entry.id} className="manual-match"><input type="radio" aria-label={`${entry.name} ${entry.association.key}`} name="manual-type" value={entry.id} checked={selected===entry.id} onChange={()=>setSelected(entry.id)} disabled={busy}/><span><strong>{entry.name}</strong><code>{entry.association.key}</code>{(entry.extensions??[]).length>0 ? <small>{(entry.extensions??[]).map(ext=>`.${ext}`).join(' · ')}</small>:null}</span></label> : <div key={entry.id} className="manual-unresolved"><strong>未解析</strong><p>{entry.unresolvedReason}</p>{(entry.diagnosticIdentifiers??[]).map(id=><code key={id}>{id}</code>)}</div>)}</div>

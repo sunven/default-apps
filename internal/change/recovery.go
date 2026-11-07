@@ -13,7 +13,7 @@ func (s *Service) observeRecoveryLocked(result association.QueryResult) {
 	if recovery == nil || recovery.Record.Association != result.Association {
 		return
 	}
-	recovery.Ready = result.Default.Known && result.Default.Error == nil && !result.Default.Stale
+	recovery.Ready = result.Default.Trustworthy()
 	if s.admitting == nil && s.state.ActiveRequestID == "" {
 		s.state.Busy = !recovery.Ready
 	}

@@ -3,6 +3,8 @@ package association
 
 import (
 	"context"
+	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 )
@@ -21,6 +23,12 @@ type AppCopy struct {
 	MetadataError string `json:"metadataError,omitempty"`
 }
 
+// Usable reports whether the copy has a canonical path and readable metadata.
+// Callers may add their own target-specific checks on top.
+func (a AppCopy) Usable() bool { return a.Path != "" && a.MetadataError == "" }
+
+func IsApplicationBundlePath(path string) bool { return strings.EqualFold(filepath.Ext(path), ".app") }
+
 type QueryError struct {
 	Message string `json:"message"`
 }
@@ -32,6 +40,10 @@ type DefaultObservation struct {
 	Error      *QueryError `json:"error"`
 	Stale      bool        `json:"stale"`
 }
+
+// Trustworthy is the single rule for "this observation can confirm a default":
+// it must be a successful, current read rather than an error or stale fallback.
+func (o DefaultObservation) Trustworthy() bool { return o.Known && o.Error == nil && !o.Stale }
 
 type CandidateObservation struct {
 	Known      bool        `json:"known"`

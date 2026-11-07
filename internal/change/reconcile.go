@@ -1,7 +1,5 @@
 package change
 
-import "context"
-
 // Reconciliation never starts a native request. Missing IDs are closed before
 // returning, so an original binding call arriving late cannot subsequently write.
 // The original parameters are retained to detect accidental ID reuse.
@@ -34,7 +32,7 @@ func (s *Service) decideLocked(in Submission, result SubmitResult) {
 	s.decisions[in.RequestID] = admissionResult{input: in, result: clone(result)}
 }
 func (s *Service) ReconcileSubmission(in Submission) Reconciliation {
-	_ = s.ensureLoaded(context.Background())
+	_ = s.ensureLoaded()
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	snapshot := clone(s.state)
@@ -48,7 +46,7 @@ func (s *Service) ReconcileSubmission(in Submission) Reconciliation {
 		return Reconciliation{State: "decided", Result: &SubmitResult{Outcome: "conflict", Message: "请求标识已用于另一项修改。", Snapshot: snapshot}, Snapshot: snapshot}
 	}
 	if request := s.findRequestLocked(in.RequestID); request != nil {
-		if request.Association != in.Association || request.Target.Path != in.TargetPath || request.Preflight.Known != in.Expected.Known || appPath(request.Preflight.App) != in.Expected.Path {
+		if !in.matchesRecord(request.PendingRecord) {
 			return Reconciliation{State: "decided", Result: &SubmitResult{Outcome: "conflict", Message: "请求标识已用于另一项修改。", Snapshot: snapshot}, Snapshot: snapshot}
 		}
 		return Reconciliation{State: "decided", Result: &SubmitResult{Outcome: "existing", Request: clone(request), Snapshot: snapshot}, Snapshot: snapshot}

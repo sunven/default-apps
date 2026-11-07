@@ -104,9 +104,6 @@ func declarations(bundle Bundle) ([]Declaration, []TypeDefinition, []Issue) {
 			origin := fmt.Sprintf("%s[%d]", key, index)
 			role, _ := dict["CFBundleTypeRole"].(string)
 			rank, _ := dict["LSHandlerRank"].(string)
-			if key == "CFBundleURLTypes" {
-				role, _ = dict["CFBundleTypeRole"].(string)
-			}
 			d := Declaration{Origin: origin, Role: role, Rank: rank, Handling: role != "None" && rank != "None", Inputs: []catalog.Input{}, LegacyExtensions: stringsAt(dict["CFBundleTypeExtensions"], origin), MIMETypes: stringsAt(dict["CFBundleTypeMIMETypes"], origin), OSTypes: stringsAt(dict["CFBundleTypeOSTypes"], origin)}
 			if key == "CFBundleDocumentTypes" && role == "" {
 				issue(origin, "文稿声明缺少角色，保留可解析关联")

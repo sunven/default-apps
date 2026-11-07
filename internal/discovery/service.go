@@ -60,11 +60,7 @@ type Service struct {
 	rescan  bool
 }
 
-func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot), stores ...config.Repository) *Service {
-	var store config.Repository
-	if len(stores) > 0 {
-		store = stores[0]
-	}
+func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot), store config.Repository) *Service {
 	return &Service{store: store, system: system, catalog: catalogService, roots: append([]string{}, roots...), changed: changed, state: Snapshot{Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}, Roots: append([]string{}, roots...)}}
 }
 func (s *Service) GetSnapshot() Snapshot { s.mu.Lock(); defer s.mu.Unlock(); return clone(s.state) }
@@ -82,19 +78,22 @@ func (s *Service) StartScan() Snapshot {
 	s.state.Version++
 	s.state.StartedAt = time.Now().UTC().Format(time.RFC3339Nano)
 	result := clone(s.state)
+	startedAt := s.state.StartedAt
 	s.mu.Unlock()
-	go s.scan()
+	go s.scan(startedAt)
 	return result
 }
 func (s *Service) publish(state Snapshot) {
+	// Detach from the scan worker's mutable graph before it appends or sorts.
+	// The stored snapshot only changes scalar fields in place, so the event can
+	// share its immutable slices.
+	snapshot := clone(state)
 	s.mu.Lock()
-	state.Version = s.state.Version + 1
-	s.state = clone(state)
+	snapshot.Version = s.state.Version + 1
+	s.state = snapshot
 	s.mu.Unlock()
 	if s.changed != nil {
-		// Event delivery can serialize after this worker resumes. Give it its own
-		// immutable graph before append/sort changes any backing arrays.
-		s.changed(clone(state))
+		s.changed(snapshot)
 	}
 }
 func clone(value Snapshot) Snapshot {
@@ -103,10 +102,10 @@ func clone(value Snapshot) Snapshot {
 	_ = json.Unmarshal(data, &result)
 	return result
 }
-func (s *Service) scan() {
+func (s *Service) scan(startedAt string) {
 	start := time.Now()
 	ctx := context.Background()
-	state := Snapshot{Scanning: true, StartedAt: s.GetSnapshot().StartedAt, Roots: append([]string{}, s.roots...), Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}}
+	state := Snapshot{Scanning: true, StartedAt: startedAt, Roots: append([]string{}, s.roots...), Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}}
 	entries, err := s.catalog.List(ctx)
 	if err != nil {
 		state.Issues = append(state.Issues, Issue{Origin: "common", Message: err.Error()})
@@ -121,7 +120,7 @@ func (s *Service) scan() {
 				state.Issues = append(state.Issues, Issue{Path: path, Origin: "scan", Message: walkErr.Error()})
 				return nil
 			}
-			if !strings.EqualFold(filepath.Ext(entry.Name()), ".app") {
+			if !association.IsApplicationBundlePath(entry.Name()) {
 				return nil
 			}
 			bundle, readErr := s.system.ReadApplication(ctx, path)
@@ -183,7 +182,7 @@ func (s *Service) scan() {
 					continue
 				}
 				bundle, readErr := s.system.ReadApplication(ctx, saved.Path)
-				if readErr != nil || bundle.App.Path != saved.Path || bundle.App.MetadataError != "" {
+				if readErr != nil || bundle.App.Path != saved.Path || !bundle.App.Usable() {
 					message := "原位置已指向另一应用副本，请重新选择"
 					if bundle.App.MetadataError != "" {
 						message = bundle.App.MetadataError

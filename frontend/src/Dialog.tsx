@@ -1,5 +1,6 @@
 import { useId, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { isComposing } from './keyboard'
 
 // Shared by association, copy and manual-entry dialogs. Mount only while open.
 export function Dialog({ title, subtitle, onClose, children }: {title:string; subtitle?:string; onClose:()=>void; children:ReactNode}) {
@@ -17,7 +18,7 @@ export function Dialog({ title, subtitle, onClose, children }: {title:string; su
   }
  },[])
  return createPortal(<dialog ref={ref} className="detail-dialog" aria-labelledby={id} onCancel={event=>{event.preventDefault();onClose()}} onKeyDown={event=>{
-  if(event.nativeEvent.isComposing || event.keyCode===229)return
+  if(isComposing(event))return
   if(event.key==='Escape'){event.preventDefault();event.stopPropagation();onClose()}
   if(event.key==='Tab'){
    const controls=Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href],[tabindex="0"]')).filter(el=>!el.closest('[hidden]'))

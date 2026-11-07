@@ -56,7 +56,7 @@ func TestPartialDiscoveryProblemsPreserveUsableAppsAndNeighboringDeclarations(t 
 		map[string]any{"LSItemContentTypes": 42, "CFBundleTypeExtensions": []any{"pdf"}, "CFBundleTypeRole": "Viewer"},
 		map[string]any{"CFBundleTypeExtensions": []any{"pdf", true, "*"}, "CFBundleTypeRole": "Viewer"},
 	}}}
-	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root, filepath.Join(root, "Missing")}, nil)
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root, filepath.Join(root, "Missing")}, nil, nil)
 	service.StartScan()
 	snapshot := finished(t, service)
 	if len(snapshot.Apps) != 1 || len(snapshot.Issues) < 4 {
@@ -95,7 +95,7 @@ func TestPublishedProgressSnapshotRemainsImmutableAfterLaterScanSorting(t *testi
 	}
 	adapter := orderedSystem{system: system{}}
 	received := make(chan discovery.Snapshot, 20)
-	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, func(value discovery.Snapshot) { received <- value })
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, func(value discovery.Snapshot) { received <- value }, nil)
 	service.StartScan()
 	finished(t, service)
 	<-received // common entries
@@ -134,7 +134,7 @@ func TestDeclarationsMergeCommonIdentityButDoNotInferSupportFromDefinitionsOrLeg
 		},
 		"CFBundleURLTypes": []any{map[string]any{"CFBundleURLSchemes": []any{"HTTPS"}, "CFBundleURLName": "not-a-scheme"}},
 	}}
-	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil)
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, nil)
 	service.StartScan()
 	snapshot := finished(t, service)
 	app := snapshot.Apps[0]
@@ -188,7 +188,7 @@ func TestBackgroundScanKeepsNestedCopiesAndStopsAtBundlesAndDirectoryLinks(t *te
 	}
 	blocked := make(chan struct{})
 	adapter := system{blocked: blocked}
-	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil)
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, nil)
 	started := service.StartScan()
 	if !started.Scanning {
 		t.Fatal("scan must return before blocked filesystem work completes")

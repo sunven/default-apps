@@ -134,6 +134,9 @@ func clone[T any](v T) T {
 	return out
 }
 func (s *Service) changedLocked() Snapshot { s.state.Version++; return clone(s.state) }
+
+// publish forwards a snapshot the caller has already detached from service
+// state (changedLocked or clone); the receiver only serializes it.
 func (s *Service) publish(v Snapshot) {
 	s.mu.Lock()
 	exiting := s.state.Quit.Exiting
@@ -142,11 +145,11 @@ func (s *Service) publish(v Snapshot) {
 		return
 	}
 	if s.options.Publish != nil {
-		s.options.Publish(clone(v))
+		s.options.Publish(v)
 	}
 }
 func (s *Service) GetSnapshot() Snapshot {
-	err := s.ensureLoaded(context.Background())
+	err := s.ensureLoaded()
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if err != nil {
@@ -156,7 +159,7 @@ func (s *Service) GetSnapshot() Snapshot {
 }
 
 // Load old disk facts once without restoring a callback or replaying a setter.
-func (s *Service) ensureLoaded(_ context.Context) error {
+func (s *Service) ensureLoaded() error {
 	s.loadOnce.Do(func() {
 		doc, err := s.store.Load(context.Background())
 		if err != nil {
@@ -196,21 +199,41 @@ func (s *Service) findRequestLocked(id string) *Request {
 func sameSubmission(a, b Submission) bool {
 	return a.RequestID == b.RequestID && a.Association == b.Association && a.TargetPath == b.TargetPath && a.Expected == b.Expected && a.RecoveryRequestID == b.RecoveryRequestID
 }
+
+// matchesRecord compares the identity a submission claims with one persisted
+// request. RecoveryRequestID is an acknowledgement, not part of that identity.
+func (in Submission) matchesRecord(r PendingRecord) bool {
+	return r.Association == in.Association && r.Target.Path == in.TargetPath &&
+		r.Preflight.Known == in.Expected.Known && appPath(r.Preflight.App) == in.Expected.Path
+}
+
+// rejectLocked releases the lock and returns a rejection with the current snapshot.
+func (s *Service) rejectLocked(outcome, message string) SubmitResult {
+	v := clone(s.state)
+	s.mu.Unlock()
+	return SubmitResult{Outcome: outcome, Message: message, Snapshot: v}
+}
+
+// existingLocked releases the lock and returns the already-known request.
+func (s *Service) existingLocked(request *Request) SubmitResult {
+	v, r := clone(s.state), clone(request)
+	s.mu.Unlock()
+	return SubmitResult{Outcome: "existing", Request: r, Snapshot: v}
+}
+
 func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if in.RequestID == "" || in.Association.Kind == "" || in.Association.Key == "" || in.TargetPath == "" {
 		return SubmitResult{Outcome: "invalid", Message: "提交缺少请求标识、关联身份或目标副本。"}
 	}
-	if err := s.ensureLoaded(ctx); err != nil {
+	if err := s.ensureLoaded(); err != nil {
 		return SubmitResult{Outcome: "storage_error", Message: err.Error()}
 	}
-	if s.dispatcher == nil || !s.writable(in.Association.Kind) {
+	if !s.writable(in.Association.Kind) {
 		return SubmitResult{Outcome: "unavailable", Message: "此版本尚未接入系统写入适配器。"}
 	}
 	s.mu.Lock()
 	if s.state.Quit.Exiting {
-		v := clone(s.state)
-		s.mu.Unlock()
-		return SubmitResult{Outcome: "exiting", Message: "应用正在退出，不再受理新修改。", Snapshot: v}
+		return s.rejectLocked("exiting", "应用正在退出，不再受理新修改。")
 	}
 	if decided := s.decidedLocked(in); decided != nil {
 		s.mu.Unlock()
@@ -218,31 +241,21 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	}
 	if previous, ok := s.submissions[in.RequestID]; ok {
 		if sameSubmission(previous, in) {
-			r := clone(s.findRequestLocked(in.RequestID))
-			v := clone(s.state)
-			s.mu.Unlock()
-			return SubmitResult{Outcome: "existing", Request: r, Snapshot: v}
+			return s.existingLocked(s.findRequestLocked(in.RequestID))
 		}
-		v := clone(s.state)
-		s.mu.Unlock()
-		return SubmitResult{Outcome: "conflict", Message: "请求标识已用于另一项修改。", Snapshot: v}
+		return s.rejectLocked("conflict", "请求标识已用于另一项修改。")
 	}
 	// Recovered IDs remain queryable but can never become a new native request,
 	// including after a later explicit request replaces their durable record.
 	if recovered := s.findRequestLocked(in.RequestID); recovered != nil {
-		v, request := clone(s.state), clone(recovered)
-		matches := recovered.Association == in.Association && recovered.Target.Path == in.TargetPath && recovered.Preflight.Known == in.Expected.Known && appPath(recovered.Preflight.App) == in.Expected.Path
-		s.mu.Unlock()
-		if !matches {
-			return SubmitResult{Outcome: "conflict", Message: "请求标识已用于上次修改。", Snapshot: v}
+		if !in.matchesRecord(recovered.PendingRecord) {
+			return s.rejectLocked("conflict", "请求标识已用于上次修改。")
 		}
-		return SubmitResult{Outcome: "existing", Request: request, Snapshot: v}
+		return s.existingLocked(recovered)
 	}
 	if pending := s.admitting; pending != nil && pending.input.RequestID == in.RequestID {
 		if !sameSubmission(pending.input, in) {
-			v := clone(s.state)
-			s.mu.Unlock()
-			return SubmitResult{Outcome: "conflict", Message: "请求标识已用于另一项修改。", Snapshot: v}
+			return s.rejectLocked("conflict", "请求标识已用于另一项修改。")
 		}
 		s.mu.Unlock()
 		select {
@@ -264,15 +277,11 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 			outcome, message = "recovery_ack_required", "上次修改仍可能完成；请阅读旧目标说明后明确提交新修改。"
 		}
 		if outcome != "" {
-			v := clone(s.state)
-			s.mu.Unlock()
-			return SubmitResult{Outcome: outcome, Message: message, Snapshot: v}
+			return s.rejectLocked(outcome, message)
 		}
 	}
 	if s.state.Busy {
-		v := clone(s.state)
-		s.mu.Unlock()
-		return SubmitResult{Outcome: "busy", Message: "已有修改结果未定，请等待系统返回并完成回读。", Snapshot: v}
+		return s.rejectLocked("busy", "已有修改结果未定，请等待系统返回并完成回读。")
 	}
 	attempt := &admission{input: in, done: make(chan struct{})}
 	s.admitting = attempt
@@ -339,7 +348,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if err != nil {
 		return fail("target_unavailable", err.Error(), nil)
 	}
-	if bundle.App.Path == "" || bundle.App.MetadataError != "" || bundle.App.Path != in.TargetPath {
+	if !bundle.App.Usable() || bundle.App.Path != in.TargetPath {
 		return fail("target_unavailable", "目标应用副本不可用。", nil)
 	}
 	req := Request{PendingRecord: PendingRecord{RequestID: in.RequestID, Association: in.Association, Target: bundle.App, Preflight: fresh.Default, Phase: "accepted", AcceptedAt: now()}, Readback: Readback{State: "pending"}}
@@ -382,9 +391,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	close(attempt.done)
 	s.mu.Unlock()
 	s.publish(v)
-	if s.dispatcher != nil {
-		go s.dispatcher.Dispatch(in.Association, bundle.App, func() { s.submitted(in.RequestID) }, func(nativeErr *NativeError) { s.completed(in.RequestID, nativeErr) })
-	}
+	go s.dispatcher.Dispatch(in.Association, bundle.App, func() { s.submitted(in.RequestID) }, func(nativeErr *NativeError) { s.completed(in.RequestID, nativeErr) })
 	return SubmitResult{Outcome: "accepted", Request: clone(&req), Snapshot: v}
 }
 func (s *Service) writable(kind string) bool {
@@ -467,7 +474,7 @@ func (s *Service) clearPending(id string) error {
 // update current facts, but cannot settle the request's post-completion readback.
 func (s *Service) Query(ctx context.Context, a association.Association) (association.QueryResult, error) {
 	// Configuration errors block writes but cannot prevent read-only browsing.
-	_ = s.ensureLoaded(ctx)
+	_ = s.ensureLoaded()
 	s.mu.Lock()
 	if s.state.Quit.Exiting {
 		s.mu.Unlock()
@@ -498,7 +505,7 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 	clearID := ""
 	if r := s.findRequestLocked(settleID); fresh && r != nil && s.state.ActiveRequestID == settleID && r.Phase != "resolved" {
 		r.Readback = Readback{State: "failed", Observation: clone(result.Default)}
-		if result.Default.Known && result.Default.Error == nil && !result.Default.Stale {
+		if result.Default.Trustworthy() {
 			r.Readback.State = "valid"
 			r.Confirmed = r.Completion.Error == nil && appPath(result.Default.App) == r.Target.Path
 			r.Phase = "resolved"
