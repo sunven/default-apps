@@ -7,10 +7,23 @@ import { Call as $Call, CancellablePromise as $CancellablePromise } from "@wails
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import * as catalog$0 from "../catalog/models.js";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import * as $models from "./models.js";
 
 export function GetSnapshot(): $CancellablePromise<$models.Snapshot> {
     return $Call.ByID(2011754152);
+}
+
+/**
+ * Reparse accepts immediately and publishes the correspondence in a completed
+ * snapshot. If a scan is running, the request belongs to the queued full scan.
+ * Token is an opaque caller value used to ignore results after navigation.
+ */
+export function Reparse(entry: catalog$0.Entry, token: string): $CancellablePromise<$models.Snapshot> {
+    return $Call.ByID(1298911408, entry, token);
 }
 
 /**

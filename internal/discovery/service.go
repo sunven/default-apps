@@ -40,6 +40,7 @@ type Snapshot struct {
 	Scanning    bool            `json:"scanning"`
 	Apps        []Application   `json:"apps"`
 	Entries     []catalog.Entry `json:"entries"`
+	Reparses    []ReparseResult `json:"reparses,omitempty"`
 	Issues      []Issue         `json:"issues"`
 	Roots       []string        `json:"roots"`
 	StartedAt   string          `json:"startedAt"`
@@ -50,14 +51,15 @@ type SystemAdapter interface {
 	ReadApplication(context.Context, string) (Bundle, error)
 }
 type Service struct {
-	mu      sync.Mutex
-	system  SystemAdapter
-	catalog *catalog.Service
-	roots   []string
-	state   Snapshot
-	changed func(Snapshot)
-	store   config.Repository
-	rescan  bool
+	mu       sync.Mutex
+	system   SystemAdapter
+	catalog  *catalog.Service
+	roots    []string
+	state    Snapshot
+	changed  func(Snapshot)
+	store    config.Repository
+	rescan   bool
+	reparses []reparseRequest
 }
 
 func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot), store config.Repository) *Service {
@@ -68,19 +70,24 @@ func (s *Service) GetSnapshot() Snapshot { s.mu.Lock(); defer s.mu.Unlock(); ret
 // StartScan accepts immediately; its lifetime is independent of the bridge call.
 func (s *Service) StartScan() Snapshot {
 	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.startScanLocked()
+}
+
+func (s *Service) startScanLocked() Snapshot {
 	if s.state.Scanning {
 		s.rescan = true
-		result := clone(s.state)
-		s.mu.Unlock()
-		return result
+		return clone(s.state)
 	}
+	s.rescan = false
 	s.state.Scanning = true
+	s.state.Reparses = nil
 	s.state.Version++
 	s.state.StartedAt = time.Now().UTC().Format(time.RFC3339Nano)
 	result := clone(s.state)
-	startedAt := s.state.StartedAt
-	s.mu.Unlock()
-	go s.scan(startedAt)
+	reparses := s.reparses
+	s.reparses = nil
+	go s.scan(s.state.StartedAt, reparses)
 	return result
 }
 func (s *Service) publish(state Snapshot) {
@@ -102,7 +109,7 @@ func clone(value Snapshot) Snapshot {
 	_ = json.Unmarshal(data, &result)
 	return result
 }
-func (s *Service) scan(startedAt string) {
+func (s *Service) scan(startedAt string, reparses []reparseRequest) {
 	start := time.Now()
 	ctx := context.Background()
 	state := Snapshot{Scanning: true, StartedAt: startedAt, Roots: append([]string{}, s.roots...), Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}}
@@ -163,7 +170,7 @@ func (s *Service) scan(startedAt string) {
 					}
 				}
 				if !matched {
-					state.Entries = catalog.Merge(state.Entries, []catalog.Entry{{ID: "unavailable:" + saved.SelectedID, Association: association.Association{Kind: "file"}, Name: saved.Input.Label, Extensions: []string{}, MIMETypes: []string{}, Sources: []catalog.Source{{Kind: "manual", InputKind: saved.Input.Kind, RawInput: saved.Input.Value}}, UnresolvedReason: "先前选择的类型现在无法解析：" + saved.SelectedID, DiagnosticIdentifiers: []string{saved.SelectedID}}})
+					state.Entries = catalog.Merge(state.Entries, []catalog.Entry{unavailableEntry(saved)})
 				}
 			}
 			for _, saved := range doc.Applications {
@@ -215,14 +222,15 @@ func (s *Service) scan(startedAt string) {
 	state.Scanning = false
 	state.CompletedAt = time.Now().UTC().Format(time.RFC3339Nano)
 	state.DurationMS = time.Since(start).Milliseconds()
+	for _, request := range reparses {
+		state.Reparses = append(state.Reparses, matchReparse(request, state.Entries))
+	}
 	s.publish(state)
 	s.mu.Lock()
-	rescan := s.rescan
-	s.rescan = false
-	s.mu.Unlock()
-	if rescan {
-		s.StartScan()
+	if s.rescan && !s.state.Scanning {
+		s.startScanLocked()
 	}
+	s.mu.Unlock()
 }
 
 func (s *Service) describe(ctx context.Context, bundle Bundle) (Application, []catalog.Entry) {

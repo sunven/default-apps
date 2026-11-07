@@ -11,7 +11,7 @@ import App from './App'
 
 vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({Query:vi.fn(),GetSnapshot:()=>Promise.resolve({version:0,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null})}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({List:vi.fn()}))
-vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({GetSnapshot:vi.fn(),StartScan:vi.fn()}))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({GetSnapshot:vi.fn(),StartScan:vi.fn(),Reparse:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))
 vi.mock('@wailsio/runtime', () => ({Events:{On:vi.fn()}}))
 const entry=(key:string,name:string,extensions:string[],common=false):Entry=>({id:`file:${key}`,association:{kind:'file',key},name,extensions,mimeTypes:[],sources:[{kind:common?'common':'declaration',inputKind:'type',rawInput:key,normalizedInput:key,label:name}],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]})

@@ -10,6 +10,7 @@ export type {
     Application,
     Declaration,
     Issue,
+    ReparseResult,
     Snapshot,
     TypeDefinition
 } from "./models.js";

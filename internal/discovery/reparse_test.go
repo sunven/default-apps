@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
@@ -25,6 +26,9 @@ func (s *reparsingSystem) ResolveExtension(ctx context.Context, value string) ([
 	}
 	if value == "manual" {
 		return []catalog.ResolvedType{{Identifier: "test.saved", Name: "Saved type", Declared: true}}, nil
+	}
+	if value == "shared" {
+		return []catalog.ResolvedType{{Identifier: "fixture.first", Declared: true}, {Identifier: "fixture.second", Declared: true}}, nil
 	}
 	return s.system.ResolveExtension(ctx, value)
 }
@@ -74,8 +78,9 @@ func TestFullRescanReparsesCommonDeclaredAndSavedInputsWithoutLosingSources(t *t
 		}
 	}
 	adapter.available.Store(true)
-	service.StartScan()
+	service.Reparse(before["unresolved:extension:pdf"], "common")
 	refreshed := finished(t, service)
+	assertReparse(t, refreshed, "common", "matched", "file:com.adobe.pdf")
 	if refreshed.Version <= initial.Version {
 		t.Fatal("completed reparse did not advance the catalog version")
 	}
@@ -101,5 +106,188 @@ func TestFullRescanReparsesCommonDeclaredAndSavedInputsWithoutLosingSources(t *t
 	}
 	if after["file:test.declared"].Sources[0].AppPath != refreshed.Apps[0].App.Path || after["file:test.saved"].Sources[0].Kind != "manual" {
 		t.Fatalf("independent declaration/manual provenance changed: %+v", refreshed.Entries)
+	}
+	for _, choice := range []struct{ original, resolved string }{
+		{"unresolved:identifier:test.declared", "file:test.declared"},
+		{"unavailable:file:test.saved", "file:test.saved"},
+	} {
+		service.Reparse(before[choice.original], choice.original)
+		assertReparse(t, finished(t, service), choice.original, "matched", choice.resolved)
+	}
+}
+
+func assertReparse(t *testing.T, snapshot discovery.Snapshot, token, status, entryID string) {
+	t.Helper()
+	if snapshot.Scanning {
+		t.Fatal("reparse result must accompany a completed catalog")
+	}
+	for _, result := range snapshot.Reparses {
+		if result.Token == token {
+			if result.Status != status || result.EntryID != entryID {
+				t.Fatalf("reparse %s: got %+v, want %s %s", token, result, status, entryID)
+			}
+			if status == "matched" {
+				entryByID(t, snapshot, entryID)
+			}
+			return
+		}
+	}
+	t.Fatalf("missing reparse result for %s: %+v", token, snapshot.Reparses)
+}
+
+func entryByID(t *testing.T, snapshot discovery.Snapshot, id string) catalog.Entry {
+	t.Helper()
+	for _, entry := range snapshot.Entries {
+		if entry.ID == id {
+			return entry
+		}
+	}
+	t.Fatalf("missing entry %s", id)
+	return catalog.Entry{}
+}
+
+func TestReparseDistinguishesUnresolvedAmbiguousAndMissingSources(t *testing.T) {
+	root := t.TempDir()
+	path := filepath.Join(root, "Reader.app")
+	if err := os.Mkdir(path, 0755); err != nil {
+		t.Fatal(err)
+	}
+	adapter := &reparsingSystem{system: system{info: map[string]any{
+		"CFBundleDocumentTypes": []any{map[string]any{"CFBundleTypeExtensions": []any{"shared"}, "CFBundleTypeRole": "Viewer"}},
+	}}}
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, nil)
+	service.StartScan()
+	original := entryByID(t, finished(t, service), "unresolved:extension:shared")
+	service.Reparse(original, "unresolved")
+	unchanged := finished(t, service)
+	assertReparse(t, unchanged, "unresolved", "matched", original.ID)
+	if entryByID(t, unchanged, original.ID).Resolved {
+		t.Fatal("matching an unresolved entry must not make it usable")
+	}
+	adapter.available.Store(true)
+	service.Reparse(original, "ambiguous")
+	ambiguous := finished(t, service)
+	assertReparse(t, ambiguous, "ambiguous", "ambiguous", "")
+	entryByID(t, ambiguous, "file:fixture.first")
+	entryByID(t, ambiguous, "file:fixture.second")
+	if err := os.Remove(path); err != nil {
+		t.Fatal(err)
+	}
+	service.Reparse(original, "missing")
+	assertReparse(t, finished(t, service), "missing", "missing", "")
+}
+
+func TestReparseRetainsExplicitManualIdentityAmongOtherMatches(t *testing.T) {
+	root := t.TempDir()
+	if err := os.Mkdir(filepath.Join(root, "Reader.app"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	adapter := &reparsingSystem{system: system{info: map[string]any{
+		"CFBundleDocumentTypes": []any{map[string]any{"CFBundleTypeExtensions": []any{"shared"}, "CFBundleTypeRole": "Viewer"}},
+	}}}
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "shared", Source: "manual"}, SelectedID: "file:fixture.second"}}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, store)
+	service.StartScan()
+	original := entryByID(t, finished(t, service), "unavailable:file:fixture.second")
+	adapter.available.Store(true)
+	service.Reparse(original, "selected-second")
+	snapshot := finished(t, service)
+	assertReparse(t, snapshot, "selected-second", "matched", "file:fixture.second")
+	entryByID(t, snapshot, "file:fixture.first")
+}
+
+func TestReparsePrefersResolvedIdentityOverItsUnavailablePlaceholder(t *testing.T) {
+	adapter := &reparsingSystem{}
+	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "missing", Source: "manual"}, SelectedID: "file:com.adobe.pdf"}}
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	service := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, store)
+	service.StartScan()
+	original := entryByID(t, finished(t, service), "unavailable:file:com.adobe.pdf")
+	service.Reparse(original, "still-unavailable")
+	assertReparse(t, finished(t, service), "still-unavailable", "matched", original.ID)
+	adapter.available.Store(true)
+	service.Reparse(original, "resolved-elsewhere")
+	snapshot := finished(t, service)
+	assertReparse(t, snapshot, "resolved-elsewhere", "matched", "file:com.adobe.pdf")
+	entryByID(t, snapshot, original.ID)
+	doc, err := store.Load(context.Background())
+	if err != nil || len(doc.Associations) != 1 || doc.Associations[0].SelectedID != "file:com.adobe.pdf" {
+		t.Fatalf("reparse changed the saved choice: %+v, %v", doc, err)
+	}
+}
+
+func TestReparseDuringScanQueuesResultsWithTheNextCompleteCatalog(t *testing.T) {
+	root := t.TempDir()
+	if err := os.Mkdir(filepath.Join(root, "Reader.app"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	blocked := make(chan struct{})
+	defer func() {
+		select {
+		case <-blocked:
+		default:
+			close(blocked)
+		}
+	}()
+	adapter := &reparsingSystem{system: system{blocked: blocked}}
+	catalogService := catalog.NewService(adapter)
+	entries, err := catalogService.List(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := entryByID(t, discovery.Snapshot{Entries: entries}, "unresolved:extension:pdf")
+	adapter.available.Store(true)
+	events := make(chan discovery.Snapshot, 20)
+	service := discovery.NewService(adapter, catalogService, []string{root}, func(value discovery.Snapshot) { events <- value }, nil)
+	service.StartScan()
+	for _, token := range []string{"first", "second"} {
+		accepted := service.Reparse(original, token)
+		if !accepted.Scanning || len(accepted.Reparses) != 0 {
+			t.Fatalf("reparse completed before the blocked scan: %+v", accepted)
+		}
+	}
+	original.Sources[0].RawInput = "caller mutation"
+	close(blocked)
+	completed := 0
+	deadline := time.After(3 * time.Second)
+	for completed < 2 {
+		select {
+		case snapshot := <-events:
+			if snapshot.Scanning {
+				if len(snapshot.Reparses) != 0 {
+					t.Fatal("partial catalog carried a reparse result")
+				}
+				continue
+			}
+			completed++
+			if completed == 1 {
+				if len(snapshot.Reparses) != 0 {
+					t.Fatal("in-flight scan answered a later reparse")
+				}
+				continue
+			}
+			for _, token := range []string{"first", "second"} {
+				assertReparse(t, snapshot, token, "matched", "file:com.adobe.pdf")
+			}
+		case <-deadline:
+			t.Fatal("queued reparse did not finish")
+		}
+	}
+	copy := service.GetSnapshot()
+	copy.Reparses[0].EntryID = "mutated"
+	assertReparse(t, service.GetSnapshot(), "first", "matched", "file:com.adobe.pdf")
+	if len(service.StartScan().Reparses) != 0 || len(finished(t, service).Reparses) != 0 {
+		t.Fatal("an ordinary scan replayed old reparse results")
 	}
 }

@@ -35,11 +35,23 @@ export interface Issue {
     "message": string;
 }
 
+export interface ReparseResult {
+    "token": string;
+
+    /**
+     * Status is matched, ambiguous or missing. Only matched has an EntryID,
+     * which may still refer to an unresolved entry in the completed snapshot.
+     */
+    "status": string;
+    "entryID"?: string;
+}
+
 export interface Snapshot {
     "version": number;
     "scanning": boolean;
     "apps": Application[] | null;
     "entries": catalog$0.Entry[] | null;
+    "reparses"?: ReparseResult[] | null;
     "issues": Issue[] | null;
     "roots": string[] | null;
     "startedAt": string;

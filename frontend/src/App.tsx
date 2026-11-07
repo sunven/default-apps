@@ -6,7 +6,7 @@ import { ChangeStatus, useChanges, requestLabel } from './Changes'
 import { ManualActions, ManualApplicationAction } from './ManualActions'
 import { Events } from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
-import { GetSnapshot, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
+import { GetSnapshot, Reparse, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { isComposing, plainKey } from './keyboard'
@@ -78,7 +78,7 @@ export default function App() {
  const [catalogLoading,setCatalogLoading] = useState(true)
  const [catalogError,setCatalogError] = useState<string|null>(null)
  const [reparseNotice,setReparseNotice] = useState<string|null>(null)
- const reparseAnchor=useRef<{entry:Entry;version:number}|null>(null)
+ const reparseAnchor=useRef<{token:string;version:number}|null>(null)
  const scanVersion=useRef(0),catalogVersion=useRef(0)
  const appSearch=useRef<HTMLInputElement>(null),associationSearch=useRef<HTMLInputElement>(null)
  const appList=useRef<HTMLDivElement>(null),associationList=useRef<HTMLDivElement>(null)
@@ -131,22 +131,27 @@ export default function App() {
   setSnapshot(previous=>value.scanning && previous?.apps?.length ? {...value,apps:[...new Map([...(previous.apps ?? []),...(value.apps ?? [])].map(item=>[item.app.path,item])).values()]} : value)
   setEntries(previous=>value.scanning? [...new Map([...previous,...(value.entries??[])].map(entry=>[entry.id,entry])).values()]:value.entries??[])
   const anchor=reparseAnchor.current
-  if(anchor && !value.scanning && value.version>anchor.version){
+  const result=anchor && !value.scanning && value.version>anchor.version ? value.reparses?.find(result=>result.token===anchor.token) : undefined
+  if(result){
    reparseAnchor.current=null
-   const savedIdentity=anchor.entry.id.startsWith('unavailable:') ? anchor.entry.diagnosticIdentifiers?.find(id=>id.startsWith('file:')||id.startsWith('scheme:')) ?? anchor.entry.id.slice('unavailable:'.length) : undefined
-   const matches=(value.entries??[]).filter(entry=>entry.id===anchor.entry.id || (savedIdentity ? entry.id===savedIdentity : entry.sources?.some(source=>anchor.entry.sources?.some(original=>source.kind===original.kind && source.inputKind===original.inputKind && source.rawInput===original.rawInput && source.appPath===original.appPath && source.origin===original.origin))))
-   if(matches.length===1)setSelectedID(matches[0].id)
-   else {setDetailOpen(false);setSelectedID(null);setReparseNotice(matches.length?'此输入解析为多个文件类型，请在列表中选择具体类型。':'此关联来源已不在当前目录中，请重新选择关联。')}
+   if(result.status==='matched')setSelectedID(result.entryID!)
+   else {setDetailOpen(false);setSelectedID(null);setReparseNotice(result.status==='ambiguous'?'此输入解析为多个文件类型，请在列表中选择具体类型。':'此关联来源已不在当前目录中，请重新选择关联。')}
   }
  },[])
- const scan=useCallback(async()=>{setCatalogError(null);try{acceptSnapshot(await StartScan())}catch(error){reparseAnchor.current=null;setCatalogError(String(error))}},[acceptSnapshot])
- const reparse=()=>{if(!selected)return;reparseAnchor.current={entry:selected,version:scanVersion.current};setReparseNotice(null);void scan()}
+ const scan=useCallback(async()=>{setCatalogError(null);try{acceptSnapshot(await StartScan())}catch(error){setCatalogError(String(error))}},[acceptSnapshot])
+ const reparse=async()=>{
+  if(!selected)return
+  const anchor={token:crypto.randomUUID(),version:scanVersion.current}
+  reparseAnchor.current=anchor;setReparseNotice(null);setCatalogError(null)
+  try{acceptSnapshot(await Reparse(selected,anchor.token))}
+  catch(error){if(reparseAnchor.current===anchor){reparseAnchor.current=null;setCatalogError(String(error))}}
+ }
  useEffect(()=>{
   let active=true
   const off=Events.On('defaultapps:catalog',event=>{if(active)acceptSnapshot(event.data)})
   void GetSnapshot().then(value=>{if(active)acceptSnapshot(value)}).catch(error=>{if(active)setCatalogError(String(error))})
   void scan()
-  return()=>{active=false;off()}
+  return()=>{active=false;reparseAnchor.current=null;off()}
  },[acceptSnapshot,scan])
  useEffect(()=>{void refreshCatalog();return()=>{++catalogVersion.current}},[refreshCatalog])
  const selectApp=(path:string,focus=false)=>{
