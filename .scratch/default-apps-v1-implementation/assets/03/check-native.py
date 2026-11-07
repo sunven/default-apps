@@ -52,7 +52,7 @@ queries={}
 baseline=json.loads((root/'independent-before.json').read_text())
 for id,expected in baseline['queries'].items():
  kind,key=id.split(':',1)
- observed=js("const {Call}=await import('/wails/runtime.js');return await Call.ByID(794654841,"+json.dumps({'kind':kind,'key':key})+")")
+ observed=js("const {Call}=await import('/wails/runtime.js');return await Call.ByID(3233615384,"+json.dumps({'kind':kind,'key':key})+")")
  assert observed['default']['known'] and observed['candidates']['known']
  assert (observed['default']['app']['path'] if observed['default']['app'] else None)==expected['current']
  assert sorted(a['path'] for a in observed['candidates']['apps'])==sorted(expected['candidates'])

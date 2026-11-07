@@ -84,7 +84,7 @@ def first_run():
  # Every saved association is now queryable; these are fresh independent native queries.
  queries={}
  for item in saved['associations']:
-  kind,key=item['selectedID'].split(':',1);queries[item['selectedID']]=service('association','Query',{'kind':kind,'key':key});assert queries[item['selectedID']]['default']['known']
+  kind,key=item['selectedID'].split(':',1);queries[item['selectedID']]=service('change','Query',{'kind':kind,'key':key});assert queries[item['selectedID']]['default']['known']
  dump('first-run.json',{'fileCancel':cancel,'fileSuccess':filepanel,'unknownFile':unknownpanel,'applicationCancel':appcancel,'applicationSelections':selections,'ambiguity':matches,'saved':saved,'manualApps':manual,'queries':queries})
  print('first run passed')
 
@@ -100,7 +100,7 @@ def restart():
  # Public snapshot establishes newly loaded identities; query evidence is fresh in this new process.
  queries={}
  for item in saved['associations']:
-  kind,key=item['selectedID'].split(':',1);queries[item['selectedID']]=service('association','Query',{'kind':kind,'key':key});assert queries[item['selectedID']]['default']['known']
+  kind,key=item['selectedID'].split(':',1);queries[item['selectedID']]=service('change','Query',{'kind':kind,'key':key});assert queries[item['selectedID']]['default']['known']
  dump('restart.json',{'saved':saved,'restoredEntries':restored,'manualApps':manual,'queries':queries})
  capture('restart-native.png');print('restart passed')
 

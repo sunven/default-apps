@@ -48,7 +48,7 @@ func main() {
 	app = application.New(application.Options{
 		Name:        "Default Apps",
 		Description: "查看与管理 macOS 文件类型和 URL 协议的默认应用",
-		Services:    []application.Service{application.NewService(associationService), application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService)},
+		Services:    []application.Service{application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService)},
 		Assets:      application.AssetOptions{Handler: application.AssetFileServerFS(assets)},
 		Mac:         application.MacOptions{ApplicationShouldTerminateAfterLastWindowClosed: true},
 		ShouldQuit: func() bool {

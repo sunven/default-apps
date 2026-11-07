@@ -14,7 +14,7 @@ def call(name, **arguments):
 
 initial=call('js_eval',js='return {width:innerWidth,height:innerHeight,text:document.body.innerText,overflow:document.documentElement.scrollWidth-innerWidth}')
 windows=call('windows_list')
-query=call('js_eval',js="const {Call}=await import('/wails/runtime.js'); return await Call.ByID(794654841,{kind:'file',key:'com.adobe.pdf'})")
+query=call('js_eval',js="const {Call}=await import('/wails/runtime.js'); return await Call.ByID(3233615384,{kind:'file',key:'com.adobe.pdf'})")
 independent=json.loads((root/'independent-query.json').read_text())
 assert query['default']['app']['path']==independent['current']
 assert sorted(x['displayPath'] for x in query['candidates']['apps'])==sorted(independent['candidates'])

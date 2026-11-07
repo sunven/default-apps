@@ -28,7 +28,7 @@ assert resolved==set(independent['queries']), (resolved,set(independent['queries
 queries={}
 for entry in catalog:
  if not entry['resolved']:continue
- value=js("const {Call}=await import('/wails/runtime.js'); return await Call.ByID(794654841,"+json.dumps(entry['association'])+")")
+ value=js("const {Call}=await import('/wails/runtime.js'); return await Call.ByID(3233615384,"+json.dumps(entry['association'])+")")
  expected=independent['queries'][entry['id']]
  assert value['default']['known'] and value['candidates']['known']
  assert not value['default']['error'] and not value['candidates']['error']
