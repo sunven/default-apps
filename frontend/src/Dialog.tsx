@@ -1,6 +1,7 @@
 import { useId, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { isComposing } from './keyboard'
+import { Icon } from './Icon'
 
 // Shared by association, copy and manual-entry dialogs. Mount only while open.
 export function Dialog({ title, subtitle, onClose, children }: {title:string; subtitle?:string; onClose:()=>void; children:ReactNode}) {
@@ -27,7 +28,7 @@ export function Dialog({ title, subtitle, onClose, children }: {title:string; su
    else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first?.focus()}
   }
  }}>
-  <div className="dialog-heading"><div><h2 id={id}>{title}</h2>{subtitle ? <p>{subtitle}</p> : null}</div><button data-dialog-close onClick={onClose} aria-label={`关闭${title}`}>关闭</button></div>
+  <div className="dialog-heading"><div><h2 id={id}>{title}</h2>{subtitle ? <p>{subtitle}</p> : null}</div><button className="btn dialog-close" data-dialog-close onClick={onClose} aria-label={`关闭${title}`} title="关闭 · Esc"><Icon name="close"/></button></div>
   <div className="dialog-body">{children}</div>
  </dialog>,document.body)
 }
