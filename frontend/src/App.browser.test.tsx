@@ -32,6 +32,22 @@ beforeEach(()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
 })
 
+test('application icons follow each copy and a failed image falls back without changing its accessible name',async()=>{
+ const icons={...snapshot,apps:snapshot.apps!.map((item,index)=>({...item,app:{...item.app,iconData:index?'archive-icon':'reader-icon'}}))}
+ vi.mocked(GetSnapshot).mockResolvedValue(icons)
+ vi.mocked(StartScan).mockResolvedValue(icons)
+ render(<App/>);const row=await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
+ const archiveRow=screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})
+ expect(row.querySelector('img')).toHaveAttribute('src','data:image/png;base64,reader-icon')
+ expect(archiveRow.querySelector('img')).toHaveAttribute('src','data:image/png;base64,archive-icon')
+ fireEvent.error(row.querySelector('img')!)
+ expect(row.querySelector('img')).toBeNull()
+ expect(row.querySelector('.application-icon')).toHaveTextContent('R')
+ expect(row).toHaveAccessibleName('Reader 2.4 /Applications/Reader.app')
+ await act(async()=>publish({data:{...icons,version:3,apps:[{...icons.apps[0],app:{...icons.apps[0].app,iconData:'updated-icon'}}]}}))
+ expect(row.querySelector('img')).toHaveAttribute('src','data:image/png;base64,updated-icon')
+})
+
 test('application metadata matches show all declarations, declaration matches narrow them, and the right filter narrows again',async()=>{
  render(<App/>);const search=await screen.findByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})
  const rows=screen.getByRole('region',{name:'声明关联列表'})

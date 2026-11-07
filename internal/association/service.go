@@ -20,6 +20,7 @@ type AppCopy struct {
 	Name          string `json:"name"`
 	Version       string `json:"version"`
 	BundleID      string `json:"bundleID"`
+	IconData      string `json:"iconData,omitempty"`
 	MetadataError string `json:"metadataError,omitempty"`
 }
 

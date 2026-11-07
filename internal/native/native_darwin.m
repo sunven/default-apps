@@ -9,6 +9,31 @@ static char *encode(id value) {
     return strdup([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding].UTF8String);
 }
 
+static NSString *applicationIconData(NSURL *url) {
+    // Fixed pixel dimensions keep scan snapshots small and remain sharp on Retina.
+    // iconForFile: is safe on the scan worker; draw into a private bitmap context.
+    @try {
+        NSImage *icon = [NSWorkspace.sharedWorkspace iconForFile:url.path];
+        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+            pixelsWide:128 pixelsHigh:128 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES
+            isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:0 bitsPerPixel:0];
+        NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap];
+        if (!icon || !context) return @"";
+        [NSGraphicsContext saveGraphicsState];
+        @try {
+            NSGraphicsContext.currentContext = context;
+            [icon drawInRect:NSMakeRect(0, 0, 128, 128) fromRect:NSZeroRect
+                  operation:NSCompositingOperationCopy fraction:1.0];
+        } @finally {
+            [NSGraphicsContext restoreGraphicsState];
+        }
+        NSData *png = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+        return [png base64EncodedStringWithOptions:0] ?: @"";
+    } @catch (NSException *exception) {
+        return @"";
+    }
+}
+
 static NSDictionary *applicationCopy(NSURL *url) {
     NSURL *resolved = url.URLByResolvingSymlinksInPath.URLByStandardizingPath;
     // File-reference resolution asks the filesystem for the actual bundle spelling.
@@ -26,12 +51,13 @@ static NSDictionary *applicationCopy(NSURL *url) {
     [canonical checkResourceIsReachableAndReturnError:&metadataError];
     return @{@"path": canonical.path ?: @"", @"displayPath": url.path ?: @"",
              @"name": name ?: @"", @"version": [version isKindOfClass:NSString.class] ? version : @"",
+             @"iconData": applicationIconData(canonical),
              @"metadataError": metadataError.localizedDescription ?: (bundle.infoDictionary ? @"" : @"无法读取应用包元数据"),
              @"bundleID": bundle.bundleIdentifier ?: @""};
 }
 
-// Property-list objects are decoded as data on the scan worker. No NSWorkspace,
-// app launch, registration or main-thread filesystem traversal is involved.
+// Property-list objects are decoded as data on the scan worker, without app
+// launch, registration or main-thread filesystem traversal.
 static id jsonProperty(id value) {
     if ([value isKindOfClass:NSDictionary.class]) {
         NSMutableDictionary *result = [NSMutableDictionary dictionary];
