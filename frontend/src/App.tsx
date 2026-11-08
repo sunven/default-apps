@@ -23,9 +23,13 @@ function ApplicationIcon({ app, className='' }: { app: AppCopy; className?: stri
  </span>
 }
 
+function SystemAppBadge({ app }: { app: AppCopy }) {
+ return app.system ? <span className="system-app-badge" aria-label="系统应用" title="受 macOS 系统保护的应用">系统</span> : null
+}
+
 function ApplicationCopy({ app, onSelect, missing=false, onSubmit, disabled=false }: { app: AppCopy; onSelect?: (app:AppCopy) => void; missing?:boolean; onSubmit?:(app:AppCopy)=>void; disabled?:boolean }) {
  return <div className="application-copy">
-  <div className="copy-heading"><div className="copy-identity"><ApplicationIcon app={app} className="application-icon--copy"/><strong>{app.name || app.path.split('/').pop()}</strong></div><span className="version-tag">版本 {app.version || '未知'}</span></div>
+  <div className="copy-heading"><div className="copy-identity"><ApplicationIcon app={app} className="application-icon--copy"/><strong>{app.name || app.path.split('/').pop()}</strong><SystemAppBadge app={app}/></div><span className="version-tag">版本 {app.version || '未知'}</span></div>
   <p className="copy-path"><Icon name="folder"/>{app.displayPath || app.path}</p>
   {app.displayPath && app.displayPath !== app.path ? <p className="copy-path">实际位置：{app.path}</p> : null}
   <p className="copy-bundle">{app.bundleID || 'Bundle ID 未提供'}</p>
@@ -215,7 +219,7 @@ export default function App() {
     <div className="catalog-heading"><h2>已安装应用</h2><span>{applicationMatches.length} / {snapshot?.apps?.length ?? 0}</span></div>
     <label className="search-field">搜索应用<span className="search-input"><Icon name="search"/><input ref={appSearch} type="search" aria-label="搜索应用名称、版本、路径或声明" placeholder="名称、版本、路径或声明" value={appQuery} onChange={event=>{setAppQuery(event.target.value);setSelectedAppPath(null);setSelectedID(null);if(appList.current)appList.current.scrollTop=0;if(associationList.current)associationList.current.scrollTop=0}} onKeyDown={event=>searchKey(event,true)}/><kbd aria-hidden="true">⌘ F</kbd></span></label>
     <p className="search-hint">匹配应用信息时显示全部声明；仅声明命中时显示匹配项。</p>
-    <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><strong>{item.app.name}</strong><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个声明关联</span></span><Icon name="chevron"/></button>)}</div>
+    <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个声明关联</span></span><Icon name="chevron"/></button>)}</div>
     <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
    </aside> : null}
    <main className="workspace">

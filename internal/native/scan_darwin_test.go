@@ -21,6 +21,44 @@ import (
 	"github.com/sunven/default-apps/internal/native"
 )
 
+func TestReadApplicationIdentifiesProtectedSystemCopies(t *testing.T) {
+	adapter := native.Adapter{}
+	for _, path := range []string{
+		"/System/Applications/Utilities/Activity Monitor.app",
+		"/System/Applications/App Store.app",
+		"/Applications/Safari.app",
+	} {
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			bundle, err := adapter.ReadApplication(context.Background(), path)
+			if err != nil || !bundle.App.Usable() || !bundle.App.System {
+				t.Fatalf("system app not identified: %v, %+v", err, bundle.App)
+			}
+			alias := filepath.Join(t.TempDir(), "System Alias.app")
+			if err := os.Symlink(path, alias); err != nil {
+				t.Fatal(err)
+			}
+			linked, err := adapter.ReadApplication(context.Background(), alias)
+			if err != nil || !linked.App.System || linked.App.Path != bundle.App.Path {
+				t.Fatalf("system alias changed classification: %v, path=%s, system=%v", err, linked.App.Path, linked.App.System)
+			}
+		})
+	}
+	// A matching Apple name/ID and a System/Applications directory are not evidence
+	// that this particular copy belongs to macOS.
+	path := filepath.Join(t.TempDir(), "System", "Applications", "Safari.app")
+	if err := os.MkdirAll(filepath.Join(path, "Contents"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	plist := `<?xml version="1.0"?><plist version="1.0"><dict><key>CFBundleName</key><string>Safari</string><key>CFBundleIdentifier</key><string>com.apple.Safari</string><key>CFBundlePackageType</key><string>APPL</string></dict></plist>`
+	if err := os.WriteFile(filepath.Join(path, "Contents", "Info.plist"), []byte(plist), 0644); err != nil {
+		t.Fatal(err)
+	}
+	bundle, err := adapter.ReadApplication(context.Background(), path)
+	if err != nil || !bundle.App.Usable() || bundle.App.System {
+		t.Fatalf("user copy misclassified: %v, metadata=%s, system=%v", err, bundle.App.MetadataError, bundle.App.System)
+	}
+}
+
 func TestReadApplicationReturnsIconForEachCopy(t *testing.T) {
 	root := t.TempDir()
 	for _, shade := range []color.NRGBA{{R: 255, A: 255}, {B: 255, A: 255}} {

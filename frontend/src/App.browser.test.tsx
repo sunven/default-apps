@@ -32,6 +32,24 @@ beforeEach(()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
 })
 
+test('system labels follow the native classification of each copy in the list and details',async()=>{
+ const systemApp={...app,name:'Safari',bundleID:'com.apple.Safari',path:'/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app',displayPath:'/Applications/Safari.app',system:true}
+ const userApp={...systemApp,path:'/Applications/Safari Copy.app',displayPath:'/Applications/Safari Copy.app',system:false}
+ const classified={...snapshot,apps:[{...snapshot.apps![0],app:systemApp},{...snapshot.apps![1],app:userApp}]}
+ vi.mocked(GetSnapshot).mockResolvedValue(classified)
+ vi.mocked(StartScan).mockResolvedValue(classified)
+ render(<App/>);const systemRow=await screen.findByRole('button',{name:`Safari 2.4 ${systemApp.path} 系统应用`})
+ const userRow=screen.getByRole('button',{name:`Safari 2.4 ${userApp.path}`})
+ expect(within(systemRow).getByText('系统')).toBeVisible()
+ expect(within(userRow).queryByText('系统')).not.toBeInTheDocument()
+ await userEvent.click(screen.getByRole('button',{name:'应用详情…'}))
+ expect(within(screen.getByRole('dialog')).getByText('系统')).toBeVisible()
+ await userEvent.keyboard('{Escape}')
+ await userEvent.click(userRow)
+ await userEvent.click(screen.getByRole('button',{name:'应用详情…'}))
+ expect(within(screen.getByRole('dialog')).queryByText('系统')).not.toBeInTheDocument()
+})
+
 test('application icons follow each copy and a failed image falls back without changing its accessible name',async()=>{
  const icons={...snapshot,apps:snapshot.apps!.map((item,index)=>({...item,app:{...item.app,iconData:index?'archive-icon':'reader-icon'}}))}
  vi.mocked(GetSnapshot).mockResolvedValue(icons)

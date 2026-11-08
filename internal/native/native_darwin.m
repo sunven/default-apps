@@ -1,6 +1,7 @@
 #import <AppKit/AppKit.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #include <string.h>
+#include <sys/stat.h>
 #include "native.h"
 
 static char *encode(id value) {
@@ -49,8 +50,14 @@ static NSDictionary *applicationCopy(NSURL *url) {
     if (![version isKindOfClass:NSString.class]) version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSError *metadataError = nil;
     [canonical checkResourceIsReachableAndReturnError:&metadataError];
+    // Use the actual copy's SIP flag, including Safari's Cryptex target.
+    // An Apple bundle ID alone does not make a user-installed copy a system app.
+    struct stat attributes;
+    BOOL system = stat(canonical.fileSystemRepresentation, &attributes) == 0 &&
+                  (attributes.st_flags & SF_RESTRICTED) != 0;
     return @{@"path": canonical.path ?: @"", @"displayPath": url.path ?: @"",
              @"name": name ?: @"", @"version": [version isKindOfClass:NSString.class] ? version : @"",
+             @"system": @(system),
              @"iconData": applicationIconData(canonical),
              @"metadataError": metadataError.localizedDescription ?: (bundle.infoDictionary ? @"" : @"无法读取应用包元数据"),
              @"bundleID": bundle.bundleIdentifier ?: @""};

@@ -101,6 +101,9 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .application-row-content {display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
 .application-row strong {font-size:14px;font-weight:600;overflow-wrap:anywhere}
 .application-row-content>span {font-size:12px;color:var(--muted);max-width:100%;font-weight:400}
+.application-row-heading {display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}
+.application-row-heading strong {color:var(--ink)}
+.system-app-badge {flex:none;font-size:11px;font-weight:400;line-height:1.5;color:var(--muted);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;padding:0 5px;white-space:nowrap}
 .sidebar-note {padding:12px 3px 4px;font-size:11px;color:var(--muted)}
 
 .workspace {background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}

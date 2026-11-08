@@ -7,6 +7,7 @@ export interface AppCopy {
     "name": string;
     "version": string;
     "bundleID": string;
+    "system"?: boolean;
     "iconData"?: string;
     "metadataError"?: string;
 }
