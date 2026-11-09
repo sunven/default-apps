@@ -60,7 +60,9 @@ function DefaultCell({ entry, rowError, observation }: { entry: Entry; rowError?
 }
 
 type View = 'app' | 'file' | 'scheme'
+type ApplicationFilter = 'user' | 'system' | 'all'
 const viewNames:Record<View,string> = {app:'应用',file:'文件类型',scheme:'URL 协议'}
+const appFilterNames:Record<ApplicationFilter,string> = {user:'非系统',system:'系统',all:'全部'}
 const entryName = (entry:Entry) => entry.name || entry.sources?.[0]?.rawInput || '关联'
 const entryText = (entry:Entry) => [entry.name,entry.association.key,...(entry.extensions ?? []).map(value=>'.'+value),...(entry.mimeTypes ?? []),...(entry.sources ?? []).flatMap(source=>[source.rawInput,source.label])].join(' ').toLocaleLowerCase()
 function focusElement(element:HTMLElement|null|undefined) { element?.focus({preventScroll:true});element?.scrollIntoView?.({block:'nearest'}) }
@@ -70,6 +72,7 @@ export default function App() {
  const recovery=useRecoveryAction(changes)
  const [entries,setEntries] = useState<Entry[]>([])
  const [kind,setKind] = useState<View>('app')
+ const [appFilter,setAppFilter] = useState<ApplicationFilter>('user')
  const [appQuery,setAppQuery] = useState('')
  const [filter,setFilter] = useState('')
  const [selectedAppPath,setSelectedAppPath] = useState<string|null>(null)
@@ -92,18 +95,18 @@ export default function App() {
  const applicationMatches=useMemo(()=>{
   const term=appQuery.trim().toLocaleLowerCase()
   const index=new Map(entries.map(entry=>[entry.id,entry]))
-  return (snapshot?.apps ?? []).filter(item=>!item.unavailable).map(item=>{
+  return (snapshot?.apps ?? []).filter(item=>!item.unavailable && (appFilter==='all' || !!item.app.system===(appFilter==='system'))).map(item=>{
    const metadataMatch=!term || [item.app.name,item.app.version,item.app.path,item.app.displayPath,item.app.bundleID].join(' ').toLocaleLowerCase().includes(term)
    const declarations=(item.associationIDs ?? []).flatMap(id=>index.get(id) ?? [])
    return {item,metadataMatch,entries:metadataMatch ? declarations : declarations.filter(entry=>entryText(entry).includes(term))}
   }).filter(match=>match.metadataMatch || match.entries.length)
- },[snapshot,entries,appQuery])
+ },[snapshot,entries,appQuery,appFilter])
  const catalogSettled=!!snapshot&&!snapshot.scanning
  const inCatalog=(path:string)=>!!snapshot?.apps?.some(item=>!item.unavailable&&item.app.path===path)
  const missingAppPath=selectedAppPath&&catalogSettled&&!inCatalog(selectedAppPath)?selectedAppPath:null
  const selectedMatch=missingAppPath ? undefined : (selectedAppPath?applicationMatches.find(match=>match.item.app.path===selectedAppPath):applicationMatches[0])
  const selectedApp=selectedMatch?.item
- const emptyHeadline=()=>{if(kind!=='app')return catalogLoading?'正在加载关联目录':catalogError?'关联目录暂时不可用':filter?'没有匹配的关联项':'此入口暂无关联';if(missingAppPath)return '此副本的关联详情已清空';if(selectedApp)return selectedApp.associationIDs?.length?'没有匹配的关联项':'此应用未声明可处理的文件类型或 URL 协议';if(appQuery)return '没有匹配的应用';return snapshot?.scanning?'正在发现应用':'未发现应用'}
+ const emptyHeadline=()=>{if(kind!=='app')return catalogLoading?'正在加载关联目录':catalogError?'关联目录暂时不可用':filter?'没有匹配的关联项':'此入口暂无关联';if(missingAppPath)return '此副本的关联详情已清空';if(selectedApp)return selectedApp.associationIDs?.length?'没有匹配的关联项':'此应用未声明可处理的文件类型或 URL 协议';if(appQuery)return '没有匹配的应用';return snapshot?.scanning?'正在发现应用':appFilter==='all'?'未发现应用':`未发现${appFilterNames[appFilter]}应用`}
  useLayoutEffect(()=>{if(kind==='app' && selectedApp && selectedAppPath!==selectedApp.app.path)setSelectedAppPath(selectedApp.app.path)},[kind,selectedApp,selectedAppPath])
  const visibleEntries=useMemo(()=> (kind==='app' ? selectedMatch?.entries ?? [] : entries.filter(entry=>entry.association.kind===kind)).filter(entry=>entryText(entry).includes(filter.trim().toLocaleLowerCase())).sort((a,b)=>Number(b.sources?.some(s=>s.kind==='common'))-Number(a.sources?.some(s=>s.kind==='common'))),[kind,selectedMatch,entries,filter])
  const browsedSelected=visibleEntries.find(entry=>entry.id===selectedID) ?? visibleEntries[0]
@@ -164,6 +167,13 @@ export default function App() {
   if(associationList.current)associationList.current.scrollTop=0
   if(focus)focusElement(Array.from(appList.current?.querySelectorAll<HTMLButtonElement>('[data-app-path]') ?? []).find(el=>el.dataset.appPath===path))
  }
+ const changeAppFilter=(value:ApplicationFilter)=>{
+  if(value===appFilter)return
+  reparseAnchor.current=null;appScroll.current=0
+  setAppFilter(value);setSelectedAppPath(null);setSelectedID(null);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null);setReparseNotice(null)
+  if(appList.current)appList.current.scrollTop=0
+  if(associationList.current)associationList.current.scrollTop=0
+ }
  const selectEntry=(id:string,focus=false)=>{
   reparseAnchor.current=null;setReparseNotice(null)
   setSelectedID(id)
@@ -217,6 +227,7 @@ export default function App() {
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">
     <div className="catalog-heading"><h2>已安装应用</h2><span>{applicationMatches.length} / {snapshot?.apps?.length ?? 0}</span></div>
+    <div className="application-filter" role="group" aria-label="应用类型筛选">{(['user','system','all'] as ApplicationFilter[]).map(value=><button key={value} aria-label={`${appFilterNames[value]}应用`} aria-pressed={appFilter===value} onClick={()=>changeAppFilter(value)}>{appFilterNames[value]}</button>)}</div>
     <label className="search-field">搜索应用<span className="search-input"><Icon name="search"/><input ref={appSearch} type="search" aria-label="搜索应用名称、版本、路径或声明" placeholder="名称、版本、路径或声明" value={appQuery} onChange={event=>{setAppQuery(event.target.value);setSelectedAppPath(null);setSelectedID(null);if(appList.current)appList.current.scrollTop=0;if(associationList.current)associationList.current.scrollTop=0}} onKeyDown={event=>searchKey(event,true)}/><kbd aria-hidden="true">⌘ F</kbd></span></label>
     <p className="search-hint">匹配应用信息时显示全部声明；仅声明命中时显示匹配项。</p>
     <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个声明关联</span></span><Icon name="chevron"/></button>)}</div>
@@ -243,7 +254,7 @@ export default function App() {
       <div className="row-actions"><button className="btn row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}>详情…</button>{kind==='app'&&selectedApp?<button className="btn row-submit" data-current={isDefault} aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</button>:null}
       {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><span key={r.requestID} className="change-row-state" data-confirmed={r.confirmed}>{requestLabel(r)}</span>)}</div>
      </div>})}
-     {!visibleEntries.length ? <div className="empty-workspace"><span className="empty-icon"><Icon name="search"/></span><h2>{emptyHeadline()}</h2><p>可清除搜索，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button className="btn" onClick={clearSearch}>清除搜索</button>{kind!=='file' ? <button className="btn" onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button className="btn" onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
+     {!visibleEntries.length ? <div className="empty-workspace"><span className="empty-icon"><Icon name="search"/></span><h2>{emptyHeadline()}</h2><p>可清除搜索{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button className="btn" onClick={clearSearch}>清除搜索</button>{kind==='app' && !selectedApp && appFilter!=='all' ? <button className="btn" onClick={()=>changeAppFilter('all')}>显示全部应用</button> : null}{kind!=='file' ? <button className="btn" onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button className="btn" onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
     </div>
     <footer className="browser-footer"><span className="footer-source"><span className="status-dot"/>默认应用由系统独立查询</span>{snapshot?.issues?.length ? <button className="btn" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span className="keyboard-hint"><kbd>⌘ 1</kbd><kbd>2</kbd><kbd>3</kbd> 切换入口</span></footer>
    </main>
