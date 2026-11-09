@@ -188,8 +188,6 @@ test('opens with installed copies, declared associations, and an independent def
  await openEntry('PDF 文稿 com.adobe.pdf')
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('/Volumes/Archive/Reader.app')).toBeVisible()
  expect(screen.getByText('扫描问题 · 1')).toBeVisible()
- await userEvent.click(screen.getByRole('button',{name:'查看此副本 /Volumes/Archive/Reader.app'}))
- expect(screen.getByRole('region',{name:'所选应用副本'})).toHaveTextContent('/Volumes/Archive/Reader.app')
  await closeDetails();await userEvent.click(within(apps).getByRole('button',{name:/Reader 2/}))
  expect(screen.getByText('此应用未声明可处理的文件类型或 URL 协议')).toBeVisible()
  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDocument()

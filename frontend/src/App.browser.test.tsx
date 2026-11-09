@@ -136,7 +136,7 @@ test('an empty application category offers an explicit way to show all applicati
  expect(screen.getByText('1 / 1')).toBeVisible()
 })
 
-test('system labels follow the native classification of each copy in the list and details',async()=>{
+test('system labels follow the native classification of each copy in the list',async()=>{
  const systemApp={...app,name:'Safari',bundleID:'com.apple.Safari',path:'/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app',displayPath:'/Applications/Safari.app',system:true}
  const userApp={...systemApp,path:'/Applications/Safari Copy.app',displayPath:'/Applications/Safari Copy.app',system:false}
  const classified={...snapshot,apps:[{...snapshot.apps![0],app:systemApp},{...snapshot.apps![1],app:userApp}]}
@@ -149,12 +149,6 @@ test('system labels follow the native classification of each copy in the list an
  const userRow=screen.getByRole('button',{name:`Safari 2.4 ${userApp.path}`})
  expect(within(systemRow).getByText('系统')).toBeVisible()
  expect(within(userRow).queryByText('系统')).not.toBeInTheDocument()
- await userEvent.click(screen.getByRole('button',{name:'应用详情…'}))
- expect(within(screen.getByRole('dialog')).getByText('系统')).toBeVisible()
- await userEvent.keyboard('{Escape}')
- await userEvent.click(userRow)
- await userEvent.click(screen.getByRole('button',{name:'应用详情…'}))
- expect(within(screen.getByRole('dialog')).queryByText('系统')).not.toBeInTheDocument()
 })
 
 test('application icons follow each copy and a failed image falls back without changing its accessible name',async()=>{
@@ -191,19 +185,13 @@ test('application metadata matches show all declarations, declaration matches na
  expect(within(rows).getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeVisible()
 })
 
-test('association details are closed by default and nested copy dialogs return focus through their triggers',async()=>{
+test('association details are closed by default and return focus to their trigger',async()=>{
  render(<App/>);const rows=await screen.findByRole('region',{name:'声明关联列表'})
  const name=within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})
  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDocument()
  await userEvent.click(name)
  const detail=screen.getByRole('dialog',{name:'PDF 文稿'})
  expect(within(detail).getByRole('region',{name:'当前默认应用'})).toHaveTextContent('/Volumes/Archive/Reader.app')
- const trigger=within(detail).getByRole('button',{name:'查看此副本 /Volumes/Archive/Reader.app'})
- await userEvent.click(trigger)
- expect(screen.getByRole('dialog',{name:'所选应用副本'})).toHaveTextContent('/Volumes/Archive/Reader.app')
- await userEvent.keyboard('{Escape}')
- expect(screen.queryByRole('dialog',{name:'所选应用副本'})).not.toBeInTheDocument()
- expect(trigger).toHaveFocus()
  await userEvent.keyboard('{Escape}')
  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
  expect(name).toHaveFocus()

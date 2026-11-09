@@ -22,7 +22,7 @@ function SystemAppBadge({ app }: { app: AppCopy }) {
  return app.system ? <span className="system-app-badge" aria-label="系统应用" title="受 macOS 系统保护的应用">系统</span> : null
 }
 
-function ApplicationCopy({ app, onSelect, missing=false, onSubmit, disabled=false }: { app: AppCopy; onSelect?: (app:AppCopy) => void; missing?:boolean; onSubmit?:(app:AppCopy)=>void; disabled?:boolean }) {
+function ApplicationCopy({ app, missing=false, onSubmit, disabled=false }: { app: AppCopy; missing?:boolean; onSubmit?:(app:AppCopy)=>void; disabled?:boolean }) {
  return <div className="application-copy">
   <div className="copy-heading"><div className="copy-identity"><ApplicationIcon app={app} className="application-icon--copy"/><strong>{app.name || app.path.split('/').pop()}</strong><SystemAppBadge app={app}/></div><span className="version-tag">版本 {app.version || '未知'}</span></div>
   <p className="copy-path"><Icon name="folder"/>{app.displayPath || app.path}</p>
@@ -31,7 +31,6 @@ function ApplicationCopy({ app, onSelect, missing=false, onSubmit, disabled=fals
   {missing ? <p className="query-error">目录中已找不到此副本；以上仍是系统实际查询结果。</p> : null}
   {app.metadataError ? <p className="query-error">应用信息暂不可用：{app.metadataError}</p> : null}
   {onSubmit ? <button className="btn btn--primary change-copy-action" aria-label={`设为默认应用 ${app.path}`} disabled={disabled} onClick={()=>onSubmit(app)}>设为默认应用</button> : null}
-  {onSelect ? <button className="btn copy-select" aria-label={`查看此副本 ${app.path}`} onClick={() => onSelect(app)}>查看此副本</button> : null}
  </div>
 }
 
@@ -93,7 +92,7 @@ export default function App() {
     <header className="app-heading">
      <div className="page-identity"><span className="page-icon" data-application={kind==='app' && !!selectedApp}>{kind==='app' && selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name={kind}/>}</span><div><h1>{kind==='app' ? selectedApp?.app.name || '已安装应用' : viewNames[kind]}</h1>
       {kind==='app' && selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>{kind==='file' ? '查看文件类型，选择打开它们的默认应用。' : kind==='scheme' ? '查看 URL 协议，选择接收链接的默认应用。' : '这台 Mac 的实际默认与系统候选'}</p>}
-     </div></div>{kind==='app' && selectedApp ? <button className="btn" onClick={()=>inspectCopy(selectedApp.app)}>应用详情…<Icon name="chevron"/></button> : null}
+     </div></div>
     </header>
     {catalogLoading || snapshot?.scanning ? <p className="scan-status" role="status">{snapshot?.scanning ? `正在扫描应用…已发现 ${snapshot.apps?.length ?? 0} 份` : '正在解析常用关联…'}</p> : null}
     {reparseNotice ? <p role="status">{reparseNotice}</p> : null}
@@ -126,7 +125,7 @@ export default function App() {
       {transportError ? <p role="alert" className="query-error">查询连接失败{visibleResult ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
       <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
        {visibleResult?.default.error ? <div className="query-error" role="status"><p>{visibleResult.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{visibleResult.default.error.message}</p></div> : null}
-       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={missingCopyPaths.has(visibleResult.default.app.path)} onSelect={inspectCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
+       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={missingCopyPaths.has(visibleResult.default.app.path)} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
        {visibleResult?.default.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.default.observedAt).toLocaleString()}</p> : null}
       </section>
       <section aria-labelledby="candidates-heading"><div className="section-heading"><h2 id="candidates-heading">系统候选应用</h2>{visibleResult?.candidates.known ? <span>{visibleResult.candidates.apps?.length ?? 0} 个应用副本</span> : null}</div>
@@ -135,7 +134,7 @@ export default function App() {
        {visibleResult?.candidates.known && !visibleResult.candidates.apps?.length ? <p>系统未返回候选应用</p> : null}
        {visibleResult?.candidates.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.candidates.observedAt).toLocaleString()}</p> : null}
        <ManualApplicationAction association={selected.association} onSelected={inspectCopy}/>
-       <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSelect={inspectCopy} onSubmit={app=>submitCopy(selected,app)} disabled={!canChange(selected,app)}/></li>)}</ul>
+       <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSubmit={app=>submitCopy(selected,app)} disabled={!canChange(selected,app)}/></li>)}</ul>
       </section>
      </>}
      <Sources entry={selected} />
