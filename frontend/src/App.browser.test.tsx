@@ -340,3 +340,39 @@ test('an unavailable saved copy leaves the usable list but keeps its original pa
  expect(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})).toHaveAttribute('aria-pressed','false')
  expect(screen.queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
 })
+
+test('manual-only filtering combines with search, remembers each view and clears an empty result',async()=>{
+ const manualSource={kind:'manual',inputKind:'identifier',rawInput:jpeg.association.key,normalizedInput:jpeg.association.key,label:jpeg.name}
+ const manualJPEG={...jpeg,sources:[...jpeg.sources!,manualSource]}
+ const manualPDF={...pdf,sources:[...pdf.sources!,{...manualSource,rawInput:pdf.association.key,normalizedInput:pdf.association.key,label:pdf.name}]}
+ const entries=[manualJPEG,manualPDF,otherJPEG,https]
+ const saved={...snapshot,entries}
+ vi.mocked(List).mockResolvedValue(entries)
+ vi.mocked(GetSnapshot).mockResolvedValue(saved)
+ vi.mocked(StartScan).mockResolvedValue(saved)
+ render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ const toggle=screen.getByRole('checkbox',{name:'仅手动添加'})
+ const rows=screen.getByRole('region',{name:'关联列表'})
+ rows.scrollTop=120
+ await userEvent.click(toggle)
+ expect(rows.scrollTop).toBe(0)
+ expect(within(rows).getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeVisible()
+ expect(within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toBeVisible()
+ expect(within(rows).queryByRole('button',{name:'JPEG 导出 test.independent.jpg'})).not.toBeInTheDocument()
+ expect(screen.getByText('2 个关联 · 常用关联优先')).toBeVisible()
+ await userEvent.type(screen.getByRole('searchbox',{name:'搜索文件类型'}),'.jpg')
+ expect(within(rows).queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
+ expect(screen.getByText('1 个关联 · 常用关联优先')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'URL 协议'}))
+ expect(screen.getByRole('checkbox',{name:'仅手动添加'})).not.toBeChecked()
+ expect(screen.getByRole('button',{name:'https https'})).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(screen.getByRole('checkbox',{name:'仅手动添加'})).toBeChecked()
+ expect(screen.getByRole('searchbox',{name:'搜索文件类型'})).toHaveValue('.jpg')
+ await userEvent.type(screen.getByRole('searchbox',{name:'搜索文件类型'}),'missing')
+ await userEvent.click(screen.getByRole('button',{name:'清除搜索和筛选'}))
+ expect(screen.getByRole('checkbox',{name:'仅手动添加'})).not.toBeChecked()
+ expect(screen.getByRole('searchbox',{name:'搜索文件类型'})).toHaveValue('')
+ expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toBeVisible()
+})

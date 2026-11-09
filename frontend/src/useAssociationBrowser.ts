@@ -74,10 +74,10 @@ function browserDOM(refs: BrowserRefs): BrowserDOMAdapter {
   }
 }
 
-type Session = { query: string; selectedID: string | null; scroll: number }
+type Session = { query: string; manualOnly: boolean; selectedID: string | null; scroll: number }
 type State = {
   entries: Entry[]; snapshot: Snapshot | null; scanVersion: number
-  kind: BrowserView; appFilter: ApplicationFilter; appQuery: string; filter: string
+  kind: BrowserView; appFilter: ApplicationFilter; appQuery: string; filter: string; manualOnly: boolean
   selectedAppPath: string | null; selectedID: string | null
   detailOpen: boolean; requestEntry: Entry | null; inspectedCopy: AppCopy | null
   catalogLoading: boolean; catalogError: string | null; catalogRequest: number
@@ -87,10 +87,10 @@ type State = {
 }
 function initialState(): State {
   return {
-    entries: [], snapshot: null, scanVersion: 0, kind: 'app', appFilter: 'user', appQuery: '', filter: '',
+    entries: [], snapshot: null, scanVersion: 0, kind: 'app', appFilter: 'user', appQuery: '', filter: '', manualOnly: false,
     selectedAppPath: null, selectedID: null, detailOpen: false, requestEntry: null, inspectedCopy: null,
     catalogLoading: true, catalogError: null, catalogRequest: 0, reparseNotice: null, reparseAnchor: null,
-    sessions: { app: { query: '', selectedID: null, scroll: 0 }, file: { query: '', selectedID: null, scroll: 0 }, scheme: { query: '', selectedID: null, scroll: 0 } },
+    sessions: { app: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, file: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, scheme: { query: '', manualOnly: false, selectedID: null, scroll: 0 } },
     appScroll: 0, discoveredPaths: new Set(), layout: null,
   }
 }
@@ -111,7 +111,7 @@ function browse(state: State) {
   const missingAppPath = state.selectedAppPath && settled && !availablePaths.has(state.selectedAppPath) ? state.selectedAppPath : null
   const selectedMatch = missingAppPath ? undefined : state.selectedAppPath ? applicationMatches.find(match => match.item.app.path === state.selectedAppPath) : applicationMatches[0]
   const visibleEntries = (state.kind === 'app' ? selectedMatch?.entries ?? [] : state.entries.filter(entry => entry.association.kind === state.kind))
-    .filter(entry => entryText(entry).includes(state.filter.trim().toLocaleLowerCase()))
+    .filter(entry => (!state.manualOnly || entry.sources?.some(source => source.kind === 'manual')) && entryText(entry).includes(state.filter.trim().toLocaleLowerCase()))
     .sort((a, b) => Number(b.sources?.some(source => source.kind === 'common')) - Number(a.sources?.some(source => source.kind === 'common')))
   const browsedSelected = visibleEntries.find(entry => entry.id === state.selectedID) ?? visibleEntries[0]
   return {
@@ -132,6 +132,7 @@ type Action =
   | { type: 'appQuery' | 'filter'; value: string }
   | { type: 'clearSearch'; apps?: boolean; all?: boolean }
   | { type: 'appFilter'; value: ApplicationFilter }
+  | { type: 'manualOnly'; value: boolean }
   | { type: 'rememberAppSelection'; path: string }
   | { type: 'selectApp'; path: string; focus?: boolean }
   | { type: 'selectEntry'; id: string; focus?: boolean; open?: boolean }
@@ -178,9 +179,11 @@ function transition(state: State, action: Action): State {
     case 'reparseFailed': return state.reparseAnchor?.token === action.token ? { ...state, reparseAnchor: null, catalogError: action.error } : state
     case 'appQuery': return { ...state, appQuery: action.value, selectedAppPath: null, selectedID: null, layout: { scroll: { apps: 0, associations: 0 } } }
     case 'filter': return { ...state, filter: action.value, layout: { scroll: { associations: 0 } } }
+    case 'manualOnly': return { ...state, manualOnly: action.value, selectedID: null, reparseAnchor: null, reparseNotice: null,
+      detailOpen: false, requestEntry: null, inspectedCopy: null, layout: { scroll: { associations: 0 } } }
     case 'clearSearch': {
       const next = action.apps || action.all ? { ...state, appQuery: '', selectedAppPath: null, selectedID: null } : state
-      return { ...next, filter: !action.apps || action.all ? '' : state.filter,
+      return { ...next, filter: !action.apps || action.all ? '' : state.filter, manualOnly: action.all ? false : state.manualOnly,
         layout: action.all ? { focus: { kind: state.kind === 'app' ? 'appSearch' : 'associationSearch' } } : state.layout }
     }
     case 'appFilter': return action.value === state.appFilter ? state : { ...state, appFilter: action.value, reparseAnchor: null, reparseNotice: null,
@@ -191,9 +194,9 @@ function transition(state: State, action: Action): State {
     case 'switchView': {
       const changed = action.view !== state.kind
       const session = state.sessions[action.view]
-      const sessions = changed ? { ...state.sessions, [state.kind]: { query: state.filter, selectedID: browse(state).browsedSelected?.id ?? null, scroll: action.scroll.associations ?? 0 } } : state.sessions
+      const sessions = changed ? { ...state.sessions, [state.kind]: { query: state.filter, manualOnly: state.manualOnly, selectedID: browse(state).browsedSelected?.id ?? null, scroll: action.scroll.associations ?? 0 } } : state.sessions
       const appScroll = changed && state.kind === 'app' ? action.scroll.apps ?? 0 : state.appScroll
-      return { ...state, kind: action.view, sessions, appScroll, filter: changed ? session.query : state.filter, selectedID: changed ? session.selectedID : state.selectedID,
+      return { ...state, kind: action.view, sessions, appScroll, filter: changed ? session.query : state.filter, manualOnly: changed ? session.manualOnly : state.manualOnly, selectedID: changed ? session.selectedID : state.selectedID,
         reparseAnchor: null, detailOpen: false, requestEntry: null, inspectedCopy: null,
         layout: { scroll: changed ? { associations: session.scroll, apps: action.view === 'app' ? appScroll : undefined } : undefined,
           focus: action.focus ? { kind: 'view', view: action.view } : undefined } }
@@ -233,7 +236,7 @@ function reduce(state: State, action: Action): State {
 }
 
 function emptyHeadline(state: State, current: ReturnType<typeof browse>) {
-  if (state.kind !== 'app') return state.catalogLoading ? '正在加载关联目录' : state.catalogError ? '关联目录暂时不可用' : state.filter ? '没有匹配的关联项' : '此入口暂无关联'
+  if (state.kind !== 'app') return state.catalogLoading ? '正在加载关联目录' : state.catalogError ? '关联目录暂时不可用' : state.filter ? '没有匹配的关联项' : state.manualOnly ? '没有手动添加的关联项' : '此入口暂无关联'
   if (current.missingAppPath) return '此副本的关联详情已清空'
   if (current.selectedApp) return current.selectedApp.associationIDs?.length ? '没有匹配的关联项' : '此应用未声明可处理的文件类型或 URL 协议'
   if (state.appQuery) return '没有匹配的应用'
@@ -250,7 +253,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
   const catalog = environment?.catalog ?? wailsCatalog
   const dom = useMemo(() => environment?.dom ?? browserDOM(refs), [environment?.dom, refs])
   const lifecycle = useRef(0), catalogSequence = useRef(0)
-  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.kind, state.appFilter, state.appQuery, state.filter, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
+  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
   const selected = useRef(current.selected)
   const activeView = useRef(state.kind)
   useLayoutEffect(() => { selected.current = current.selected }, [current.selected])
@@ -299,6 +302,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     scan, retryCatalog, reparse,
     setAppQuery: (value: string) => dispatch({ type: 'appQuery', value }),
     setFilter: (value: string) => dispatch({ type: 'filter', value }),
+    setManualOnly: (value: boolean) => dispatch({ type: 'manualOnly', value }),
     changeAppFilter: (value: ApplicationFilter) => dispatch({ type: 'appFilter', value }),
     selectApp: (path: string, focus = false) => dispatch({ type: 'selectApp', path, focus }),
     selectEntry: (id: string, focus = false) => dispatch({ type: 'selectEntry', id, focus }),
@@ -339,7 +343,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     [current.selected?.id, current.selected?.association.kind, current.selected?.association.key, current.selected?.resolved])
   const getVisibleAssociationIDs = useCallback(() => dom.visibleAssociationIDs(), [dom])
   const queryInputs = useMemo(() => ({ selected: querySelected, entries: queryEntries, getVisibleAssociationIDs }), [querySelected, queryEntries, getVisibleAssociationIDs])
-  const view = { ...current, kind: state.kind, appFilter: state.appFilter, appQuery: state.appQuery, filter: state.filter,
+  const view = { ...current, kind: state.kind, appFilter: state.appFilter, appQuery: state.appQuery, filter: state.filter, manualOnly: state.manualOnly,
     entries: state.entries, snapshot: state.snapshot, detailOpen: state.detailOpen, inspectedCopy: state.inspectedCopy,
     catalogLoading: state.catalogLoading, catalogError: state.catalogError, reparseNotice: state.reparseNotice,
     requestEntryMissing: !!state.requestEntry && !state.entries.some(entry => entry.id === state.requestEntry!.id), emptyHeadline: emptyHeadline(state, current) }

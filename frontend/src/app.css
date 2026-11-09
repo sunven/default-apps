@@ -106,7 +106,7 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .application-row-content>span {font-size:12px;color:var(--muted);max-width:100%;font-weight:400}
 .application-row-heading {display:flex;align-items:center;flex-wrap:wrap;gap:2px 6px}
 .application-row-heading strong {color:var(--ink)}
-.system-app-badge {flex:none;font-size:11px;font-weight:400;line-height:1.5;color:var(--muted);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;padding:0 5px;white-space:nowrap}
+.system-app-badge,.manual-association-badge {flex:none;font-size:11px;font-weight:400;line-height:1.5;color:var(--muted);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;padding:0 5px;white-space:nowrap}
 .sidebar-note {padding:8px 3px 2px;font-size:11px;color:var(--muted)}
 
 .workspace {background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}
@@ -122,6 +122,9 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .association-toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px var(--gutter);flex:none}
 .association-toolbar p {font-size:12px;color:var(--muted);margin-top:2px}
 .association-toolbar .search-field {width:260px;flex:none}
+.association-filters {display:flex;align-items:flex-end;gap:12px;min-width:0}
+.manual-only-filter {display:flex;align-items:center;gap:6px;min-height:32px;white-space:nowrap;font-size:12px;color:var(--ink);cursor:pointer}
+.manual-only-filter input {margin:0}
 .column-labels,.association-row {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) 160px;gap:10px;align-items:center}
 .column-labels {padding:6px var(--gutter);color:var(--muted);font-size:12px;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);flex:none}
 .column-labels>:last-child {text-align:right}
@@ -134,6 +137,8 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .association-name strong {font-size:14px;font-weight:600;overflow-wrap:anywhere}
 .association-label>span {font-size:12px;color:var(--muted);font-weight:400;overflow-wrap:anywhere}
 .association-label>span:empty {display:none}
+.association-heading {display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 6px}
+.association-heading strong {min-width:0;color:var(--ink)}
 .association-icon {display:grid;place-items:center;width:32px;height:38px;flex:none;color:#677d99}
 .association-icon .icon {width:22px;height:22px}
 .declared-default {min-width:0;font-size:13px;display:flex;flex-direction:column;gap:2px}
@@ -221,7 +226,8 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
  .app-heading {align-items:flex-start}
  .app-heading>button {padding:4px 6px}
  .association-toolbar {flex-wrap:wrap;gap:8px}
- .association-toolbar .search-field {width:100%}
+ .association-filters {width:100%;flex-wrap:wrap;gap:6px 12px}
+ .association-toolbar .search-field {width:auto;flex:1;min-width:160px}
  .column-labels,.association-row {grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:6px 10px}
  .column-labels>:last-child {display:none}
  .row-actions {grid-column:1 / -1}
