@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog } from './Dialog'
 import { Icon } from './Icon'
 import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
@@ -7,7 +7,7 @@ import { ManualActions, ManualApplicationAction } from './ManualActions'
 import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
 import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
-import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
+import type { Entry, Source } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 
 function ApplicationIcon({ app, className='' }: { app: AppCopy; className?: string }) {
  const [failedData,setFailedData] = useState<string>()
@@ -34,10 +34,24 @@ function ApplicationCopy({ app, missing=false, onSubmit, disabled=false }: { app
  </div>
 }
 
+function sourceKind(source:Source, resolved:boolean) {
+ const declared=source.kind==='declaration'
+ const names:Record<string,string> = {identifier:declared?'直接声明类型':'类型标识',scheme:declared?'直接声明协议':'协议名称',extension:resolved?'由扩展名解析':'扩展名声明',mime:resolved?'由 MIME 解析':'MIME 声明',ostype:'旧式类型声明'}
+ return names[source.inputKind] || '原始声明'
+}
+
+function DeclarationOrigin({ entry, appPath }: { entry:Entry; appPath:string }) {
+ const sources=entry.sources?.filter(source=>source.kind==='declaration'&&source.appPath===appPath) ?? []
+ const direct=sources.find(source=>source.inputKind==='identifier'||source.inputKind==='scheme')
+ if(direct)return <span>{sourceKind(direct,entry.resolved)}</span>
+ const labels=[...new Set(sources.map(source=>`${sourceKind(source,entry.resolved)} · ${source.inputKind==='extension'?'.':''}${source.normalizedInput}`))]
+ return labels.length ? <span>{labels.join('；')}</span> : null
+}
+
 function Sources({ entry }: { entry: Entry }) {
  const names: Record<string, string> = {common:'常用项', declaration:'应用声明', manual:'手动添加'}
  return <section aria-labelledby="source-heading" className="sources"><h2 id="source-heading">关联来源</h2>
-  <ul>{entry.sources?.map((source, index) => <li key={index}>{names[source.kind] ?? source.kind} · {source.label} · {source.rawInput}{source.appPath ? ` · ${source.appPath}` : ''}{source.role ? ` · ${source.role}` : ''}{source.rank ? ` / ${source.rank}` : ''}</li>)}</ul>
+  <ul>{entry.sources?.map((source, index) => <li key={index}>{names[source.kind] ?? source.kind} · {sourceKind(source,entry.resolved)} · {source.rawInput} · {source.label}{source.appPath ? ` · ${source.appPath}` : ''}{source.role ? ` · ${source.role}` : ''}{source.rank ? ` / ${source.rank}` : ''}</li>)}</ul>
   {entry.mimeTypes?.length ? <p>MIME 标签：{entry.mimeTypes.join('、')}</p> : null}
  </section>
 }
@@ -66,6 +80,10 @@ export default function App() {
  const {appSearch,associationSearch,appList,associationList,navigation}=refs
  const [issuesOpen,setIssuesOpen]=useState(false)
  const {observations,rowErrors,loading,refresh}=useAssociationQueries({...queryInputs,snapshotObservations:changes.state?.observations})
+ useEffect(()=>{
+  actions.setDefaultPaths(Object.fromEntries(Object.entries(observations).flatMap(([id,result])=>
+   isTrustworthy(result.default)&&!rowErrors[id]&&result.default.app ? [[id,result.default.app.path]] : [])))
+ },[observations,rowErrors,actions.setDefaultPaths])
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
@@ -84,8 +102,8 @@ export default function App() {
     <div className="catalog-heading"><h2>已安装应用</h2><span>{applicationMatches.length} / {snapshot?.apps?.length ?? 0}</span></div>
     <div className="application-filter" role="group" aria-label="应用类型筛选">{(['user','system','all'] as ApplicationFilter[]).map(value=><button key={value} aria-label={`${appFilterNames[value]}应用`} aria-pressed={appFilter===value} onClick={()=>changeAppFilter(value)}>{appFilterNames[value]}</button>)}</div>
     <label className="search-field">搜索应用<span className="search-input"><Icon name="search"/><input ref={appSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label="搜索应用名称、版本、路径或声明" placeholder="名称、版本、路径或声明" value={appQuery} onChange={event=>actions.setAppQuery(event.target.value)} onKeyDown={event=>searchKey(event,true)}/><kbd aria-hidden="true">⌘ F</kbd></span></label>
-    <p className="search-hint">匹配应用信息时显示全部声明；仅声明命中时显示匹配项。</p>
-    <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个声明关联</span></span><Icon name="chevron"/></button>)}</div>
+    <p className="search-hint">匹配应用信息时显示全部关联；仅声明命中时显示匹配项。</p>
+    <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个关联</span></span><Icon name="chevron"/></button>)}</div>
     <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
    </aside> : null}
    <main className="workspace">
@@ -98,14 +116,14 @@ export default function App() {
     {reparseNotice ? <p role="status">{reparseNotice}</p> : null}
     {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button className="btn" onClick={()=>void retryCatalog()}>重试加载目录</button></div> : null}
     {kind==='app' && missingAppPath ? <div role="status" className="missing-copy"><strong>原应用副本已不在目录中</strong><p>{missingAppPath}</p><p>可选择其他应用副本继续浏览。</p></div> : null}
-    <div className="association-toolbar"><div><h2>{kind==='app' ? '声明支持' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配声明' : '常用关联优先'}</p></div><div className="association-filters"><label className="manual-only-filter"><input type="checkbox" checked={manualOnly} onChange={event=>actions.setManualOnly(event.target.checked)}/>仅手动添加</label><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label></div></div>
+    <div className="association-toolbar"><div><h2>{kind==='app' ? '应用关联' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配声明 · 已是默认优先' : kind==='app' ? '已是默认优先' : '常用关联优先'}</p>{kind==='app' ? <p>同一扩展名可能对应多个类型；当前默认按具体类型查询。</p> : null}</div><div className="association-filters"><label className="manual-only-filter"><input type="checkbox" checked={manualOnly} onChange={event=>actions.setManualOnly(event.target.checked)}/>仅手动添加</label><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label></div></div>
     <div className="column-labels"><span>关联项</span><span>当前默认应用</span><span>操作</span></div>
-    <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '声明关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
+    <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '应用关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
      {visibleEntries.map(entry=>{
-      const isDefault=observations[entry.id]?.default.app?.path===selectedApp?.app.path
+      const isDefault=!!selectedApp&&isTrustworthy(observations[entry.id]?.default)&&!rowErrors[entry.id]&&observations[entry.id]?.default.app?.path===selectedApp.app.path
       const isManual=entry.sources?.some(source=>source.kind==='manual')
       return <div className="association-row" data-selected={browsedSelected?.id===entry.id} key={entry.id}>
-      <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><span className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></span><span className="association-label"><span className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <span className="manual-association-badge">手动添加</span> : null}</span><span>{entry.extensions?.map(value=>`.${value}`).join(' · ')}</span><span>{entry.association.key || entry.sources?.[0]?.rawInput}</span></span></button>
+      <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><span className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></span><span className="association-label"><span className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <span className="manual-association-badge">手动添加</span> : null}</span><span>{entry.extensions?.map(value=>`.${value}`).join(' · ')}</span><span>{entry.association.key || entry.sources?.[0]?.rawInput}</span>{kind==='app'&&selectedApp ? <DeclarationOrigin entry={entry} appPath={selectedApp.app.path}/> : null}</span></button>
       <div className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></div>
       <div className="row-actions"><button className="btn row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}>详情…</button>{kind==='app'&&selectedApp?<button className="btn row-submit" data-current={isDefault} aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</button>:null}
       {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><span key={r.requestID} className="change-row-state" data-confirmed={r.confirmed}>{requestLabel(r)}</span>)}</div>

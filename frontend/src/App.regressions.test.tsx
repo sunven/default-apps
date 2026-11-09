@@ -38,7 +38,7 @@ test('successful foreground requery must clear a prior row transport error',asyn
  let fail=true
  vi.mocked(Query).mockImplementation(association=>(association.key==='public.jpeg'&&fail ? Promise.reject(new Error('prior transport failure')):Promise.resolve({association,version:2,default:{known:true,app,observedAt:'now',stale:false,error:null},candidates:{known:true,apps:[],observedAt:'now',stale:false,error:null}})) as any)
  render(<App/>);expect(await screen.findByText('查询连接失败')).toBeVisible()
- const list=screen.getByRole('region',{name:'声明关联列表'})
+ const list=screen.getByRole('region',{name:'应用关联列表'})
  vi.spyOn(list,'getBoundingClientRect').mockReturnValue({top:0,bottom:300,height:300} as any)
  for(const row of list.querySelectorAll<HTMLButtonElement>('[data-association-id]'))vi.spyOn(row,'getBoundingClientRect').mockReturnValue({top:10,bottom:30,height:20} as any)
  fail=false
@@ -48,6 +48,26 @@ test('successful foreground requery must clear a prior row transport error',asyn
 
 const observation=(association:Association,version=2):QueryResult=>({association,version,default:{known:true,app,observedAt:'2026-11-06T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[],observedAt:'2026-11-06T10:00:00Z',stale:false,error:null}})
 const rowFor=(name:string)=>screen.getByRole('button',{name}).closest('.association-row') as HTMLElement
+
+test('default updates reorder rows without changing the open detail or restarting queries',async()=>{
+ render(<App/>)
+ await userEvent.click(await screen.findByRole('button',{name:'JPEG 导出 test.independent.jpg'}))
+ const detail=screen.getByRole('dialog',{name:'JPEG 导出'})
+ const list=screen.getByRole('region',{name:'应用关联列表'})
+ const order=()=>Array.from(list.querySelectorAll('[data-association-id]'),row=>row.getAttribute('data-association-id'))
+ const calls=vi.mocked(Query).mock.calls.length
+ const updated=observation(otherJPEG.association)
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,activeRequestID:'',requests:[],observations:[updated],writableKinds:[],storageError:null}}))
+ expect(order()).toEqual([otherJPEG.id,pdf.id,jpeg.id])
+ expect(detail).toBeInTheDocument()
+ expect(within(detail).getByRole('region',{name:'当前默认应用'})).toHaveTextContent(app.path)
+ expect(Query).toHaveBeenCalledTimes(calls)
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:2,busy:false,activeRequestID:'',requests:[],observations:[{...updated,version:3,default:{...updated.default,stale:true}}],writableKinds:[],storageError:null}}))
+ expect(order()).toEqual([pdf.id,jpeg.id,otherJPEG.id])
+ expect(rowFor('JPEG 导出 test.independent.jpg')).not.toHaveTextContent('已是默认')
+ await userEvent.keyboard('{Escape}')
+ expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toHaveFocus()
+})
 
 test('fresh change snapshots clear the selected row and detail errors together',async()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve(observation(association)) as ReturnType<typeof Query>)

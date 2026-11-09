@@ -77,6 +77,7 @@ function browserDOM(refs: BrowserRefs): BrowserDOMAdapter {
 type Session = { query: string; manualOnly: boolean; selectedID: string | null; scroll: number }
 type State = {
   entries: Entry[]; snapshot: Snapshot | null; scanVersion: number
+  defaultPaths: Record<string, string>
   kind: BrowserView; appFilter: ApplicationFilter; appQuery: string; filter: string; manualOnly: boolean
   selectedAppPath: string | null; selectedID: string | null
   detailOpen: boolean; requestEntry: Entry | null; inspectedCopy: AppCopy | null
@@ -87,7 +88,7 @@ type State = {
 }
 function initialState(): State {
   return {
-    entries: [], snapshot: null, scanVersion: 0, kind: 'app', appFilter: 'user', appQuery: '', filter: '', manualOnly: false,
+    entries: [], snapshot: null, scanVersion: 0, defaultPaths: {}, kind: 'app', appFilter: 'user', appQuery: '', filter: '', manualOnly: false,
     selectedAppPath: null, selectedID: null, detailOpen: false, requestEntry: null, inspectedCopy: null,
     catalogLoading: true, catalogError: null, catalogRequest: 0, reparseNotice: null, reparseAnchor: null,
     sessions: { app: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, file: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, scheme: { query: '', manualOnly: false, selectedID: null, scroll: 0 } },
@@ -112,7 +113,8 @@ function browse(state: State) {
   const selectedMatch = missingAppPath ? undefined : state.selectedAppPath ? applicationMatches.find(match => match.item.app.path === state.selectedAppPath) : applicationMatches[0]
   const visibleEntries = (state.kind === 'app' ? selectedMatch?.entries ?? [] : state.entries.filter(entry => entry.association.kind === state.kind))
     .filter(entry => (!state.manualOnly || entry.sources?.some(source => source.kind === 'manual')) && entryText(entry).includes(state.filter.trim().toLocaleLowerCase()))
-    .sort((a, b) => Number(b.sources?.some(source => source.kind === 'common')) - Number(a.sources?.some(source => source.kind === 'common')))
+    .sort((a, b) => (state.kind === 'app' ? Number(state.defaultPaths[b.id] === selectedMatch?.item.app.path) - Number(state.defaultPaths[a.id] === selectedMatch?.item.app.path) : 0)
+      || Number(b.sources?.some(source => source.kind === 'common')) - Number(a.sources?.some(source => source.kind === 'common')))
   const browsedSelected = visibleEntries.find(entry => entry.id === state.selectedID) ?? visibleEntries[0]
   return {
     applicationMatches, selectedMatch, selectedApp: selectedMatch?.item, visibleEntries, browsedSelected,
@@ -123,6 +125,7 @@ function browse(state: State) {
 
 type Action =
   | { type: 'snapshot'; value: Snapshot }
+  | { type: 'defaults'; paths: Record<string, string> }
   | { type: 'catalogStarted'; request: number }
   | { type: 'catalogResult'; request: number; entries: Entry[] }
   | { type: 'catalogFailed'; request: number; error: string }
@@ -155,6 +158,10 @@ function selectEntry(state: State, id: string, focus = false, open = false): Sta
 
 function transition(state: State, action: Action): State {
   switch (action.type) {
+    case 'defaults': {
+      if (Object.keys(state.defaultPaths).length === Object.keys(action.paths).length && Object.keys(action.paths).every(id => state.defaultPaths[id] === action.paths[id])) return state
+      return { ...state, defaultPaths: action.paths, selectedID: state.selectedID ?? browse(state).browsedSelected?.id ?? null }
+    }
     case 'snapshot': {
       const value = action.value
       if (value.version < state.scanVersion) return state
@@ -253,7 +260,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
   const catalog = environment?.catalog ?? wailsCatalog
   const dom = useMemo(() => environment?.dom ?? browserDOM(refs), [environment?.dom, refs])
   const lifecycle = useRef(0), catalogSequence = useRef(0)
-  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
+  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.defaultPaths, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
   const selected = useRef(current.selected)
   const activeView = useRef(state.kind)
   useLayoutEffect(() => { selected.current = current.selected }, [current.selected])
@@ -300,6 +307,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
 
   const actions = useMemo(() => ({
     scan, retryCatalog, reparse,
+    setDefaultPaths: (paths: Record<string, string>) => dispatch({ type: 'defaults', paths }),
     setAppQuery: (value: string) => dispatch({ type: 'appQuery', value }),
     setFilter: (value: string) => dispatch({ type: 'filter', value }),
     setManualOnly: (value: boolean) => dispatch({ type: 'manualOnly', value }),
@@ -336,8 +344,8 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     document.addEventListener('keydown', keydown)
     return () => document.removeEventListener('keydown', keydown)
   }, [actions, dom])
-  // Metadata and dialog changes must not restart association query rounds.
-  const queryEntryKey = JSON.stringify(current.visibleEntries.map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved]))
+  // Metadata, dialogs and sorting must not restart association query rounds.
+  const queryEntryKey = JSON.stringify([...current.visibleEntries].sort((a, b) => a.id.localeCompare(b.id)).map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved]))
   const queryEntries = useMemo(() => current.visibleEntries.map(({ id, association, resolved }) => ({ id, association, resolved })), [queryEntryKey])
   const querySelected = useMemo(() => current.selected ? { id: current.selected.id, association: current.selected.association, resolved: current.selected.resolved } : undefined,
     [current.selected?.id, current.selected?.association.kind, current.selected?.association.key, current.selected?.resolved])

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { Events } from '@wailsio/runtime'
@@ -32,6 +32,69 @@ beforeEach(()=>{
  vi.mocked(StartScan).mockResolvedValue(snapshot)
  vi.mocked(Events.On).mockImplementation((name,listener)=>{if(name==='defaultapps:catalog')publish=listener as typeof publish;return ()=>{}})
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+})
+
+test('current defaults sort first for the selected copy and keyboard navigation follows that order',async()=>{
+ const data={...snapshot,apps:snapshot.apps!.map(item=>({...item,associationIDs:[jpeg.id,pdf.id,otherJPEG.id]}))}
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,
+  default:{known:true,app:association.key===pdf.association.key ? archive : app,observedAt:'now',stale:false,error:null},
+  candidates:{known:true,apps:[],observedAt:'now',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+ render(<App/>)
+ const rows=await screen.findByRole('region',{name:'应用关联列表'})
+ const order=()=>Array.from(rows.querySelectorAll('[data-association-id]'),row=>row.getAttribute('data-association-id'))
+ await waitFor(()=>expect(order()).toEqual([jpeg.id,otherJPEG.id,pdf.id]))
+ expect(screen.getByText('3 个关联 · 已是默认优先')).toBeVisible()
+ const first=screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})
+ first.focus();await userEvent.keyboard('{Home}{ArrowDown}')
+ expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toHaveFocus()
+ await userEvent.keyboard('{End}')
+ expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toHaveFocus()
+ await userEvent.click(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'}))
+ await waitFor(()=>expect(order()).toEqual([pdf.id,jpeg.id,otherJPEG.id]))
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(Array.from(screen.getByRole('region',{name:'关联列表'}).querySelectorAll('[data-association-id]'),row=>row.getAttribute('data-association-id'))).toEqual([pdf.id,jpeg.id,otherJPEG.id])
+ expect(screen.getByText('3 个关联 · 常用关联优先')).toBeVisible()
+})
+
+test('legacy extension matches show their provenance and query defaults by distinct type',async()=>{
+ const extensionSource={kind:'declaration',inputKind:'extension',rawInput:'jpg',normalizedInput:'jpg',label:'图片',appPath:app.path}
+ const directSource={kind:'declaration',inputKind:'identifier',rawInput:otherJPEG.association.key,normalizedInput:otherJPEG.association.key,label:'JPEG 导出',appPath:archive.path}
+ const types=[{...jpeg,sources:[{...extensionSource,kind:'common',appPath:undefined},extensionSource]},
+  {...otherJPEG,sources:[extensionSource,directSource]},
+  {...pdf,sources:[{...extensionSource,inputKind:'identifier',rawInput:pdf.association.key,normalizedInput:pdf.association.key}]}]
+ const data={...snapshot,entries:types,apps:[{...snapshot.apps![0],associationIDs:types.map(type=>type.id)},
+  {...snapshot.apps![1],associationIDs:[otherJPEG.id]}]}
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,
+  default:{known:true,app:association.key===otherJPEG.association.key ? systemApp : archive,observedAt:'2026-11-09T04:00:00Z',stale:false,error:null},
+  candidates:{known:true,apps:[],observedAt:'2026-11-09T04:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+ render(<App/>)
+ const jpegButton=await screen.findByRole('button',{name:'JPEG 图像 public.jpeg'})
+ const jpegRow=jpegButton.closest('.association-row') as HTMLElement
+ const exportRow=screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'}).closest('.association-row') as HTMLElement
+ expect(screen.getByRole('heading',{name:'应用关联'})).toBeVisible()
+ expect(screen.queryByText(/个声明关联/)).not.toBeInTheDocument()
+ expect(within(jpegRow).getByText('由扩展名解析 · .jpg')).toBeVisible()
+ expect(within(exportRow).getByText('由扩展名解析 · .jpg')).toBeVisible()
+ expect(within(exportRow).queryByText('直接声明类型')).not.toBeInTheDocument()
+ expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toHaveTextContent('直接声明类型')
+ expect(screen.getByText('同一扩展名可能对应多个类型；当前默认按具体类型查询。')).toBeVisible()
+ expect(await within(jpegRow).findByText('Reader')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'}))
+ expect(await within(exportRow).findByText('Safari')).toBeVisible()
+ expect(Query).toHaveBeenCalledWith(jpeg.association)
+ expect(Query).toHaveBeenCalledWith(otherJPEG.association)
+ const sources=screen.getByRole('heading',{name:'关联来源'}).closest('section') as HTMLElement
+ expect(sources).toHaveTextContent('应用声明 · 由扩展名解析 · jpg')
+ expect(sources).toHaveTextContent('应用声明 · 直接声明类型 · test.independent.jpg')
+ await userEvent.keyboard('{Escape}')
+ await userEvent.click(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'}))
+ const archiveType=screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})
+ expect(archiveType).toHaveTextContent('直接声明类型')
+ expect(archiveType).not.toHaveTextContent('由扩展名解析')
 })
 
 test('application filters default to non-system copies and leave system defaults and candidates visible in queries',async()=>{
@@ -100,7 +163,7 @@ test('changing application classification resets selection and scrolling and sur
  render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
  await userEvent.click(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'}))
  const apps=screen.getByRole('region',{name:'已安装应用列表'})
- const rows=screen.getByRole('region',{name:'声明关联列表'})
+ const rows=screen.getByRole('region',{name:'应用关联列表'})
  apps.scrollTop=120;rows.scrollTop=80
  await userEvent.click(screen.getByRole('button',{name:'系统应用'}))
  expect(apps.scrollTop).toBe(0);expect(rows.scrollTop).toBe(0)
@@ -169,7 +232,7 @@ test('application icons follow each copy and a failed image falls back without c
 
 test('application metadata matches show all declarations, declaration matches narrow them, and the right filter narrows again',async()=>{
  render(<App/>);const search=await screen.findByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})
- const rows=screen.getByRole('region',{name:'声明关联列表'})
+ const rows=screen.getByRole('region',{name:'应用关联列表'})
  for(const query of ['Reader','2.4','/Applications/','test.reader']){
   await userEvent.clear(search);await userEvent.type(search,query)
   expect(within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toBeVisible()
@@ -186,7 +249,7 @@ test('application metadata matches show all declarations, declaration matches na
 })
 
 test('association details are closed by default and return focus to their trigger',async()=>{
- render(<App/>);const rows=await screen.findByRole('region',{name:'声明关联列表'})
+ render(<App/>);const rows=await screen.findByRole('region',{name:'应用关联列表'})
  const name=within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})
  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDocument()
  await userEvent.click(name)
@@ -231,7 +294,7 @@ test('keyboard traverses only the active list, opens details, and does not inter
 test('each view restores its own search, association identity and scroll position while application changes select the first visible association',async()=>{
  render(<App/>);await screen.findByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})
  await userEvent.type(screen.getByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'}),'Reader')
- const appList=screen.getByRole('region',{name:'已安装应用列表'}),appRows=screen.getByRole('region',{name:'声明关联列表'})
+ const appList=screen.getByRole('region',{name:'已安装应用列表'}),appRows=screen.getByRole('region',{name:'应用关联列表'})
  screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'}).focus();await userEvent.keyboard('{ArrowDown}')
  appList.scrollTop=180;appRows.scrollTop=96
  await userEvent.keyboard('{Meta>}2{/Meta}')
@@ -249,7 +312,7 @@ test('each view restores its own search, association identity and scroll positio
  expect(screen.getByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})).toHaveValue('Reader')
  expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toHaveAttribute('tabindex','0')
  expect(screen.getByRole('region',{name:'已安装应用列表'}).scrollTop).toBe(180)
- expect(screen.getByRole('region',{name:'声明关联列表'}).scrollTop).toBe(96)
+ expect(screen.getByRole('region',{name:'应用关联列表'}).scrollTop).toBe(96)
  await userEvent.click(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'}))
  await userEvent.click(screen.getByRole('button',{name:'Reader 2.4 /Applications/Reader.app'}))
  expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toHaveAttribute('tabindex','0')
@@ -296,7 +359,7 @@ test('a current default pointing to a vanished copy keeps the observed path and 
 test('scan progress keeps old declarations, search, selection and scroll until authoritative replacement',async()=>{
  render(<App/>);const search=await screen.findByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})
  await userEvent.type(search,'Reader')
- const rows=screen.getByRole('region',{name:'声明关联列表'});rows.scrollTop=94
+ const rows=screen.getByRole('region',{name:'应用关联列表'});rows.scrollTop=94
  await userEvent.click(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'}));await userEvent.keyboard('{Escape}')
  await act(async()=>publish({data:{...snapshot,version:3,scanning:true,apps:[],entries:[https]}}))
  expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toHaveAttribute('tabindex','0')
