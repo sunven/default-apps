@@ -24,13 +24,29 @@ import (
 
 type Adapter struct{}
 
+// ReadApplicationCopy reads current copy metadata without returning declarations.
+// A readable location with damaged metadata returns a copy with MetadataError.
+func (Adapter) ReadApplicationCopy(ctx context.Context, path string) (association.AppCopy, error) {
+	bundle, err := readApplication(ctx, path, false)
+	return bundle.App, err
+}
+
 func (Adapter) ReadApplication(ctx context.Context, path string) (discovery.Bundle, error) {
+	return readApplication(ctx, path, true)
+}
+
+func readApplication(ctx context.Context, path string, declarations bool) (discovery.Bundle, error) {
 	if err := ctx.Err(); err != nil {
 		return discovery.Bundle{}, err
 	}
 	value := C.CString(path)
 	defer C.free(unsafe.Pointer(value))
-	data := C.default_apps_read_application(value)
+	var data *C.char
+	if declarations {
+		data = C.default_apps_read_application(value)
+	} else {
+		data = C.default_apps_read_application_copy(value)
+	}
 	if data == nil {
 		return discovery.Bundle{}, errors.New("无法读取应用声明")
 	}

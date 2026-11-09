@@ -11,7 +11,6 @@ import (
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
-	"github.com/sunven/default-apps/internal/discovery"
 )
 
 type ExpectedDefault struct {
@@ -78,7 +77,7 @@ type SubmitResult struct {
 	Observation *association.DefaultObservation `json:"observation"`
 }
 type ApplicationReader interface {
-	ReadApplication(context.Context, string) (discovery.Bundle, error)
+	ReadApplicationCopy(context.Context, string) (association.AppCopy, error)
 }
 
 // Dispatcher starts a short asynchronous native initiation. It must call submitted
@@ -341,17 +340,17 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if appPath(fresh.Default.App) == in.TargetPath {
 		return fail("no_change", "目标已经是当前具体应用副本。", &fresh.Default)
 	}
-	bundle, err := s.reader.ReadApplication(ctx, in.TargetPath)
+	app, err := s.reader.ReadApplicationCopy(ctx, in.TargetPath)
 	if interrupted := ctx.Err(); interrupted != nil {
 		return fail("interrupted", interrupted.Error(), nil)
 	}
 	if err != nil {
 		return fail("target_unavailable", err.Error(), nil)
 	}
-	if !bundle.App.Usable() || bundle.App.Path != in.TargetPath {
+	if !app.Usable() || app.Path != in.TargetPath {
 		return fail("target_unavailable", "目标应用副本不可用。", nil)
 	}
-	req := Request{PendingRecord: PendingRecord{RequestID: in.RequestID, Association: in.Association, Target: bundle.App, Preflight: fresh.Default, Phase: "accepted", AcceptedAt: now()}, Readback: Readback{State: "pending"}}
+	req := Request{PendingRecord: PendingRecord{RequestID: in.RequestID, Association: in.Association, Target: app, Preflight: fresh.Default, Phase: "accepted", AcceptedAt: now()}, Readback: Readback{State: "pending"}}
 	if err := ctx.Err(); err != nil {
 		return fail("interrupted", err.Error(), nil)
 	}
@@ -391,7 +390,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	close(attempt.done)
 	s.mu.Unlock()
 	s.publish(v)
-	go s.dispatcher.Dispatch(in.Association, bundle.App, func() { s.submitted(in.RequestID) }, func(nativeErr *NativeError) { s.completed(in.RequestID, nativeErr) })
+	go s.dispatcher.Dispatch(in.Association, app, func() { s.submitted(in.RequestID) }, func(nativeErr *NativeError) { s.completed(in.RequestID, nativeErr) })
 	return SubmitResult{Outcome: "accepted", Request: clone(&req), Snapshot: v}
 }
 func (s *Service) writable(kind string) bool {

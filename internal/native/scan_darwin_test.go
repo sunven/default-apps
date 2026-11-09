@@ -21,25 +21,28 @@ import (
 	"github.com/sunven/default-apps/internal/native"
 )
 
-func TestReadApplicationIdentifiesProtectedSystemCopies(t *testing.T) {
-	adapter := native.Adapter{}
+func TestApplicationReadersIdentifyProtectedSystemCopies(t *testing.T) {
 	for _, path := range []string{
 		"/System/Applications/Utilities/Activity Monitor.app",
 		"/System/Applications/App Store.app",
 		"/Applications/Safari.app",
 	} {
 		t.Run(filepath.Base(path), func(t *testing.T) {
-			bundle, err := adapter.ReadApplication(context.Background(), path)
-			if err != nil || !bundle.App.Usable() || !bundle.App.System {
-				t.Fatalf("system app not identified: %v, %+v", err, bundle.App)
-			}
 			alias := filepath.Join(t.TempDir(), "System Alias.app")
 			if err := os.Symlink(path, alias); err != nil {
 				t.Fatal(err)
 			}
-			linked, err := adapter.ReadApplication(context.Background(), alias)
-			if err != nil || !linked.App.System || linked.App.Path != bundle.App.Path {
-				t.Fatalf("system alias changed classification: %v, path=%s, system=%v", err, linked.App.Path, linked.App.System)
+			for _, reader := range applicationCopyReaders() {
+				t.Run(reader.name, func(t *testing.T) {
+					app, err := reader.read(context.Background(), path)
+					if err != nil || !app.Usable() || !app.System {
+						t.Fatalf("system app not identified: %v, %+v", err, app)
+					}
+					linked, err := reader.read(context.Background(), alias)
+					if err != nil || !linked.System || linked.Path != app.Path {
+						t.Fatalf("system alias changed classification: %v, path=%s, system=%v", err, linked.Path, linked.System)
+					}
+				})
 			}
 		})
 	}
@@ -53,13 +56,15 @@ func TestReadApplicationIdentifiesProtectedSystemCopies(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(path, "Contents", "Info.plist"), []byte(plist), 0644); err != nil {
 		t.Fatal(err)
 	}
-	bundle, err := adapter.ReadApplication(context.Background(), path)
-	if err != nil || !bundle.App.Usable() || bundle.App.System {
-		t.Fatalf("user copy misclassified: %v, metadata=%s, system=%v", err, bundle.App.MetadataError, bundle.App.System)
+	for _, reader := range applicationCopyReaders() {
+		app, err := reader.read(context.Background(), path)
+		if err != nil || !app.Usable() || app.System {
+			t.Fatalf("user copy misclassified by %s: %v, metadata=%s, system=%v", reader.name, err, app.MetadataError, app.System)
+		}
 	}
 }
 
-func TestReadApplicationReturnsIconForEachCopy(t *testing.T) {
+func TestApplicationReadersReturnIconForEachCopy(t *testing.T) {
 	root := t.TempDir()
 	for _, shade := range []color.NRGBA{{R: 255, A: 255}, {B: 255, A: 255}} {
 		name := "Red.app"
@@ -100,24 +105,26 @@ func TestReadApplicationReturnsIconForEachCopy(t *testing.T) {
 		if err := os.WriteFile(filepath.Join(resources, "AppIcon.icns"), append(icon, data.Bytes()...), 0644); err != nil {
 			t.Fatal(err)
 		}
-		bundle, err := (native.Adapter{}).ReadApplication(context.Background(), path)
-		if err != nil || !bundle.App.Usable() {
-			t.Fatalf("read application: %v, metadata: %s", err, bundle.App.MetadataError)
-		}
-		decoded, err := base64.StdEncoding.DecodeString(bundle.App.IconData)
-		if err != nil {
-			t.Fatal(err)
-		}
-		got, err := png.Decode(bytes.NewReader(decoded))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if got.Bounds().Dx() != 128 || got.Bounds().Dy() != 128 {
-			t.Fatalf("unexpected icon bounds: %v", got.Bounds())
-		}
-		r, _, b, a := got.At(64, 64).RGBA()
-		if a != 65535 || (shade.R > 0 && r <= b) || (shade.B > 0 && b <= r) {
-			t.Fatalf("wrong copy's icon for %s: red=%d blue=%d alpha=%d", name, r, b, a)
+		for _, reader := range applicationCopyReaders() {
+			app, err := reader.read(context.Background(), path)
+			if err != nil || !app.Usable() {
+				t.Fatalf("read application: %v, metadata: %s", err, app.MetadataError)
+			}
+			decoded, err := base64.StdEncoding.DecodeString(app.IconData)
+			if err != nil {
+				t.Fatal(err)
+			}
+			got, err := png.Decode(bytes.NewReader(decoded))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got.Bounds().Dx() != 128 || got.Bounds().Dy() != 128 {
+				t.Fatalf("unexpected icon bounds: %v", got.Bounds())
+			}
+			r, _, b, a := got.At(64, 64).RGBA()
+			if a != 65535 || (shade.R > 0 && r <= b) || (shade.B > 0 && b <= r) {
+				t.Fatalf("wrong copy's icon for %s via %s: red=%d blue=%d alpha=%d", name, reader.name, r, b, a)
+			}
 		}
 	}
 }

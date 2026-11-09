@@ -6,7 +6,6 @@ import (
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
-	"github.com/sunven/default-apps/internal/discovery"
 	"github.com/sunven/default-apps/internal/manual"
 	"path/filepath"
 	"testing"
@@ -23,8 +22,8 @@ func (adapter) ResolveExtension(_ context.Context, value string) ([]catalog.Reso
 func (adapter) ResolveIdentifier(_ context.Context, value string) ([]catalog.ResolvedType, error) {
 	return []catalog.ResolvedType{{Identifier: value, Declared: true}}, nil
 }
-func (adapter) ReadApplication(_ context.Context, path string) (discovery.Bundle, error) {
-	return discovery.Bundle{App: association.AppCopy{Path: path, Name: "Fixture"}}, nil
+func (adapter) ReadApplicationCopy(_ context.Context, path string) (association.AppCopy, error) {
+	return association.AppCopy{Path: path, Name: "Fixture"}, nil
 }
 func (adapter) IdentifyFile(_ context.Context, path string) (catalog.ResolvedType, error) {
 	return catalog.ResolvedType{Identifier: "public.jpeg", Declared: true}, nil
@@ -109,11 +108,11 @@ func TestFileIdentificationDoesNotSaveUntilConfirmed(t *testing.T) {
 
 type canonicalAdapter struct{ adapter }
 
-func (canonicalAdapter) ReadApplication(_ context.Context, path string) (discovery.Bundle, error) {
+func (canonicalAdapter) ReadApplicationCopy(_ context.Context, path string) (association.AppCopy, error) {
 	if path == "/alias.app" {
 		path = "/one/Copy.app"
 	}
-	return discovery.Bundle{App: association.AppCopy{Path: path, Name: "Copy", BundleID: "fixture.same"}}, nil
+	return association.AppCopy{Path: path, Name: "Copy", BundleID: "fixture.same"}, nil
 }
 func TestManualApplicationsMergeCanonicalAliasesButKeepSeparateCopies(t *testing.T) {
 	ctx := context.Background()

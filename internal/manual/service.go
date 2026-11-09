@@ -10,12 +10,11 @@ import (
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
-	"github.com/sunven/default-apps/internal/discovery"
 	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 type SystemAdapter interface {
-	ReadApplication(context.Context, string) (discovery.Bundle, error)
+	ReadApplicationCopy(context.Context, string) (association.AppCopy, error)
 	IdentifyFile(context.Context, string) (catalog.ResolvedType, error)
 }
 type Picker interface {
@@ -120,21 +119,21 @@ func (s *Service) PickApplication(ctx context.Context) (Result, error) {
 	if !association.IsApplicationBundlePath(path) {
 		return Result{}, fmt.Errorf("请选择 .app 应用包")
 	}
-	bundle, err := s.system.ReadApplication(ctx, path)
+	app, err := s.system.ReadApplicationCopy(ctx, path)
 	if err != nil {
 		return Result{}, err
 	}
-	if !bundle.App.Usable() || !association.IsApplicationBundlePath(bundle.App.Path) {
-		return Result{}, fmt.Errorf("所选应用不可用：%s", bundle.App.MetadataError)
+	if !app.Usable() || !association.IsApplicationBundlePath(app.Path) {
+		return Result{}, fmt.Errorf("所选应用不可用：%s", app.MetadataError)
 	}
 	err = s.store.Update(ctx, func(doc *config.Document) error {
 		for i, existing := range doc.Applications {
-			if existing.Path == bundle.App.Path {
-				doc.Applications[i] = bundle.App
+			if existing.Path == app.Path {
+				doc.Applications[i] = app
 				return nil
 			}
 		}
-		doc.Applications = append(doc.Applications, bundle.App)
+		doc.Applications = append(doc.Applications, app)
 		return nil
 	})
 	if err != nil {
@@ -143,5 +142,5 @@ func (s *Service) PickApplication(ctx context.Context) (Result, error) {
 	if s.changed != nil {
 		s.changed()
 	}
-	return Result{Saved: true, App: &bundle.App}, nil
+	return Result{Saved: true, App: &app}, nil
 }

@@ -80,7 +80,7 @@ static id jsonProperty(id value) {
     return NSNull.null;
 }
 
-char *default_apps_read_application(const char *path) {
+static char *readApplication(const char *path, BOOL declarations) {
     @autoreleasepool {
         @try {
             NSURL *original = [NSURL fileURLWithPath:@(path)].URLByStandardizingPath;
@@ -108,11 +108,20 @@ char *default_apps_read_application(const char *path) {
             app[@"version"] = [version isKindOfClass:NSString.class] ? version : @"";
             id bundleID = info[@"CFBundleIdentifier"];
             app[@"bundleID"] = [bundleID isKindOfClass:NSString.class] ? bundleID : @"";
+            if (!declarations) return encode(@{@"app": app});
             return encode(@{@"app": app, @"info": jsonProperty(info), @"issues": issues});
         } @catch (NSException *exception) {
             return encode(@{@"error": exception.reason ?: @"无法读取应用声明"});
         }
     }
+}
+
+char *default_apps_read_application(const char *path) {
+    return readApplication(path, YES);
+}
+
+char *default_apps_read_application_copy(const char *path) {
+    return readApplication(path, NO);
 }
 
 char *default_apps_resolve_type(const char *kind, const char *value) {

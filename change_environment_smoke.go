@@ -15,7 +15,6 @@ import (
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/change"
 	"github.com/sunven/default-apps/internal/config"
-	"github.com/sunven/default-apps/internal/discovery"
 	"github.com/sunven/default-apps/internal/native"
 )
 
@@ -131,12 +130,12 @@ func (s *smokeSystem) CandidateApplications(context.Context, association.Associa
 	other.DisplayPath = other.Path
 	return []association.AppCopy{s.target, other}, nil
 }
-func (s *smokeSystem) ReadApplication(ctx context.Context, path string) (discovery.Bundle, error) {
+func (s *smokeSystem) ReadApplicationCopy(ctx context.Context, path string) (association.AppCopy, error) {
 	s.mu.Lock()
 	missing := s.unavailable
 	s.mu.Unlock()
 	if missing {
-		return discovery.Bundle{}, errors.New("controlled target unavailable")
+		return association.AppCopy{}, errors.New("controlled target unavailable")
 	}
 	if path == "/Controlled/Other/Xcode.app" {
 		s.mu.Lock()
@@ -144,9 +143,9 @@ func (s *smokeSystem) ReadApplication(ctx context.Context, path string) (discove
 		s.mu.Unlock()
 		v.Path = path
 		v.DisplayPath = path
-		return discovery.Bundle{App: v}, nil
+		return v, nil
 	}
-	return native.Adapter{}.ReadApplication(ctx, path)
+	return native.Adapter{}.ReadApplicationCopy(ctx, path)
 }
 func (s *smokeSystem) Dispatch(_ association.Association, _ association.AppCopy, submitted func(), complete func(*change.NativeError)) {
 	doc, _ := s.store.Load(context.Background())

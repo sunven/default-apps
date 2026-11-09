@@ -4,6 +4,7 @@
 char *default_apps_query(const char *kind, const char *key, int candidates);
 char *default_apps_resolve_type(const char *kind, const char *value);
 char *default_apps_read_application(const char *path);
+char *default_apps_read_application_copy(const char *path);
 void default_apps_content_minimum(void *window, double width, double height);
 char *default_apps_identify_file(const char *path);
 // Inputs are borrowed only for this short call and copied into Foundation

@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sunven/default-apps/internal/discovery"
 	"path/filepath"
 	"sync/atomic"
 	"testing"
@@ -174,10 +173,10 @@ type recoveryReader struct {
 	entered, release chan struct{}
 }
 
-func (r recoveryReader) ReadApplication(c context.Context, path string) (discovery.Bundle, error) {
+func (r recoveryReader) ReadApplicationCopy(c context.Context, path string) (association.AppCopy, error) {
 	close(r.entered)
 	<-r.release
-	return r.system.ReadApplication(c, path)
+	return r.system.ReadApplicationCopy(c, path)
 }
 func TestRecoveredQueryFailureDuringAnotherAssociationsPreflightKeepsOldRecord(t *testing.T) {
 	svc, sys, store := fixture(t)

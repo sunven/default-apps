@@ -13,7 +13,6 @@ import (
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/change"
 	"github.com/sunven/default-apps/internal/config"
-	"github.com/sunven/default-apps/internal/discovery"
 )
 
 var ctx = context.Background()
@@ -46,7 +45,7 @@ func (s *system) ResolveIdentifier(_ context.Context, key string) ([]catalog.Res
 	}
 	return []catalog.ResolvedType{{Identifier: key, Declared: true}}, nil
 }
-func (s *system) ReadApplication(_ context.Context, path string) (discovery.Bundle, error) {
+func (s *system) ReadApplicationCopy(_ context.Context, path string) (association.AppCopy, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	v := target
@@ -54,7 +53,7 @@ func (s *system) ReadApplication(_ context.Context, path string) (discovery.Bund
 	if s.unavailable {
 		v.MetadataError = "missing"
 	}
-	return discovery.Bundle{App: v}, nil
+	return v, nil
 }
 func (s *system) CurrentDefault(context.Context, association.Association) (*association.AppCopy, error) {
 	s.mu.Lock()
@@ -653,11 +652,11 @@ func TestCancellationRacingDurableAcceptanceKeepsOriginalNativeLifetime(t *testi
 	}
 }
 
-func (s scheduledSystem) ReadApplication(c context.Context, path string) (discovery.Bundle, error) {
+func (s scheduledSystem) ReadApplicationCopy(c context.Context, path string) (association.AppCopy, error) {
 	if err := c.Err(); err != nil {
-		return discovery.Bundle{}, err
+		return association.AppCopy{}, err
 	}
-	return s.system.ReadApplication(c, path)
+	return s.system.ReadApplicationCopy(c, path)
 }
 
 func TestSupersededRecoveryQueryCannotReleaseRecoveredGate(t *testing.T) {
