@@ -34,23 +34,32 @@ type picker struct{ file, app string }
 
 func (p picker) PickFile(context.Context) (string, error)        { return p.file, nil }
 func (p picker) PickApplication(context.Context) (string, error) { return p.app, nil }
-func TestAmbiguousInputRequiresAnExplicitIdentityAndPersistsOnlyThatChoice(t *testing.T) {
+func TestAddInputRestrictsItsKindsAndPublishesOnlyAfterSaving(t *testing.T) {
 	ctx := context.Background()
 	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
-	service := manual.NewService(catalog.NewService(adapter{}), adapter{}, store, picker{}, nil)
+	published := 0
+	service := manual.NewService(catalog.NewService(adapter{}), adapter{}, store, picker{}, func() {
+		published++
+		doc, err := store.Load(ctx)
+		if err != nil || len(doc.Associations) != 1 {
+			t.Errorf("notification preceded the commit: %+v, %v", doc, err)
+		}
+	})
 	resolution, err := service.ResolveInput(ctx, "extension", " .JPG ")
 	if err != nil || len(resolution.Entries) != 2 {
 		t.Fatalf("ambiguity lost: %#v %v", resolution, err)
 	}
-	if _, err = service.AddInput(ctx, "extension", ".JPG", ""); err == nil {
-		t.Fatal("ambiguous input accepted without choice")
+	if result, err := service.AddInput(ctx, "identifier", "public.jpeg", "file:public.jpeg"); err == nil || result.Saved || published != 0 {
+		t.Fatalf("input entry point accepted a file-identifier choice: %+v, %v", result, err)
 	}
-	if _, err = service.AddInput(ctx, "extension", ".JPG", "file:public.jpeg"); err != nil {
-		t.Fatal(err)
+	for i := 0; i < 2; i++ {
+		result, err := service.AddInput(ctx, "extension", ".JPG", "file:public.jpeg")
+		if err != nil || !result.Saved || result.Entry == nil || result.Entry.ID != "file:public.jpeg" {
+			t.Fatalf("committed choice did not reach the bridge: %+v, %v", result, err)
+		}
 	}
-	doc, err := store.Load(ctx)
-	if err != nil || len(doc.Associations) != 1 || doc.Associations[0].SelectedID != "file:public.jpeg" {
-		t.Fatalf("choice not saved: %#v %v", doc, err)
+	if published != 2 || service.GetStatus(ctx).Associations != 1 {
+		t.Fatalf("duplicate save changed notifications or persisted count: %d", published)
 	}
 }
 
@@ -79,30 +88,21 @@ func TestSchemeNormalizationAndCancelledPickersHaveNoPersistenceEffects(t *testi
 	}
 }
 
-func TestUnknownExtensionCannotBeSavedAndFileIdentificationDoesNotSaveUntilConfirmed(t *testing.T) {
+func TestFileIdentificationDoesNotSaveUntilConfirmed(t *testing.T) {
 	ctx := context.Background()
 	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
 	service := manual.NewService(catalog.NewService(adapter{}), adapter{}, store, picker{file: "/a.jpg"}, nil)
-	resolution, err := service.ResolveInput(ctx, "extension", "unknown")
-	if err != nil || len(resolution.Entries) != 1 || resolution.Entries[0].Resolved || resolution.Entries[0].UnresolvedReason == "" {
-		t.Fatalf("unknown presented as usable: %#v %v", resolution, err)
-	}
-	if _, err := service.AddInput(ctx, "extension", "unknown", resolution.Entries[0].ID); err == nil {
-		t.Fatal("unknown input saved")
-	}
 	file, err := service.IdentifyFile(ctx)
 	if err != nil || file.Entries[0].Association.Key != "public.jpeg" {
 		t.Fatalf("file type: %#v %v", file, err)
 	}
-	doc, _ := store.Load(ctx)
-	if len(doc.Associations) != 0 {
+	if service.GetStatus(ctx).Associations != 0 {
 		t.Fatal("picker silently saved type")
 	}
 	if _, err := service.AddIdentifiedType(ctx, "public.jpeg"); err != nil {
 		t.Fatal(err)
 	}
-	doc, _ = store.Load(ctx)
-	if len(doc.Associations) != 1 || doc.Associations[0].SelectedID != "file:public.jpeg" {
+	if service.GetStatus(ctx).Associations != 1 {
 		t.Fatal("confirmed file identity not saved")
 	}
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
 	"github.com/sunven/default-apps/internal/discovery"
+	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 type SystemAdapter interface {
@@ -38,16 +39,17 @@ type Status struct {
 	Applications int    `json:"applications"`
 }
 type Service struct {
-	catalog  *catalog.Service
-	system   SystemAdapter
-	store    config.Repository
-	picker   Picker
-	changed  func()
-	pickerMu sync.Mutex
+	catalog      *catalog.Service
+	associations *manualassociations.Collection
+	system       SystemAdapter
+	store        config.Repository
+	picker       Picker
+	changed      func()
+	pickerMu     sync.Mutex
 }
 
 func NewService(catalogService *catalog.Service, system SystemAdapter, store config.Repository, picker Picker, changed func()) *Service {
-	return &Service{catalog: catalogService, system: system, store: store, picker: picker, changed: changed}
+	return &Service{catalog: catalogService, associations: manualassociations.New(catalogService, store), system: system, store: store, picker: picker, changed: changed}
 }
 func (s *Service) GetStatus(ctx context.Context) Status {
 	doc, err := s.store.Load(ctx)
@@ -64,32 +66,13 @@ func (s *Service) ResolveInput(ctx context.Context, kind, value string) (Resolut
 	return Resolution{Entries: entries}, err
 }
 func (s *Service) AddInput(ctx context.Context, kind, value, selectedID string) (Result, error) {
-	resolution, err := s.ResolveInput(ctx, kind, value)
-	if err != nil {
-		return Result{}, err
+	if kind != "extension" && kind != "scheme" {
+		return Result{}, fmt.Errorf("请选择扩展名或 URL 协议")
 	}
-	var selected *catalog.Entry
-	for i := range resolution.Entries {
-		if resolution.Entries[i].ID == selectedID && resolution.Entries[i].Resolved {
-			selected = &resolution.Entries[i]
-		}
-	}
-	if selected == nil {
-		return Result{}, fmt.Errorf("请明确选择一个已解析的关联项；未解析项不能添加")
-	}
-	input := catalog.Input{Kind: kind, Value: value, Label: strings.TrimSpace(value), Source: "manual"}
-	return s.saveEntry(ctx, input, *selected)
+	return s.saveChoice(ctx, manualassociations.Choice{Kind: kind, Value: value, SelectedID: selectedID})
 }
-func (s *Service) saveEntry(ctx context.Context, input catalog.Input, entry catalog.Entry) (Result, error) {
-	err := s.store.Update(ctx, func(doc *config.Document) error {
-		for _, existing := range doc.Associations {
-			if existing.SelectedID == entry.ID && existing.Input.Kind == input.Kind && strings.EqualFold(strings.TrimSpace(existing.Input.Value), strings.TrimSpace(input.Value)) {
-				return nil
-			}
-		}
-		doc.Associations = append(doc.Associations, config.ManualAssociation{Input: input, SelectedID: entry.ID})
-		return nil
-	})
+func (s *Service) saveChoice(ctx context.Context, choice manualassociations.Choice) (Result, error) {
+	entry, err := s.associations.Save(ctx, choice)
 	if err != nil {
 		return Result{}, err
 	}
@@ -120,17 +103,7 @@ func (s *Service) IdentifyFile(ctx context.Context) (Resolution, error) {
 
 // AddIdentifiedType resolves the identifier again; callers cannot persist fabricated entries.
 func (s *Service) AddIdentifiedType(ctx context.Context, identifier string) (Result, error) {
-	input := catalog.Input{Kind: "identifier", Value: identifier, Label: identifier, Source: "manual", Origin: "file"}
-	entries, err := s.catalog.Resolve(ctx, []catalog.Input{input})
-	if err != nil {
-		return Result{}, err
-	}
-	for _, entry := range entries {
-		if entry.Resolved && entry.Association.Key == identifier {
-			return s.saveEntry(ctx, input, entry)
-		}
-	}
-	return Result{}, fmt.Errorf("文件类型仍未解析，不能添加")
+	return s.saveChoice(ctx, manualassociations.Choice{Kind: "identifier", Value: identifier})
 }
 func (s *Service) PickApplication(ctx context.Context) (Result, error) {
 	if !s.pickerMu.TryLock() {

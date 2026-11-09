@@ -13,6 +13,7 @@ import (
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
 	"github.com/sunven/default-apps/internal/discovery"
+	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 type system struct {
@@ -212,14 +213,16 @@ func TestManualItemsRejoinCatalogOnRestartAndUnavailableCopiesKeepOriginalPath(t
 	path, _ = filepath.EvalSymlinks(path)
 	storePath := filepath.Join(t.TempDir(), "config.json")
 	store := config.NewStore(storePath)
+	adapter := system{}
+	if _, err := manualassociations.New(catalog.NewService(adapter), store).Save(context.Background(), manualassociations.Choice{Kind: "extension", Value: ".PDF", SelectedID: "file:com.adobe.pdf"}); err != nil {
+		t.Fatal(err)
+	}
 	if err := store.Update(context.Background(), func(doc *config.Document) error {
-		doc.Associations = append(doc.Associations, config.ManualAssociation{Input: catalog.Input{Kind: "extension", Value: ".PDF", Source: "manual"}, SelectedID: "file:com.adobe.pdf"})
 		doc.Applications = append(doc.Applications, association.AppCopy{Path: path, DisplayPath: path, Name: "Saved Reader", BundleID: "test.reader"})
 		return nil
 	}); err != nil {
 		t.Fatal(err)
 	}
-	adapter := system{}
 	reopened := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, config.NewStore(storePath))
 	reopened.StartScan()
 	snapshot := finished(t, reopened)
@@ -248,41 +251,6 @@ func TestManualItemsRejoinCatalogOnRestartAndUnavailableCopiesKeepOriginalPath(t
 	if err != nil || len(saved.Applications) != 1 || saved.Applications[0].Path != path {
 		t.Fatalf("missing copy configuration lost: %#v %v", saved, err)
 	}
-}
-
-func TestSavedManualChoiceDoesNotExpandIntoOtherAmbiguousTypes(t *testing.T) {
-	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
-	if err := store.Update(context.Background(), func(doc *config.Document) error {
-		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "shared", Source: "manual"}, SelectedID: "file:fixture.second"}}
-		return nil
-	}); err != nil {
-		t.Fatal(err)
-	}
-	adapter := ambiguousSystem{}
-	service := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, store)
-	service.StartScan()
-	snapshot := finished(t, service)
-	found := false
-	for _, entry := range snapshot.Entries {
-		if entry.ID == "file:fixture.first" {
-			t.Fatal("unselected ambiguous type was restored")
-		}
-		if entry.ID == "file:fixture.second" {
-			found = true
-		}
-	}
-	if !found {
-		t.Fatal("selected ambiguous type was not restored")
-	}
-}
-
-type ambiguousSystem struct{ system }
-
-func (ambiguousSystem) ResolveExtension(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
-	if value == "shared" {
-		return []catalog.ResolvedType{{Identifier: "fixture.first", Declared: true}, {Identifier: "fixture.second", Declared: true}}, nil
-	}
-	return system{}.ResolveExtension(ctx, value)
 }
 
 func TestReappearingManualCopyBecomesAvailableWithoutLosingSavedIdentity(t *testing.T) {

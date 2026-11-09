@@ -14,6 +14,7 @@ import (
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
+	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 type Issue struct {
@@ -51,19 +52,23 @@ type SystemAdapter interface {
 	ReadApplication(context.Context, string) (Bundle, error)
 }
 type Service struct {
-	mu       sync.Mutex
-	system   SystemAdapter
-	catalog  *catalog.Service
-	roots    []string
-	state    Snapshot
-	changed  func(Snapshot)
-	store    config.Repository
-	rescan   bool
-	reparses []reparseRequest
+	mu           sync.Mutex
+	system       SystemAdapter
+	catalog      *catalog.Service
+	roots        []string
+	state        Snapshot
+	changed      func(Snapshot)
+	associations *manualassociations.Collection
+	rescan       bool
+	reparses     []reparseRequest
 }
 
 func NewService(system SystemAdapter, catalogService *catalog.Service, roots []string, changed func(Snapshot), store config.Repository) *Service {
-	return &Service{store: store, system: system, catalog: catalogService, roots: append([]string{}, roots...), changed: changed, state: Snapshot{Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}, Roots: append([]string{}, roots...)}}
+	service := &Service{system: system, catalog: catalogService, roots: append([]string{}, roots...), changed: changed, state: Snapshot{Apps: []Application{}, Entries: []catalog.Entry{}, Issues: []Issue{}, Roots: append([]string{}, roots...)}}
+	if store != nil {
+		service.associations = manualassociations.New(catalogService, store)
+	}
+	return service
 }
 func (s *Service) GetSnapshot() Snapshot { s.mu.Lock(); defer s.mu.Unlock(); return clone(s.state) }
 
@@ -151,29 +156,16 @@ func (s *Service) scan(startedAt string, reparses []reparseRequest) {
 			return nil
 		})
 	}
-	if s.store != nil {
-		doc, loadErr := s.store.Load(ctx)
+	if s.associations != nil {
+		restored, loadErr := s.associations.Restore(ctx)
 		if loadErr != nil {
 			state.Issues = append(state.Issues, Issue{Origin: "configuration", Message: loadErr.Error()})
 		} else {
-			for _, saved := range doc.Associations {
-				resolved, resolveErr := s.catalog.Resolve(ctx, []catalog.Input{saved.Input})
-				if resolveErr != nil {
-					state.Issues = append(state.Issues, Issue{Origin: "manual", Message: resolveErr.Error()})
-					continue
-				}
-				matched := false
-				for _, entry := range resolved {
-					if entry.ID == saved.SelectedID {
-						state.Entries = catalog.Merge(state.Entries, []catalog.Entry{entry})
-						matched = true
-					}
-				}
-				if !matched {
-					state.Entries = catalog.Merge(state.Entries, []catalog.Entry{unavailableEntry(saved)})
-				}
+			state.Entries = catalog.Merge(state.Entries, restored.Entries)
+			for _, problem := range restored.Problems {
+				state.Issues = append(state.Issues, Issue{Origin: "manual", Message: problem.Error()})
 			}
-			for _, saved := range doc.Applications {
+			for _, saved := range restored.Applications {
 				if seen[saved.Path] {
 					for i := range state.Apps {
 						if state.Apps[i].App.Path == saved.Path {

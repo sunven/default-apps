@@ -1,6 +1,7 @@
 package discovery_test
 
 import (
+	"bytes"
 	"context"
 	"os"
 	"path/filepath"
@@ -11,16 +12,21 @@ import (
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/config"
 	"github.com/sunven/default-apps/internal/discovery"
+	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 // The resolver represents system registrations becoming available between full
 // scans. Its public responses are the only source of resolved file identities.
 type reparsingSystem struct {
 	system
-	available atomic.Bool
+	available           atomic.Bool
+	savedInputAvailable atomic.Bool
 }
 
 func (s *reparsingSystem) ResolveExtension(ctx context.Context, value string) ([]catalog.ResolvedType, error) {
+	if value == "missing" && s.savedInputAvailable.Load() {
+		return s.system.ResolveExtension(ctx, "pdf")
+	}
 	if !s.available.Load() {
 		return nil, nil
 	}
@@ -51,16 +57,18 @@ func TestFullRescanReparsesCommonDeclaredAndSavedInputsWithoutLosingSources(t *t
 		"CFBundleDocumentTypes": []any{map[string]any{"LSItemContentTypes": []any{"com.adobe.pdf", "test.declared"}, "CFBundleTypeRole": "Viewer"}},
 	}}}
 	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
-	if err := store.Update(context.Background(), func(doc *config.Document) error {
-		doc.Associations = []config.ManualAssociation{
-			{Input: catalog.Input{Kind: "extension", Value: "pdf", Source: "manual"}, SelectedID: "file:com.adobe.pdf"},
-			{Input: catalog.Input{Kind: "extension", Value: "manual", Source: "manual"}, SelectedID: "file:test.saved"},
-			{Input: catalog.Input{Kind: "scheme", Value: "manual-neighbor", Source: "manual"}, SelectedID: "scheme:manual-neighbor"},
+	adapter.available.Store(true)
+	choices := manualassociations.New(catalog.NewService(adapter), store)
+	for _, choice := range []manualassociations.Choice{
+		{Kind: "extension", Value: "pdf", SelectedID: "file:com.adobe.pdf"},
+		{Kind: "extension", Value: "manual", SelectedID: "file:test.saved"},
+		{Kind: "scheme", Value: "manual-neighbor", SelectedID: "scheme:manual-neighbor"},
+	} {
+		if _, err := choices.Save(context.Background(), choice); err != nil {
+			t.Fatal(err)
 		}
-		return nil
-	}); err != nil {
-		t.Fatal(err)
 	}
+	adapter.available.Store(false)
 	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, store)
 	service.StartScan()
 	initial := finished(t, service)
@@ -186,12 +194,11 @@ func TestReparseRetainsExplicitManualIdentityAmongOtherMatches(t *testing.T) {
 		"CFBundleDocumentTypes": []any{map[string]any{"CFBundleTypeExtensions": []any{"shared"}, "CFBundleTypeRole": "Viewer"}},
 	}}}
 	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
-	if err := store.Update(context.Background(), func(doc *config.Document) error {
-		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "shared", Source: "manual"}, SelectedID: "file:fixture.second"}}
-		return nil
-	}); err != nil {
+	adapter.available.Store(true)
+	if _, err := manualassociations.New(catalog.NewService(adapter), store).Save(context.Background(), manualassociations.Choice{Kind: "extension", Value: "shared", SelectedID: "file:fixture.second"}); err != nil {
 		t.Fatal(err)
 	}
+	adapter.available.Store(false)
 	service := discovery.NewService(adapter, catalog.NewService(adapter), []string{root}, nil, store)
 	service.StartScan()
 	original := entryByID(t, finished(t, service), "unavailable:file:fixture.second")
@@ -204,11 +211,15 @@ func TestReparseRetainsExplicitManualIdentityAmongOtherMatches(t *testing.T) {
 
 func TestReparsePrefersResolvedIdentityOverItsUnavailablePlaceholder(t *testing.T) {
 	adapter := &reparsingSystem{}
-	store := config.NewStore(filepath.Join(t.TempDir(), "config.json"))
-	if err := store.Update(context.Background(), func(doc *config.Document) error {
-		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "extension", Value: "missing", Source: "manual"}, SelectedID: "file:com.adobe.pdf"}}
-		return nil
-	}); err != nil {
+	storePath := filepath.Join(t.TempDir(), "config.json")
+	store := config.NewStore(storePath)
+	adapter.savedInputAvailable.Store(true)
+	if _, err := manualassociations.New(catalog.NewService(adapter), store).Save(context.Background(), manualassociations.Choice{Kind: "extension", Value: "missing", SelectedID: "file:com.adobe.pdf"}); err != nil {
+		t.Fatal(err)
+	}
+	adapter.savedInputAvailable.Store(false)
+	committed, err := os.ReadFile(storePath)
+	if err != nil {
 		t.Fatal(err)
 	}
 	service := discovery.NewService(adapter, catalog.NewService(adapter), nil, nil, store)
@@ -221,9 +232,9 @@ func TestReparsePrefersResolvedIdentityOverItsUnavailablePlaceholder(t *testing.
 	snapshot := finished(t, service)
 	assertReparse(t, snapshot, "resolved-elsewhere", "matched", "file:com.adobe.pdf")
 	entryByID(t, snapshot, original.ID)
-	doc, err := store.Load(context.Background())
-	if err != nil || len(doc.Associations) != 1 || doc.Associations[0].SelectedID != "file:com.adobe.pdf" {
-		t.Fatalf("reparse changed the saved choice: %+v, %v", doc, err)
+	after, err := os.ReadFile(storePath)
+	if err != nil || !bytes.Equal(committed, after) {
+		t.Fatalf("reparse changed the saved choices: %v", err)
 	}
 }
 

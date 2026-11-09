@@ -3,9 +3,8 @@ package discovery
 import (
 	"strings"
 
-	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
-	"github.com/sunven/default-apps/internal/config"
+	"github.com/sunven/default-apps/internal/manualassociations"
 )
 
 type ReparseResult struct {
@@ -32,28 +31,17 @@ func (s *Service) Reparse(entry catalog.Entry, token string) Snapshot {
 	return s.startScanLocked()
 }
 
-const unavailablePrefix = "unavailable:"
-
-func unavailableEntry(saved config.ManualAssociation) catalog.Entry {
-	return catalog.Entry{
-		ID: unavailablePrefix + saved.SelectedID, Association: association.Association{Kind: "file"},
-		Name: saved.Input.Label, Extensions: []string{}, MIMETypes: []string{},
-		Sources:          []catalog.Source{{Kind: "manual", InputKind: saved.Input.Kind, RawInput: saved.Input.Value}},
-		UnresolvedReason: "先前选择的类型现在无法解析：" + saved.SelectedID, DiagnosticIdentifiers: []string{saved.SelectedID},
-	}
-}
-
 func matchReparse(request reparseRequest, entries []catalog.Entry) ReparseResult {
 	result := ReparseResult{Token: request.token, Status: "missing"}
 	original := request.entry
-	savedID, unavailable := strings.CutPrefix(original.ID, unavailablePrefix)
+	savedID, unavailable := strings.CutPrefix(original.ID, manualassociations.UnavailablePrefix)
 	if unavailable || original.Resolved {
 		if !unavailable {
 			savedID = original.ID
 		}
 		// An explicit choice follows its identity, even if another source now
 		// provides it. Its unavailable placeholder is only the fallback.
-		for _, id := range []string{savedID, unavailablePrefix + savedID} {
+		for _, id := range []string{savedID, manualassociations.UnavailablePrefix + savedID} {
 			for _, entry := range entries {
 				if entry.ID == id {
 					result.Status, result.EntryID = "matched", id
