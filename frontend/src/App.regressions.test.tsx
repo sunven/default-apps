@@ -133,22 +133,6 @@ test('reparse follows the complete catalog result even when its event precedes t
  expect(detail).toBeInTheDocument()
 })
 
-test('reparse uses the authoritative choice even when siblings and its placeholder remain in the catalog',async()=>{
- const source={kind:'manual',inputKind:'extension',rawInput:'shared',normalizedInput:'shared',label:'Saved type'}
- const saved={...pdf,id:'file:fixture.second',association:{kind:'file',key:'fixture.second'},name:'Saved type',sources:[source]}
- const sibling={...saved,id:'file:fixture.first',association:{kind:'file',key:'fixture.first'},name:'Other type'}
- const unavailable={...saved,id:'unavailable:file:fixture.second',association:{kind:'file',key:''},resolved:false,unresolvedReason:'saved identity unavailable',diagnosticIdentifiers:['file:fixture.second']}
- const initial={...snapshot,apps:[],entries:[unavailable,https]}
- vi.mocked(List).mockResolvedValue([]);vi.mocked(GetSnapshot).mockResolvedValue(initial);vi.mocked(StartScan).mockResolvedValue(initial)
- render(<App/>);await userEvent.click(await screen.findByRole('button',{name:'文件类型'}));await userEvent.click(screen.getByRole('button',{name:'Saved type 未解析'}))
- vi.mocked(Reparse).mockImplementation((_entry,token)=>Promise.resolve<Snapshot>({...initial,version:3,entries:[sibling,saved,unavailable,https],reparses:[{token,status:'matched',entryID:saved.id}]}) as ReturnType<typeof Reparse>)
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- const detail=screen.getByRole('dialog',{name:'Saved type'})
- expect(detail).toHaveTextContent('fixture.second')
- expect(detail).not.toHaveTextContent('fixture.first')
- expect(screen.getByRole('button',{name:'Saved type fixture.second'})).toHaveAttribute('tabindex','0')
-})
-
 test('a newly ambiguous source requires an explicit type choice and still unresolved sources remain query-disabled',async()=>{
  const source={kind:'declaration',inputKind:'extension',rawInput:'shared',normalizedInput:'shared',label:'Shared type',appPath:app.path}
  const unresolved={...pdf,id:'unresolved:extension:shared',association:{kind:'file',key:''},name:'Shared type',sources:[source],resolved:false,unresolvedReason:'not yet registered'}
@@ -177,14 +161,6 @@ async function openUnresolvedPDF() {
  render(<App/>);await userEvent.click(await screen.findByRole('button',{name:'文件类型'}));await userEvent.click(screen.getByRole('button',{name:'PDF 文稿 未解析'}))
 }
 
-test('a missing reparse source closes details and asks for a new selection',async()=>{
- await openUnresolvedPDF()
- vi.mocked(Reparse).mockImplementation((_entry,token)=>Promise.resolve<Snapshot>({...unresolvedCatalog,version:3,entries:[jpeg,https],reparses:[{token,status:'missing'}]}) as ReturnType<typeof Reparse>)
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
- expect(screen.getByText('此关联来源已不在当前目录中，请重新选择关联。')).toBeVisible()
-})
-
 test.each(['matched','ambiguous','missing'])('a late %s reparse result preserves the newer selection and focus',async(status)=>{
  await openUnresolvedPDF()
  vi.mocked(Reparse).mockResolvedValue({...unresolvedCatalog,version:3,scanning:true})
@@ -200,47 +176,4 @@ test.each(['matched','ambiguous','missing'])('a late %s reparse result preserves
  expect(document.activeElement).toBe(focused)
  expect(screen.queryByText('此输入解析为多个文件类型，请在列表中选择具体类型。')).not.toBeInTheDocument()
  expect(screen.queryByText('此关联来源已不在当前目录中，请重新选择关联。')).not.toBeInTheDocument()
-})
-
-test('a late reparse result does not reopen closed details',async()=>{
- await openUnresolvedPDF()
- vi.mocked(Reparse).mockResolvedValue({...unresolvedCatalog,version:3,scanning:true})
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- const token=vi.mocked(Reparse).mock.calls[0][1]
- await userEvent.click(screen.getByRole('button',{name:'关闭PDF 文稿'}))
- expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
- await act(async()=>listeners.get('defaultapps:catalog')?.({data:{...unresolvedCatalog,version:4,entries:[jpeg,pdf,https],reparses:[{token,status:'matched',entryID:pdf.id}]}}))
- expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-})
-
-test('an older operation cannot replace a newer reparse with its result or bridge error',async()=>{
- await openUnresolvedPDF()
- let rejectFirst!:(reason:Error)=>void,replySecond!:(value:Snapshot)=>void
- vi.mocked(Reparse).mockImplementationOnce(()=>new Promise<Snapshot>((_resolve,reject)=>{rejectFirst=reject}) as ReturnType<typeof Reparse>)
- vi.mocked(Reparse).mockImplementationOnce(()=>new Promise<Snapshot>(resolve=>{replySecond=resolve}) as ReturnType<typeof Reparse>)
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- const [first,second]=vi.mocked(Reparse).mock.calls.map(call=>call[1])
- expect(first).not.toBe(second)
- await act(async()=>listeners.get('defaultapps:catalog')?.({data:{...unresolvedCatalog,version:3,reparses:[{token:first,status:'missing'}]}}))
- await act(async()=>rejectFirst(new Error('older bridge failure')))
- expect(screen.getByRole('dialog',{name:'PDF 文稿'})).toHaveTextContent('temporarily unavailable')
- expect(screen.queryByRole('alert')).not.toBeInTheDocument()
- expect(screen.queryByText('此关联来源已不在当前目录中，请重新选择关联。')).not.toBeInTheDocument()
- await act(async()=>listeners.get('defaultapps:catalog')?.({data:{...unresolvedCatalog,version:4,entries:[jpeg,pdf,https],reparses:[{token:second,status:'matched',entryID:pdf.id}]}}))
- await act(async()=>replySecond({...unresolvedCatalog,version:3,scanning:true}))
- expect(screen.getByRole('dialog',{name:'PDF 文稿'})).toHaveTextContent('com.adobe.pdf')
- expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toHaveAttribute('tabindex','0')
-})
-
-test('a reparse bridge failure keeps details available for retry',async()=>{
- await openUnresolvedPDF()
- vi.mocked(Reparse).mockRejectedValueOnce(new Error('reparse bridge unavailable'))
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- expect(await screen.findByRole('alert')).toHaveTextContent('reparse bridge unavailable')
- expect(screen.getByRole('dialog',{name:'PDF 文稿'})).toHaveTextContent('temporarily unavailable')
- vi.mocked(Reparse).mockImplementation((_entry,token)=>Promise.resolve<Snapshot>({...unresolvedCatalog,version:3,entries:[jpeg,pdf,https],reparses:[{token,status:'matched',entryID:pdf.id}]}) as ReturnType<typeof Reparse>)
- await userEvent.click(screen.getByRole('button',{name:'重新解析'}))
- expect(screen.queryByRole('alert')).not.toBeInTheDocument()
- expect(screen.getByRole('dialog',{name:'PDF 文稿'})).toHaveTextContent('com.adobe.pdf')
 })

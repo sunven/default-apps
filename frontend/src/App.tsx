@@ -1,16 +1,11 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
+import { useState } from 'react'
 import { Dialog } from './Dialog'
 import { Icon } from './Icon'
 import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
 import { ChangeStatus, useChanges, requestLabel } from './Changes'
 import { ManualActions, ManualApplicationAction } from './ManualActions'
-import { Events } from '@wailsio/runtime'
-import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
-import { GetSnapshot, Reparse, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
-import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
-import { isComposing, plainKey } from './keyboard'
-import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
+import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
 import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 
@@ -59,176 +54,37 @@ function DefaultCell({ entry, rowError, observation }: { entry: Entry; rowError?
  return <span className="declared-app"><ApplicationIcon app={app} className="application-icon--compact"/><span><span className="declared-app-heading"><strong title={app.name}>{app.name}</strong><span>版本 {app.version || '未知'}</span></span><span className="row-path" title={app.path}>{app.path}</span></span></span>
 }
 
-type View = 'app' | 'file' | 'scheme'
-type ApplicationFilter = 'user' | 'system' | 'all'
 const viewNames:Record<View,string> = {app:'应用',file:'文件类型',scheme:'URL 协议'}
 const appFilterNames:Record<ApplicationFilter,string> = {user:'非系统',system:'系统',all:'全部'}
 const entryName = (entry:Entry) => entry.name || entry.sources?.[0]?.rawInput || '关联'
-const entryText = (entry:Entry) => [entry.name,entry.association.key,...(entry.extensions ?? []).map(value=>'.'+value),...(entry.mimeTypes ?? []),...(entry.sources ?? []).flatMap(source=>[source.rawInput,source.label])].join(' ').toLocaleLowerCase()
-function focusElement(element:HTMLElement|null|undefined) { element?.focus({preventScroll:true});element?.scrollIntoView?.({block:'nearest'}) }
-
 export default function App() {
  const changes=useChanges()
  const recovery=useRecoveryAction(changes)
- const [entries,setEntries] = useState<Entry[]>([])
- const [kind,setKind] = useState<View>('app')
- const [appFilter,setAppFilter] = useState<ApplicationFilter>('user')
- const [appQuery,setAppQuery] = useState('')
- const [filter,setFilter] = useState('')
- const [selectedAppPath,setSelectedAppPath] = useState<string|null>(null)
- const [selectedID,setSelectedID] = useState<string|null>(null)
- const [snapshot,setSnapshot] = useState<Snapshot|null>(null)
- const [issuesOpen,setIssuesOpen] = useState(false)
- const [detailOpen,setDetailOpen] = useState(false)
- const [requestEntry,setRequestEntry] = useState<Entry|null>(null)
- const [inspectedCopy,setInspectedCopy] = useState<AppCopy|null>(null)
- const [catalogLoading,setCatalogLoading] = useState(true)
- const [catalogError,setCatalogError] = useState<string|null>(null)
- const [reparseNotice,setReparseNotice] = useState<string|null>(null)
- const reparseAnchor=useRef<{token:string;version:number}|null>(null)
- const scanVersion=useRef(0),catalogVersion=useRef(0)
- const appSearch=useRef<HTMLInputElement>(null),associationSearch=useRef<HTMLInputElement>(null)
- const appList=useRef<HTMLDivElement>(null),associationList=useRef<HTMLDivElement>(null)
- const sessions=useRef<Record<View,{query:string;selectedID:string|null;scroll:number}>>({app:{query:'',selectedID:null,scroll:0},file:{query:'',selectedID:null,scroll:0},scheme:{query:'',selectedID:null,scroll:0}})
- const appScroll=useRef(0)
- const discoveredPaths=useRef(new Set<string>())
- const applicationMatches=useMemo(()=>{
-  const term=appQuery.trim().toLocaleLowerCase()
-  const index=new Map(entries.map(entry=>[entry.id,entry]))
-  return (snapshot?.apps ?? []).filter(item=>!item.unavailable && (appFilter==='all' || !!item.app.system===(appFilter==='system'))).map(item=>{
-   const metadataMatch=!term || [item.app.name,item.app.version,item.app.path,item.app.displayPath,item.app.bundleID].join(' ').toLocaleLowerCase().includes(term)
-   const declarations=(item.associationIDs ?? []).flatMap(id=>index.get(id) ?? [])
-   return {item,metadataMatch,entries:metadataMatch ? declarations : declarations.filter(entry=>entryText(entry).includes(term))}
-  }).filter(match=>match.metadataMatch || match.entries.length)
- },[snapshot,entries,appQuery,appFilter])
- const catalogSettled=!!snapshot&&!snapshot.scanning
- const inCatalog=(path:string)=>!!snapshot?.apps?.some(item=>!item.unavailable&&item.app.path===path)
- const missingAppPath=selectedAppPath&&catalogSettled&&!inCatalog(selectedAppPath)?selectedAppPath:null
- const selectedMatch=missingAppPath ? undefined : (selectedAppPath?applicationMatches.find(match=>match.item.app.path===selectedAppPath):applicationMatches[0])
- const selectedApp=selectedMatch?.item
- const emptyHeadline=()=>{if(kind!=='app')return catalogLoading?'正在加载关联目录':catalogError?'关联目录暂时不可用':filter?'没有匹配的关联项':'此入口暂无关联';if(missingAppPath)return '此副本的关联详情已清空';if(selectedApp)return selectedApp.associationIDs?.length?'没有匹配的关联项':'此应用未声明可处理的文件类型或 URL 协议';if(appQuery)return '没有匹配的应用';return snapshot?.scanning?'正在发现应用':appFilter==='all'?'未发现应用':`未发现${appFilterNames[appFilter]}应用`}
- useLayoutEffect(()=>{if(kind==='app' && selectedApp && selectedAppPath!==selectedApp.app.path)setSelectedAppPath(selectedApp.app.path)},[kind,selectedApp,selectedAppPath])
- const visibleEntries=useMemo(()=> (kind==='app' ? selectedMatch?.entries ?? [] : entries.filter(entry=>entry.association.kind===kind)).filter(entry=>entryText(entry).includes(filter.trim().toLocaleLowerCase())).sort((a,b)=>Number(b.sources?.some(s=>s.kind==='common'))-Number(a.sources?.some(s=>s.kind==='common'))),[kind,selectedMatch,entries,filter])
- const browsedSelected=visibleEntries.find(entry=>entry.id===selectedID) ?? visibleEntries[0]
- const selected=requestEntry ?? browsedSelected
- const getVisibleAssociationIDs=useCallback(()=>{
-  const bounds=associationList.current?.getBoundingClientRect()
-  const ids=new Set<string>()
-  if(bounds&&bounds.height>0)for(const row of associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]')??[]){const rect=row.getBoundingClientRect();if(rect.bottom>bounds.top&&rect.top<bounds.bottom)ids.add(row.dataset.associationId!)}
-  return ids
- },[])
- const {observations,rowErrors,loading,refresh}=useAssociationQueries({selected,entries:visibleEntries,snapshotObservations:changes.state?.observations,getVisibleAssociationIDs})
- useEffect(()=>{if(!selected){setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}},[selected])
+ const {view,actions,refs,queryInputs}=useAssociationBrowser()
+ const {kind,appFilter,appQuery,filter,applicationMatches,selectedMatch,selectedApp,visibleEntries,browsedSelected,selected,
+  snapshot,entries,catalogLoading,catalogError,reparseNotice,missingAppPath,detailOpen,inspectedCopy,requestEntryMissing,missingCopyPaths,emptyHeadline}=view
+ const {scan,retryCatalog,reparse,selectApp,openEntry,switchView,changeAppFilter,inspectCopy,closeCopy,closeDetails,dismissDetails,clearSearch,searchKey,listKey}=actions
+ const {appSearch,associationSearch,appList,associationList,navigation}=refs
+ const [issuesOpen,setIssuesOpen]=useState(false)
+ const {observations,rowErrors,loading,refresh}=useAssociationQueries({...queryInputs,snapshotObservations:changes.state?.observations})
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
- const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)}
-
- const refreshCatalog=useCallback(async()=>{
-  const version=++catalogVersion.current
-  setCatalogLoading(true);setCatalogError(null)
-  try{const values=await List();if(version===catalogVersion.current)setEntries(previous=>scanVersion.current>0 && previous.length ? previous : values ?? [])}
-  catch(error){if(version===catalogVersion.current)setCatalogError(String(error))}
-  finally{if(version===catalogVersion.current)setCatalogLoading(false)}
- },[])
- const acceptSnapshot=useCallback((value:Snapshot)=>{
-  if(value.version<scanVersion.current)return
-  scanVersion.current=value.version
-  for(const item of value.apps ?? [])discoveredPaths.current.add(item.app.path)
-  setSnapshot(previous=>value.scanning && previous?.apps?.length ? {...value,apps:[...new Map([...(previous.apps ?? []),...(value.apps ?? [])].map(item=>[item.app.path,item])).values()]} : value)
-  setEntries(previous=>value.scanning? [...new Map([...previous,...(value.entries??[])].map(entry=>[entry.id,entry])).values()]:value.entries??[])
-  const anchor=reparseAnchor.current
-  const result=anchor && !value.scanning && value.version>anchor.version ? value.reparses?.find(result=>result.token===anchor.token) : undefined
-  if(result){
-   reparseAnchor.current=null
-   if(result.status==='matched')setSelectedID(result.entryID!)
-   else {setDetailOpen(false);setSelectedID(null);setReparseNotice(result.status==='ambiguous'?'此输入解析为多个文件类型，请在列表中选择具体类型。':'此关联来源已不在当前目录中，请重新选择关联。')}
-  }
- },[])
- const scan=useCallback(async()=>{setCatalogError(null);try{acceptSnapshot(await StartScan())}catch(error){setCatalogError(String(error))}},[acceptSnapshot])
- const reparse=async()=>{
-  if(!selected)return
-  const anchor={token:crypto.randomUUID(),version:scanVersion.current}
-  reparseAnchor.current=anchor;setReparseNotice(null);setCatalogError(null)
-  try{acceptSnapshot(await Reparse(selected,anchor.token))}
-  catch(error){if(reparseAnchor.current===anchor){reparseAnchor.current=null;setCatalogError(String(error))}}
- }
- useEffect(()=>{
-  let active=true
-  const off=Events.On('defaultapps:catalog',event=>{if(active)acceptSnapshot(event.data)})
-  void GetSnapshot().then(value=>{if(active)acceptSnapshot(value)}).catch(error=>{if(active)setCatalogError(String(error))})
-  void scan()
-  return()=>{active=false;reparseAnchor.current=null;off()}
- },[acceptSnapshot,scan])
- useEffect(()=>{void refreshCatalog();return()=>{++catalogVersion.current}},[refreshCatalog])
- const selectApp=(path:string,focus=false)=>{
-  reparseAnchor.current=null
-  setSelectedAppPath(path);setSelectedID(null);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)
-  if(associationList.current)associationList.current.scrollTop=0
-  if(focus)focusElement(Array.from(appList.current?.querySelectorAll<HTMLButtonElement>('[data-app-path]') ?? []).find(el=>el.dataset.appPath===path))
- }
- const changeAppFilter=(value:ApplicationFilter)=>{
-  if(value===appFilter)return
-  reparseAnchor.current=null;appScroll.current=0
-  setAppFilter(value);setSelectedAppPath(null);setSelectedID(null);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null);setReparseNotice(null)
-  if(appList.current)appList.current.scrollTop=0
-  if(associationList.current)associationList.current.scrollTop=0
- }
- const selectEntry=(id:string,focus=false)=>{
-  reparseAnchor.current=null;setReparseNotice(null)
-  setSelectedID(id)
-  if(focus)focusElement(Array.from(associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]') ?? []).find(el=>el.dataset.associationId===id))
- }
- const enterAssociations=()=>selected ? selectEntry(selected.id,true) : associationSearch.current?.focus()
- const switchView=(view:View,focus=false)=>{
-  reparseAnchor.current=null
-  if(view!==kind){sessions.current[kind]={query:filter,selectedID:browsedSelected?.id ?? null,scroll:associationList.current?.scrollTop ?? 0};if(kind==='app')appScroll.current=appList.current?.scrollTop ?? 0;setFilter(sessions.current[view].query);setSelectedID(sessions.current[view].selectedID)}
-  setKind(view);setDetailOpen(false);setRequestEntry(null);setInspectedCopy(null)
-  if(focus)document.querySelector<HTMLButtonElement>(`[data-view="${view}"]`)?.focus()
- }
- useLayoutEffect(()=>{if(associationList.current)associationList.current.scrollTop=sessions.current[kind].scroll;if(kind==='app' && appList.current)appList.current.scrollTop=appScroll.current},[kind])
- useEffect(()=>{
-  const keydown=(event:globalThis.KeyboardEvent)=>{
-   if(isComposing(event) || document.querySelector('dialog[open]') || !event.metaKey || event.altKey || event.ctrlKey)return
-   if(event.key.toLowerCase()==='f'){event.preventDefault();(kind==='app' ? appSearch : associationSearch).current?.focus()}
-   if(['1','2','3'].includes(event.key)){event.preventDefault();switchView((['app','file','scheme'] as View[])[Number(event.key)-1],true)}
-  }
-  document.addEventListener('keydown',keydown)
-  return()=>document.removeEventListener('keydown',keydown)
- },[kind,filter,selected?.id])
- const searchKey=(event:KeyboardEvent<HTMLInputElement>,apps=false)=>{
-  if(!plainKey(event))return
-  if(event.key==='ArrowDown'){event.preventDefault();if(apps && applicationMatches.length)selectApp(selectedApp?.app.path ?? applicationMatches[0].item.app.path,true);else if(!apps)enterAssociations()}
-  if(event.key==='Escape'){event.preventDefault();if(apps){setAppQuery('');setSelectedAppPath(null);setSelectedID(null)}else setFilter('')}
- }
- const listKey=(event:KeyboardEvent<HTMLDivElement>,apps=false)=>{
-  if(!plainKey(event) || !(event.target instanceof HTMLButtonElement)||(!apps&&!event.target.dataset.associationId))return
-  const ids=apps ? applicationMatches.map(match=>match.item.app.path) : visibleEntries.map(entry=>entry.id)
-  const index=Math.max(0,ids.indexOf(apps ? selectedApp?.app.path ?? '' : selected?.id ?? ''))
-  const destination=event.key==='Home' ? 0 : event.key==='End' ? ids.length-1 : event.key==='ArrowDown' ? Math.min(ids.length-1,index+1) : event.key==='ArrowUp' ? Math.max(0,index-1) : -1
-  if(destination>=0 && ids[destination]){event.preventDefault();if(apps)selectApp(ids[destination],true);else selectEntry(ids[destination],true)}
-  if(event.key==='Enter' && apps){event.preventDefault();enterAssociations()}
- }
- const clearSearch=()=>{setAppQuery('');setFilter('');setSelectedAppPath(null);setSelectedID(null);(kind==='app' ? appSearch : associationSearch).current?.focus()}
+ const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
  return <div className="app-shell">
   <header className="global-header">
    <div className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"/></svg><span>Default Apps<small>默认应用管理</small></span></div>
-   <nav className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><button className="btn" key={view} data-view={view} aria-pressed={kind===view} onClick={()=>switchView(view)}><Icon name={view}/>{viewNames[view]}</button>)}</nav>
+   <nav ref={navigation} className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><button className="btn" key={view} data-view={view} aria-pressed={kind===view} onClick={()=>switchView(view)}><Icon name={view}/>{viewNames[view]}</button>)}</nav>
    <div className="header-actions"><ManualActions/><button className="btn" disabled={snapshot?.scanning} onClick={()=>void scan()}><Icon name="refresh"/>{snapshot?.scanning ? '正在扫描…' : '重新扫描应用'}</button></div>
   </header>
   <LifecycleStatus changes={changes}/>{recovery.dialog}
-  <ChangeStatus changes={changes} onReturn={association=>{
-   reparseAnchor.current=null
-   const id=`${association.kind}:${association.key}`
-   setRequestEntry(entries.find(entry=>entry.id===id) ?? {id,association,name:association.key,resolved:true,extensions:[],mimeTypes:[],sources:[],unresolvedReason:'',diagnosticIdentifiers:[]})
-   setDetailOpen(true);setInspectedCopy(null)
-  }}/>
+  <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>
 
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">
     <div className="catalog-heading"><h2>已安装应用</h2><span>{applicationMatches.length} / {snapshot?.apps?.length ?? 0}</span></div>
     <div className="application-filter" role="group" aria-label="应用类型筛选">{(['user','system','all'] as ApplicationFilter[]).map(value=><button key={value} aria-label={`${appFilterNames[value]}应用`} aria-pressed={appFilter===value} onClick={()=>changeAppFilter(value)}>{appFilterNames[value]}</button>)}</div>
-    <label className="search-field">搜索应用<span className="search-input"><Icon name="search"/><input ref={appSearch} type="search" aria-label="搜索应用名称、版本、路径或声明" placeholder="名称、版本、路径或声明" value={appQuery} onChange={event=>{setAppQuery(event.target.value);setSelectedAppPath(null);setSelectedID(null);if(appList.current)appList.current.scrollTop=0;if(associationList.current)associationList.current.scrollTop=0}} onKeyDown={event=>searchKey(event,true)}/><kbd aria-hidden="true">⌘ F</kbd></span></label>
+    <label className="search-field">搜索应用<span className="search-input"><Icon name="search"/><input ref={appSearch} type="search" aria-label="搜索应用名称、版本、路径或声明" placeholder="名称、版本、路径或声明" value={appQuery} onChange={event=>actions.setAppQuery(event.target.value)} onKeyDown={event=>searchKey(event,true)}/><kbd aria-hidden="true">⌘ F</kbd></span></label>
     <p className="search-hint">匹配应用信息时显示全部声明；仅声明命中时显示匹配项。</p>
     <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {item.associationIDs?.length ?? 0} 个声明关联</span></span><Icon name="chevron"/></button>)}</div>
     <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
@@ -237,39 +93,39 @@ export default function App() {
     <header className="app-heading">
      <div className="page-identity"><span className="page-icon" data-application={kind==='app' && !!selectedApp}>{kind==='app' && selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name={kind}/>}</span><div><h1>{kind==='app' ? selectedApp?.app.name || '已安装应用' : viewNames[kind]}</h1>
       {kind==='app' && selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>{kind==='file' ? '查看文件类型，选择打开它们的默认应用。' : kind==='scheme' ? '查看 URL 协议，选择接收链接的默认应用。' : '这台 Mac 的实际默认与系统候选'}</p>}
-     </div></div>{kind==='app' && selectedApp ? <button className="btn" onClick={()=>setInspectedCopy(selectedApp.app)}>应用详情…<Icon name="chevron"/></button> : null}
+     </div></div>{kind==='app' && selectedApp ? <button className="btn" onClick={()=>inspectCopy(selectedApp.app)}>应用详情…<Icon name="chevron"/></button> : null}
     </header>
     {catalogLoading || snapshot?.scanning ? <p className="scan-status" role="status">{snapshot?.scanning ? `正在扫描应用…已发现 ${snapshot.apps?.length ?? 0} 份` : '正在解析常用关联…'}</p> : null}
     {reparseNotice ? <p role="status">{reparseNotice}</p> : null}
-    {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button className="btn" onClick={()=>void refreshCatalog()}>重试加载目录</button></div> : null}
+    {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button className="btn" onClick={()=>void retryCatalog()}>重试加载目录</button></div> : null}
     {kind==='app' && missingAppPath ? <div role="status" className="missing-copy"><strong>原应用副本已不在目录中</strong><p>{missingAppPath}</p><p>可选择其他应用副本继续浏览。</p></div> : null}
-    <div className="association-toolbar"><div><h2>{kind==='app' ? '声明支持' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配声明' : '常用关联优先'}</p></div><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>{setFilter(event.target.value);if(associationList.current)associationList.current.scrollTop=0}} onKeyDown={event=>searchKey(event)}/></span></label></div>
+    <div className="association-toolbar"><div><h2>{kind==='app' ? '声明支持' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配声明' : '常用关联优先'}</p></div><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label></div>
     <div className="column-labels"><span>关联项</span><span>当前默认应用</span><span>操作</span></div>
     <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '声明关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
      {visibleEntries.map(entry=>{
       const isDefault=observations[entry.id]?.default.app?.path===selectedApp?.app.path
       return <div className="association-row" data-selected={browsedSelected?.id===entry.id} key={entry.id}>
-      <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}><span className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></span><span className="association-label"><strong>{entryName(entry)}</strong><span>{entry.extensions?.map(value=>`.${value}`).join(' · ')}</span><span>{entry.association.key || entry.sources?.[0]?.rawInput}</span></span></button>
+      <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} onClick={()=>openEntry(entry.id)}><span className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></span><span className="association-label"><strong>{entryName(entry)}</strong><span>{entry.extensions?.map(value=>`.${value}`).join(' · ')}</span><span>{entry.association.key || entry.sources?.[0]?.rawInput}</span></span></button>
       <div className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></div>
-      <div className="row-actions"><button className="btn row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>{selectEntry(entry.id);setDetailOpen(true)}}>详情…</button>{kind==='app'&&selectedApp?<button className="btn row-submit" data-current={isDefault} aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</button>:null}
+      <div className="row-actions"><button className="btn row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}>详情…</button>{kind==='app'&&selectedApp?<button className="btn row-submit" data-current={isDefault} aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</button>:null}
       {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><span key={r.requestID} className="change-row-state" data-confirmed={r.confirmed}>{requestLabel(r)}</span>)}</div>
      </div>})}
-     {!visibleEntries.length ? <div className="empty-workspace"><span className="empty-icon"><Icon name="search"/></span><h2>{emptyHeadline()}</h2><p>可清除搜索{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button className="btn" onClick={clearSearch}>清除搜索</button>{kind==='app' && !selectedApp && appFilter!=='all' ? <button className="btn" onClick={()=>changeAppFilter('all')}>显示全部应用</button> : null}{kind!=='file' ? <button className="btn" onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button className="btn" onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
+     {!visibleEntries.length ? <div className="empty-workspace"><span className="empty-icon"><Icon name="search"/></span><h2>{emptyHeadline}</h2><p>可清除搜索{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button className="btn" onClick={clearSearch}>清除搜索</button>{kind==='app' && !selectedApp && appFilter!=='all' ? <button className="btn" onClick={()=>changeAppFilter('all')}>显示全部应用</button> : null}{kind!=='file' ? <button className="btn" onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button className="btn" onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
     </div>
     <footer className="browser-footer"><span className="footer-source"><span className="status-dot"/>默认应用由系统独立查询</span>{snapshot?.issues?.length ? <button className="btn" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span className="keyboard-hint"><kbd>⌘ 1</kbd><kbd>2</kbd><kbd>3</kbd> 切换入口</span></footer>
    </main>
   </div>
   {issuesOpen ? <Dialog title="扫描问题" onClose={()=>setIssuesOpen(false)}><ul className="scan-issues">{snapshot?.issues?.map((issue,index)=><li key={index}><p>{issue.path}</p><p>{issue.origin} · {issue.message}</p></li>)}</ul></Dialog> : null}
-  {inspectedCopy ? <Dialog title="所选应用副本" onClose={()=>setInspectedCopy(null)}><section aria-label="所选应用副本"><ApplicationCopy app={inspectedCopy} onSubmit={detailOpen&&selected?app=>submitCopy(selected,app):undefined} disabled={!canChange(selected,inspectedCopy)}/></section></Dialog> : null}
-  {selected && detailOpen ? <Dialog title={entryName(selected)} subtitle={selected.association.key || '尚未解析'} onClose={()=>{reparseAnchor.current=null;setDetailOpen(false);setRequestEntry(null)}}>
-    {requestEntry && !entries.some(entry=>entry.id===requestEntry.id) ? <p role="status" className="query-error">此关联已不在当前目录中；仍按原修改请求查询。</p> : null}
+  {inspectedCopy ? <Dialog title="所选应用副本" onClose={closeCopy}><section aria-label="所选应用副本"><ApplicationCopy app={inspectedCopy} onSubmit={detailOpen&&selected?app=>submitCopy(selected,app):undefined} disabled={!canChange(selected,inspectedCopy)}/></section></Dialog> : null}
+  {selected && detailOpen ? <Dialog title={entryName(selected)} subtitle={selected.association.key || '尚未解析'} onClose={closeDetails}>
+    {requestEntryMissing ? <p role="status" className="query-error">此关联已不在当前目录中；仍按原修改请求查询。</p> : null}
     <div className="page-heading"><div><h3>关联查询</h3><p>{selected.extensions?.map(value => `.${value}`).join(' · ')}{selected.extensions?.length ? ' · ' : ''}{selected.association.key || '尚未解析'}</p></div><button className="btn" onClick={() => void (selected.resolved ? refresh() : reparse())} disabled={loading || catalogLoading || (!selected.resolved && !!snapshot?.scanning)}><Icon name="refresh"/>{loading ? '正在查询…' : selected.resolved ? '重新查询' : '重新解析'}</button></div>
     <div className="query-content" role="region" aria-label={`${selected.name || '关联'} 查询结果`} tabIndex={0} aria-busy={loading}>
      {!selected.resolved ? <div className="query-error" role="status"><p>关联尚未解析，不能查询或修改默认应用。</p><p>{selected.unresolvedReason}</p>{selected.diagnosticIdentifiers?.length ? <p>系统诊断：{selected.diagnosticIdentifiers.join('、')}</p> : null}<ManualActions label="选择文件识别类型…" showStorageWarning={false}/></div> : <>
       {transportError ? <p role="alert" className="query-error">查询连接失败{visibleResult ? '，显示最后有效观察，待更新。' : '。'}{transportError}</p> : null}
       <section aria-labelledby="current-heading"><h2 id="current-heading">当前默认应用</h2>
        {visibleResult?.default.error ? <div className="query-error" role="status"><p>{visibleResult.default.known ? '默认应用待更新 · 保留最后有效观察' : '默认应用查询失败'}</p><p>{visibleResult.default.error.message}</p></div> : null}
-       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={discoveredPaths.current.has(visibleResult.default.app.path) && catalogSettled && !inCatalog(visibleResult.default.app.path)} onSelect={setInspectedCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
+       {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={missingCopyPaths.has(visibleResult.default.app.path)} onSelect={inspectCopy} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
        {visibleResult?.default.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.default.observedAt).toLocaleString()}</p> : null}
       </section>
       <section aria-labelledby="candidates-heading"><div className="section-heading"><h2 id="candidates-heading">系统候选应用</h2>{visibleResult?.candidates.known ? <span>{visibleResult.candidates.apps?.length ?? 0} 个应用副本</span> : null}</div>
@@ -277,8 +133,8 @@ export default function App() {
        {!visibleResult?.candidates.known ? <p>{loading ? '正在读取系统候选…' : '尚无有效候选观察'}</p> : null}
        {visibleResult?.candidates.known && !visibleResult.candidates.apps?.length ? <p>系统未返回候选应用</p> : null}
        {visibleResult?.candidates.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.candidates.observedAt).toLocaleString()}</p> : null}
-       <ManualApplicationAction association={selected.association} onSelected={setInspectedCopy}/>
-       <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSelect={setInspectedCopy} onSubmit={app=>submitCopy(selected,app)} disabled={!canChange(selected,app)}/></li>)}</ul>
+       <ManualApplicationAction association={selected.association} onSelected={inspectCopy}/>
+       <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSelect={inspectCopy} onSubmit={app=>submitCopy(selected,app)} disabled={!canChange(selected,app)}/></li>)}</ul>
       </section>
      </>}
      <Sources entry={selected} />
