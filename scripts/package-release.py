@@ -9,12 +9,12 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VERSION = (ROOT / 'internal/buildinfo/version.txt').read_text().strip()
-bundle = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / 'bin/default-apps.app').resolve()
+bundle = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / 'bin/Default Apps.app').resolve()
 out = pathlib.Path(sys.argv[2] if len(sys.argv) > 2 else ROOT / 'bin/release').resolve()
-if not bundle.is_dir() or bundle.name != 'default-apps.app':
-    raise SystemExit('Expected a built default-apps.app')
+if not bundle.is_dir() or bundle.name != 'Default Apps.app':
+    raise SystemExit('Expected a built Default Apps.app')
 info = plistlib.loads(subprocess.check_output(['/usr/bin/plutil', '-convert', 'xml1', '-o', '-', str(bundle / 'Contents/Info.plist')]))
-for key, value in {'CFBundleIdentifier': 'io.github.sunven.default-apps', 'CFBundleExecutable': 'default-apps', 'CFBundleVersion': VERSION, 'CFBundleShortVersionString': VERSION}.items():
+for key, value in {'CFBundleName': 'Default Apps', 'CFBundleDisplayName': 'Default Apps', 'CFBundleIdentifier': 'io.github.sunven.default-apps', 'CFBundleExecutable': 'default-apps', 'CFBundleVersion': VERSION, 'CFBundleShortVersionString': VERSION}.items():
     if info.get(key) != value:
         raise SystemExit(f'{key} does not match release identity/version')
 binary = bundle / 'Contents/MacOS/default-apps'
@@ -41,11 +41,11 @@ with archive.open('rb') as file:
 (out / 'SHA256SUMS').write_text(f'{digest}  {archive.name}\n')
 (out / 'INSTALL.md').write_text(f'''# Default Apps {VERSION}
 
-仅支持 macOS Apple Silicon。下载并解压 ZIP，将 default-apps.app 移至可写的应用目录。
+仅支持 macOS Apple Silicon。下载并解压 ZIP，将 Default Apps.app 移至可写的应用目录。
 本应用不提供 Developer ID 签名或公证。首次手动安装后，如被 macOS 隔离，请在终端按实际路径执行：
 
 ```sh
-xattr -dr com.apple.quarantine "/Applications/default-apps.app"
+xattr -dr com.apple.quarantine "/Applications/Default Apps.app"
 ```
 
 然后重新打开应用。此版本内置软件更新；只有主动下载并确认重启安装后才替换当前应用副本。

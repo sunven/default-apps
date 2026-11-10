@@ -8,7 +8,7 @@ import (
 
 func TestOnlyCurrentCanonicalInstalledCopyIsEligible(t *testing.T) {
 	root := t.TempDir()
-	app := filepath.Join(root, "Copies", "default-apps.app")
+	app := filepath.Join(root, "Copies", "Default Apps.app")
 	binary := filepath.Join(app, "Contents", "MacOS", "default-apps")
 	if err := os.MkdirAll(filepath.Dir(binary), 0700); err != nil {
 		t.Fatal(err)

@@ -5,6 +5,8 @@
             <string>APPL</string>
         <key>CFBundleName</key>
             <string>Default Apps</string>
+        <key>CFBundleDisplayName</key>
+            <string>Default Apps</string>
         <key>CFBundleExecutable</key>
             <string>default-apps</string>
         <key>CFBundleIdentifier</key>

@@ -35,9 +35,11 @@ node scripts/version.mjs check
 
 发布附件为：
 
-- `default-apps-darwin-arm64.zip`：唯一顶层为 `default-apps.app`，客户端只选择这个附件。
+- `default-apps-darwin-arm64.zip`：唯一顶层为 `Default Apps.app`，客户端只选择这个附件。
 - `SHA256SUMS`：该 ZIP 的 SHA-256。客户端缺少有效摘要时拒绝下载，内容不匹配时拒绝安装。
 - `INSTALL.md`：首次安装与解除 quarantine 的操作说明。
+
+应用名称及安装包目录统一为 `Default Apps.app`。已安装的旧名副本通过应用内升级时会保留原路径；如需同步名称，可先退出应用，再将旧副本重命名为 `Default Apps.app`。更新包附件名保持 `default-apps-darwin-arm64.zip`，供已有客户端继续识别。
 
 版本、发布日期和更新说明使用 GitHub Release API 的 metadata，无需 Tauri 的 `latest.json`。自动生成的 Release notes 用于应用内更新说明，以纯文本展示。
 
@@ -53,7 +55,7 @@ python3 scripts/package-release.py
 首次手动安装：下载解压，移至可写目录；如被 macOS 隔离，按真实路径执行以下命令，再重新打开：
 
 ```sh
-xattr -dr com.apple.quarantine "/Applications/default-apps.app"
+xattr -dr com.apple.quarantine "/Applications/Default Apps.app"
 ```
 
 ## 安装与恢复边界

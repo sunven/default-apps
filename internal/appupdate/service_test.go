@@ -184,7 +184,7 @@ func (p archiveProvider) Download(_ context.Context, _ *updater.Release, w io.Wr
 func TestRealEngineRejectsChangedBytesBeforeExtraction(t *testing.T) {
 	var body bytes.Buffer
 	z := zip.NewWriter(&body)
-	w, _ := z.Create("default-apps.app/Contents/MacOS/default-apps")
+	w, _ := z.Create("Default Apps.app/Contents/MacOS/default-apps")
 	w.Write([]byte("fixture"))
 	z.Close()
 	sum := sha256.Sum256(body.Bytes())

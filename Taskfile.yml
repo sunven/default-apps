@@ -2,6 +2,7 @@ version: '3'
 
 vars:
   APP_NAME: "default-apps"
+  APP_BUNDLE_NAME: "Default Apps"
   BIN_DIR: "bin"
   PACKAGE_MANAGER: '{{.PACKAGE_MANAGER | default "npm"}}'
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'

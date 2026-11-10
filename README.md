@@ -7,24 +7,24 @@ macOS 自用默认应用工具。从已安装应用出发浏览文件类型和 U
 支持应用／关联搜索、双列表独立滚动、键盘浏览、原生文件识别／应用选择器、手动项跨启动保存，以及查询失败重查。配置位于 `~/Library/Application Support/Default Apps/config.json`。日常使用从普通应用启动：
 
 ```sh
-open bin/default-apps.app
+open "bin/Default Apps.app"
 ```
 
 本机构建固定 Go **1.27.3**、Wails CLI／模块／前端 runtime **3.1.0**，保留现有 npm 锁文件和 React **18.3.1**：
 
 ```sh
 wails3 task darwin:package
-open bin/default-apps.app
+open "bin/Default Apps.app"
 ```
 
-任务执行版本检查、`npm ci`、生成绑定和前端构建，并以本机 ad-hoc 签名打包 `bin/default-apps.app`。产品名称为 Default Apps，bundle ID 为 `io.github.sunven.default-apps`，版本 0.1.0。开发产品使用同一身份与正式入口：
+任务执行版本检查、`npm ci`、生成绑定和前端构建，并以本机 ad-hoc 签名打包 `bin/Default Apps.app`。产品名称为 Default Apps，bundle ID 为 `io.github.sunven.default-apps`，版本以 `internal/buildinfo/version.txt` 为准。开发产品使用同一身份与正式入口：
 
 ```sh
 wails3 build DEV=true
 wails3 task run
 ```
 
-这会创建并启动 `bin/default-apps.dev.app`。热重载使用 `wails3 task dev`。开发和普通产物均不包含原型、压力数据、MCP 或原生验收控制器。
+这会创建并启动 `bin/Default Apps.dev.app`。热重载使用 `wails3 task dev`。开发和普通产物均不包含原型、压力数据、MCP 或原生验收控制器。
 
 C 编译、链接、部署目标和两份 plist 的下限均为 **macOS 13**；这是构建下限。实际签收环境为 **macOS 27.2／Apple Silicon**，未验证所有 13+ 系统、Intel 或 universal。商业分发、公证、商店和其他平台不在范围；首版之后新增了下述本工具更新功能。
 
@@ -33,10 +33,10 @@ C 编译、链接、部署目标和两份 plist 的下限均为 **macOS 13**；�
 更新仅支持 macOS Apple Silicon，使用 SHA-256 校验，不配置更新包密钥签名、Developer ID 或公证；保留本机 ad-hoc 构建处理。首次手动安装后如被系统隔离，按实际安装位置执行：
 
 ```sh
-xattr -dr com.apple.quarantine "/Applications/default-apps.app"
+xattr -dr com.apple.quarantine "/Applications/Default Apps.app"
 ```
 
-首次安装带更新能力的版本仍需手动完成。发布源必须可匿名读取；目前 `sunven/default-apps` 尚不能匿名读取，客户端会如实显示检查失败。[发布指南](docs/releasing.md)说明统一版本、标签发布与手动打包；[更新规格](docs/automatic-updates.md)记录范围与验证边界。
+首次安装带更新能力的版本仍需手动完成。发布源必须可匿名读取；`sunven/default-apps` 已设为公开，客户端通过公开接口检查与下载更新。[发布指南](docs/releasing.md)说明统一版本、标签发布与手动打包；[更新规格](docs/automatic-updates.md)记录范围与验证边界。
 
 2026-11-06 的[成品验收报告与全部 25 项矩阵](.scratch/default-apps-v1-implementation/assets/11/README.md)包含普通／开发启动、签名、哈希、实际工具版本及本机限制。专用文件类型和协议均通过真实 A→B→A；文件请求的真实拒绝、同 ID 副本差异、未声明应用、待决退出重开另有记录。协议实验在 11–14ms 返回，未观察到它的系统提示或持续等待；不保证所有协议接受任意应用。日常 PDF、浏览器、邮件仅做只读核对。
 
