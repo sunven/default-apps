@@ -5,6 +5,7 @@ import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/
 import type {Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import {message} from './errors'
+import {notify,dismissNotification} from './Notifications'
 
 // Trustworthy mirrors association.DefaultObservation.Trustworthy in Go.
 export const isTrustworthy=(observation:DefaultObservation|undefined)=>!!observation?.known&&!observation.error&&!observation.stale
@@ -52,19 +53,27 @@ type Options={
 export function useAssociationQueries({selected,entries,snapshotObservations,getVisibleAssociationIDs}:Options){
  const [state,dispatch]=useReducer(reduce,{observations:{},rowErrors:{},issued:{}})
  const [loading,setLoading]=useState(false)
+ const [prefetching,setPrefetching]=useState(false)
  const sequence=useRef(0),requestVersion=useRef(0)
  useEffect(()=>{for(const value of snapshotObservations??[])dispatch({type:'result',value})},[snapshotObservations])
  const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true)=>{
   const token=++sequence.current,id=`${association.kind}:${association.key}`
   dispatch({type:'started',id,token})
-  try{const value=await Query(association);if(isCurrent())dispatch({type:'result',value,token})}
+  try{const value=await Query(association);if(isCurrent()){dispatch({type:'result',value,token});return value}}
   catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:message(error)})}
  },[])
- const refresh=useCallback(async()=>{
+ const refresh=useCallback(async(notifyUser=false)=>{
   const version=++requestVersion.current
   if(!selected?.resolved){setLoading(false);return}
   setLoading(true)
-  try{await query(selected.association,()=>version===requestVersion.current)}
+  const id=notifyUser?notify('pending','正在重新查询关联…',{description:selected.association.key}):undefined
+  try{
+   const result=await query(selected.association,()=>version===requestVersion.current)
+   if(id!==undefined){
+    if(version===requestVersion.current&&result&&!result.superseded&&result.default.known&&!result.default.error&&result.candidates.known&&!result.candidates.error)notify('success','关联查询已更新',{id,description:selected.association.key})
+    else dismissNotification(id)
+   }
+  }
   finally{if(version===requestVersion.current)setLoading(false)}
  },[selected,query])
  useEffect(()=>{void refresh();return()=>{++requestVersion.current}},[refresh])
@@ -72,8 +81,9 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
  useEffect(()=>{
   let active=true,cursor=0
   const pending=entries.filter(entry=>entry.resolved && entry.id!==selected?.id && !state.observations[entry.id])
+  setPrefetching(pending.length>0)
   const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];await query(entry.association,()=>active)}}
-  void Promise.all(Array.from({length:Math.min(4,pending.length)},worker))
+  void Promise.all(Array.from({length:Math.min(4,pending.length)},worker)).then(()=>{if(active)setPrefetching(false)})
   return()=>{active=false}
  },[entries,query])
  const visibleRefresh=useRef(()=>{})
@@ -87,5 +97,5 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
   const off=Events.On('defaultapps:activated',()=>{if(timer!==undefined)return;timer=setTimeout(()=>{timer=undefined;visibleRefresh.current()},100)})
   return()=>{off();if(timer!==undefined)clearTimeout(timer)}
  },[])
- return {observations:state.observations,rowErrors:state.rowErrors,loading,refresh}
+ return {observations:state.observations,rowErrors:state.rowErrors,loading,prefetching,refresh}
 }

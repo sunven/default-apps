@@ -34,12 +34,98 @@ beforeEach(()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
 })
 
+test('a default assigned to an application without declarations appears in its associations',async()=>{
+ const markdown=entry('net.daringfireball.markdown','Markdown',['md','markdown'],true)
+ const openIt={...app,name:'Open It',path:'/Applications/Open It.app',displayPath:'/Applications/Open It.app',bundleID:'com.sunven.open-it'}
+ const data={...snapshot,entries:[markdown],apps:[{app:openIt,associationIDs:[],declarations:[],definitions:[],issues:[]}]}
+ vi.mocked(List).mockResolvedValue(data.entries)
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,
+  default:{known:true,app:openIt,observedAt:'now',stale:false,error:null},
+  candidates:{known:true,apps:[],observedAt:'now',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+ render(<App/>)
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ const row=await screen.findByRole('button',{name:'Markdown net.daringfireball.markdown'})
+ expect(await within(row.closest('.association-row') as HTMLElement).findByText('Open It')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'应用'}))
+ expect(await within(screen.getByRole('region',{name:'应用关联列表'})).findByRole('button',{name:'Markdown net.daringfireball.markdown'})).toBeVisible()
+ expect(screen.getByRole('button',{name:'Open It 2.4 /Applications/Open It.app'})).toHaveTextContent('1 个关联')
+ expect(screen.getByText('1 个关联 · 已是默认优先')).toBeVisible()
+})
+
+test('application source dropdown filters rows, survives navigation and clears with the other filters',async()=>{
+ const direct={...pdf,sources:[{...pdf.sources![0],kind:'declaration',inputKind:'identifier',appPath:app.path}]}
+ const markdown={...jpeg,id:'file:net.daringfireball.markdown',association:{kind:'file',key:'net.daringfireball.markdown'},name:'Markdown',extensions:['md'],sources:[{...jpeg.sources![0],kind:'manual'}]}
+ const data={...snapshot,entries:[direct,markdown],apps:[{...snapshot.apps![0],associationIDs:[direct.id]}]}
+ vi.mocked(List).mockResolvedValue(data.entries)
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,
+  default:{known:true,app,observedAt:'now',stale:false,error:null},candidates:{known:true,apps:[],observedAt:'now',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+ render(<App/>)
+ const rows=await screen.findByRole('region',{name:'应用关联列表'})
+ await within(rows).findByRole('button',{name:'Markdown net.daringfireball.markdown'})
+ const source=screen.getByRole('combobox',{name:'筛选关联来源'})
+ expect(source).toHaveValue('all')
+ rows.scrollTop=100
+ await userEvent.selectOptions(source,'default')
+ expect(rows.scrollTop).toBe(0)
+ expect(within(rows).queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
+ expect(within(rows).getByText('当前默认关联')).toBeVisible()
+ expect(screen.getByText('1 个关联 · 已是默认优先')).toBeVisible()
+ expect(screen.getByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})).toHaveTextContent('2 个关联')
+ await userEvent.type(screen.getByRole('searchbox',{name:'筛选当前关联'}),'mark')
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(screen.queryByRole('combobox',{name:'筛选关联来源'})).not.toBeInTheDocument()
+ expect(within(screen.getByRole('region',{name:'关联列表'})).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'应用'}))
+ expect(screen.getByRole('combobox',{name:'筛选关联来源'})).toHaveValue('default')
+ expect(screen.getByRole('searchbox',{name:'筛选当前关联'})).toHaveValue('mark')
+ await userEvent.click(screen.getByRole('checkbox',{name:'仅手动添加'}))
+ await userEvent.type(screen.getByRole('searchbox',{name:'筛选当前关联'}),'missing')
+ await userEvent.click(screen.getByRole('button',{name:'清除搜索和筛选'}))
+ expect(screen.getByRole('combobox',{name:'筛选关联来源'})).toHaveValue('all')
+ expect(screen.getByRole('checkbox',{name:'仅手动添加'})).not.toBeChecked()
+ expect(within(rows).getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toBeVisible()
+ expect(within(rows).getByRole('button',{name:'Markdown net.daringfireball.markdown'})).toBeVisible()
+})
+
+test.each(['file','scheme'])('startup discovers undeclared %s defaults and follows the concrete copy after a change',async kind=>{
+ const association=kind==='file'?pdf:https
+ const copies=snapshot.apps!.map(item=>({...item,associationIDs:[]}))
+ const data={...snapshot,entries:[association],apps:copies}
+ vi.mocked(List).mockResolvedValue(data.entries)
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ let currentCopy=app
+ vi.mocked(Query).mockImplementation(identity=>Promise.resolve({association:identity,version:currentCopy===app?1:2,
+  default:{known:true,app:currentCopy,observedAt:'now',stale:false,error:null},
+  candidates:{known:true,apps:[app,archive],observedAt:'now',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+ render(<App/>)
+ const name=`${association.name} ${association.association.key}`
+ const row=await within(screen.getByRole('region',{name:'应用关联列表'})).findByRole('button',{name})
+ expect(within(row).getByText('当前默认关联')).toBeVisible()
+ expect(screen.getByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})).toHaveTextContent('1 个关联')
+ expect(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})).toHaveTextContent('0 个关联')
+ await userEvent.click(row)
+ currentCopy=archive
+ await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
+ await waitFor(()=>expect(screen.getByRole('region',{name:'应用关联列表'}).querySelector('[data-association-id]')).toBeNull())
+ expect(screen.getByRole('button',{name:'Reader 2.4 /Applications/Reader.app'})).toHaveTextContent('0 个关联')
+ const other=screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})
+ expect(other).toHaveTextContent('1 个关联')
+ await userEvent.click(other)
+ expect(within(screen.getByRole('region',{name:'应用关联列表'})).getByRole('button',{name})).toBeVisible()
+ expect(data.apps.every(item=>item.associationIDs.length===0)).toBe(true)
+})
+
 test('current defaults sort first for the selected copy and keyboard navigation follows that order',async()=>{
  const data={...snapshot,apps:snapshot.apps!.map(item=>({...item,associationIDs:[jpeg.id,pdf.id,otherJPEG.id]}))}
  vi.mocked(GetSnapshot).mockResolvedValue(data)
  vi.mocked(StartScan).mockResolvedValue(data)
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,
-  default:{known:true,app:association.key===pdf.association.key ? archive : app,observedAt:'now',stale:false,error:null},
+  default:{known:true,app:association.kind==='scheme'?null:association.key===pdf.association.key ? archive : app,observedAt:'now',stale:false,error:null},
   candidates:{known:true,apps:[],observedAt:'now',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
  render(<App/>)
  const rows=await screen.findByRole('region',{name:'应用关联列表'})
@@ -134,7 +220,7 @@ test('application classification combines with metadata and declaration searches
  const search=screen.getByRole('searchbox',{name:'搜索应用名称、版本、路径或声明'})
  const apps=screen.getByRole('region',{name:'已安装应用列表'})
  await userEvent.type(search,'.jpg')
- expect(within(apps).getAllByRole('button')).toHaveLength(1)
+ expect(within(apps).getAllByRole('button')).toHaveLength(2)
  expect(screen.getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeVisible()
  expect(screen.queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
  await userEvent.click(within(filters).getByRole('button',{name:'系统应用'}))
@@ -242,7 +328,7 @@ test('application metadata matches show all declarations, declaration matches na
  expect(within(rows).queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
  expect(within(rows).getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeVisible()
  expect(within(rows).getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toBeVisible()
- expect(screen.getByText(/仅显示匹配声明/)).toBeVisible()
+ expect(screen.getByText(/仅显示匹配关联/)).toBeVisible()
  await userEvent.type(screen.getByRole('searchbox',{name:'筛选当前关联'}),'public.jpeg')
  expect(within(rows).queryByRole('button',{name:'JPEG 导出 test.independent.jpg'})).not.toBeInTheDocument()
  expect(within(rows).getByRole('button',{name:'JPEG 图像 public.jpeg'})).toBeVisible()
@@ -272,8 +358,8 @@ test('keyboard traverses only the active list, opens details, and does not inter
  await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}')
  expect(first).toHaveFocus()
  await userEvent.keyboard('{End}{Enter}')
- expect(screen.getByRole('searchbox',{name:'筛选当前关联'})).toHaveFocus()
- expect(screen.getByText('此应用未声明可处理的文件类型或 URL 协议')).toBeVisible()
+ expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toHaveFocus()
+ expect(screen.getByText('4 个关联 · 已是默认优先')).toBeVisible()
  first.focus();await userEvent.keyboard('{Home}{Enter}')
  const name=screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})
  expect(name).toHaveFocus()
@@ -333,7 +419,8 @@ test('no matches clear old details, and a vanished selected copy retains its pat
  expect(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'})).toHaveAttribute('aria-pressed','false')
  expect(screen.queryByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).not.toBeInTheDocument()
  await userEvent.click(screen.getByRole('button',{name:'Reader 1.2 /Volumes/Archive/Reader.app'}))
- expect(screen.getByText('此应用未声明可处理的文件类型或 URL 协议')).toBeVisible()
+ expect(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'})).toBeVisible()
+ expect(screen.getByText('4 个关联 · 已是默认优先')).toBeVisible()
 })
 
 test('progress snapshots keep the selected copy until the completed scan confirms it has disappeared',async()=>{

@@ -2,6 +2,7 @@ import { useId, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { isComposing } from './keyboard'
 import { Icon } from './Icon'
+import { registerNotificationDialog } from './Notifications'
 
 // Shared by association, copy and manual-entry dialogs. Mount only while open.
 export function Dialog({ title, subtitle, onClose, children }: {title:string; subtitle?:string; onClose:()=>void; children:ReactNode}) {
@@ -11,8 +12,10 @@ export function Dialog({ title, subtitle, onClose, children }: {title:string; su
   const trigger=document.activeElement instanceof HTMLElement ? document.activeElement : null
   const dialog=ref.current!
   dialog.showModal()
+  const unregisterNotifications=registerNotificationDialog(dialog)
   dialog.querySelector<HTMLButtonElement>('[data-dialog-close]')?.focus()
   return ()=>{
+   unregisterNotifications()
    dialog.close()
    if(trigger?.isConnected) trigger.focus({preventScroll:true})
    else document.querySelector<HTMLInputElement>('input[type="search"]')?.focus({preventScroll:true})

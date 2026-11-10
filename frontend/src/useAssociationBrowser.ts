@@ -7,6 +7,8 @@ import type { Snapshot } from '../bindings/github.com/sunven/default-apps/intern
 import type { AppCopy, Association } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import { isComposing, plainKey } from './keyboard'
+import { notify, dismissNotification } from './Notifications'
+import { matchesAssociationSource, type AssociationSourceFilter } from './associationSources'
 
 export type BrowserView = 'app' | 'file' | 'scheme'
 export type ApplicationFilter = 'user' | 'system' | 'all'
@@ -78,7 +80,7 @@ type Session = { query: string; manualOnly: boolean; selectedID: string | null; 
 type State = {
   entries: Entry[]; snapshot: Snapshot | null; scanVersion: number
   defaultPaths: Record<string, string>
-  kind: BrowserView; appFilter: ApplicationFilter; appQuery: string; filter: string; manualOnly: boolean
+  kind: BrowserView; appFilter: ApplicationFilter; appQuery: string; filter: string; manualOnly: boolean; sourceFilter: AssociationSourceFilter
   selectedAppPath: string | null; selectedID: string | null
   detailOpen: boolean; requestEntry: Entry | null; inspectedCopy: AppCopy | null
   catalogLoading: boolean; catalogError: string | null; catalogRequest: number
@@ -88,7 +90,7 @@ type State = {
 }
 function initialState(): State {
   return {
-    entries: [], snapshot: null, scanVersion: 0, defaultPaths: {}, kind: 'app', appFilter: 'user', appQuery: '', filter: '', manualOnly: false,
+    entries: [], snapshot: null, scanVersion: 0, defaultPaths: {}, kind: 'app', appFilter: 'user', appQuery: '', filter: '', manualOnly: false, sourceFilter:'all',
     selectedAppPath: null, selectedID: null, detailOpen: false, requestEntry: null, inspectedCopy: null,
     catalogLoading: true, catalogError: null, catalogRequest: 0, reparseNotice: null, reparseAnchor: null,
     sessions: { app: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, file: { query: '', manualOnly: false, selectedID: null, scroll: 0 }, scheme: { query: '', manualOnly: false, selectedID: null, scroll: 0 } },
@@ -111,12 +113,21 @@ function mergeScanningEntries(previous:Entry[], incoming:Entry[]) {
 function browse(state: State) {
   const term = state.appQuery.trim().toLocaleLowerCase()
   const index = new Map(state.entries.map(entry => [entry.id, entry]))
+  const defaultsByPath = new Map<string,Entry[]>()
+  for(const [id,path] of Object.entries(state.defaultPaths)){
+    const entry=index.get(id)
+    if(!entry)continue
+    const entries=defaultsByPath.get(path)
+    if(entries)entries.push(entry)
+    else defaultsByPath.set(path,[entry])
+  }
   const applicationMatches = (state.snapshot?.apps ?? [])
     .filter(item => !item.unavailable && (state.appFilter === 'all' || !!item.app.system === (state.appFilter === 'system')))
     .map(item => {
       const metadataMatch = !term || [item.app.name, item.app.version, item.app.path, item.app.displayPath, item.app.bundleID].join(' ').toLocaleLowerCase().includes(term)
       const declarations = (item.associationIDs ?? []).flatMap(id => index.get(id) ?? [])
-      return { item, metadataMatch, entries: metadataMatch ? declarations : declarations.filter(entry => entryText(entry).includes(term)) }
+      const associations=[...new Map([...declarations,...(defaultsByPath.get(item.app.path)??[])].map(entry=>[entry.id,entry])).values()]
+      return { item, metadataMatch, associationCount:associations.length, entries: metadataMatch ? associations : associations.filter(entry => entryText(entry).includes(term)) }
     }).filter(match => match.metadataMatch || match.entries.length)
   const settled = !!state.snapshot && !state.snapshot.scanning
   const availablePaths = new Set((state.snapshot?.apps ?? []).filter(item => !item.unavailable).map(item => item.app.path))
@@ -124,6 +135,7 @@ function browse(state: State) {
   const selectedMatch = missingAppPath ? undefined : state.selectedAppPath ? applicationMatches.find(match => match.item.app.path === state.selectedAppPath) : applicationMatches[0]
   const visibleEntries = (state.kind === 'app' ? selectedMatch?.entries ?? [] : state.entries.filter(entry => entry.association.kind === state.kind))
     .filter(entry => (!state.manualOnly || entry.sources?.some(source => source.kind === 'manual')) && entryText(entry).includes(state.filter.trim().toLocaleLowerCase()))
+    .filter(entry => state.kind!=='app'||matchesAssociationSource(entry,selectedMatch?.item.app.path??'',state.defaultPaths[entry.id]===selectedMatch?.item.app.path,state.sourceFilter))
     .sort((a, b) => (state.kind === 'app' ? Number(state.defaultPaths[b.id] === selectedMatch?.item.app.path) - Number(state.defaultPaths[a.id] === selectedMatch?.item.app.path) : 0)
       || Number(b.sources?.some(source => source.kind === 'common')) - Number(a.sources?.some(source => source.kind === 'common')))
   const browsedSelected = visibleEntries.find(entry => entry.id === state.selectedID) ?? visibleEntries[0]
@@ -147,6 +159,7 @@ type Action =
   | { type: 'clearSearch'; apps?: boolean; all?: boolean }
   | { type: 'appFilter'; value: ApplicationFilter }
   | { type: 'manualOnly'; value: boolean }
+  | { type: 'sourceFilter'; value: AssociationSourceFilter }
   | { type: 'rememberAppSelection'; path: string }
   | { type: 'selectApp'; path: string; focus?: boolean }
   | { type: 'selectEntry'; id: string; focus?: boolean; open?: boolean }
@@ -199,9 +212,12 @@ function transition(state: State, action: Action): State {
     case 'filter': return { ...state, filter: action.value, layout: { scroll: { associations: 0 } } }
     case 'manualOnly': return { ...state, manualOnly: action.value, selectedID: null, reparseAnchor: null, reparseNotice: null,
       detailOpen: false, requestEntry: null, inspectedCopy: null, layout: { scroll: { associations: 0 } } }
+    case 'sourceFilter': return { ...state, sourceFilter: action.value, selectedID: null, reparseAnchor: null, reparseNotice: null,
+      detailOpen: false, requestEntry: null, inspectedCopy: null, layout: { scroll: { associations: 0 } } }
     case 'clearSearch': {
       const next = action.apps || action.all ? { ...state, appQuery: '', selectedAppPath: null, selectedID: null } : state
       return { ...next, filter: !action.apps || action.all ? '' : state.filter, manualOnly: action.all ? false : state.manualOnly,
+        sourceFilter: action.all ? 'all' : state.sourceFilter,
         layout: action.all ? { focus: { kind: state.kind === 'app' ? 'appSearch' : 'associationSearch' } } : state.layout }
     }
     case 'appFilter': return action.value === state.appFilter ? state : { ...state, appFilter: action.value, reparseAnchor: null, reparseNotice: null,
@@ -256,7 +272,7 @@ function reduce(state: State, action: Action): State {
 function emptyHeadline(state: State, current: ReturnType<typeof browse>) {
   if (state.kind !== 'app') return state.catalogLoading ? '正在加载关联目录' : state.catalogError ? '关联目录暂时不可用' : state.filter ? '没有匹配的关联项' : state.manualOnly ? '没有手动添加的关联项' : '此入口暂无关联'
   if (current.missingAppPath) return '此副本的关联详情已清空'
-  if (current.selectedApp) return current.selectedApp.associationIDs?.length ? '没有匹配的关联项' : '此应用未声明可处理的文件类型或 URL 协议'
+  if (current.selectedApp) return current.selectedMatch?.associationCount ? '没有匹配的关联项' : '未找到此应用的声明或当前默认关联'
   if (state.appQuery) return '没有匹配的应用'
   return state.snapshot?.scanning ? '正在发现应用' : state.appFilter === 'all' ? '未发现应用' : `未发现${state.appFilter === 'system' ? '系统' : '非系统'}应用`
 }
@@ -271,7 +287,38 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
   const catalog = environment?.catalog ?? wailsCatalog
   const dom = useMemo(() => environment?.dom ?? browserDOM(refs), [environment?.dom, refs])
   const lifecycle = useRef(0), catalogSequence = useRef(0)
-  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.defaultPaths, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
+  const latestSnapshot = useRef<Snapshot | null>(null)
+  const scanNotification = useRef<{id:string;version:number;onIssues?:()=>void} | null>(null)
+  const reparseNotification = useRef<{id:string;token:string} | null>(null)
+  useLayoutEffect(()=>{
+    const operation=reparseNotification.current
+    if(operation&&operation.token!==state.reparseAnchor?.token){dismissNotification(operation.id);reparseNotification.current=null}
+  },[state.reparseAnchor])
+  const acceptSnapshot = useCallback((value:Snapshot) => {
+    if(value.version < (latestSnapshot.current?.version ?? 0))return
+    latestSnapshot.current=value
+    const scan=scanNotification.current
+    if(scan&&!value.scanning&&value.version>scan.version){
+      scanNotification.current=null
+      const issues=value.issues?.length??0
+      notify(issues?'warning':'success',issues?'扫描完成，发现部分问题':'应用扫描完成',{
+        id:scan.id,description:`已发现 ${value.apps?.length??0} 份应用${issues?` · ${issues} 个扫描问题`:''}`,
+        action:issues&&scan.onIssues?{label:'查看扫描问题',onClick:scan.onIssues}:undefined,
+      })
+    }
+    const reparse=reparseNotification.current
+    const result=!value.scanning&&reparse?value.reparses?.find(item=>item.token===reparse.token):undefined
+    if(reparse&&result){
+      reparseNotification.current=null
+      const entry=value.entries?.find(item=>item.id===result.entryID)
+      const matched=result.status==='matched'&&entry?.resolved
+      notify(matched?'success':'warning',matched?'关联已重新解析':result.status==='ambiguous'?'此输入解析为多个文件类型，请在列表中选择具体类型。':result.status==='missing'?'此关联来源已不在当前目录中，请重新选择关联。':'关联仍未解析',{
+        id:reparse.id,description:matched?entry.name:entry?.unresolvedReason,
+      })
+    }
+    dispatch({type:'snapshot',value})
+  },[])
+  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.defaultPaths, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.sourceFilter, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
   const selected = useRef(current.selected)
   const activeView = useRef(state.kind)
   useLayoutEffect(() => { selected.current = current.selected }, [current.selected])
@@ -287,34 +334,63 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     if (state.layout?.focus) dom.focus(state.layout.focus)
   }, [state.layout, dom])
 
-  const scan = useCallback(async () => {
+  const scan = useCallback(async (onIssues?:()=>void, silent=false) => {
     const generation = lifecycle.current
+    if(!silent){
+      if(scanNotification.current)dismissNotification(scanNotification.current.id)
+      const id=`scan:${crypto.randomUUID()}`
+      scanNotification.current={id,version:latestSnapshot.current?.version??0,onIssues}
+      notify('pending','正在扫描应用…',{id})
+    }
     dispatch({ type: 'catalogError', error: null })
-    try { const value = await catalog.startScan(); if (generation === lifecycle.current) dispatch({ type: 'snapshot', value }) }
-    catch (error) { if (generation === lifecycle.current) dispatch({ type: 'catalogError', error: String(error) }) }
-  }, [catalog])
-  const retryCatalog = useCallback(async () => {
+    try { const value = await catalog.startScan(); if (generation === lifecycle.current) acceptSnapshot(value) }
+    catch (error) { if (generation === lifecycle.current) {
+      if(scanNotification.current){dismissNotification(scanNotification.current.id);scanNotification.current=null}
+      dispatch({ type: 'catalogError', error: String(error) })
+    } }
+  }, [catalog,acceptSnapshot])
+  const retryCatalog = useCallback(async (silent=false) => {
     const generation = lifecycle.current, request = ++catalogSequence.current
+    if(!silent)notify('pending','正在重新加载关联目录…',{id:'catalog:reload'})
     dispatch({ type: 'catalogStarted', request })
-    try { const entries = await catalog.list(); if (generation === lifecycle.current) dispatch({ type: 'catalogResult', request, entries: entries ?? [] }) }
-    catch (error) { if (generation === lifecycle.current) dispatch({ type: 'catalogFailed', request, error: String(error) }) }
+    try { const entries = await catalog.list(); if (generation === lifecycle.current) {
+      dispatch({ type: 'catalogResult', request, entries: entries ?? [] })
+      if(!silent&&request===catalogSequence.current)notify('success','关联目录已重新加载',{id:'catalog:reload'})
+    } }
+    catch (error) { if (generation === lifecycle.current) {
+      if(!silent&&request===catalogSequence.current)dismissNotification('catalog:reload')
+      dispatch({ type: 'catalogFailed', request, error: String(error) })
+    } }
   }, [catalog])
   const reparse = useCallback(async () => {
     const entry = selected.current
     if (!entry) return
     const generation = lifecycle.current, token = crypto.randomUUID()
+    if(reparseNotification.current)dismissNotification(reparseNotification.current.id)
+    const id=`reparse:${token}`
+    reparseNotification.current={id,token}
+    notify('pending','正在重新解析关联…',{id})
     dispatch({ type: 'reparseStarted', token })
-    try { const value = await catalog.reparse(entry, token); if (generation === lifecycle.current) dispatch({ type: 'snapshot', value }) }
-    catch (error) { if (generation === lifecycle.current) dispatch({ type: 'reparseFailed', token, error: String(error) }) }
-  }, [catalog])
+    try { const value = await catalog.reparse(entry, token); if (generation === lifecycle.current) acceptSnapshot(value) }
+    catch (error) { if (generation === lifecycle.current) {
+      dismissNotification(id)
+      if(reparseNotification.current?.token===token)reparseNotification.current=null
+      dispatch({ type: 'reparseFailed', token, error: String(error) })
+    } }
+  }, [catalog,acceptSnapshot])
   useEffect(() => {
     const generation = ++lifecycle.current
-    const off = catalog.subscribe(value => { if (generation === lifecycle.current) dispatch({ type: 'snapshot', value }) })
-    void catalog.getSnapshot().then(value => { if (generation === lifecycle.current) dispatch({ type: 'snapshot', value }) }).catch(error => { if (generation === lifecycle.current) dispatch({ type: 'catalogError', error: String(error) }) })
-    void scan()
-    void retryCatalog()
-    return () => { ++lifecycle.current; off() }
-  }, [catalog, scan, retryCatalog])
+    const off = catalog.subscribe(value => { if (generation === lifecycle.current) acceptSnapshot(value) })
+    void catalog.getSnapshot().then(value => { if (generation === lifecycle.current) acceptSnapshot(value) }).catch(error => { if (generation === lifecycle.current) dispatch({ type: 'catalogError', error: String(error) }) })
+    void scan(undefined,true)
+    void retryCatalog(true)
+    return () => {
+      ++lifecycle.current; off()
+      if(scanNotification.current){dismissNotification(scanNotification.current.id);scanNotification.current=null}
+      if(reparseNotification.current){dismissNotification(reparseNotification.current.id);reparseNotification.current=null}
+      dismissNotification('catalog:reload')
+    }
+  }, [catalog, scan, retryCatalog,acceptSnapshot])
 
   const actions = useMemo(() => ({
     scan, retryCatalog, reparse,
@@ -322,6 +398,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     setAppQuery: (value: string) => dispatch({ type: 'appQuery', value }),
     setFilter: (value: string) => dispatch({ type: 'filter', value }),
     setManualOnly: (value: boolean) => dispatch({ type: 'manualOnly', value }),
+    setSourceFilter: (value: AssociationSourceFilter) => dispatch({ type: 'sourceFilter', value }),
     changeAppFilter: (value: ApplicationFilter) => dispatch({ type: 'appFilter', value }),
     selectApp: (path: string, focus = false) => dispatch({ type: 'selectApp', path, focus }),
     selectEntry: (id: string, focus = false) => dispatch({ type: 'selectEntry', id, focus }),
@@ -356,13 +433,16 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     return () => document.removeEventListener('keydown', keydown)
   }, [actions, dom])
   // Metadata, dialogs and sorting must not restart association query rounds.
-  const queryEntryKey = JSON.stringify([...current.visibleEntries].sort((a, b) => a.id.localeCompare(b.id)).map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved]))
-  const queryEntries = useMemo(() => current.visibleEntries.map(({ id, association, resolved }) => ({ id, association, resolved })), [queryEntryKey])
+  // Reverse default associations can only be discovered by querying the catalog,
+  // including entries the selected application has never declared.
+  const queryCatalog = state.kind==='app'&&state.snapshot?.apps?.some(item=>!item.unavailable) ? state.entries : current.visibleEntries
+  const queryEntryKey = JSON.stringify([...queryCatalog].sort((a, b) => a.id.localeCompare(b.id)).map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved]))
+  const queryEntries = useMemo(() => queryCatalog.map(({ id, association, resolved }) => ({ id, association, resolved })), [queryEntryKey])
   const querySelected = useMemo(() => current.selected ? { id: current.selected.id, association: current.selected.association, resolved: current.selected.resolved } : undefined,
     [current.selected?.id, current.selected?.association.kind, current.selected?.association.key, current.selected?.resolved])
   const getVisibleAssociationIDs = useCallback(() => dom.visibleAssociationIDs(), [dom])
   const queryInputs = useMemo(() => ({ selected: querySelected, entries: queryEntries, getVisibleAssociationIDs }), [querySelected, queryEntries, getVisibleAssociationIDs])
-  const view = { ...current, kind: state.kind, appFilter: state.appFilter, appQuery: state.appQuery, filter: state.filter, manualOnly: state.manualOnly,
+  const view = { ...current, kind: state.kind, appFilter: state.appFilter, appQuery: state.appQuery, filter: state.filter, manualOnly: state.manualOnly, sourceFilter:state.sourceFilter,
     entries: state.entries, snapshot: state.snapshot, detailOpen: state.detailOpen, inspectedCopy: state.inspectedCopy,
     catalogLoading: state.catalogLoading, catalogError: state.catalogError, reparseNotice: state.reparseNotice,
     requestEntryMissing: !!state.requestEntry && !state.entries.some(entry => entry.id === state.requestEntry!.id), emptyHeadline: emptyHeadline(state, current) }

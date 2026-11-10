@@ -6,6 +6,7 @@ import { Dialog } from './Dialog'
 import { Icon } from './Icon'
 import { message } from './errors'
 import { isComposing } from './keyboard'
+import { notify, dismissNotification } from './Notifications'
 import './manual.css'
 
 export function ManualActions({kind="type",onCatalogChanged,label,showStorageWarning=true}:{kind?:"type"|"application";onCatalogChanged?:()=>void;label?:string;showStorageWarning?:boolean}) {
@@ -22,21 +23,21 @@ function ManualTypeDialog({onClose,onCatalogChanged,storageError}:{onClose:()=>v
  const [fileName,setFileName]=useState('')
  const [busy,setBusy]=useState(false)
  const [error,setError]=useState(storageError)
- const [notice,setNotice]=useState('')
  const revision=useRef(0)
- const invalidate=()=>{revision.current++;setEntries([]);setSelected('');setFileName('');setNotice('');setError(storageError)}
+ const invalidate=()=>{revision.current++;setEntries([]);setSelected('');setFileName('');setError(storageError)}
  const resolve=async()=>{
-  const version=++revision.current;setBusy(true);setError('');setNotice('');setEntries([]);setSelected('');setFileName('')
+  const version=++revision.current;setBusy(true);setError('');setEntries([]);setSelected('');setFileName('')
   try {const result=await ResolveInput(kind,value);if(version===revision.current){const matches=result.entries??[];setEntries(matches);if(matches.length===1&&matches[0].resolved)setSelected(matches[0].id)}}catch(error){if(version===revision.current)setError(message(error))}finally{setBusy(false)}
  }
  const identify=async()=>{
-  const version=++revision.current;setBusy(true);setError('');setNotice('')
+  const version=++revision.current;setBusy(true);setError('')
   try {const result=await IdentifyFile();if(version===revision.current&&!result.cancelled){const matches=result.entries??[];setEntries(matches);setSelected(matches.length===1&&matches[0].resolved ? matches[0].id : '');setFileName(result.fileName)}}catch(error){setError(message(error))}finally{setBusy(false)}
  }
  const save=async()=>{
   const entry=entries.find(item=>item.id===selected);if(!entry)return
-  setBusy(true);setError('');setNotice('')
-  try {const result=fileName ? await AddIdentifiedType(entry.association.key) : await AddInput(kind,value,selected);if(result.saved){setNotice('已保存手动关联');onCatalogChanged?.()}}catch(error){setError(message(error))}finally{setBusy(false)}
+  setBusy(true);setError('')
+  const id=notify('pending','正在保存手动关联…')
+  try {const result=fileName ? await AddIdentifiedType(entry.association.key) : await AddInput(kind,value,selected);if(result.saved){notify('success','已保存手动关联',{id,description:entry.association.key});onCatalogChanged?.()}else dismissNotification(id)}catch(error){dismissNotification(id);setError(message(error))}finally{setBusy(false)}
  }
  return <Dialog title="补充文件类型" subtitle="通过扩展名、URL 协议或选择文件补充关联目录。" onClose={onClose}>
   <section className="manual-section" aria-label="补充关联"><h3>添加文件类型或协议</h3>
@@ -48,7 +49,7 @@ function ManualTypeDialog({onClose,onCatalogChanged,storageError}:{onClose:()=>v
    <div className="manual-buttons"><button className="btn" disabled={busy} onClick={()=>void identify()}><Icon name="folder"/>选择文件识别类型…</button><button className="btn btn--primary" disabled={busy||!selected||!!storageError} onClick={()=>void save()}>保存手动关联</button></div>
    <p className="manual-help">文件仅用于识别整类类型；不会读取文件内容或改变该文件自己的默认应用。</p>
   </section>
-  {busy ? <p role="status">正在处理…</p> : null}{notice ? <p role="status">{notice}</p> : null}{error ? <p role="alert" className="manual-error">{error}</p> : null}
+  {error ? <p role="alert" className="manual-error">{error}</p> : null}
  </Dialog>
 }
 function ManualApplicationDialog({onClose,onCatalogChanged,storageError}:{onClose:()=>void;onCatalogChanged?:()=>void;storageError:string}) {
@@ -62,6 +63,10 @@ export function ManualApplicationAction({association,onSelected,disabled=false}:
  const [error,setError]=useState('')
  const [selected,setSelected]=useState<AppCopy|null>(null)
  useEffect(()=>{setSelected(null);setError('')},[association?.kind,association?.key])
- const choose=async()=>{setBusy(true);setError('');try{const result=await PickApplication();if(!result.cancelled&&result.saved&&result.app){setSelected(result.app);onSelected?.(result.app)}}catch(error){setError(message(error))}finally{setBusy(false)}}
- return <div className="manual-application"><button className="btn" disabled={busy||disabled} onClick={()=>void choose()}><Icon name="plus"/>{busy?'正在选择…':association?'选择其他应用…':'添加应用位置…'}</button><p className="manual-help">{association ? '保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。' : '选择 .app 应用包，将它加入应用列表。'}</p>{selected ? <div role="status" className="manual-picked"><strong>已保存应用位置 · {selected.name}</strong><span>版本 {selected.version||'未知'} · {selected.bundleID||'无 bundle ID'}</span><code>{selected.path}</code><span>尚未提出修改默认应用的请求。</span></div>:null}{error ? <p role="alert" className="manual-error">{error}</p>:null}</div>
+ const choose=async()=>{
+  setBusy(true);setError('')
+  const id=notify('pending','正在选择应用…')
+  try{const result=await PickApplication();if(!result.cancelled&&result.saved&&result.app){setSelected(result.app);notify('success','已保存应用位置',{id,description:result.app.path});onSelected?.(result.app)}else dismissNotification(id)}catch(error){dismissNotification(id);setError(message(error))}finally{setBusy(false)}
+ }
+ return <div className="manual-application"><button className="btn" disabled={busy||disabled} onClick={()=>void choose()}><Icon name="plus"/>{busy?'正在选择…':association?'选择其他应用…':'添加应用位置…'}</button><p className="manual-help">{association ? '保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。' : '选择 .app 应用包，将它加入应用列表。'}</p>{selected ? <div className="manual-picked"><strong>所选应用 · {selected.name}</strong><span>版本 {selected.version||'未知'} · {selected.bundleID||'无 bundle ID'}</span><code>{selected.path}</code><span>尚未提出修改默认应用的请求。</span></div>:null}{error ? <p role="alert" className="manual-error">{error}</p>:null}</div>
 }

@@ -189,7 +189,7 @@ test('opens with installed copies, declared associations, and an independent def
  expect(await within(screen.getByRole('region',{name:'当前默认应用'})).findByText('/Volumes/Archive/Reader.app')).toBeVisible()
  expect(screen.getByText('扫描问题 · 1')).toBeVisible()
  await closeDetails();await userEvent.click(within(apps).getByRole('button',{name:/Reader 2/}))
- expect(screen.getByText('此应用未声明可处理的文件类型或 URL 协议')).toBeVisible()
+ expect(screen.getByText('未找到此应用的声明或当前默认关联')).toBeVisible()
  expect(screen.queryByRole('region',{name:'当前默认应用'})).not.toBeInTheDocument()
 })
 

@@ -6,6 +6,8 @@ import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import { useAssociationBrowser, type CatalogAdapter, type BrowserDOMAdapter } from './useAssociationBrowser'
 import { useAssociationQueries } from './useAssociationQueries'
+import {toast,type ToastT} from 'sonner'
+const activeToasts=()=>toast.getToasts().filter((item):item is ToastT=>'title' in item)
 
 vi.mock('@wailsio/runtime', () => ({ Events: { On: vi.fn(() => () => {}) } }))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({ Query: vi.fn() }))
@@ -78,6 +80,80 @@ beforeEach(() => {
     default: { known: true, app: null, observedAt: 'now', stale: false, error: null },
     candidates: { known: true, apps: [], observedAt: 'now', stale: false, error: null },
   }) as unknown as ReturnType<typeof Query>)
+})
+
+test('startup scanning is silent and an explicit scan finishes only on its final snapshot',async()=>{
+ const browser=await openBrowser()
+ expect(activeToasts()).toHaveLength(0)
+ const onIssues=vi.fn()
+ browser.catalog.startScan.mockResolvedValue({...snapshot,version:3,scanning:true,startedAt:'new-scan'})
+ await act(async()=>browser.result.current.actions.scan(onIssues))
+ const pending=activeToasts().find(item=>item.title==='正在扫描应用…')!
+ expect(pending).toBeDefined()
+ act(()=>browser.publish({...snapshot,version:4,scanning:true,startedAt:'new-scan'}))
+ expect(activeToasts().find(item=>item.id===pending.id)?.title).toBe('正在扫描应用…')
+ act(()=>{toast.dismiss(pending.id)})
+ act(()=>browser.publish({...snapshot,version:5,scanning:true,startedAt:'new-scan'}))
+ expect(activeToasts().find(item=>item.id===pending.id)).toBeUndefined()
+ const final={...snapshot,version:6,startedAt:'new-scan',completedAt:'done',issues:[{path:'/Broken.app',origin:'metadata',message:'不可读取'}]}
+ act(()=>browser.publish(final))
+ const result=activeToasts().find(item=>item.title==='扫描完成，发现部分问题')!
+ expect(result.title).toBe('扫描完成，发现部分问题')
+ expect(result.duration).toBe(Infinity)
+ const action=result.action
+ if(action&&typeof action==='object'&&'onClick' in action)action.onClick({} as never)
+ expect(onIssues).toHaveBeenCalledTimes(1)
+ act(()=>{toast.dismiss(result.id);browser.publish(final)})
+ expect(activeToasts().find(item=>item.title==='扫描完成，发现部分问题')).toBeUndefined()
+})
+
+test('application associations combine declarations and defaults once, support search and remove only obsolete defaults',async()=>{
+ const browser=await openBrowser()
+ act(()=>browser.result.current.actions.setDefaultPaths({[pdf.id]:app.path,[https.id]:app.path,[jpeg.id]:archive.path}))
+ const match=()=>browser.result.current.view.applicationMatches.find(item=>item.item.app.path===app.path)!
+ expect(match().associationCount).toBe(4)
+ expect(match().entries.filter(item=>item.id===pdf.id)).toHaveLength(1)
+ expect(browser.result.current.view.applicationMatches.find(item=>item.item.app.path===archive.path)?.associationCount).toBe(1)
+ act(()=>browser.result.current.actions.setAppQuery('https'))
+ expect(browser.result.current.view.applicationMatches.map(item=>item.item.app.path)).toEqual([app.path])
+ expect(browser.result.current.view.visibleEntries.map(item=>item.id)).toEqual([https.id])
+ act(()=>browser.result.current.actions.setAppQuery(''))
+ act(()=>browser.result.current.actions.setDefaultPaths({}))
+ expect(match().associationCount).toBe(3)
+ expect(match().entries.some(item=>item.id===pdf.id)).toBe(true)
+ expect(match().entries.some(item=>item.id===https.id)).toBe(false)
+ expect(browser.result.current.view.applicationMatches.find(item=>item.item.app.path===archive.path)?.associationCount).toBe(0)
+})
+
+test('source filters follow the selected copy and visible declaration precedence, and combine with manual and text filters',async()=>{
+ const source=(inputKind:string,rawInput:string,appPath=app.path)=>({kind:'declaration',inputKind,rawInput,normalizedInput:rawInput,label:rawInput,appPath})
+ const direct={...pdf,sources:[source('identifier',pdf.association.key),source('extension','pdf')]}
+ const extension={...jpeg,sources:[source('extension','jpg'),source('identifier',jpeg.association.key,archive.path)]}
+ const mixed={...otherJPEG,sources:[source('extension','jpg'),source('mime','image/jpeg'),{...source('identifier',otherJPEG.association.key),kind:'manual'}]}
+ const legacy={...pdf,id:'file:test.legacy',association:{kind:'file',key:'test.legacy'},sources:[source('ostype','TEXT')]}
+ const other={...pdf,id:'file:test.other',association:{kind:'file',key:'test.other'},sources:[source('unknown','other')]}
+ const currentDefault={...https,sources:[source('scheme','https',archive.path)]}
+ const entries=[direct,extension,mixed,legacy,other,currentDefault]
+ const browser=await openBrowser({...snapshot,entries,apps:[{...snapshot.apps[0],associationIDs:entries.filter(item=>item!==currentDefault).map(item=>item.id)}]})
+ act(()=>browser.result.current.actions.setDefaultPaths({[direct.id]:app.path,[currentDefault.id]:app.path}))
+ const ids=()=>browser.result.current.view.visibleEntries.map(item=>item.id)
+ const choose=(value:Parameters<typeof browser.result.current.actions.setSourceFilter>[0])=>act(()=>browser.result.current.actions.setSourceFilter(value))
+ choose('default');expect(ids()).toEqual([currentDefault.id])
+ choose('direct');expect(ids()).toEqual([direct.id])
+ choose('extension');expect(ids()).toEqual([extension.id,mixed.id])
+ choose('mime');expect(ids()).toEqual([mixed.id])
+ choose('ostype');expect(ids()).toEqual([legacy.id])
+ choose('other');expect(ids()).toEqual([other.id])
+ choose('extension')
+ browser.scrollTo(0,100)
+ act(()=>browser.result.current.actions.setManualOnly(true))
+ expect(ids()).toEqual([mixed.id])
+ act(()=>browser.result.current.actions.setFilter('missing'))
+ expect(ids()).toEqual([])
+ act(()=>browser.result.current.actions.clearSearch())
+ expect(browser.result.current.view.sourceFilter).toBe('all')
+ expect(browser.result.current.view.manualOnly).toBe(false)
+ expect(ids()).toHaveLength(entries.length)
 })
 
 test('subscribes before reading and keeps an event newer than both initial replies and the common catalog', async () => {

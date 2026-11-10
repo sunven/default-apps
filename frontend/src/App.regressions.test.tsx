@@ -124,7 +124,7 @@ test('returning to a request whose sole declaration disappeared keeps the origin
  expect(detail).toHaveTextContent('此关联已不在当前目录中；仍按原修改请求查询。')
  expect(within(detail).getByRole('region',{name:'当前默认应用'})).toHaveTextContent('custom-review-scheme')
  expect(Query).toHaveBeenCalledWith({kind:'scheme',key:'custom-review-scheme'})
- expect(screen.getByRole('region',{name:'修改请求状态'})).toHaveTextContent('目标：/Applications/Reader.app')
+ expect(screen.getByRole('region',{name:'操作通知 alt+T'})).toHaveTextContent('目标：/Applications/Reader.app')
  await userEvent.keyboard('{Escape}')
  expect(screen.getByRole('button',{name:'返回请求项'})).toHaveFocus()
  expect(screen.getByRole('button',{name:'文件类型'})).toHaveAttribute('aria-pressed','true')

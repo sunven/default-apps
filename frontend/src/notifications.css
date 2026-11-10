@@ -1,0 +1,9 @@
+.notification-host [data-sonner-toaster] {font-family:inherit;--width:420px;--border-radius:12px}
+.notification-host [data-sonner-toast] {user-select:text}
+.notification-host [data-description] {overflow-wrap:anywhere;white-space:pre-line}
+.notification-host [data-close-button] {min-height:24px;min-width:24px}
+.notification-actions {display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.notification-actions button {min-height:28px;font-size:12px;padding:3px 8px}
+.notification-spinner {width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:notification-spin 900ms linear infinite}
+@keyframes notification-spin {to {transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce) {.notification-spinner {animation:none}}

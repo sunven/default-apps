@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { render as renderScreen, screen } from '@testing-library/react'
+import type {ReactNode} from 'react'
+import {NotificationHost} from './Notifications'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { AddInput, AddIdentifiedType, GetStatus, IdentifyFile, PickApplication, ResolveInput } from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import { ManualActions, ManualApplicationAction } from './ManualActions'
+function render(children:ReactNode){return renderScreen(<><NotificationHost/>{children}</>)}
 
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({AddInput:vi.fn(),AddIdentifiedType:vi.fn(),GetStatus:vi.fn(),IdentifyFile:vi.fn(),PickApplication:vi.fn(),ResolveInput:vi.fn()}))
 const jpeg:Entry={id:'file:public.jpeg',association:{kind:'file',key:'public.jpeg'},name:'JPEG',extensions:['jpg'],mimeTypes:[],sources:[],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]}
@@ -58,7 +61,7 @@ test('shows stored application path without claiming a default change and makes 
  expect(screen.queryByLabelText('扩展名或协议')).not.toBeInTheDocument()
  expect(screen.queryByRole('button',{name:'保存手动关联'})).not.toBeInTheDocument()
  await user.click(screen.getByRole('button',{name:'添加应用位置…'}));expect(screen.queryByText(/已保存应用位置/)).not.toBeInTheDocument()
- await user.click(screen.getByRole('button',{name:'添加应用位置…'}));expect(await screen.findByText('/Outside/Reader.app')).toBeVisible();expect(screen.getByText('尚未提出修改默认应用的请求。')).toBeVisible()
+ await user.click(screen.getByRole('button',{name:'添加应用位置…'}));expect(screen.getByText('/Outside/Reader.app',{selector:'code'})).toBeVisible();expect(await screen.findByText('已保存应用位置')).toBeVisible();expect(screen.getByText('尚未提出修改默认应用的请求。')).toBeVisible()
  await user.click(screen.getByRole('button',{name:'关闭补充应用'}));expect(trigger).toHaveFocus()
 })
 test('reports preserved corrupt configuration and disables actions that would overwrite it',async()=>{
@@ -74,7 +77,7 @@ test('association other-application entry preserves the concrete selected copy',
  vi.mocked(PickApplication).mockResolvedValue({saved:true,cancelled:false,entry:null,app:{path:'/Outside/Second.app',displayPath:'/Outside/Second.app',name:'Same name',version:'3',bundleID:'same.bundle'}})
  render(<ManualApplicationAction association={{kind:'file',key:'public.jpeg'}} onSelected={selected}/>)
  await user.click(screen.getByRole('button',{name:'选择其他应用…'}))
- expect(await screen.findByText('/Outside/Second.app')).toBeVisible()
+ expect(screen.getByText('/Outside/Second.app',{selector:'code'})).toBeVisible()
  expect(selected).toHaveBeenCalledWith(expect.objectContaining({path:'/Outside/Second.app',version:'3',bundleID:'same.bundle'}))
  expect(screen.getByText('尚未提出修改默认应用的请求。')).toBeVisible()
 })
