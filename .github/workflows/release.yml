@@ -32,7 +32,11 @@ jobs:
       - name: Validate version tag and public release source
         run: |
           node scripts/version.mjs check
-          curl --fail --silent --show-error --max-time 30 "https://api.github.com/repos/$GITHUB_REPOSITORY" > /dev/null
+          repository_visibility=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.visibility')
+          if [ "$repository_visibility" != public ]; then
+            echo '::error::App updates require a public repository and public release assets. Set the release repository visibility to public before publishing.'
+            exit 1
+          fi
           if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
             echo 'Release already exists; use a new version tag.' >&2
             exit 1
@@ -43,10 +47,11 @@ jobs:
         run: |
           sh scripts/check-versions.sh
           python3 scripts/test-release.py
-          go test -race ./...
           npm --prefix frontend ci
           npm --prefix frontend test
           npm --prefix frontend run build
+          # main.go embeds frontend/dist, which is absent in a clean checkout.
+          go test -race ./...
       - name: Build macOS ARM64 application and update archive
         run: |
           wails3 task darwin:package ARCH=arm64

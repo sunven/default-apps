@@ -1,0 +1,25 @@
+Verified version 0.1.2
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 4.796s
+
+OK
+# github.com/sunven/default-apps
+main.go:22:12: pattern all:frontend/dist: no matching files found
+FAIL	github.com/sunven/default-apps [setup failed]
+?   	github.com/sunven/default-apps/build/android/scripts/deps	[no test files]
+?   	github.com/sunven/default-apps/build/ios	[no test files]
+?   	github.com/sunven/default-apps/build/ios/scripts/deps	[no test files]
+# github.com/sunven/default-apps/internal/native.test
+ld: warning: ignoring duplicate libraries: '-lobjc'
+ok  	github.com/sunven/default-apps/internal/appupdate	1.798s
+ok  	github.com/sunven/default-apps/internal/association	1.411s
+?   	github.com/sunven/default-apps/internal/buildinfo	[no test files]
+ok  	github.com/sunven/default-apps/internal/catalog	1.396s
+ok  	github.com/sunven/default-apps/internal/change	2.647s
+ok  	github.com/sunven/default-apps/internal/config	2.042s
+ok  	github.com/sunven/default-apps/internal/discovery	2.083s
+ok  	github.com/sunven/default-apps/internal/manual	1.697s
+ok  	github.com/sunven/default-apps/internal/manualassociations	2.164s
+ok  	github.com/sunven/default-apps/internal/native	1.846s
+FAIL

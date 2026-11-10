@@ -29,9 +29,9 @@ node scripts/version.mjs check
 
 ## GitHub Actions
 
-`.github/workflows/release.yml` 在推送 `v*` 标签后依次执行版本与公开读取检查、Go race 测试、React 测试、前端构建、ARM64 应用打包与发布产物校验。先上传到草稿 Release，重新下载并检查摘要成功后才发布为最新正式版本。已有同名 Release 时失败，避免覆盖已发布产物。
+`.github/workflows/release.yml` 在推送 `v*` 标签后依次执行版本与公开读取检查、React 测试、前端构建、Go race 测试、ARM64 应用打包与发布产物校验。Go 主程序嵌入 `frontend/dist`，因此必须先构建前端再运行 Go 测试。先上传到草稿 Release，重新下载并检查摘要成功后才发布为最新正式版本。已有同名 Release 时失败，避免覆盖已发布产物。
 
-使用工作流自带的 `GITHUB_TOKEN`，不需要 Apple 证书或更新签名密钥。仓库与 Releases 必须可匿名读取；当前仓库尚不满足这一条件，工作流会在发布前检查并失败。需要在实际发布之前完成可见性配置；本次功能实现不修改远端设置。
+使用工作流自带的 `GITHUB_TOKEN`，不需要 Apple 证书或更新签名密钥。`sunven/default-apps` 已设为公开，仓库与 Releases 必须保持可匿名读取。工作流使用自带令牌查询并检查仓库可见性，避免匿名 API 限流；客户端仍通过公开接口获取版本和附件，无需令牌。
 
 发布附件为：
 
