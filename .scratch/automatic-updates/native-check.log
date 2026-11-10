@@ -1,0 +1,8 @@
+startup checks without downloading available
+native resize attempt without horizontal overflow available
+corrupt download rejected before installation available
+verified update waits for user ready
+restart requires final confirmation ready
+new version reopened at original path current
+original path bundle version and signature verified; config untouched current
+PASS: native 0.1.0 -> 0.1.1 upgrade

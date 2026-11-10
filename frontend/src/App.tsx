@@ -5,6 +5,7 @@ import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
 import { ChangeStatus, useChanges, requestLabel } from './Changes'
 import { ManualActions, ManualApplicationAction } from './ManualActions'
 import { NotificationHost } from './Notifications'
+import { SoftwareUpdate } from './SoftwareUpdate'
 import { applicationDeclarationSources, associationSourceOptions, type AssociationSourceFilter } from './associationSources'
 import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
@@ -96,7 +97,7 @@ export default function App() {
   <header className="global-header">
    <div className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"/></svg><span>Default Apps<small>默认应用管理</small></span></div>
    <nav ref={navigation} className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><button className="btn" key={view} data-view={view} aria-pressed={kind===view} onClick={()=>switchView(view)}><Icon name={view}/>{viewNames[view]}</button>)}</nav>
-   <div className="header-actions"><ManualActions/><ManualActions kind="application" showStorageWarning={false}/><button className="btn" disabled={snapshot?.scanning} onClick={()=>void scan(()=>setIssuesOpen(true))}><Icon name="refresh"/>{snapshot?.scanning ? '正在扫描…' : '重新扫描应用'}</button></div>
+   <div className="header-actions"><SoftwareUpdate/><ManualActions/><ManualActions kind="application" showStorageWarning={false}/><button className="btn" disabled={snapshot?.scanning} onClick={()=>void scan(()=>setIssuesOpen(true))}><Icon name="refresh"/>{snapshot?.scanning ? '正在扫描…' : '重新扫描应用'}</button></div>
   </header>
   <LifecycleStatus changes={changes}/>{recovery.dialog}
   <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>

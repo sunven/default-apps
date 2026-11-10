@@ -1,0 +1,23 @@
+task: [darwin:build] sh scripts/check-versions.sh
+Verified version 0.1.0
+task: [darwin:common:go:mod:tidy] go mod tidy
+task: Task "darwin:common:generate:icons" is up to date
+task: [darwin:common:install:frontend:deps:npm] npm ci
+task: [darwin:common:generate:bindings] wails3 generate bindings -f '-tags production -trimpath -buildvcs=false -ldflags="-w -s"' -clean=true -ts -i
+Wails v3.1.0 › Generate Bindings
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+added 100 packages in 1s
+
+21 packages are looking for funding
+  run `npm fund` for details
+ INFO  Processed: 254 Packages, 5 Services, 22 Methods, 0 Enums, 33 Models, 4 Events in 1.833839708s.
+ INFO  Output directory: /Users/sunven/github/default-apps/frontend/bindings
+task: [darwin:common:frontend:run:npm] npm run build -q
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> default-apps@0.1.0 build
+> tsc && vite build --mode production
+
+sh: tsc: command not found
+  ERROR   exit status 127

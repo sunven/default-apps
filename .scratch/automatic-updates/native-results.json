@@ -1,0 +1,297 @@
+[
+  {
+    "check": "startup checks without downloading",
+    "at": "2026-11-10T09:37:38.556657+00:00",
+    "state": {
+      "currentVersion": "0.1.0",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "",
+      "phase": "available",
+      "release": {
+        "date": "2026-11-10T00:00:00Z",
+        "notes": "本机升级验证：完整性校验、确认安装、原位置重新打开。",
+        "version": "0.1.1"
+      },
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 0,
+      "version": 2,
+      "written": 0
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.0\n\n有新版本可用\n版本 0.1.1\n更新说明\n\n本机升级验证：完整性校验、确认安装、原位置重新打开。\n\n打开发布页\n检查更新\n下载更新",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "native resize attempt without horizontal overflow",
+    "at": "2026-11-10T09:37:39.420332+00:00",
+    "state": {
+      "currentVersion": "0.1.0",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "",
+      "phase": "available",
+      "release": {
+        "date": "2026-11-10T00:00:00Z",
+        "notes": "本机升级验证：完整性校验、确认安装、原位置重新打开。",
+        "version": "0.1.1"
+      },
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 0,
+      "version": 2,
+      "written": 0
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.0\n\n有新版本可用\n版本 0.1.1\n更新说明\n\n本机升级验证：完整性校验、确认安装、原位置重新打开。\n\n打开发布页\n检查更新\n下载更新",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "corrupt download rejected before installation",
+    "at": "2026-11-10T09:37:39.684609+00:00",
+    "state": {
+      "currentVersion": "0.1.0",
+      "disabledReason": "",
+      "error": "下载或校验失败：updater: digest mismatch",
+      "installPath": "/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app",
+      "phase": "available",
+      "release": {
+        "date": "2026-11-10T00:00:00Z",
+        "notes": "本机升级验证：完整性校验、确认安装、原位置重新打开。",
+        "version": "0.1.1"
+      },
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 9596818,
+      "version": 6,
+      "written": 9596818
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.5529048
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.0\n\n有新版本可用\n版本 0.1.1\n更新说明\n\n本机升级验证：完整性校验、确认安装、原位置重新打开。\n\n安装位置：/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app\n\n下载或校验失败：updater: digest mismatch\n\n打开发布页\n检查更新\n重试下载",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "verified update waits for user",
+    "at": "2026-11-10T09:37:40.092010+00:00",
+    "state": {
+      "currentVersion": "0.1.0",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app",
+      "phase": "ready",
+      "release": {
+        "date": "2026-11-10T00:00:00Z",
+        "notes": "本机升级验证：完整性校验、确认安装、原位置重新打开。",
+        "version": "0.1.1"
+      },
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 9596818,
+      "version": 11,
+      "written": 9596818
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.5529048
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.8335261
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.0\n\n更新已准备好\n版本 0.1.1\n\n下载内容已校验。可以继续使用应用，或重启安装新版。\n\n更新说明\n\n本机升级验证：完整性校验、确认安装、原位置重新打开。\n\n安装位置：/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app\n\n打开发布页\n重启安装",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "restart requires final confirmation",
+    "at": "2026-11-10T09:37:40.359634+00:00",
+    "state": {
+      "currentVersion": "0.1.0",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app",
+      "phase": "ready",
+      "release": {
+        "date": "2026-11-10T00:00:00Z",
+        "notes": "本机升级验证：完整性校验、确认安装、原位置重新打开。",
+        "version": "0.1.1"
+      },
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 9596818,
+      "version": 11,
+      "written": 9596818
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.5529048
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.8335261
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.0\n\n更新已准备好\n版本 0.1.1\n\n下载内容已校验。可以继续使用应用，或重启安装新版。\n\n更新说明\n\n本机升级验证：完整性校验、确认安装、原位置重新打开。\n\n安装位置：/Users/sunven/github/default-apps/.scratch/automatic-updates/runtime/current/default-apps.app\n\n将退出 Default Apps，更新当前应用副本并重新打开。\n\n稍后\n确认重启安装\n打开发布页\n重启安装",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "new version reopened at original path",
+    "at": "2026-11-10T09:37:42.813411+00:00",
+    "state": {
+      "currentVersion": "0.1.1",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "",
+      "phase": "current",
+      "release": null,
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 0,
+      "version": 2,
+      "written": 0
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.5529048
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.8335261
+      },
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303462.758605
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n正在扫描…\n已安装应用\n26 / 90\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nXcode\n版本 27.0 · 154 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\niNodeClient\n版本 1.0 · 0 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\n企业微信\n版本 5.0.13 · 9 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n正在扫描应用…已发现 90 份\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.1\n\n启动后自动检查更新\n打开发布页\n检查更新",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "focus": "关闭软件更新"
+  },
+  {
+    "check": "original path bundle version and signature verified; config untouched",
+    "at": "2026-11-10T09:37:43.363208+00:00",
+    "state": {
+      "currentVersion": "0.1.1",
+      "disabledReason": "",
+      "error": "",
+      "installPath": "",
+      "phase": "current",
+      "release": null,
+      "releaseURL": "https://github.com/sunven/default-apps/releases/latest",
+      "total": 0,
+      "version": 2,
+      "written": 0
+    },
+    "requests": [
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303457.9818292
+      },
+      {
+        "path": "/checksums",
+        "at": 1794303457.9827552
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.5529048
+      },
+      {
+        "path": "/asset",
+        "at": 1794303459.8335261
+      },
+      {
+        "path": "/repos/sunven/default-apps/releases/latest",
+        "at": 1794303462.758605
+      }
+    ],
+    "body": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n已安装应用\n26 / 92\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 1 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.255 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n软件更新\n\nDefault Apps · 当前版本 0.1.1\n\n启动后自动检查更新\n打开发布页\n检查更新",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "focus": "关闭软件更新"
+  }
+]

@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-15
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CGO_CFLAGS: -mmacosx-version-min=13.0
+      CGO_LDFLAGS: -mmacosx-version-min=13.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.3'
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Validate version tag and public release source
+        run: |
+          node scripts/version.mjs check
+          curl --fail --silent --show-error --max-time 30 "https://api.github.com/repos/$GITHUB_REPOSITORY" > /dev/null
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            echo 'Release already exists; use a new version tag.' >&2
+            exit 1
+          fi
+      - name: Install Wails CLI
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@v3.1.0
+      - name: Test
+        run: |
+          sh scripts/check-versions.sh
+          python3 scripts/test-release.py
+          go test -race ./...
+          npm --prefix frontend ci
+          npm --prefix frontend test
+          npm --prefix frontend run build
+      - name: Build macOS ARM64 application and update archive
+        run: |
+          wails3 task darwin:package ARCH=arm64
+          python3 scripts/package-release.py
+      - name: Create and verify draft
+        run: |
+          gh release create "$GITHUB_REF_NAME" --verify-tag --draft --title "Default Apps $GITHUB_REF_NAME" --generate-notes bin/release/default-apps-darwin-arm64.zip bin/release/SHA256SUMS bin/release/INSTALL.md
+          verify_dir=$(mktemp -d)
+          gh release download "$GITHUB_REF_NAME" --dir "$verify_dir" --pattern default-apps-darwin-arm64.zip --pattern SHA256SUMS
+          cd "$verify_dir"
+          shasum -a 256 -c SHA256SUMS
+      - name: Publish complete stable release
+        run: gh release edit "$GITHUB_REF_NAME" --draft=false --prerelease=false --latest

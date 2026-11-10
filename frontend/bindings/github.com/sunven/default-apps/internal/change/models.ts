@@ -36,6 +36,8 @@ export interface QuitState {
     "promptID": number;
     "prompt": boolean;
     "exiting": boolean;
+    "intent"?: string;
+    "restarting"?: boolean;
 }
 
 export interface Readback {

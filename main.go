@@ -2,11 +2,14 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 
+	"github.com/sunven/default-apps/internal/appupdate"
 	"github.com/sunven/default-apps/internal/association"
+	"github.com/sunven/default-apps/internal/buildinfo"
 	"github.com/sunven/default-apps/internal/catalog"
 	"github.com/sunven/default-apps/internal/change"
 	"github.com/sunven/default-apps/internal/discovery"
@@ -22,9 +25,14 @@ var assets embed.FS
 func init() {
 	application.RegisterEvent[discovery.Snapshot]("defaultapps:catalog")
 	application.RegisterEvent[change.Snapshot]("defaultapps:change")
+	application.RegisterEvent[appupdate.Snapshot]("defaultapps:update")
 }
 
 func main() {
+	if len(os.Args) == 2 && os.Args[1] == "--version" {
+		fmt.Println(buildinfo.Version())
+		return
+	}
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
@@ -45,10 +53,20 @@ func main() {
 	}})
 	discoveryService := discovery.NewService(native.Adapter{}, catalogService, []string{"/Applications", filepath.Join(home, "Applications"), "/System/Applications"}, func(snapshot discovery.Snapshot) { app.Event.Emit("defaultapps:catalog", snapshot) }, store)
 	manualService := manual.NewService(catalogService, native.Adapter{}, store, picker, func() { discoveryService.StartScan() })
+	updateService := appupdate.NewService(configureUpdateSource(appupdate.Options{CurrentVersion: buildinfo.Version(), DisabledReason: updateDisabledReason(), Publish: func(snapshot appupdate.Snapshot) {
+		if app != nil {
+			app.Event.Emit("defaultapps:update", snapshot)
+		}
+	}, Quit: func() {
+		if app != nil {
+			app.Quit()
+		}
+	}}), changeService)
 	app = application.New(application.Options{
 		Name:        "Default Apps",
 		Description: "查看与管理 macOS 文件类型和 URL 协议的默认应用",
-		Services:    []application.Service{application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService)},
+		Services:    []application.Service{application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService), application.NewService(updateService)},
+		OnShutdown:  func() { appupdate.Close(updateService) },
 		Assets:      application.AssetOptions{Handler: application.AssetFileServerFS(assets)},
 		Mac:         application.MacOptions{ApplicationShouldTerminateAfterLastWindowClosed: true},
 		ShouldQuit: func() bool {
@@ -74,6 +92,7 @@ func main() {
 	setupForegroundRefresh(app)
 	window.OnWindowEvent(events.Common.WindowRuntimeReady, func(*application.WindowEvent) {
 		application.InvokeAsync(func() { native.SetContentMinimum(window.NativeWindow(), 1000, 700) })
+		appupdate.Start(updateService)
 	})
 	if err := app.Run(); err != nil {
 		log.Fatal(err)

@@ -53,3 +53,12 @@ test('completion updates the open quit explanation without another prompt or aut
  expect(screen.queryByText(/上次修改仍按结果未知显示/)).not.toBeInTheDocument();expect(RespondQuit).not.toHaveBeenCalled()
  await userEvent.click(screen.getByRole('button',{name:'仍然退出'}));expect(RespondQuit).toHaveBeenCalledWith(9,true)
 })
+
+test('update quit warning uses restart intent and Escape stays without starting installation',async()=>{
+ vi.mocked(GetSnapshot).mockResolvedValue({...recovered,busy:true,quit:{prompt:true,promptID:11,exiting:false,intent:'update'}})
+ render(<Screen/>);const dialog=await screen.findByRole('dialog',{name:'重启安装前确认'})
+ expect(within(dialog).getByText(/系统可能在退出后完成修改/)).toBeVisible()
+ expect(within(dialog).getByRole('button',{name:'仍然重启安装'})).toBeVisible()
+ await userEvent.keyboard('{Escape}')
+ expect(RespondQuit).toHaveBeenLastCalledWith(11,false)
+})

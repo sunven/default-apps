@@ -120,6 +120,7 @@ type Service struct {
 	loadError   error
 	admitting   *admission
 	decisions   map[string]admissionResult
+	restart     func()
 }
 
 func NewService(c *catalog.Service, q *association.Service, r ApplicationReader, store config.Repository, d Dispatcher, options Options) *Service {
@@ -233,6 +234,9 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	s.mu.Lock()
 	if s.state.Quit.Exiting {
 		return s.rejectLocked("exiting", "应用正在退出，不再受理新修改。")
+	}
+	if s.state.Quit.Restarting || (s.state.Quit.Prompt && s.state.Quit.Intent == "update") {
+		return s.rejectLocked("busy", "正在确认重启安装，暂不受理新修改。")
 	}
 	if decided := s.decidedLocked(in); decided != nil {
 		s.mu.Unlock()

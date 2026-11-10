@@ -23,3 +23,8 @@ export const DefaultappsCatalog = "defaultapps:catalog";
  */
 export const DefaultappsChange = "defaultapps:change";
 
+/**
+ * Name of the custom event "defaultapps:update".
+ */
+export const DefaultappsUpdate = "defaultapps:update";
+

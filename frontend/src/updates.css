@@ -1,0 +1,16 @@
+.software-update-entry {position:relative;gap:6px}
+.update-dot {width:6px;height:6px;border-radius:50%;background:var(--action);flex:none}
+.software-update {font-size:14px;line-height:1.7;user-select:text}
+.update-summary {display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.update-summary strong {font-size:17px;font-weight:600}
+.update-summary>span,.update-location {color:var(--muted);font-size:12px}
+.update-progress {display:flex;align-items:center;gap:12px;margin:16px 0}
+.update-progress progress {flex:1;min-width:0;height:8px;accent-color:var(--action)}
+.update-progress>span {min-width:64px;text-align:right;font-variant-numeric:tabular-nums}
+.update-notes {margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.update-notes h3 {font-size:13px;font-weight:600;margin:0 0 8px}
+.update-notes p {white-space:pre-wrap;overflow-wrap:anywhere;max-height:240px;overflow:auto;margin:0}
+.update-location {overflow-wrap:anywhere;margin-top:16px}
+.update-actions {display:flex;justify-content:flex-end;gap:8px;margin-top:22px;flex-wrap:wrap}
+.update-actions>button:first-child {margin-right:auto}
+.update-confirm {border-top:1px solid var(--line);padding-top:16px;margin-top:16px}

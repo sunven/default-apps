@@ -7,6 +7,9 @@ import type { Events } from "@wailsio/runtime";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import type * as appupdate$0 from "../../../../sunven/default-apps/internal/appupdate/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import type * as change$0 from "../../../../sunven/default-apps/internal/change/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -18,6 +21,7 @@ declare module "@wailsio/runtime" {
             "defaultapps:activated": boolean;
             "defaultapps:catalog": discovery$0.Snapshot;
             "defaultapps:change": change$0.Snapshot;
+            "defaultapps:update": appupdate$0.Snapshot;
         }
     }
 }

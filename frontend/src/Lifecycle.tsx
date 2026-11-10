@@ -43,10 +43,10 @@ export function LifecycleStatus({changes}:{changes:Changes}){
    {current?.error?<p className="change-error">当前查询失败：{current.error.message}。有效查询后才可再次修改。</p>:null}
    <p>当前观察不能证明上次修改成功。旧请求仍可能完成；再次修改前会说明旧目标。</p>
   </section>:null}
-  {quit?.prompt?<Dialog title={resultKnown?'修改结果已可查看':'修改结果仍未确定'} onClose={()=>void respond(false)}>
+  {quit?.prompt?<Dialog title={quit.intent==='update'?'重启安装前确认':resultKnown?'修改结果已可查看':'修改结果仍未确定'} onClose={()=>void respond(false)}>
    <div className="lifecycle-explanation">{resultKnown?<p>系统结果和当前默认已可查看。可以留在应用继续查看，或仍然退出。</p>:<><p>系统可能在退出后完成修改。退出不会撤回已经提出的系统请求。</p><p>重新打开应用后会查询当前默认，上次修改仍按结果未知显示。</p></>}</div>
    {quitError?<p className="change-error" role="status">{quitError}</p>:null}
-   <div className="lifecycle-actions"><button className="btn" onClick={()=>void respond(false)}>留在应用</button><button className="btn" onClick={()=>void respond(true)}>仍然退出</button></div>
+   <div className="lifecycle-actions"><button className="btn" onClick={()=>void respond(false)}>留在应用</button><button className="btn" onClick={()=>void respond(true)}>{quit.intent==='update'?'仍然重启安装':'仍然退出'}</button></div>
   </Dialog>:null}
  </>
 }
