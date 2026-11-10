@@ -9,11 +9,12 @@ import type { Snapshot } from '../bindings/github.com/sunven/default-apps/intern
 import type { QueryResult, Association } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import App from './App'
+import { PickApplication } from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 
 vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({Query:vi.fn(),GetSnapshot:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({List:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({GetSnapshot:vi.fn(),StartScan:vi.fn(),Reparse:vi.fn()}))
-vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0}),PickApplication:vi.fn()}))
 vi.mock('@wailsio/runtime', () => ({Events:{On:vi.fn()}}))
 const entry=(key:string,name:string,extensions:string[],common=false):Entry=>({id:`file:${key}`,association:{kind:'file',key},name,extensions,mimeTypes:[],sources:[{kind:common?'common':'declaration',inputKind:'type',rawInput:key,normalizedInput:key,label:name}],resolved:true,unresolvedReason:'',diagnosticIdentifiers:[]})
 const pdf=entry('com.adobe.pdf','PDF 文稿',['pdf'],true)
@@ -48,6 +49,30 @@ test('successful foreground requery must clear a prior row transport error',asyn
 
 const observation=(association:Association,version=2):QueryResult=>({association,version,default:{known:true,app,observedAt:'2026-11-06T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[],observedAt:'2026-11-06T10:00:00Z',stale:false,error:null}})
 const rowFor=(name:string)=>screen.getByRole('button',{name}).closest('.association-row') as HTMLElement
+
+test('selecting an undeclared application keeps its default action available after the catalog refresh',async()=>{
+ const openIt={name:'Open It',version:'0.1.3',path:'/Applications/Open It.app',displayPath:'/Applications/Open It.app',bundleID:'com.sunven.open-it'}
+ const data:Entry={...pdf,id:'file:public.data',association:{kind:'file',key:'public.data'},name:'data',extensions:[],sources:[{kind:'manual',inputKind:'identifier',rawInput:'public.data',normalizedInput:'public.data',label:'data'}]}
+ const initial={...snapshot,entries:[data]}
+ vi.mocked(List).mockResolvedValue(initial.entries)
+ vi.mocked(GetSnapshot).mockResolvedValue(initial)
+ vi.mocked(StartScan).mockResolvedValue(initial)
+ vi.mocked(ChangeSnapshot).mockResolvedValue({version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file'],storageError:null,recovery:null,quit:{promptID:0,prompt:false,exiting:false}})
+ vi.mocked(PickApplication).mockImplementation(()=>{
+  listeners.get('defaultapps:catalog')?.({data:{...initial,version:3,scanning:true,entries:[{...data,sources:[{...data.sources![0],kind:'declaration',appPath:app.path}]}]}})
+  return Promise.resolve({saved:true,cancelled:false,entry:null,app:openIt}) as ReturnType<typeof PickApplication>
+ })
+ render(<App/>);
+ await userEvent.click(await screen.findByRole('button',{name:'文件类型'}))
+ await userEvent.click(await screen.findByRole('checkbox',{name:'仅手动添加'}))
+ await userEvent.click(await screen.findByRole('button',{name:'data public.data'}))
+ await userEvent.click(await screen.findByRole('button',{name:'选择其他应用…'}))
+ const copy=await screen.findByRole('dialog',{name:'所选应用副本'})
+ expect(within(copy).getByText('Open It')).toBeVisible()
+ expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).toBeEnabled()
+ await act(async()=>listeners.get('defaultapps:catalog')?.({data:{...initial,version:4,apps:[...snapshot.apps!,{app:openIt,associationIDs:[],declarations:[],definitions:[],issues:[]}]}}))
+ expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).toBeEnabled()
+})
 
 test('default updates reorder rows without changing the open detail or restarting queries',async()=>{
  render(<App/>)

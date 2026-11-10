@@ -97,6 +97,17 @@ function initialState(): State {
 }
 
 const entryText = (entry: Entry) => [entry.name, entry.association.key, ...(entry.extensions ?? []).map(value => '.' + value), ...(entry.mimeTypes ?? []), ...(entry.sources ?? []).flatMap(source => [source.rawInput, source.label])].join(' ').toLocaleLowerCase()
+function mergeScanningEntries(previous:Entry[], incoming:Entry[]) {
+  const entries=new Map(previous.map(entry=>[entry.id,entry]))
+  for(const entry of incoming){
+    const existing=entries.get(entry.id)
+    // A partial scan has not restored manual entries or visited every declaring
+    // application yet. Keep those sources until the completed snapshot replaces them.
+    const sources=existing ? [...new Map([...(existing.sources??[]),...(entry.sources??[])].map(source=>[JSON.stringify(source),source])).values()] : entry.sources
+    entries.set(entry.id,existing ? {...entry,sources} : entry)
+  }
+  return [...entries.values()]
+}
 function browse(state: State) {
   const term = state.appQuery.trim().toLocaleLowerCase()
   const index = new Map(state.entries.map(entry => [entry.id, entry]))
@@ -167,7 +178,7 @@ function transition(state: State, action: Action): State {
       if (value.version < state.scanVersion) return state
       const apps = value.scanning && state.snapshot?.apps?.length
         ? [...new Map([...(state.snapshot.apps ?? []), ...(value.apps ?? [])].map(item => [item.app.path, item])).values()] : value.apps
-      const entries = value.scanning ? [...new Map([...state.entries, ...(value.entries ?? [])].map(entry => [entry.id, entry])).values()] : value.entries ?? []
+      const entries = value.scanning ? mergeScanningEntries(state.entries,value.entries??[]) : value.entries ?? []
       const next = { ...state, scanVersion: value.version, snapshot: { ...value, apps }, entries,
         discoveredPaths: new Set([...state.discoveredPaths, ...(value.apps ?? []).map(item => item.app.path)]) }
       const anchor = state.reparseAnchor

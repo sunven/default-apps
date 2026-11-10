@@ -126,6 +126,7 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .manual-only-filter {display:flex;align-items:center;gap:6px;min-height:32px;white-space:nowrap;font-size:12px;color:var(--ink);cursor:pointer}
 .manual-only-filter input {margin:0}
 .column-labels,.association-row {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) 160px;gap:10px;align-items:center}
+.file-columns .column-labels,.file-columns .association-row {grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr) 160px}
 .column-labels {padding:6px var(--gutter);color:var(--muted);font-size:12px;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);flex:none}
 .column-labels>:last-child {text-align:right}
 .association-list {overflow:auto;overscroll-behavior:contain;min-height:0;flex:1;padding:0 var(--gutter);scrollbar-width:thin}
@@ -133,6 +134,9 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .association-row[data-selected=true] {background:#f1f6fc;box-shadow:calc(-1 * var(--gutter)) 0 #f1f6fc,var(--gutter) 0 #f1f6fc}
 .association-row[data-selected=true]::before {content:"";position:absolute;left:calc(-1 * var(--gutter));top:8px;bottom:8px;width:3px;background:var(--action);border-radius:0 3px 3px 0}
 .association-name {border:1px solid transparent;border-radius:6px;background:transparent;display:flex;justify-content:flex-start;text-align:left;gap:8px;width:100%;min-width:0;padding:2px 0}
+.file-columns .association-name {display:grid;grid-column:span 3;grid-template-columns:subgrid;gap:inherit;align-items:center}
+.association-title {display:flex;align-items:center;gap:8px;min-width:0}
+.association-extensions,.association-identifier {font-size:12px;font-weight:400;color:var(--muted);min-width:0;overflow-wrap:anywhere}
 .association-label {display:flex;flex-direction:column;gap:0;min-width:0}
 .association-name strong {font-size:14px;font-weight:600;overflow-wrap:anywhere}
 .association-label>span {font-size:12px;color:var(--muted);font-weight:400;overflow-wrap:anywhere}
@@ -142,14 +146,9 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .association-icon {display:grid;place-items:center;width:32px;height:38px;flex:none;color:#677d99}
 .association-icon .icon {width:22px;height:22px}
 .declared-default {min-width:0;font-size:13px;display:flex;flex-direction:column;gap:2px}
-.declared-app {display:flex;align-items:flex-start;gap:6px;min-width:0}
-.declared-app>span:last-child {display:flex;flex-direction:column;gap:2px;min-width:0}
-.declared-default strong {font-size:13px;font-weight:500;overflow-wrap:anywhere}
+.declared-app {display:flex;align-items:center;gap:6px;min-width:0}
+.declared-default strong {font-size:13px;font-weight:500;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .declared-default span {color:var(--muted);font-size:12px}
-.declared-app-heading {display:flex;align-items:baseline;gap:6px;min-width:0}
-.declared-app-heading strong {min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.declared-app-heading>span {flex:none;white-space:nowrap}
-.row-path {white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row-detail {font-size:13px;white-space:nowrap}
 .browser-footer {display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px var(--gutter);color:var(--muted);font-size:11px;border-top:1px solid var(--line);flex:none;min-height:36px}
 .browser-footer button {padding:2px 8px;min-height:26px;font-size:12px}
@@ -228,6 +227,7 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
  .association-filters {width:100%;flex-wrap:wrap;gap:6px 12px}
  .association-toolbar .search-field {width:auto;flex:1;min-width:160px}
  .column-labels,.association-row {grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:6px 10px}
+ .file-columns .column-labels,.file-columns .association-row {grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr)}
  .column-labels>:last-child {display:none}
  .row-actions {grid-column:1 / -1}
  .keyboard-hint {display:none}
