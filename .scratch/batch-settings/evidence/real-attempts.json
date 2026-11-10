@@ -1,0 +1,44 @@
+[
+  {
+    "run": "real-57819ca758954d87a68a1c9b9643b47c",
+    "layer": "real NSWorkspace",
+    "nativeEvents": [
+      {
+        "operation": 1,
+        "mainThread": true,
+        "kind": "file",
+        "event": "native-start",
+        "key": "org.defaultapps.batchqa.57819ca758954d87a68a1c9b9643b47c.one",
+        "targetPath": "/Users/sunven/github/default-apps/.scratch/batch-settings/out/real-57819ca758954d87a68a1c9b9643b47c/Batch QA A 57819ca7.app"
+      }
+    ],
+    "savedBatchState": "waiting",
+    "savedItemStates": [
+      "waiting",
+      "queued"
+    ],
+    "completionObserved": false,
+    "dailyDefaultsAndCandidatesUnchanged": true
+  },
+  {
+    "run": "real-fcb99a08bd824b47900d9a9ec251df03",
+    "layer": "real NSWorkspace",
+    "nativeEvents": [
+      {
+        "operation": 1,
+        "mainThread": true,
+        "kind": "file",
+        "event": "native-start",
+        "key": "org.defaultapps.batchqa.fcb99a08bd824b47900d9a9ec251df03.one",
+        "targetPath": "/Users/sunven/github/default-apps/.scratch/batch-settings/out/real-fcb99a08bd824b47900d9a9ec251df03/Batch QA A fcb99a08.app"
+      }
+    ],
+    "savedBatchState": "waiting",
+    "savedItemStates": [
+      "waiting",
+      "queued"
+    ],
+    "completionObserved": false,
+    "dailyDefaultsAndCandidatesUnchanged": true
+  }
+]

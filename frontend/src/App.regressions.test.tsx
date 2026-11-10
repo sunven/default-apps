@@ -26,7 +26,7 @@ const archive={...app,path:'/Volumes/Archive/Reader.app',displayPath:'/Volumes/A
 const snapshot:Snapshot={version:2,scanning:false,apps:[{app,associationIDs:[jpeg.id,pdf.id,otherJPEG.id],declarations:[],definitions:[],issues:[]},{app:archive,associationIDs:[],declarations:[],definitions:[],issues:[]}],entries:[jpeg,pdf,otherJPEG,https],issues:[],roots:[],startedAt:'',completedAt:'',durationMS:0}
 const listeners=new Map<string,(event:any)=>void>()
 beforeEach(()=>{
- vi.resetAllMocks(); sessionStorage.clear(); listeners.clear(); vi.mocked(ChangeSnapshot).mockResolvedValue({version:0,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null,recovery:null,quit:{promptID:0,prompt:false,exiting:false}})
+ vi.resetAllMocks(); sessionStorage.clear(); listeners.clear(); vi.mocked(ChangeSnapshot).mockResolvedValue({version:0,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null,recovery:null,quit:{promptID:0,prompt:false,exiting:false}})
  vi.mocked(List).mockResolvedValue(snapshot.entries!)
  vi.mocked(GetSnapshot).mockResolvedValue(snapshot)
  vi.mocked(StartScan).mockResolvedValue(snapshot)
@@ -57,7 +57,7 @@ test('selecting an undeclared application keeps its default action available aft
  vi.mocked(List).mockResolvedValue(initial.entries)
  vi.mocked(GetSnapshot).mockResolvedValue(initial)
  vi.mocked(StartScan).mockResolvedValue(initial)
- vi.mocked(ChangeSnapshot).mockResolvedValue({version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file'],storageError:null,recovery:null,quit:{promptID:0,prompt:false,exiting:false}})
+ vi.mocked(ChangeSnapshot).mockResolvedValue({version:1,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file'],storageError:null,recovery:null,quit:{promptID:0,prompt:false,exiting:false}})
  vi.mocked(PickApplication).mockImplementation(()=>{
   listeners.get('defaultapps:catalog')?.({data:{...initial,version:3,scanning:true,entries:[{...data,sources:[{...data.sources![0],kind:'declaration',appPath:app.path}]}]}})
   return Promise.resolve({saved:true,cancelled:false,entry:null,app:openIt}) as ReturnType<typeof PickApplication>
@@ -82,12 +82,12 @@ test('default updates reorder rows without changing the open detail or restartin
  const order=()=>Array.from(list.querySelectorAll('[data-association-id]'),row=>row.getAttribute('data-association-id'))
  const calls=vi.mocked(Query).mock.calls.length
  const updated=observation(otherJPEG.association)
- await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,activeRequestID:'',requests:[],observations:[updated],writableKinds:[],storageError:null}}))
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[updated],writableKinds:[],storageError:null}}))
  expect(order()).toEqual([otherJPEG.id,pdf.id,jpeg.id])
  expect(detail).toBeInTheDocument()
  expect(within(detail).getByRole('region',{name:'当前默认应用'})).toHaveTextContent(app.path)
  expect(Query).toHaveBeenCalledTimes(calls)
- await act(async()=>listeners.get('defaultapps:change')?.({data:{version:2,busy:false,activeRequestID:'',requests:[],observations:[{...updated,version:3,default:{...updated.default,stale:true}}],writableKinds:[],storageError:null}}))
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:2,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[{...updated,version:3,default:{...updated.default,stale:true}}],writableKinds:[],storageError:null}}))
  expect(order()).toEqual([pdf.id,jpeg.id,otherJPEG.id])
  expect(rowFor('JPEG 导出 test.independent.jpg')).not.toHaveTextContent('已是默认')
  await userEvent.keyboard('{Escape}')
@@ -100,7 +100,7 @@ test('fresh change snapshots clear the selected row and detail errors together',
  vi.mocked(Query).mockRejectedValue(new Error('current transport failure'))
  await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
  expect(await screen.findByRole('alert')).toHaveTextContent('current transport failure')
- await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,activeRequestID:'',requests:[],observations:[observation(pdf.association,4)],writableKinds:[],storageError:null}}))
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[observation(pdf.association,4)],writableKinds:[],storageError:null}}))
  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
  expect(rowFor('PDF 文稿 com.adobe.pdf')).not.toHaveTextContent('查询连接失败')
  expect(screen.getByRole('region',{name:'当前默认应用'})).toHaveTextContent('/Applications/Reader.app')

@@ -47,7 +47,7 @@ func TestManualItemsSurviveReopeningAndUpdatesPreserveOtherFields(t *testing.T) 
 }
 
 func TestUnreadableConfigurationsArePreservedAndCannotBeOverwritten(t *testing.T) {
-	for _, raw := range []string{`{broken`, `{"version":2,"associations":[],"applications":[]}`, `{"version":1,"futureField":true}`, `{"version":1} {}`} {
+	for _, raw := range []string{`{broken`, `{"version":99,"associations":[],"applications":[]}`, `{"version":1,"futureField":true}`, `{"version":1} {}`} {
 		t.Run(raw, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "config.json")
 			if err := os.WriteFile(path, []byte(raw), 0600); err != nil {
@@ -65,6 +65,43 @@ func TestUnreadableConfigurationsArePreservedAndCannotBeOverwritten(t *testing.T
 				t.Fatalf("original changed: %q %v", after, err)
 			}
 		})
+	}
+}
+
+func TestBatchMigratesLegacyConfigAndManualUpdatesPreserveProgress(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "config.json")
+	store := config.NewStore(path)
+	if err := store.Update(context.Background(), func(doc *config.Document) error {
+		doc.Associations = []config.ManualAssociation{{Input: catalog.Input{Kind: "scheme", Value: "batch-marker", Source: "manual"}, SelectedID: "scheme:batch-marker"}}
+		doc.Pending = json.RawMessage(`{"requestID":"existing"}`)
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	legacy, _ := store.Load(context.Background())
+	if legacy.Version != 1 {
+		t.Fatal("legacy configuration changed without a batch")
+	}
+	batch := json.RawMessage(`{"id":"batch-one","items":[{"status":"waiting"}]}`)
+	if err := store.Update(context.Background(), func(doc *config.Document) error { doc.Batch = batch; return nil }); err != nil {
+		t.Fatal(err)
+	}
+	reopened := config.NewStore(path)
+	if err := reopened.Update(context.Background(), func(doc *config.Document) error {
+		doc.Applications = append(doc.Applications, association.AppCopy{Path: "/Applications/Added.app"})
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	doc, err := reopened.Load(context.Background())
+	if err != nil || doc.Version != 2 || len(doc.Associations) != 1 || len(doc.Applications) != 1 || !bytes.Equal(bytes.TrimSpace(doc.Pending), bytes.TrimSpace(legacy.Pending)) {
+		t.Fatalf("migration lost data: %+v %v", doc, err)
+	}
+	var before, after any
+	_ = json.Unmarshal(batch, &before)
+	_ = json.Unmarshal(doc.Batch, &after)
+	if fmt.Sprint(before) != fmt.Sprint(after) {
+		t.Fatalf("manual addition overwrote batch: %s", doc.Batch)
 	}
 }
 func TestFailedAtomicSavePreservesPreviouslyCommittedItems(t *testing.T) {

@@ -12,11 +12,20 @@ vi.mock('@wailsio/runtime',()=>({Events:{On:vi.fn()}}))
 const copy={path:'/Applications/Reader.app',displayPath:'/Applications/Reader.app',name:'Reader',version:'2',bundleID:'test.reader'}
 const association={kind:'file',key:'com.adobe.pdf'}
 const observation={known:true,app:null,observedAt:'2026-11-06T00:00:00Z',error:null,stale:false}
-const empty:Snapshot={version:1,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file','scheme'],storageError:null,recovery:null,quit:{prompt:false,promptID:0,exiting:false}}
+const empty:Snapshot={version:1,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[],writableKinds:['file','scheme'],storageError:null,recovery:null,quit:{prompt:false,promptID:0,exiting:false}}
 const request:Request={requestID:'one',association,target:copy,preflight:observation,phase:'accepted',acceptedAt:'now',submittedAt:'',completion:{known:false,error:null,completedAt:''},readback:{state:'pending',observation},confirmed:false,storageError:null}
 let notify:(event:{data:Snapshot})=>void
 beforeEach(()=>{vi.resetAllMocks();sessionStorage.clear();vi.mocked(GetSnapshot).mockResolvedValue(empty);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})
 function Screen(){const changes=useChanges();return <><NotificationHost/><button disabled={changes.blocked} onClick={()=>void changes.submit(association,copy,observation)}>修改</button><ChangeStatus changes={changes} onReturn={()=>{}}/></>}
+test('completed items from an earlier batch do not become single-change notifications',async()=>{
+ render(<Screen/>);await waitFor(()=>expect(screen.getByRole('button',{name:'修改'})).toBeEnabled())
+ const completed={...request,batchID:'previous-batch',phase:'resolved',confirmed:true,completion:{known:true,error:null,completedAt:'now'},readback:{state:'valid',observation:{...observation,app:copy}}}
+ await act(async()=>notify({data:{...empty,version:2,requests:[completed]}}))
+ expect(screen.queryByText('已确认本次修改')).not.toBeInTheDocument()
+ await act(async()=>notify({data:{...empty,version:3,requests:[completed,{...request,requestID:'single'}]}}))
+ expect(await screen.findByText('已受理 · 等待提交系统')).toBeVisible()
+ expect(screen.queryByText('已确认本次修改')).not.toBeInTheDocument()
+})
 test('explicit action sends one canonical copy and shows accepted separately from submitted',async()=>{
  vi.mocked(Submit).mockResolvedValue({outcome:'accepted',message:'',request,snapshot:{...empty,version:2,busy:true,activeRequestID:'one',requests:[request]},observation:null})
  render(<Screen/>);await userEvent.click(screen.getByRole('button',{name:'修改'}));
@@ -121,7 +130,7 @@ test('scheme submission and reload preserve its identity and block file and othe
  const failed={...pending,phase:'completed',completion:{known:true,error:null,completedAt:'now'},readback:{state:'failed',observation:{...observation,stale:true,error:{message:'Scheme query failed'}}}}
  await act(async()=>notify({data:{...state,version:3,requests:[failed]}}))
  expect(screen.getByRole('button',{name:'修改文件类型'})).toBeDisabled()
- vi.mocked(Requery).mockResolvedValue({...state,version:4,busy:false,activeRequestID:'',requests:[{...failed,phase:'resolved',confirmed:true,readback:{state:'valid',observation:{...observation,app:copy}}}]})
+ vi.mocked(Requery).mockResolvedValue({...state,version:4,busy:false,batchBlocked:false,activeRequestID:'',requests:[{...failed,phase:'resolved',confirmed:true,readback:{state:'valid',observation:{...observation,app:copy}}}]})
  await userEvent.click(await screen.findByRole('button',{name:'重新回读'}))
  expect(Requery).toHaveBeenCalledWith(scheme);expect(Submit).toHaveBeenCalledTimes(1)
  expect(vi.mocked(Submit).mock.calls[0][0]).toEqual(original)

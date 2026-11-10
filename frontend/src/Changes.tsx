@@ -44,7 +44,7 @@ export function useChanges(){
  // endpoint can close a never-arrived request; it never invokes the setter.
  useEffect(()=>{if(!sending&&pending)void recoverReply()},[state?.version,sending,pending,recoverReply])
  const submit=async(association:Association,target:AppCopy,observed:DefaultObservation,recoveryRequestID='')=>{
-  if(inFlight.current||state?.busy||state?.quit?.exiting||state?.quit?.restarting||(state?.quit?.prompt&&state.quit.intent==='update')||pending)return
+  if(inFlight.current||state?.busy||state?.batchBlocked||state?.quit?.exiting||state?.quit?.restarting||(state?.quit?.prompt&&state.quit.intent==='update')||pending)return
   const input={requestID:crypto.randomUUID(),recoveryRequestID,association,targetPath:target.path,expected:{known:observed.known&&!observed.stale&&!observed.error,path:observed.app?.path??''}}
   try{sessionStorage.setItem(pendingKey,JSON.stringify({version:1,input}))}catch{setMessage('无法保存原请求标识，请恢复会话存储后再修改。');return}
   inFlight.current=true;pendingRef.current=input;setPending(input);setSending(true);setMessage('')
@@ -53,7 +53,7 @@ export function useChanges(){
   finally{inFlight.current=false;if(mounted.current)setSending(false)}
  }
  const retry=async(association:Association)=>{try{accept(await Requery(association));setMessage('')}catch(error){setMessage(`重新查询失败：${String(error)}`)}}
- return {state,message,sending,pending,historicalRequests,blocked:!state||state.busy||!!state.quit?.exiting||!!state.quit?.restarting||!!(state.quit?.prompt&&state.quit.intent==='update')||sending||!!pending,submit,retry,recoverReply}
+ return {state,message,sending,pending,historicalRequests,accept,blocked:!state||state.busy||!!state.batchBlocked||!!state.quit?.exiting||!!state.quit?.restarting||!!(state.quit?.prompt&&state.quit.intent==='update')||sending||!!pending,submit,retry,recoverReply}
 }
 export type Changes=ReturnType<typeof useChanges>
 export function requestLabel(request:Request){
@@ -75,6 +75,7 @@ export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(assoc
    notify(tone,title,{id,description:<>{description.split('\n').filter(Boolean).map((line,index)=><p key={index}>{line.startsWith('目标：')?<>目标：<span>{line.slice(3)}</span></>:line}</p>)}{actions?<div className="notification-actions">{actions}</div>:null}</>})
   }
   for(const request of changes.state?.requests??[]){
+   if(request.batchID||changes.state?.batch?.items?.some(item=>item.requestID===request.requestID))continue
    if(request.phase==='recovered'||changes.historicalRequests.current.has(request.requestID))continue
    const actual=observationFor(changes.state,request.association)??request.readback.observation
    const error=request.completion.error

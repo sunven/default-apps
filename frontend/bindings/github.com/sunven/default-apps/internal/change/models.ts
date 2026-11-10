@@ -5,6 +5,55 @@
 // @ts-ignore: Unused imports
 import * as association$0 from "../association/models.js";
 
+export interface Batch {
+    "id": string;
+    "revision": number;
+    "target": association$0.AppCopy;
+    "items": BatchItem[] | null;
+    "state": string;
+    "error": string;
+    "createdAt": string;
+    "commands": string[] | null;
+    "runItems": string[] | null;
+}
+
+export interface BatchItem {
+    "selection": BatchSelection;
+    "expected": ExpectedDefault;
+    "observed"?: association$0.AppCopy | null;
+    "status": string;
+    "message": string;
+    "requestID": string;
+    "attempts": number;
+    "previousUnknown"?: boolean;
+}
+
+/**
+ * A preview is an immutable, process-local capability. Its ID can start at most
+ * one confirmed run; a late start after reconciliation cannot write anything.
+ */
+export interface BatchPreview {
+    "id": string;
+    "target": association$0.AppCopy;
+    "items": BatchItem[] | null;
+    "baseBatchID": string;
+    "baseRevision": number;
+    "resumeBatchID": string;
+    "replaceBatchID": string;
+}
+
+export interface BatchResult {
+    "outcome": string;
+    "message": string;
+    "snapshot": Snapshot;
+}
+
+export interface BatchSelection {
+    "association": association$0.Association;
+    "name": string;
+    "extensions": string[] | null;
+}
+
 export interface Completion {
     "known": boolean;
     "error": NativeError | null;
@@ -72,6 +121,7 @@ export interface Request {
     "phase": string;
     "acceptedAt": string;
     "submittedAt": string;
+    "batchID"?: string;
     "completion": Completion;
     "readback": Readback;
     "confirmed": boolean;
@@ -88,6 +138,8 @@ export interface Snapshot {
     "storageError": StorageIssue | null;
     "recovery": Recovery | null;
     "quit": QuitState;
+    "batch"?: Batch | null;
+    "batchBlocked": boolean;
 }
 
 export interface StorageIssue {

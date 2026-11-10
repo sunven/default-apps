@@ -1,0 +1,7 @@
+one confirmed batch has one active request
+frontend reload only reads existing batch
+stop keeps fourth unsubmitted; known failure retained
+reopen requires explicit preview and resumes only unsubmitted item
+reopen preserves pending uncertainty and does not replay
+acknowledged continuation keeps old request unknown
+PASS /Users/sunven/github/default-apps/.scratch/batch-settings/out/control-1794314687047823000

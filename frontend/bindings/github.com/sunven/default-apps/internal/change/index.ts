@@ -7,6 +7,11 @@ export {
 };
 
 export type {
+    Batch,
+    BatchItem,
+    BatchPreview,
+    BatchResult,
+    BatchSelection,
     Completion,
     ExpectedDefault,
     NativeError,

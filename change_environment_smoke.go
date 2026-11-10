@@ -23,6 +23,8 @@ import (
 type smokeSystem struct {
 	mu                                             sync.Mutex
 	current                                        *association.AppCopy
+	currentByAssociation                           map[association.Association]*association.AppCopy
+	activeAssociation                              association.Association
 	target                                         association.AppCopy
 	queryError, unavailable, saveError, clearError bool
 	starts                                         int
@@ -109,8 +111,12 @@ func (s *smokeSystem) CurrentDefault(_ context.Context, a association.Associatio
 	}
 	queryError := s.queryError
 	var value *association.AppCopy
-	if s.current != nil {
-		copy := *s.current
+	current := s.current
+	if value, ok := s.currentByAssociation[a]; ok {
+		current = value
+	}
+	if current != nil {
+		copy := *current
 		value = &copy
 	}
 	s.mu.Unlock()
@@ -147,10 +153,11 @@ func (s *smokeSystem) ReadApplicationCopy(ctx context.Context, path string) (ass
 	}
 	return native.Adapter{}.ReadApplicationCopy(ctx, path)
 }
-func (s *smokeSystem) Dispatch(_ association.Association, _ association.AppCopy, submitted func(), complete func(*change.NativeError)) {
+func (s *smokeSystem) Dispatch(a association.Association, _ association.AppCopy, submitted func(), complete func(*change.NativeError)) {
 	doc, _ := s.store.Load(context.Background())
 	s.mu.Lock()
 	s.starts++
+	s.activeAssociation = a
 	s.initiated = false
 	s.submitted = submitted
 	s.complete = complete
@@ -161,6 +168,7 @@ func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 	var command struct {
 		Action          string                   `json:"action"`
 		Path            *string                  `json:"path"`
+		Association     *association.Association `json:"association"`
 		QueryError      *bool                    `json:"queryError"`
 		Unavailable     *bool                    `json:"unavailable"`
 		SaveError       *bool                    `json:"saveError"`
@@ -178,13 +186,22 @@ func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 	}
 	s.mu.Lock()
 	if command.Path != nil {
+		var value *association.AppCopy
 		if *command.Path == "" {
-			s.current = nil
+			value = nil
 		} else {
 			v := s.target
 			v.Path = *command.Path
 			v.DisplayPath = v.Path
-			s.current = &v
+			value = &v
+		}
+		if command.Association != nil {
+			if s.currentByAssociation == nil {
+				s.currentByAssociation = map[association.Association]*association.AppCopy{}
+			}
+			s.currentByAssociation[*command.Association] = value
+		} else {
+			s.current = value
 		}
 	}
 	if command.QueryError != nil {
@@ -218,7 +235,7 @@ func (s *smokeSystem) control(w http.ResponseWriter, r *http.Request) {
 		held = append(held, id)
 	}
 	submitted, complete := s.submitted, s.complete
-	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "actualStarts": s.actualStarts, "current": s.current, "pendingAtDispatch": s.pendingAtDispatch, "queries": s.queryCalls, "querySequence": s.querySequence, "heldQueries": held, "saving": s.saving}
+	result := map[string]any{"layer": "native Wails shell + controlled adapter", "starts": s.starts, "actualStarts": s.actualStarts, "current": s.current, "activeAssociation": s.activeAssociation, "pendingAtDispatch": s.pendingAtDispatch, "queries": s.queryCalls, "querySequence": s.querySequence, "heldQueries": held, "saving": s.saving}
 	s.mu.Unlock()
 	if command.Action == "submitted" && submitted != nil {
 		s.mu.Lock()

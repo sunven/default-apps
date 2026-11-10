@@ -1,0 +1,142 @@
+[
+  {
+    "name": "one confirmed batch has one active request",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "batchState": "waiting",
+    "statuses": [
+      "waiting",
+      "queued",
+      "queued",
+      "queued"
+    ],
+    "nativeDispatchCount": 1,
+    "configurationVersion": 2,
+    "pendingPersisted": true,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  },
+  {
+    "name": "frontend reload only reads existing batch",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "batchState": "waiting",
+    "statuses": [
+      "waiting",
+      "queued",
+      "queued",
+      "queued"
+    ],
+    "nativeDispatchCount": 1,
+    "configurationVersion": 2,
+    "pendingPersisted": true,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  },
+  {
+    "name": "stop keeps fourth unsubmitted; known failure retained",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 701,
+      "overflow": 0,
+      "width": 1001
+    },
+    "batchState": "stopped",
+    "statuses": [
+      "confirmed",
+      "failed",
+      "confirmed",
+      "queued"
+    ],
+    "nativeDispatchCount": 3,
+    "configurationVersion": 2,
+    "pendingPersisted": false,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  },
+  {
+    "name": "reopen requires explicit preview and resumes only unsubmitted item",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "batchState": "completed",
+    "statuses": [
+      "confirmed",
+      "failed",
+      "confirmed",
+      "confirmed"
+    ],
+    "nativeDispatchCount": 1,
+    "configurationVersion": 2,
+    "pendingPersisted": false,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  },
+  {
+    "name": "reopen preserves pending uncertainty and does not replay",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "batchState": "recovered",
+    "statuses": [
+      "unknown",
+      "queued"
+    ],
+    "nativeDispatchCount": 0,
+    "configurationVersion": 2,
+    "pendingPersisted": true,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  },
+  {
+    "name": "acknowledged continuation keeps old request unknown",
+    "layer": "native Wails shell + controlled system adapter",
+    "viewport": {
+      "height": 800,
+      "overflow": 0,
+      "width": 1180
+    },
+    "batchState": "stopped",
+    "statuses": [
+      "unknown",
+      "confirmed"
+    ],
+    "nativeDispatchCount": 1,
+    "configurationVersion": 2,
+    "pendingPersisted": false,
+    "quit": {
+      "exiting": false,
+      "prompt": false,
+      "promptID": 0
+    }
+  }
+]

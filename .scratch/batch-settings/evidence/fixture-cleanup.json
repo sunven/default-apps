@@ -1,0 +1,26 @@
+[
+  {
+    "run": "real-57819ca758954d87a68a1c9b9643b47c",
+    "type": "org.defaultapps.batchqa.57819ca758954d87a68a1c9b9643b47c.one",
+    "current": null,
+    "candidates": []
+  },
+  {
+    "run": "real-57819ca758954d87a68a1c9b9643b47c",
+    "type": "org.defaultapps.batchqa.57819ca758954d87a68a1c9b9643b47c.two",
+    "current": null,
+    "candidates": []
+  },
+  {
+    "run": "real-fcb99a08bd824b47900d9a9ec251df03",
+    "type": "org.defaultapps.batchqa.fcb99a08bd824b47900d9a9ec251df03.one",
+    "current": null,
+    "candidates": []
+  },
+  {
+    "run": "real-fcb99a08bd824b47900d9a9ec251df03",
+    "type": "org.defaultapps.batchqa.fcb99a08bd824b47900d9a9ec251df03.two",
+    "current": null,
+    "candidates": []
+  }
+]

@@ -18,11 +18,26 @@ export function GetSnapshot(): $CancellablePromise<$models.Snapshot> {
 }
 
 /**
+ * PrepareBatch only reads. Item order is the order shown in the resulting preview.
+ */
+export function PrepareBatch(selections: $models.BatchSelection[] | null, targetPath: string, resumeBatchID: string): $CancellablePromise<$models.BatchPreview> {
+    return $Call.ByID(1945431049, selections, targetPath, resumeBatchID);
+}
+
+/**
  * Query publishes one shared observation. A query begun before completion can
  * update current facts, but cannot settle the request's post-completion readback.
  */
 export function Query(a: association$0.Association): $CancellablePromise<association$0.QueryResult> {
     return $Call.ByID(3233615384, a);
+}
+
+/**
+ * Reconciliation closes an unused capability before returning. A binding call
+ * arriving after this read-only recovery endpoint cannot start the batch.
+ */
+export function ReconcileBatchStart(previewID: string): $CancellablePromise<$models.BatchResult> {
+    return $Call.ByID(2160554228, previewID);
 }
 
 export function ReconcileSubmission($in: $models.Submission): $CancellablePromise<$models.Reconciliation> {
@@ -50,6 +65,14 @@ export function RequestQuit(): $CancellablePromise<boolean> {
  */
 export function RespondQuit(promptID: number, exit: boolean): $CancellablePromise<$models.Snapshot> {
     return $Call.ByID(3386273962, promptID, exit);
+}
+
+export function StartBatch(previewID: string, replaceBatchID: string, recoveryRequestID: string): $CancellablePromise<$models.BatchResult> {
+    return $Call.ByID(1242550568, previewID, replaceBatchID, recoveryRequestID);
+}
+
+export function StopBatch(batchID: string): $CancellablePromise<$models.BatchResult> {
+    return $Call.ByID(470447964, batchID);
 }
 
 export function Submit($in: $models.Submission): $CancellablePromise<$models.SubmitResult> {

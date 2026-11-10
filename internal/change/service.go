@@ -53,6 +53,7 @@ type PendingRecord struct {
 }
 type Request struct {
 	PendingRecord
+	BatchID      string        `json:"batchID,omitempty"`
 	Completion   Completion    `json:"completion"`
 	Readback     Readback      `json:"readback"`
 	Confirmed    bool          `json:"confirmed"`
@@ -68,6 +69,8 @@ type Snapshot struct {
 	StorageError    *StorageIssue             `json:"storageError"`
 	Recovery        *Recovery                 `json:"recovery"`
 	Quit            QuitState                 `json:"quit"`
+	Batch           *Batch                    `json:"batch,omitempty"`
+	BatchBlocked    bool                      `json:"batchBlocked"`
 }
 type SubmitResult struct {
 	Outcome     string                          `json:"outcome"`
@@ -107,20 +110,24 @@ type admission struct {
 }
 
 type Service struct {
-	mu          sync.Mutex
-	catalog     *catalog.Service
-	queries     *association.Service
-	reader      ApplicationReader
-	store       config.Repository
-	dispatcher  Dispatcher
-	options     Options
-	state       Snapshot
-	submissions map[string]Submission
-	loadOnce    sync.Once
-	loadError   error
-	admitting   *admission
-	decisions   map[string]admissionResult
-	restart     func()
+	mu              sync.Mutex
+	batchMu         sync.Mutex
+	catalog         *catalog.Service
+	queries         *association.Service
+	reader          ApplicationReader
+	store           config.Repository
+	dispatcher      Dispatcher
+	options         Options
+	state           Snapshot
+	submissions     map[string]Submission
+	loadOnce        sync.Once
+	loadError       error
+	admitting       *admission
+	decisions       map[string]admissionResult
+	restart         func()
+	previews        map[string]BatchPreview
+	closedPreviews  map[string]bool
+	batchRecoveryID string
 }
 
 func NewService(c *catalog.Service, q *association.Service, r ApplicationReader, store config.Repository, d Dispatcher, options Options) *Service {
@@ -133,7 +140,11 @@ func clone[T any](v T) T {
 	_ = json.Unmarshal(data, &out)
 	return out
 }
-func (s *Service) changedLocked() Snapshot { s.state.Version++; return clone(s.state) }
+func (s *Service) changedLocked() Snapshot {
+	s.state.BatchBlocked = s.batchBlocksLocked()
+	s.state.Version++
+	return clone(s.state)
+}
 
 // publish forwards a snapshot the caller has already detached from service
 // state (changedLocked or clone); the receiver only serializes it.
@@ -155,6 +166,7 @@ func (s *Service) GetSnapshot() Snapshot {
 	if err != nil {
 		s.state.StorageError = &StorageIssue{Operation: "load", Message: err.Error()}
 	}
+	s.state.BatchBlocked = s.batchBlocksLocked()
 	return clone(s.state)
 }
 
@@ -163,6 +175,10 @@ func (s *Service) ensureLoaded() error {
 	s.loadOnce.Do(func() {
 		doc, err := s.store.Load(context.Background())
 		if err != nil {
+			s.loadError = err
+			return
+		}
+		if err := s.loadBatch(doc); err != nil {
 			s.loadError = err
 			return
 		}
@@ -181,7 +197,15 @@ func (s *Service) ensureLoaded() error {
 		pending.Phase = "recovered"
 		s.mu.Lock()
 		defer s.mu.Unlock()
-		s.state.Requests = []Request{{PendingRecord: pending, Readback: Readback{State: "unknown"}}}
+		batchID := ""
+		if s.state.Batch != nil {
+			for _, item := range s.state.Batch.Items {
+				if item.RequestID == pending.RequestID {
+					batchID = s.state.Batch.ID
+				}
+			}
+		}
+		s.state.Requests = []Request{{PendingRecord: pending, BatchID: batchID, Readback: Readback{State: "unknown"}}}
 		s.state.Recovery = &Recovery{Record: pending}
 		s.state.Busy = true
 		s.state.Version++
@@ -222,6 +246,11 @@ func (s *Service) existingLocked(request *Request) SubmitResult {
 }
 
 func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
+	return s.submit(ctx, in, "")
+}
+
+// batchID is supplied only by the backend coordinator, never by a binding caller.
+func (s *Service) submit(ctx context.Context, in Submission, batchID string) SubmitResult {
 	if in.RequestID == "" || in.Association.Kind == "" || in.Association.Key == "" || in.TargetPath == "" {
 		return SubmitResult{Outcome: "invalid", Message: "提交缺少请求标识、关联身份或目标副本。"}
 	}
@@ -232,6 +261,12 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 		return SubmitResult{Outcome: "unavailable", Message: "此版本尚未接入系统写入适配器。"}
 	}
 	s.mu.Lock()
+	if batchID == "" && s.batchBlocksLocked() {
+		return s.rejectLocked("busy", "批量设置尚未结束，请先停止后续设置。")
+	}
+	if batchID != "" && (s.state.Batch == nil || s.state.Batch.ID != batchID || s.state.Batch.State != "running") {
+		return s.rejectLocked("batch_stopped", "批次已停止，不再提交下一项。")
+	}
 	if s.state.Quit.Exiting {
 		return s.rejectLocked("exiting", "应用正在退出，不再受理新修改。")
 	}
@@ -354,7 +389,7 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if !app.Usable() || app.Path != in.TargetPath {
 		return fail("target_unavailable", "目标应用副本不可用。", nil)
 	}
-	req := Request{PendingRecord: PendingRecord{RequestID: in.RequestID, Association: in.Association, Target: app, Preflight: fresh.Default, Phase: "accepted", AcceptedAt: now()}, Readback: Readback{State: "pending"}}
+	req := Request{PendingRecord: PendingRecord{RequestID: in.RequestID, Association: in.Association, Target: app, Preflight: fresh.Default, Phase: "accepted", AcceptedAt: now()}, BatchID: batchID, Readback: Readback{State: "pending"}}
 	if err := ctx.Err(); err != nil {
 		return fail("interrupted", err.Error(), nil)
 	}
@@ -368,18 +403,40 @@ func (s *Service) Submit(ctx context.Context, in Submission) SubmitResult {
 	if !recoveryReady {
 		return fail("recovery_query_required", "上次修改关联的当前查询已失败，请重新查询后再明确提交。", nil)
 	}
+	var admittedBatch *Batch
+	if batchID != "" {
+		s.mu.Lock()
+		admittedBatch = clone(s.state.Batch)
+		s.mu.Unlock()
+		for i := range admittedBatch.Items {
+			if admittedBatch.Items[i].RequestID == in.RequestID {
+				admittedBatch.Items[i].Status = "waiting"
+			}
+		}
+		admittedBatch.State = "waiting"
+		admittedBatch.Revision++
+	}
 	err = s.store.Update(context.Background(), func(doc *config.Document) error {
 		data, e := json.Marshal(req.PendingRecord)
 		if e != nil {
 			return e
 		}
 		doc.Pending = data
+		if admittedBatch != nil {
+			doc.Batch, e = json.Marshal(admittedBatch)
+			if e != nil {
+				return e
+			}
+		}
 		return nil
 	})
 	if err != nil {
 		return fail("storage_error", "未提交：保存未定记录失败。"+err.Error(), nil)
 	}
 	s.mu.Lock()
+	if admittedBatch != nil {
+		s.state.Batch = admittedBatch
+	}
 	if s.state.Quit.Exiting {
 		s.mu.Unlock()
 		return fail("exiting", "应用正在退出；已保存未定记录，不再调度系统修改。", nil)
@@ -458,7 +515,12 @@ func (s *Service) finishReadback(id string) {
 }
 
 func (s *Service) clearPending(id string) error {
-	return s.store.Update(context.Background(), func(doc *config.Document) error {
+	s.batchMu.Lock()
+	defer s.batchMu.Unlock()
+	s.mu.Lock()
+	batch := s.settledBatchLocked(id)
+	s.mu.Unlock()
+	err := s.store.Update(context.Background(), func(doc *config.Document) error {
 		if len(doc.Pending) == 0 {
 			return nil
 		}
@@ -469,8 +531,25 @@ func (s *Service) clearPending(id string) error {
 		if p.RequestID == id {
 			doc.Pending = nil
 		}
+		if batch != nil {
+			var err error
+			doc.Batch, err = json.Marshal(batch)
+			if err != nil {
+				return err
+			}
+		}
 		return nil
 	})
+	if batch != nil {
+		s.mu.Lock()
+		if err != nil {
+			batch.State = "paused"
+			batch.Error = "保存批次结果失败：" + err.Error()
+		}
+		s.state.Batch = batch
+		s.mu.Unlock()
+	}
+	return err
 }
 
 // Query publishes one shared observation. A query begun before completion can
@@ -535,6 +614,7 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 		v = s.changedLocked()
 		s.mu.Unlock()
 		s.publish(v)
+		s.kickBatch()
 	}
 	return clone(result), nil
 }

@@ -26,7 +26,7 @@ func (s *Service) RequestQuit() bool {
 		s.mu.Unlock()
 		return false
 	}
-	if !s.state.Busy && s.admitting == nil && s.state.Recovery == nil {
+	if !s.state.Busy && s.admitting == nil && s.state.Recovery == nil && !s.batchBlocksLocked() {
 		s.state.Quit.Exiting = true
 		s.state.Version++
 		s.mu.Unlock()
@@ -71,6 +71,8 @@ func (s *Service) RespondQuit(promptID uint64, exit bool) Snapshot {
 		s.publish(v)
 		if exit && action != nil {
 			go action()
+		} else if !exit {
+			s.kickBatch()
 		}
 	} else if exit {
 		if s.options.Quit != nil {
@@ -78,6 +80,7 @@ func (s *Service) RespondQuit(promptID uint64, exit bool) Snapshot {
 		}
 	} else {
 		s.publish(v)
+		s.kickBatch()
 	}
 	return v
 }
@@ -99,7 +102,7 @@ func PrepareRestart(s *Service, action func()) error {
 	}
 	s.restart = action
 	s.state.Quit.Intent = "update"
-	prompt := s.state.Busy || s.admitting != nil || s.state.Recovery != nil
+	prompt := s.state.Busy || s.admitting != nil || s.state.Recovery != nil || s.batchBlocksLocked()
 	s.state.Quit.Prompt = prompt
 	s.state.Quit.Restarting = !prompt
 	if prompt {
@@ -141,4 +144,5 @@ func CancelRestart(s *Service) {
 	v := s.changedLocked()
 	s.mu.Unlock()
 	s.publish(v)
+	s.kickBatch()
 }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
 import { Icon } from './Icon'
 import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
@@ -76,12 +77,16 @@ const appFilterNames:Record<ApplicationFilter,string> = {user:'非系统',system
 const entryName = (entry:Entry) => entry.name || entry.sources?.[0]?.rawInput || '关联'
 export default function App() {
  const changes=useChanges()
+ const batch=useBatchSettings(changes)
  const recovery=useRecoveryAction(changes)
  const {view,actions,refs,queryInputs}=useAssociationBrowser()
  const {kind,appFilter,appQuery,filter,manualOnly,sourceFilter,applicationMatches,selectedMatch,selectedApp,visibleEntries,browsedSelected,selected,
   snapshot,entries,catalogLoading,catalogError,missingAppPath,detailOpen,inspectedCopy,requestEntryMissing,missingCopyPaths,emptyHeadline:browserEmptyHeadline}=view
  const {scan,retryCatalog,reparse,selectApp,openEntry,switchView,changeAppFilter,inspectCopy,closeCopy,closeDetails,dismissDetails,clearSearch,searchKey,listKey}=actions
  const {appSearch,associationSearch,appList,associationList,navigation}=refs
+ const batchApps=useMemo(()=>(snapshot?.apps??[]).filter(item=>!item.unavailable).map(item=>item.app),[snapshot?.apps])
+ const selectableEntries=kind==='file'?visibleEntries.filter(entry=>entry.resolved):[]
+ const selectedVisible=selectableEntries.filter(entry=>batch.selected.has(entry.id)).length
  const [issuesOpen,setIssuesOpen]=useState(false)
  const {observations,rowErrors,loading,prefetching,refresh}=useAssociationQueries({...queryInputs,snapshotObservations:changes.state?.observations})
  const emptyHeadline=kind==='app'&&selectedApp&&!selectedMatch?.associationCount&&(prefetching||loading)?'正在查询应用关联…':browserEmptyHeadline
@@ -91,7 +96,7 @@ export default function App() {
  },[observations,rowErrors,actions.setDefaultPaths])
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
- const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
+ const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.pending&&!batch.working&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
  return <><NotificationHost/><div className="app-shell">
   <header className="global-header">
@@ -101,6 +106,7 @@ export default function App() {
   </header>
   <LifecycleStatus changes={changes}/>{recovery.dialog}
   <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>
+  <BatchBars controller={batch}/>
 
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">
@@ -111,7 +117,7 @@ export default function App() {
     <div ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item,associationCount})=><button key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} onClick={()=>selectApp(item.app.path)}><ApplicationIcon app={item.app} className="application-icon--row"/><span className="application-row-content"><span className="application-row-heading"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></span><span>版本 {item.app.version || '未知'} · {associationCount} 个关联</span></span><Icon name="chevron"/></button>)}</div>
     <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
    </aside> : null}
-   <main className={`workspace${kind!=='scheme' ? ' file-columns' : ''}`}>
+   <main className={`workspace${kind!=='scheme' ? ' file-columns' : ''}${kind==='file'?' batch-file-columns':''}`}>
     {kind!=='file' ? <header className="app-heading">
      <div className="page-identity"><span className="page-icon" data-application={kind==='app' && !!selectedApp}>{kind==='app' && selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name={kind}/>}</span><div><h1>{kind==='app' ? selectedApp?.app.name || '已安装应用' : viewNames[kind]}</h1>
       {kind==='app' && selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>{kind==='scheme' ? '查看 URL 协议，选择接收链接的默认应用。' : '这台 Mac 的实际默认与系统候选'}</p>}
@@ -121,13 +127,14 @@ export default function App() {
     {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button className="btn" onClick={()=>void retryCatalog()}>重试加载目录</button></div> : null}
     {kind==='app' && missingAppPath ? <div role="status" className="missing-copy"><strong>原应用副本已不在目录中</strong><p>{missingAppPath}</p><p>可选择其他应用副本继续浏览。</p></div> : null}
     <div className="association-toolbar"><div><h2>{kind==='app' ? '应用关联' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配关联 · 已是默认优先' : kind==='app' ? '已是默认优先' : '常用关联优先'}</p>{kind==='app' ? <p>同一扩展名可能对应多个类型；当前默认按具体类型查询。</p> : null}</div><div className="association-filters">{kind==='app' ? <label className="association-source-filter">来源<select aria-label="筛选关联来源" value={sourceFilter} onChange={event=>actions.setSourceFilter(event.target.value as AssociationSourceFilter)}>{associationSourceOptions.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select></label> : null}<label className="manual-only-filter"><input type="checkbox" checked={manualOnly} onChange={event=>actions.setManualOnly(event.target.checked)}/>仅手动添加</label><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label></div></div>
-    <div className="column-labels"><span>{kind!=='scheme' ? '名称' : '关联项'}</span>{kind!=='scheme' ? <><span>扩展名</span><span>类型 ID</span></> : null}<span>当前默认应用</span><span>操作</span></div>
+    <div className="column-labels">{kind==='file'?<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={()=>batch.toggleVisible(visibleEntries)}/>:null}<span>{kind!=='scheme' ? '名称' : '关联项'}</span>{kind!=='scheme' ? <><span>扩展名</span><span>类型 ID</span></> : null}<span>当前默认应用</span><span>操作</span></div>
     <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '应用关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
      {visibleEntries.map(entry=>{
       const isDefault=!!selectedApp&&isTrustworthy(observations[entry.id]?.default)&&!rowErrors[entry.id]&&observations[entry.id]?.default.app?.path===selectedApp.app.path
       const isManual=entry.sources?.some(source=>source.kind==='manual')
       const protocol=entry.association.key || entry.sources?.[0]?.rawInput
       return <div className="association-row" data-selected={browsedSelected?.id===entry.id} key={entry.id}>
+      {kind==='file'?<BatchCheckbox checked={batch.selected.has(entry.id)} disabled={batch.selectionBlocked||!entry.resolved} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>batch.toggle(entry)}/>:null}
       <button className="association-name" data-association-id={entry.id} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id} aria-label={`${entryName(entry)} ${entry.association.key || '未解析'}`} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><span className="association-title"><span className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></span><span className="association-label"><span className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <span className="manual-association-badge">手动添加</span> : null}</span>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <span>{protocol}</span> : null}{kind==='app'&&selectedApp ? <DeclarationOrigin entry={entry} appPath={selectedApp.app.path} isDefault={isDefault}/> : null}</span></span>{kind!=='scheme' ? <><span className="association-extensions">{entry.extensions?.map(value=>`.${value}`).join(' · ') || '—'}</span><span className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</span></> : null}</button>
       <div className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></div>
       <div className="row-actions"><button className="btn row-detail" aria-label={`查看 ${entryName(entry)} 详情`} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}>详情…</button>{kind==='app'&&selectedApp?<button className="btn row-submit" data-current={isDefault} aria-label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} title={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} disabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</button>:null}
@@ -138,6 +145,7 @@ export default function App() {
     <footer className="browser-footer"><span className="footer-source"><span className="status-dot"/>默认应用由系统独立查询</span>{snapshot?.issues?.length ? <button className="btn" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span className="keyboard-hint"><kbd>⌘ 1</kbd><kbd>2</kbd><kbd>3</kbd> 切换入口</span></footer>
    </main>
   </div>
+  <BatchDialogs controller={batch} apps={batchApps}/>
   {issuesOpen ? <Dialog title="扫描问题" onClose={()=>setIssuesOpen(false)}><ul className="scan-issues">{snapshot?.issues?.map((issue,index)=><li key={index}><p>{issue.path}</p><p>{issue.origin} · {issue.message}</p></li>)}</ul></Dialog> : null}
   {inspectedCopy ? <Dialog title="所选应用副本" onClose={closeCopy}><section aria-label="所选应用副本"><ApplicationCopy app={inspectedCopy} onSubmit={detailOpen&&selected?app=>submitCopy(selected,app):undefined} disabled={!canChange(selected,inspectedCopy)}/></section></Dialog> : null}
   {selected && detailOpen ? <Dialog title={entryName(selected)} subtitle={selected.association.key || '尚未解析'} onClose={closeDetails}>

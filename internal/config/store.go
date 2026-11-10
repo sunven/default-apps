@@ -27,6 +27,7 @@ type Document struct {
 	Applications []association.AppCopy `json:"applications"`
 	// Pending belongs to the change coordinator. Manual updates preserve its data.
 	Pending json.RawMessage `json:"pending,omitempty"`
+	Batch   json.RawMessage `json:"batch,omitempty"`
 }
 type Repository interface {
 	Load(context.Context) (Document, error)
@@ -70,7 +71,7 @@ func (s *Store) load(ctx context.Context) (Document, error) {
 	if err = decoder.Decode(&trailing); err != io.EOF {
 		return empty, fmt.Errorf("配置包含额外内容，已保留原文件 %s", s.path)
 	}
-	if doc.Version != 1 {
+	if doc.Version != 1 && doc.Version != 2 {
 		return empty, fmt.Errorf("无法安全读取配置版本 %d，已保留原文件 %s", doc.Version, s.path)
 	}
 	if err := validate(doc); err != nil {
@@ -96,6 +97,9 @@ func (s *Store) Update(ctx context.Context, change func(*Document) error) error 
 	}
 	if err = change(&doc); err != nil {
 		return err
+	}
+	if len(doc.Batch) != 0 {
+		doc.Version = 2
 	}
 	if err = ctx.Err(); err != nil {
 		return err
@@ -147,7 +151,7 @@ func AtomicWrite(path string, data []byte) (err error) {
 }
 
 func validate(doc Document) error {
-	if doc.Version != 1 {
+	if doc.Version != 1 && doc.Version != 2 {
 		return fmt.Errorf("不支持的配置版本 %d", doc.Version)
 	}
 	for _, item := range doc.Associations {

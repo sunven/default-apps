@@ -13,7 +13,7 @@ const copy={path:'/Applications/OldTarget.app',displayPath:'/Applications/OldTar
 const nextCopy={...copy,path:'/Applications/NewTarget.app'}
 const observation={known:true,app:copy,observedAt:'now',error:null,stale:false}
 const request:Request={requestID:'old',association,target:copy,preflight:observation,phase:'recovered',acceptedAt:'then',submittedAt:'',completion:{known:false,error:null,completedAt:''},readback:{state:'unknown',observation},confirmed:false,storageError:null}
-const recovered:Snapshot={version:2,busy:false,activeRequestID:'',requests:[request],observations:[{association,default:observation,candidates:{known:true,apps:[],observedAt:'now',error:null,stale:false},version:1}],writableKinds:['file'],storageError:null,recovery:{record:request,ready:true},quit:{prompt:false,promptID:0,exiting:false}}
+const recovered:Snapshot={version:2,busy:false,batchBlocked:false,activeRequestID:'',requests:[request],observations:[{association,default:observation,candidates:{known:true,apps:[],observedAt:'now',error:null,stale:false},version:1}],writableKinds:['file'],storageError:null,recovery:{record:request,ready:true},quit:{prompt:false,promptID:0,exiting:false}}
 let notify:(event:{data:Snapshot})=>void
 beforeEach(()=>{vi.resetAllMocks();vi.mocked(GetSnapshot).mockResolvedValue(recovered);vi.mocked(Requery).mockResolvedValue(recovered);vi.mocked(RespondQuit).mockResolvedValue(recovered);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})
 function Screen(){const changes=useChanges();const recovery=useRecoveryAction(changes);return <><button disabled={changes.blocked} onClick={()=>recovery.submit(association,nextCopy,observation)}>修改</button><LifecycleStatus changes={changes}/>{recovery.dialog}</>}
