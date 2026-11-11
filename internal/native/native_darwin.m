@@ -35,32 +35,37 @@ static NSString *applicationIconData(NSURL *url) {
     }
 }
 
-static NSDictionary *applicationCopy(NSURL *url) {
+static NSString *nonemptyString(id value) {
+    return [value isKindOfClass:NSString.class] && [value length] ? value : nil;
+}
+
+static NSDictionary *applicationCopy(NSURL *url, NSDictionary **declarations) {
     NSURL *resolved = url.URLByResolvingSymlinksInPath.URLByStandardizingPath;
     // File-reference resolution asks the filesystem for the actual bundle spelling.
     // No lowercasing: distinct paths on a case-sensitive volume remain distinct.
     NSURL *canonical = resolved.fileReferenceURL.filePathURL ?: resolved;
-    NSBundle *bundle = [NSBundle bundleWithURL:canonical];
-    NSString *name = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    if (![name isKindOfClass:NSString.class] || !name.length)
-        name = [bundle objectForInfoDictionaryKey:@"CFBundleName"];
-    if (![name isKindOfClass:NSString.class] || !name.length)
-        name = canonical.lastPathComponent.stringByDeletingPathExtension;
-    id version = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    if (![version isKindOfClass:NSString.class]) version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    // NSBundle caches Info.plist for the life of the process. Read it once per
+    // copy so discovery, default queries and candidates all observe updates,
+    // removed fields and repaired bundles using the same metadata snapshot.
     NSError *metadataError = nil;
-    [canonical checkResourceIsReachableAndReturnError:&metadataError];
+    NSData *data = [NSData dataWithContentsOfURL:[canonical URLByAppendingPathComponent:@"Contents/Info.plist"] options:0 error:&metadataError];
+    id value = data ? [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:nil error:&metadataError] : nil;
+    BOOL valid = [value isKindOfClass:NSDictionary.class];
+    NSDictionary *info = valid ? value : @{};
+    if (declarations) *declarations = info;
+    NSString *name = nonemptyString(info[@"CFBundleDisplayName"]) ?: nonemptyString(info[@"CFBundleName"]) ?: canonical.lastPathComponent.stringByDeletingPathExtension;
+    NSString *version = nonemptyString(info[@"CFBundleShortVersionString"]) ?: nonemptyString(info[@"CFBundleVersion"]);
     // Use the actual copy's SIP flag, including Safari's Cryptex target.
     // An Apple bundle ID alone does not make a user-installed copy a system app.
     struct stat attributes;
     BOOL system = stat(canonical.fileSystemRepresentation, &attributes) == 0 &&
                   (attributes.st_flags & SF_RESTRICTED) != 0;
     return @{@"path": canonical.path ?: @"", @"displayPath": url.path ?: @"",
-             @"name": name ?: @"", @"version": [version isKindOfClass:NSString.class] ? version : @"",
+             @"name": name ?: @"", @"version": version ?: @"",
              @"system": @(system),
              @"iconData": applicationIconData(canonical),
-             @"metadataError": metadataError.localizedDescription ?: (bundle.infoDictionary ? @"" : @"无法读取应用包元数据"),
-             @"bundleID": bundle.bundleIdentifier ?: @""};
+             @"metadataError": valid ? @"" : (metadataError.localizedDescription ?: @"应用声明不是属性字典"),
+             @"bundleID": nonemptyString(info[@"CFBundleIdentifier"]) ?: @""};
 }
 
 // Property-list objects are decoded as data on the scan worker, without app
@@ -90,24 +95,13 @@ static char *readApplication(const char *path, BOOL declarations) {
             NSNumber *directory = nil;
             [resolved getResourceValue:&directory forKey:NSURLIsDirectoryKey error:&error];
             if (!directory.boolValue) return encode(@{@"error": @"所选位置不是应用包目录"});
-            NSURL *canonical = resolved.fileReferenceURL.filePathURL ?: resolved;
-            NSMutableDictionary *app = [applicationCopy(original) mutableCopy];
-            NSData *data = [NSData dataWithContentsOfURL:[canonical URLByAppendingPathComponent:@"Contents/Info.plist"] options:0 error:&error];
-            id info = data ? [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:nil error:&error] : nil;
+            NSDictionary *info = nil;
+            NSDictionary *app = applicationCopy(original, &info);
             NSMutableArray *issues = [NSMutableArray array];
-            if (![info isKindOfClass:NSDictionary.class]) {
-                NSString *message = error.localizedDescription ?: @"应用声明不是属性字典";
+            if ([app[@"metadataError"] length]) {
+                NSString *message = app[@"metadataError"];
                 [issues addObject:@{@"path": app[@"path"], @"origin": @"Info.plist", @"message": message}];
-                app[@"metadataError"] = message;
-                info = @{};
             }
-            // Avoid NSBundle's process cache when an installed copy changes on refresh.
-            id name = info[@"CFBundleDisplayName"] ?: info[@"CFBundleName"];
-            if ([name isKindOfClass:NSString.class] && [name length]) app[@"name"] = name;
-            id version = info[@"CFBundleShortVersionString"] ?: info[@"CFBundleVersion"];
-            app[@"version"] = [version isKindOfClass:NSString.class] ? version : @"";
-            id bundleID = info[@"CFBundleIdentifier"];
-            app[@"bundleID"] = [bundleID isKindOfClass:NSString.class] ? bundleID : @"";
             if (!declarations) return encode(@{@"app": app});
             return encode(@{@"app": app, @"info": jsonProperty(info), @"issues": issues});
         } @catch (NSException *exception) {
@@ -168,12 +162,12 @@ char *default_apps_query(const char *kind, const char *key, int candidates) {
                 NSMutableArray *apps = [NSMutableArray array];
                 NSArray<NSURL *> *urls = type ? [workspace URLsForApplicationsToOpenContentType:type] : [workspace URLsForApplicationsToOpenURL:schemeURL];
                 for (NSURL *url in urls) {
-                    [apps addObject:applicationCopy(url)];
+                    [apps addObject:applicationCopy(url, NULL)];
                 }
                 return encode(@{@"apps": apps});
             }
             NSURL *url = type ? [workspace URLForApplicationToOpenContentType:type] : [workspace URLForApplicationToOpenURL:schemeURL];
-            return encode(@{@"app": url ? applicationCopy(url) : (id)NSNull.null});
+            return encode(@{@"app": url ? applicationCopy(url, NULL) : (id)NSNull.null});
         } @catch (NSException *exception) {
             return encode(@{@"error": exception.reason ?: @"系统查询失败"});
         }

@@ -68,6 +68,11 @@ func TestApplicationReadersPreservePathsAndRefreshCopyMetadata(t *testing.T) {
 			if err != nil || !app.Usable() || app.Name != "Without version or ID" || app.Version != "" || app.BundleID != "" {
 				t.Fatalf("removed metadata retained cached values: %+v, %v", app, err)
 			}
+			writeApplicationPlist(t, path, `<?xml version="1.0"?><plist version="1.0"><dict/></plist>`)
+			app, err = reader.read(context.Background(), alias)
+			if err != nil || !app.Usable() || app.Name != "Reader" || app.Version != "" || app.BundleID != "" {
+				t.Fatalf("removed name must fall back to the canonical filename: name=%q version=%q bundleID=%q usable=%v error=%v", app.Name, app.Version, app.BundleID, app.Usable(), err)
+			}
 		})
 	}
 }

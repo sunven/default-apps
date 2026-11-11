@@ -63,7 +63,7 @@ func main() {
 			app.Quit()
 		}
 	}}), changeService)
-	app = application.New(application.Options{
+	app = newApplication(home, application.Options{
 		Name:        "Default Apps",
 		Description: "查看与管理 macOS 文件类型和 URL 协议的默认应用",
 		Services:    []application.Service{application.NewService(changeService), application.NewService(catalogService), application.NewService(discoveryService), application.NewService(manualService), application.NewService(updateService)},
