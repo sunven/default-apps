@@ -5,7 +5,10 @@ import (
 	"crypto/sha256"
 	"errors"
 	"fmt"
+	"io"
+	"net"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/wailsapp/wails/v3/pkg/updater"
@@ -20,10 +23,17 @@ const artifactName = "default-apps-darwin-arm64.zip"
 // optional. Enforce the product's explicit failure and integrity requirements.
 type requiredChecksum struct{ updater.Provider }
 
+type publicSourceError string
+
+func (e publicSourceError) Error() string { return string(e) }
+
 func (p requiredChecksum) Check(ctx context.Context, req updater.CheckRequest) (*updater.Release, error) {
 	r, err := p.Provider.Check(ctx, req)
-	if err != nil || r == nil {
-		return r, err
+	if err != nil {
+		return nil, sourceError(err)
+	}
+	if r == nil {
+		return nil, nil
 	}
 	if r.Channel != "stable" || strings.Contains(r.Version, "-") {
 		return nil, errors.New("发布源返回了非稳定版本。")
@@ -37,6 +47,31 @@ func (p requiredChecksum) Check(ctx context.Context, req updater.CheckRequest) (
 	return r, nil
 }
 
+func (p requiredChecksum) Download(ctx context.Context, release *updater.Release, dst io.Writer, progress func(int64, int64)) error {
+	return sourceError(p.Provider.Download(ctx, release, dst, progress))
+}
+
+// The engine flattens provider errors into strings. Translate them before that
+// boundary so temporary signed URLs never reach notifications or the dialog.
+func sourceError(err error) error {
+	if err == nil {
+		return nil
+	}
+	var publicErr publicSourceError
+	if errors.As(err, &publicErr) {
+		return publicErr
+	}
+	var requestErr *url.Error
+	if errors.As(err, &requestErr) {
+		var networkErr net.Error
+		if errors.Is(err, context.DeadlineExceeded) || errors.As(err, &networkErr) && networkErr.Timeout() {
+			return errors.New("连接更新服务器超时，请检查网络或系统代理后重试。")
+		}
+		return errors.New("无法连接更新服务器，请检查网络或系统代理后重试，也可打开发布页手动下载。")
+	}
+	return err
+}
+
 type releaseTransport struct{ base http.RoundTripper }
 
 func (t releaseTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -46,7 +81,15 @@ func (t releaseTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 	if resp.StatusCode == http.StatusNotFound && strings.HasSuffix(req.URL.Path, "/releases/latest") {
 		resp.Body.Close()
-		return nil, errors.New("无法读取发布源：仓库或正式版本不存在，或尚未开放公开读取。")
+		return nil, publicSourceError("无法读取发布源：仓库或正式版本不存在，或尚未开放公开读取。")
+	}
+	if resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode == http.StatusForbidden && resp.Header.Get("X-RateLimit-Remaining") == "0" {
+		resp.Body.Close()
+		return nil, publicSourceError("GitHub 请求次数已达上限，请稍后重试，也可打开发布页手动下载。")
+	}
+	if resp.StatusCode == http.StatusForbidden || resp.StatusCode >= 500 {
+		resp.Body.Close()
+		return nil, publicSourceError(fmt.Sprintf("更新服务器暂不可用（HTTP %d），请稍后重试，也可打开发布页手动下载。", resp.StatusCode))
 	}
 	return resp, nil
 }
@@ -58,7 +101,7 @@ func NewProvider(client *http.Client, baseURL string) (updater.Provider, error) 
 	copyClient := *client
 	base := copyClient.Transport
 	if base == nil {
-		base = http.DefaultTransport
+		base = updateTransport()
 	}
 	copyClient.Transport = releaseTransport{base: base}
 	p, err := github.New(github.Config{

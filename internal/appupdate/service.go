@@ -166,7 +166,7 @@ func (s *Service) Check() Snapshot {
 		}
 		if err != nil {
 			s.state.Phase = "error"
-			s.state.Error = "检查更新失败：" + err.Error()
+			s.state.Error = "检查更新失败：" + strings.TrimPrefix(err.Error(), "updater: all providers failed: github: ")
 		} else if rel == nil {
 			s.state.Phase = "current"
 		} else {
