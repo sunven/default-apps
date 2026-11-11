@@ -275,7 +275,7 @@ func (s *Service) StartBatch(previewID, replaceBatchID, recoveryRequestID string
 	}
 	s.mu.Unlock()
 	p, ok := s.previews[previewID]
-	if !ok || s.closedPreviews[previewID] {
+	if !ok {
 		return s.batchResult("expired", "预览已失效或原提交未被受理，请重新预览。")
 	}
 	if (base == nil && p.BaseBatchID != "") || (base != nil && (p.BaseBatchID != base.ID || p.BaseRevision != base.Revision)) {
@@ -372,10 +372,6 @@ func (s *Service) ReconcileBatchStart(previewID string) BatchResult {
 		return s.batchResult("existing", "已找到原批量设置。")
 	}
 	delete(s.previews, previewID)
-	if s.closedPreviews == nil {
-		s.closedPreviews = map[string]bool{}
-	}
-	s.closedPreviews[previewID] = true
 	return s.batchResult("closed", "最近批次中未找到原操作，迟到的开始操作不会执行。请查看最近批次后重新预览。")
 }
 

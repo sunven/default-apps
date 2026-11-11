@@ -127,7 +127,6 @@ type Service struct {
 	decisions       map[string]admissionResult
 	restart         func()
 	previews        map[string]BatchPreview
-	closedPreviews  map[string]bool
 	batchRecoveryID string
 }
 
