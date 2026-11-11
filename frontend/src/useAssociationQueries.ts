@@ -10,8 +10,10 @@ import {notify,dismissNotification} from './Notifications'
 // Trustworthy mirrors association.DefaultObservation.Trustworthy in Go.
 export const isTrustworthy=(observation:DefaultObservation|undefined)=>!!observation?.known&&!observation.error&&!observation.stale
 
-export function observationFor(state:{observations?:QueryResult[]|null}|null|undefined,association:Association):DefaultObservation|undefined {
- return state?.observations?.find(value=>value.association.kind===association.kind&&value.association.key===association.key)?.default
+export function observationFor(state:{observations?:QueryResult[]|null}|null|undefined,association:Association,observations?:Record<string,QueryResult>):DefaultObservation|undefined {
+ const snapshot=state?.observations?.find(value=>value.association.kind===association.kind&&value.association.key===association.key)
+ const current=observations?.[`${association.kind}:${association.key}`]
+ return (current&&(!snapshot||current.version>=snapshot.version)?current:snapshot)?.default
 }
 
 type State={
@@ -55,6 +57,7 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
  const [loading,setLoading]=useState(false)
  const [prefetching,setPrefetching]=useState(false)
  const sequence=useRef(0),requestVersion=useRef(0)
+ useEffect(()=>Events.On('defaultapps:observation',event=>dispatch({type:'result',value:event.data})),[])
  useEffect(()=>{for(const value of snapshotObservations??[])dispatch({type:'result',value})},[snapshotObservations])
  const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true)=>{
   const token=++sequence.current,id=`${association.kind}:${association.key}`

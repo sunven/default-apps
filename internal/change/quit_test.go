@@ -157,7 +157,7 @@ func TestExitDiscardsInflightQueryAndPreventsNewQueriesOrPublications(t *testing
 	_, sys, store := fixture(t)
 	blocking := &exitQuerySystem{system: sys, entered: make(chan struct{}), release: make(chan struct{})}
 	var events atomic.Int64
-	svc := change.NewService(catalog.NewService(sys), association.NewService(blocking), sys, store, sys, change.Options{WritableKinds: []string{"file"}, Publish: func(change.Snapshot) { events.Add(1) }})
+	svc := change.NewService(catalog.NewService(sys), association.NewService(blocking), sys, store, sys, change.Options{WritableKinds: []string{"file"}, Publish: func(change.Snapshot) { events.Add(1) }, PublishObservation: func(association.QueryResult) { events.Add(1) }})
 	queryDone := make(chan error, 1)
 	go func() { _, err := svc.Query(ctx, pdf); queryDone <- err }()
 	<-blocking.entered

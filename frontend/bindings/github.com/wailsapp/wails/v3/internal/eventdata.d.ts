@@ -10,6 +10,9 @@ import type { Events } from "@wailsio/runtime";
 import type * as appupdate$0 from "../../../../sunven/default-apps/internal/appupdate/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import type * as association$0 from "../../../../sunven/default-apps/internal/association/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import type * as change$0 from "../../../../sunven/default-apps/internal/change/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -22,6 +25,7 @@ declare module "@wailsio/runtime" {
             "defaultapps:catalog": discovery$0.Snapshot;
             "defaultapps:change": change$0.Snapshot;
             "defaultapps:files-dropped": string[] | null;
+            "defaultapps:observation": association$0.QueryResult;
             "defaultapps:update": appupdate$0.Snapshot;
         }
     }

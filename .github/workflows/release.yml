@@ -52,6 +52,7 @@ jobs:
           npm --prefix frontend run build
           # main.go embeds frontend/dist, which is absent in a clean checkout.
           go test -race ./...
+          go test -race -tags native_adapter_test ./internal/native
       - name: Build macOS ARM64 application and update archive
         run: |
           wails3 task darwin:package ARCH=arm64

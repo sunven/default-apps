@@ -25,6 +25,7 @@ var assets embed.FS
 func init() {
 	application.RegisterEvent[discovery.Snapshot]("defaultapps:catalog")
 	application.RegisterEvent[change.Snapshot]("defaultapps:change")
+	application.RegisterEvent[association.QueryResult]("defaultapps:observation")
 	application.RegisterEvent[appupdate.Snapshot]("defaultapps:update")
 	application.RegisterEvent[[]string]("defaultapps:files-dropped")
 }
@@ -46,6 +47,10 @@ func main() {
 	changeService := change.NewService(catalogService, associationService, appReader, store, dispatcher, change.Options{WritableKinds: writableKinds, Publish: func(snapshot change.Snapshot) {
 		if app != nil {
 			app.Event.Emit("defaultapps:change", snapshot)
+		}
+	}, PublishObservation: func(result association.QueryResult) {
+		if app != nil {
+			app.Event.Emit("defaultapps:observation", result)
 		}
 	}, Quit: func() {
 		if app != nil {

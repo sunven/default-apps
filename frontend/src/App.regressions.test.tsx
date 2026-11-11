@@ -74,7 +74,7 @@ test('selecting an undeclared application keeps its default action available aft
  expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).toBeEnabled()
 })
 
-test('default updates reorder rows without changing the open detail or restarting queries',async()=>{
+test.each(['snapshot','observation event'])('%s default updates reorder rows without changing the open detail or restarting queries',async(source)=>{
  render(<App/>)
  await userEvent.click(await screen.findByRole('button',{name:'JPEG 导出 test.independent.jpg'}))
  const detail=screen.getByRole('dialog',{name:'JPEG 导出'})
@@ -82,16 +82,32 @@ test('default updates reorder rows without changing the open detail or restartin
  const order=()=>Array.from(list.querySelectorAll('[data-association-id]'),row=>row.getAttribute('data-association-id'))
  const calls=vi.mocked(Query).mock.calls.length
  const updated=observation(otherJPEG.association)
- await act(async()=>listeners.get('defaultapps:change')?.({data:{version:1,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[updated],writableKinds:[],storageError:null}}))
+ const publish=(value:QueryResult,version:number)=>act(async()=>{
+  if(source==='snapshot')listeners.get('defaultapps:change')?.({data:{version,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[value],writableKinds:[],storageError:null}})
+  else listeners.get('defaultapps:observation')?.({data:value})
+ })
+ await publish(updated,1)
  expect(order()).toEqual([otherJPEG.id,pdf.id,jpeg.id])
  expect(detail).toBeInTheDocument()
  expect(within(detail).getByRole('region',{name:'当前默认应用'})).toHaveTextContent(app.path)
  expect(Query).toHaveBeenCalledTimes(calls)
- await act(async()=>listeners.get('defaultapps:change')?.({data:{version:2,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[{...updated,version:3,default:{...updated.default,stale:true}}],writableKinds:[],storageError:null}}))
+ await publish({...updated,version:3,default:{...updated.default,stale:true}},2)
  expect(order()).toEqual([pdf.id,jpeg.id,otherJPEG.id])
  expect(rowFor('JPEG 导出 test.independent.jpg')).not.toHaveTextContent('已是默认')
  await userEvent.keyboard('{Escape}')
  expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toHaveFocus()
+})
+
+test('observation events refresh a completed request notification without changing its confirmed result',async()=>{
+ render(<App/>);await screen.findByRole('button',{name:'PDF 文稿 com.adobe.pdf'})
+ const confirmed={requestID:'completed',association:pdf.association,target:app,phase:'resolved',confirmed:true,completion:{known:true,error:null},readback:{state:'valid',observation:observation(pdf.association).default},preflight:observation(pdf.association).default}
+ await act(async()=>listeners.get('defaultapps:change')?.({data:{version:9,busy:false,batchBlocked:false,activeRequestID:'',requests:[confirmed],observations:[observation(pdf.association,2)],writableKinds:['file'],storageError:null}}))
+ const initialNotice=(await screen.findByText(`实际默认：${app.path}`)).closest('li')!
+ expect(within(initialNotice).getByText('已确认本次修改')).toBeVisible()
+ const updated={...observation(pdf.association,3),default:{...observation(pdf.association).default,app:{...app,path:'/External/Reader.app'}}}
+ await act(async()=>listeners.get('defaultapps:observation')?.({data:updated}))
+ const updatedNotice=(await screen.findByText('实际默认：/External/Reader.app')).closest('li')!
+ expect(within(updatedNotice).getByText('已确认本次修改')).toBeVisible()
 })
 
 test('fresh change snapshots clear the selected row and detail errors together',async()=>{

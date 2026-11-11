@@ -97,8 +97,8 @@ export default function App() {
    <nav ref={navigation} className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><button className="btn" key={view} data-view={view} aria-pressed={kind===view} onClick={()=>switchView(view)}><Icon name={view}/>{viewNames[view]}</button>)}</nav>
    <div className="header-actions"><SoftwareUpdate/><ManualActions/><ManualActions kind="application" showStorageWarning={false}/><button className="btn" disabled={snapshot?.scanning} onClick={()=>void scan(()=>setIssuesOpen(true))}><Icon name="refresh"/>{snapshot?.scanning ? '正在扫描…' : '重新扫描应用'}</button></div>
   </header>
-  <LifecycleStatus changes={changes}/>{recovery.dialog}
-  <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>
+  <LifecycleStatus changes={changes} observations={observations}/>{recovery.dialog}
+  <ChangeStatus changes={changes} observations={observations} onReturn={actions.returnToRequest}/>
   <BatchBars controller={batch} showSelection={kind==='file'}/>
   <FileDrop controller={batch}/>
 

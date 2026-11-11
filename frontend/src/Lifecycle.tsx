@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react'
-import type {AppCopy,Association,DefaultObservation} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type {AppCopy,Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import {RespondQuit} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import {Dialog} from './Dialog'
 import type {Changes} from './Changes'
@@ -24,14 +24,14 @@ export function useRecoveryAction(changes:Changes){
  return {submit,dialog}
 }
 
-export function LifecycleStatus({changes}:{changes:Changes}){
+export function LifecycleStatus({changes,observations}:{changes:Changes;observations?:Record<string,QueryResult>}){
  const recovery=changes.state?.recovery
  const requested=useRef('')
  const [quitError,setQuitError]=useState('')
  useEffect(()=>{
   if(recovery&&requested.current!==recovery.record.requestID){requested.current=recovery.record.requestID;void changes.retry(recovery.record.association)}
  },[recovery?.record.requestID,changes.retry])
- const current=recovery?observationFor(changes.state,recovery.record.association):undefined
+ const current=recovery?observationFor(changes.state,recovery.record.association,observations):undefined
  const quit=changes.state?.quit
  const resultKnown=!!changes.state&&!changes.state.busy&&!recovery
  const respond=async(exit:boolean)=>{if(!quit?.prompt)return;try{setQuitError('');await RespondQuit(quit.promptID,exit)}catch(error){setQuitError(`退出选择未送达，请重试：${String(error)}`)}}

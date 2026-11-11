@@ -16,10 +16,10 @@ function deferred(){
  const promise=new Promise<QueryResult>((accept,fail)=>{resolve=accept;reject=fail}) as ReturnType<typeof Query>
  return {promise,resolve,reject}
 }
-const listeners=new Map<string,()=>void>()
+const listeners=new Map<string,(data?:unknown)=>void>()
 beforeEach(()=>{
  vi.resetAllMocks();listeners.clear()
- vi.mocked(Events.On).mockImplementation((name,listener)=>{listeners.set(name,()=>listener({data:true} as never));return ()=>{listeners.delete(name)}})
+ vi.mocked(Events.On).mockImplementation((name,listener)=>{listeners.set(name,(data=true)=>listener({data} as never));return ()=>{listeners.delete(name)}})
  vi.mocked(Query).mockImplementation(association=>Promise.resolve(observation(association)) as ReturnType<typeof Query>)
 })
 afterEach(()=>vi.useRealTimers())
@@ -41,29 +41,51 @@ test('selection owns loading and ignores an obsolete selection response',async()
  expect(result.current.observations[jpeg.id]).toEqual(observation(jpeg.association))
 })
 
-test('fresh snapshots clear transport errors while cached and superseded observations cannot',async()=>{
+test.each(['snapshot','observation event'])('fresh %s clears transport errors while cached and superseded observations cannot',async(source)=>{
  const options={selected:pdf,entries:[],snapshotObservations:[] as QueryResult[],getVisibleAssociationIDs:()=>new Set<string>()}
  const {result,rerender}=renderHook(useAssociationQueries,{initialProps:options})
+ const publish=(value:QueryResult)=>act(()=>{
+  if(source==='snapshot')rerender({...options,snapshotObservations:[value]})
+  else listeners.get('defaultapps:observation')?.(value)
+ })
  await act(async()=>{})
  vi.mocked(Query).mockRejectedValueOnce(new Error('connection lost'))
  await act(async()=>result.current.refresh())
  expect(result.current.rowErrors[pdf.id]).toBe('connection lost')
  expect(result.current.observations[pdf.id]).toEqual(observation(pdf.association))
- rerender({...options,snapshotObservations:[observation(pdf.association)]})
+ publish(observation(pdf.association))
  expect(result.current.rowErrors[pdf.id]).toBe('connection lost')
  vi.mocked(Query).mockResolvedValueOnce({...observation(pdf.association,2),superseded:true})
  await act(async()=>result.current.refresh())
  expect(result.current.rowErrors[pdf.id]).toBe('connection lost')
- rerender({...options,snapshotObservations:[observation(pdf.association,3)]})
+ publish(observation(pdf.association,3))
  expect(result.current.rowErrors[pdf.id]).toBeUndefined()
  expect(result.current.observations[pdf.id].version).toBe(3)
- rerender({...options,snapshotObservations:[observation(pdf.association,2)]})
+ publish(observation(pdf.association,2))
  expect(result.current.observations[pdf.id].version).toBe(3)
  vi.mocked(Query).mockRejectedValueOnce(new Error('retry failed'))
  await act(async()=>result.current.refresh())
  vi.mocked(Query).mockResolvedValueOnce(observation(pdf.association,3))
  await act(async()=>result.current.refresh())
  expect(result.current.rowErrors[pdf.id]).toBeUndefined()
+})
+
+test('an observation event survives a late initial snapshot and request rejection, and unsubscribes on unmount',async()=>{
+ const call=deferred()
+ vi.mocked(Query).mockReturnValueOnce(call.promise)
+ const options={selected:pdf,entries:[],snapshotObservations:[] as QueryResult[],getVisibleAssociationIDs:()=>new Set<string>()}
+ const {result,rerender,unmount}=renderHook(useAssociationQueries,{initialProps:options})
+ act(()=>listeners.get('defaultapps:observation')?.(observation(pdf.association,4)))
+ act(()=>listeners.get('defaultapps:observation')?.(observation(jpeg.association,2)))
+ rerender({...options,snapshotObservations:[observation(pdf.association,1)]})
+ await act(async()=>call.reject(new Error('late transport failure')))
+ expect(result.current.observations[pdf.id]).toEqual(observation(pdf.association,4))
+ expect(result.current.observations[jpeg.id]).toEqual(observation(jpeg.association,2))
+ expect(result.current.rowErrors[pdf.id]).toBeUndefined()
+ act(()=>listeners.get('defaultapps:observation')?.({...observation(pdf.association,5),superseded:true}))
+ expect(result.current.observations[pdf.id].version).toBe(4)
+ unmount()
+ expect(listeners.has('defaultapps:observation')).toBe(false)
 })
 
 test('prefetch skips known and unresolved entries and stops an obsolete round after the list changes',async()=>{

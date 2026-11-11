@@ -29,6 +29,11 @@ export const DefaultappsChange = "defaultapps:change";
 export const DefaultappsFilesDropped = "defaultapps:files-dropped";
 
 /**
+ * Name of the custom event "defaultapps:observation".
+ */
+export const DefaultappsObservation = "defaultapps:observation";
+
+/**
  * Name of the custom event "defaultapps:update".
  */
 export const DefaultappsUpdate = "defaultapps:update";

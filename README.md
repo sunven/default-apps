@@ -54,6 +54,7 @@ xattr -dr com.apple.quarantine "/Applications/Default Apps.app"
 
 ```sh
 CGO_CFLAGS=-mmacosx-version-min=13.0 CGO_LDFLAGS=-mmacosx-version-min=13.0 go test -race ./...
+CGO_CFLAGS=-mmacosx-version-min=13.0 CGO_LDFLAGS=-mmacosx-version-min=13.0 go test -race -tags native_adapter_test ./internal/native
 npm --prefix frontend ci
 npm --prefix frontend run test
 npm --prefix frontend run build

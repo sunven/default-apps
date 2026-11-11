@@ -99,9 +99,10 @@ func (DisabledDispatcher) Dispatch(_ association.Association, _ association.AppC
 }
 
 type Options struct {
-	WritableKinds []string
-	Publish       func(Snapshot)
-	Quit          func()
+	WritableKinds      []string
+	Publish            func(Snapshot)
+	PublishObservation func(association.QueryResult)
+	Quit               func()
 }
 type admission struct {
 	input  Submission
@@ -157,6 +158,15 @@ func (s *Service) publish(v Snapshot) {
 	}
 	if s.options.Publish != nil {
 		s.options.Publish(v)
+	}
+}
+
+func (s *Service) publishObservation(result association.QueryResult) {
+	s.mu.Lock()
+	exiting := s.state.Quit.Exiting
+	s.mu.Unlock()
+	if !exiting && s.options.PublishObservation != nil {
+		s.options.PublishObservation(clone(result))
 	}
 }
 func (s *Service) GetSnapshot() Snapshot {
@@ -580,12 +590,15 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 		s.mu.Unlock()
 		return clone(result), nil
 	}
-	fresh := s.observeLocked(result)
-	if fresh {
-		s.observeRecoveryLocked(result)
+	if !s.observeLocked(result) {
+		s.mu.Unlock()
+		return clone(result), nil
 	}
+	stateChanged := s.state.Recovery != nil && s.state.Recovery.Record.Association == result.Association
+	s.observeRecoveryLocked(result)
 	clearID := ""
-	if r := s.findRequestLocked(settleID); fresh && r != nil && s.state.ActiveRequestID == settleID && r.Phase != "resolved" {
+	if r := s.findRequestLocked(settleID); r != nil && s.state.ActiveRequestID == settleID && r.Phase != "resolved" {
+		stateChanged = true
 		r.Readback = Readback{State: "failed", Observation: clone(result.Default)}
 		if result.Default.Trustworthy() {
 			r.Readback.State = "valid"
@@ -594,9 +607,21 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 			clearID = settleID
 		}
 	}
-	v := s.changedLocked()
+	// Browsing updates only one observation. Do not clone or broadcast the
+	// growing history (including every app icon) for each startup query.
+	// Recovery and request transitions still publish their lifecycle state.
+	var snapshot *Snapshot
+	if stateChanged {
+		value := s.changedLocked()
+		snapshot = &value
+	} else {
+		s.state.Version++
+	}
 	s.mu.Unlock()
-	s.publish(v)
+	s.publishObservation(result)
+	if snapshot != nil {
+		s.publish(*snapshot)
+	}
 	if clearID != "" {
 		clearErr := s.clearPending(clearID)
 		s.mu.Lock()
@@ -611,7 +636,7 @@ func (s *Service) Query(ctx context.Context, a association.Association) (associa
 			s.state.Busy = false
 			s.state.ActiveRequestID = ""
 		}
-		v = s.changedLocked()
+		v := s.changedLocked()
 		s.mu.Unlock()
 		s.publish(v)
 		s.kickBatch()

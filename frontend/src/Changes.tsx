@@ -3,7 +3,7 @@ import {Events} from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
 import {GetSnapshot,Submit,Requery,ReconcileSubmission} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {Snapshot,Request,Submission} from '../bindings/github.com/sunven/default-apps/internal/change/models'
-import type {AppCopy,Association,DefaultObservation} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type {AppCopy,Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import {observationFor} from './useAssociationQueries'
 import {notify,dismissNotification,isNotificationVisible} from './Notifications'
 import './changes.css'
@@ -62,7 +62,7 @@ export function requestLabel(request:Request){
  if(request.completion.known){if(request.readback.state==='failed')return '系统已返回 · 回读失败，等待重查';if(request.readback.state==='valid')return request.completion.error?'系统返回错误 · 已读取实际默认':'系统已返回 · 实际默认与目标不同';return '系统已返回 · 正在回读'}
  return request.phase==='submitted'?'已提交系统 · 等待系统返回':'已受理 · 等待提交系统'
 }
-export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(association:Association)=>void}){
+export function ChangeStatus({changes,onReturn,observations}:{changes:Changes;onReturn:(association:Association)=>void;observations?:Record<string,QueryResult>}){
  const presented=useRef(new Map<string,{stage:string;description:string}>())
  const pendingToast=useRef<string|null>(null)
  const latest=useRef({changes,onReturn});latest.current={changes,onReturn}
@@ -77,7 +77,7 @@ export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(assoc
   for(const request of changes.state?.requests??[]){
    if(request.batchID||changes.state?.batch?.items?.some(item=>item.requestID===request.requestID))continue
    if(request.phase==='recovered'||changes.historicalRequests.current.has(request.requestID))continue
-   const actual=observationFor(changes.state,request.association)??request.readback.observation
+   const actual=observationFor(changes.state,request.association,observations)??request.readback.observation
    const error=request.completion.error
    const description=[request.association.key,`目标：${request.target.path}`,
     error?`${error.domain} · ${error.code} · ${error.description}`:'',
@@ -102,7 +102,7 @@ export function ChangeStatus({changes,onReturn}:{changes:Changes;onReturn:(assoc
   const messageID='change:message'
   if(changes.message&&!changes.pending)publish(messageID,changes.message,changes.message,'','warning',null)
   else if(presented.current.has(messageID)){dismissNotification(messageID);presented.current.delete(messageID)}
- },[changes.state,changes.pending,changes.message,changes.historicalRequests])
+ },[changes.state,changes.pending,changes.message,changes.historicalRequests,observations])
  const storageRequests=changes.state?.requests?.filter(request=>request.storageError)??[]
  if(!changes.state?.storageError&&!storageRequests.length)return null
  return <section className="recovery-status" aria-label="修改配置故障" role="alert">
