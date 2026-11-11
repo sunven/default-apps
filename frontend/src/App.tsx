@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ApplicationIcon } from './ApplicationIcon'
 import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
+import { FileDrop } from './FileDrop'
 import { Icon } from './Icon'
 import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
 import { ChangeStatus, useChanges, requestLabel } from './Changes'
@@ -99,6 +100,7 @@ export default function App() {
   <LifecycleStatus changes={changes}/>{recovery.dialog}
   <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>
   <BatchBars controller={batch} showSelection={kind==='file'}/>
+  <FileDrop controller={batch}/>
 
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">

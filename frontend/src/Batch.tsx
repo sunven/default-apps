@@ -16,11 +16,11 @@ const selectionOf=(entry:Entry):BatchSelection=>({association:entry.association,
 function savedStart(){try{return sessionStorage.getItem(pendingKey)||''}catch{return ''}}
 export const batchItemLabel=(status:string)=>({queued:'未执行',waiting:'结果未定',unknown:'结果未定',confirmed:'已确认修改',unchanged:'已是目标',failed:'失败',changed:'需重新确认',unavailable:'本次不执行'}[status]??status)
 const stateLabel=(state:string)=>({running:'正在设置',waiting:'等待当前项结果',paused:'后续设置已暂停',stopped:'后续设置已停止',completed:'本轮处理结束',recovered:'已恢复最近一批'}[state]??state)
-type Workflow={items:BatchSelection[];resumeID:string}
+type Workflow={items:BatchSelection[];resumeID:string;source?:'files'|'selection'|'resume'}
 
 export function useBatchSettings(changes:Changes){
  const [selected,setSelected]=useState<Map<string,BatchSelection>>(()=>new Map())
- const [modal,setModal]=useState<'selected'|'choose'|'preview'|'results'|null>(null)
+ const [modal,setModal]=useState<'selected'|'choose'|'preview'|'results'|'files'|null>(null)
  const [workflow,setWorkflow]=useState<Workflow>({items:[],resumeID:''})
  const [preview,setPreview]=useState<BatchPreview|null>(null)
  const [working,setWorking]=useState(false)
@@ -28,12 +28,13 @@ export function useBatchSettings(changes:Changes){
  const [pending,setPending]=useState(savedStart)
  const pendingRef=useRef(pending),workingRef=useRef(false),reconciling=useRef(false),generation=useRef(0),mounted=useRef(true)
  const latest=useRef(changes);latest.current=changes
+ const workflowRef=useRef(workflow);workflowRef.current=workflow
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;++generation.current}},[])
  const forget=useCallback(()=>{sessionStorage.removeItem(pendingKey);pendingRef.current='';setPending('')},[])
  const acceptResult=useCallback((result:BatchResult)=>{
   latest.current.accept(result.snapshot)
   if(result.outcome==='accepted'||result.outcome==='existing'){
-   forget();setSelected(new Map());setPreview(null);setModal('results');setError('')
+   forget();if(!workflowRef.current.source||workflowRef.current.source==='selection')setSelected(new Map());setPreview(null);setModal('results');setError('')
   }else{
    forget();setError(result.message);setPreview(null)
    setModal(result.snapshot.batch?'results':'choose')
@@ -61,7 +62,12 @@ export function useBatchSettings(changes:Changes){
   setSelected(previous=>{const next=new Map(previous),all=eligible.every(entry=>next.has(entry.id));for(const entry of eligible){if(all)next.delete(entry.id);else next.set(entry.id,selectionOf(entry))}return next})
  }
  const close=()=>{if(workingRef.current||pendingRef.current)return;++generation.current;setModal(null);setError('')}
- const choose=()=>{if(selectionBlocked||!selected.size)return;setWorkflow({items:Array.from(selected.values()),resumeID:''});setPreview(null);setError('');setModal('choose')}
+ const choose=()=>{if(selectionBlocked||!selected.size)return;setWorkflow({items:Array.from(selected.values()),resumeID:'',source:'selection'});setPreview(null);setError('');setModal('choose')}
+ const chooseFiles=(entries:Entry[])=>{
+  if(reviewBlocked||!state?.writableKinds?.includes('file')||!entries.length)return
+  setWorkflow({items:entries.map(selectionOf),resumeID:'',source:'files'});setPreview(null);setError('');setModal('choose')
+ }
+ const returnToFiles=()=>{if(workingRef.current||pendingRef.current)return;++generation.current;setPreview(null);setError('');setModal('files')}
  const prepare=async(app:AppCopy,flow=workflow)=>{
   if(workingRef.current)return
   const version=++generation.current
@@ -74,7 +80,7 @@ export function useBatchSettings(changes:Changes){
   const batch=state?.batch;if(!batch||reviewBlocked)return
   const items=(batch.items??[]).filter(item=>mode==='remaining'?item.status==='queued':['failed','changed','unavailable','unknown'].includes(item.status)).map(item=>item.selection)
   if(!items.length)return
-  const flow={items,resumeID:batch.id};setWorkflow(flow);setPreview(null);setModal('choose');void prepare(batch.target,flow)
+  const flow:Workflow={items,resumeID:batch.id,source:'resume'};setWorkflow(flow);setPreview(null);setModal('choose');void prepare(batch.target,flow)
  }
  const start=async(replace:boolean,recovery:boolean)=>{
   if(!preview||workingRef.current||pendingRef.current)return
@@ -91,7 +97,7 @@ export function useBatchSettings(changes:Changes){
   catch(error){if(mounted.current)setError(`停止指令尚未确认，请重试：${message(error)}`)}
   finally{workingRef.current=false;if(mounted.current)setWorking(false)}
  }
- return {changes,selected,setSelected,modal,setModal,workflow,preview,working,error,setError,pending,reconcile,selectionBlocked,reviewBlocked,toggle,toggleVisible,close,choose,prepare,resume,start,stop}
+ return {changes,selected,setSelected,modal,setModal,workflow,preview,working,error,setError,pending,reconcile,selectionBlocked,reviewBlocked,toggle,toggleVisible,close,choose,chooseFiles,returnToFiles,prepare,resume,start,stop}
 }
 export type BatchController=ReturnType<typeof useBatchSettings>
 
@@ -167,17 +173,18 @@ function PreviewDialog({controller:c}:{controller:BatchController}){
  return <Dialog title="预览批量设置" subtitle={`将 ${count} 个文件类型设为 ${p.target.name||p.target.path}`} onClose={c.close}>
   <div className="batch-target"><strong>共同目标：{p.target.name||'所选应用'}</strong><span>{p.target.path}</span><button className="btn" disabled={c.working||!!c.pending} onClick={()=>{c.setModal('choose');c.setError('')}}>更换应用</button></div>
   <ItemTable items={p.items??[]} preview/>
+  {c.workflow.source==='files'?<p className="batch-muted">设置将影响这些类型的所有同类文件。</p>:null}
   <p className="batch-muted">按此顺序逐项设置。系统可能逐项确认；明确失败会记录并继续，结果未定时等待。</p>
   {p.replaceBatchID?<label className="batch-confirm"><input type="checkbox" checked={replace} onChange={event=>setReplace(event.target.checked)} disabled={c.working}/>放弃旧批次的后续设置，以这份清单开始新批次并替换最近批次记录。</label>:null}
   {recovery?<div className="batch-recovery"><p>上次修改仍可能完成。旧目标：{recovery.record.target.path}</p>{!recovery.ready?<button className="btn" onClick={()=>void c.changes.retry(recovery.record.association)}>查询旧请求的当前默认</button>:null}<label className="batch-confirm"><input type="checkbox" checked={acknowledge} onChange={event=>setAcknowledge(event.target.checked)} disabled={!recovery.ready||c.working}/>已了解旧请求仍可能改变当前默认，明确开始新的修改。</label></div>:null}
   {c.error?<p role="alert" className="batch-error">{c.error}</p>:null}
-  <div className="batch-dialog-actions"><button className="btn" disabled={c.working||!!c.pending} onClick={c.close}>暂不设置</button><button className="btn btn--primary" disabled={blocked} onClick={()=>void c.start(replace,acknowledge)}>{c.working?'正在受理…':`开始设置 ${count} 项`}</button></div>
+  <div className="batch-dialog-actions">{c.workflow.source==='files'?<button className="btn" disabled={c.working||!!c.pending} onClick={c.returnToFiles}>返回识别清单</button>:null}<button className="btn" disabled={c.working||!!c.pending} onClick={c.close}>暂不设置</button><button className="btn btn--primary" disabled={blocked} onClick={()=>void c.start(replace,acknowledge)}>{c.working?'正在受理…':`开始设置 ${count} 项`}</button></div>
  </Dialog>
 }
 
 export function BatchDialogs({controller:c,apps}:{controller:BatchController;apps:AppCopy[]}){
  if(c.modal==='preview'&&c.preview)return <PreviewDialog key={c.preview.id} controller={c}/>
- if(c.modal==='choose')return <Dialog title="为所选类型选择应用" onClose={c.close}><BatchAppPicker items={c.workflow.items} apps={apps} disabled={c.working||!!c.pending} onSelect={app=>void c.prepare(app)} onError={c.setError}/>{c.working?<p role="status">正在检查当前默认并准备预览…</p>:null}{c.error?<p role="alert" className="batch-error">{c.error}</p>:null}</Dialog>
+ if(c.modal==='choose')return <Dialog title="为所选类型选择应用" onClose={c.close}><BatchAppPicker items={c.workflow.items} apps={apps} disabled={c.working||!!c.pending} onSelect={app=>void c.prepare(app)} onError={c.setError}/>{c.working?<p role="status">正在检查当前默认并准备预览…</p>:null}{c.error?<p role="alert" className="batch-error">{c.error}</p>:null}{c.workflow.source==='files'?<div className="batch-dialog-actions"><button className="btn" disabled={c.working||!!c.pending} onClick={c.returnToFiles}>返回识别清单</button></div>:null}</Dialog>
  if(c.modal==='selected')return <Dialog title="已选文件类型" subtitle={`${c.selected.size} 个类型，搜索隐藏的已选项也会保留`} onClose={c.close}>
   <ul className="batch-selected-list">{Array.from(c.selected.entries()).map(([id,item])=><li key={id}><div><strong>{item.name}</strong><small>{item.association.key}</small></div><button className="btn" disabled={c.selectionBlocked} aria-label={`移除 ${item.name}`} onClick={()=>c.setSelected(previous=>{const next=new Map(previous);next.delete(id);return next})}>移除</button></li>)}</ul>
   <div className="batch-dialog-actions"><button className="btn btn--primary" disabled={c.selectionBlocked||!c.selected.size} onClick={c.choose}>选择应用…</button></div>

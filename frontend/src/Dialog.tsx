@@ -5,7 +5,7 @@ import { Icon } from './Icon'
 import { registerNotificationDialog } from './Notifications'
 
 // Shared by association, copy and manual-entry dialogs. Mount only while open.
-export function Dialog({ title, subtitle, onClose, children }: {title:string; subtitle?:string; onClose:()=>void; children:ReactNode}) {
+export function Dialog({ title, subtitle, onClose, children, fileDrop=false }: {title:string; subtitle?:string; onClose:()=>void; children:ReactNode; fileDrop?:boolean}) {
  const id=useId()
  const ref=useRef<HTMLDialogElement>(null)
  useLayoutEffect(()=>{
@@ -21,7 +21,7 @@ export function Dialog({ title, subtitle, onClose, children }: {title:string; su
    else document.querySelector<HTMLInputElement>('input[type="search"]')?.focus({preventScroll:true})
   }
  },[])
- return createPortal(<dialog ref={ref} className="detail-dialog" aria-labelledby={id} onCancel={event=>{event.preventDefault();onClose()}} onKeyDown={event=>{
+ return createPortal(<dialog ref={ref} className="detail-dialog" data-file-identification={fileDrop||undefined} aria-labelledby={id} onCancel={event=>{event.preventDefault();onClose()}} onKeyDown={event=>{
   if(isComposing(event))return
   if(event.key==='Escape'){event.preventDefault();event.stopPropagation();onClose()}
   if(event.key==='Tab'){

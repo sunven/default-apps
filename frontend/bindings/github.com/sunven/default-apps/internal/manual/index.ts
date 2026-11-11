@@ -7,6 +7,7 @@ export {
 };
 
 export type {
+    IdentifiedFile,
     Resolution,
     Result,
     Status

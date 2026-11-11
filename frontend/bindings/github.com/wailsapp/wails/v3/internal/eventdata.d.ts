@@ -21,6 +21,7 @@ declare module "@wailsio/runtime" {
             "defaultapps:activated": boolean;
             "defaultapps:catalog": discovery$0.Snapshot;
             "defaultapps:change": change$0.Snapshot;
+            "defaultapps:files-dropped": string[] | null;
             "defaultapps:update": appupdate$0.Snapshot;
         }
     }

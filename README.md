@@ -6,7 +6,11 @@ macOS 自用默认应用工具。从已安装应用出发浏览文件类型和 U
 
 应用先保存未定请求和对应批次进度，再调用系统；只有原生 completion 成功且回读匹配目标规范路径，才确认本次修改。等待期间仍可浏览和查询。退出不会撤回系统请求；重开只查询当前状态，旧请求保持结果未知，需要再次明确操作才能提出新修改。批量设置的完整规则与验证边界见[批量设置规格](docs/batch-file-associations.md)及[验收记录](docs/batch-file-associations-validation.md)。
 
-支持应用／关联搜索、双列表独立滚动、键盘浏览、原生文件识别／应用选择器、手动项跨启动保存，以及查询失败重查。配置位于 `~/Library/Application Support/Default Apps/config.json`。日常使用从普通应用启动：
+支持应用／关联搜索、双列表独立滚动、键盘浏览、原生文件识别／应用选择器、手动项跨启动保存，以及查询失败重查。配置位于 `~/Library/Application Support/Default Apps/config.json`。
+
+也可以把一个或多个普通文件拖到已打开的窗口：查看按文件类型去重的识别清单，统一选择应用，预览后开始设置。设置影响该类型的所有同类文件；不支持或无法识别的输入逐项说明，识别本身不保存文件路径。清单支持追加及可选保存手动关联；执行、结果和恢复沿用批量设置。具体规则及验证边界见[拖入文件规格](docs/file-drop-associations.md)与[验收记录](docs/file-drop-associations-validation.md)。
+
+日常使用从普通应用启动：
 
 ```sh
 open "bin/Default Apps.app"

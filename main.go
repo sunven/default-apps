@@ -26,6 +26,7 @@ func init() {
 	application.RegisterEvent[discovery.Snapshot]("defaultapps:catalog")
 	application.RegisterEvent[change.Snapshot]("defaultapps:change")
 	application.RegisterEvent[appupdate.Snapshot]("defaultapps:update")
+	application.RegisterEvent[[]string]("defaultapps:files-dropped")
 }
 
 func main() {
@@ -78,6 +79,10 @@ func main() {
 	window := app.Window.NewWithOptions(application.WebviewWindowOptions{
 		Name: "main", Title: "Default Apps", Width: 1180, Height: 800,
 		BackgroundColour: application.NewRGB(245, 246, 248), URL: "/",
+		EnableFileDrop: true,
+	})
+	window.OnWindowEvent(events.Common.WindowFilesDropped, func(event *application.WindowEvent) {
+		app.Event.Emit("defaultapps:files-dropped", event.Context().DroppedFiles())
 	})
 	picker.App, picker.Window = app, window
 	window.RegisterHook(events.Common.WindowClosing, func(event *application.WindowEvent) {

@@ -1,0 +1,28 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "bottom": 608.6875,
+        "height": 508.375,
+        "left": 150.5,
+        "right": 850.5,
+        "top": 100.3125,
+        "width": 700,
+        "x": 150.5,
+        "y": 100.3125
+      },
+      "client": 506,
+      "scroll": 506,
+      "text": "预览批量设置\n\n将 2 个文件类型设为 Preview\n\n共同目标：Preview\n/System/Applications/Preview.app\n更换应用\n文件类型\t当前默认\t本次操作\nPDF document\n.pdf\ncom.adobe.pdf\nGoogle Chrome\n/Applications/Google Chrome.app\n将设置\ntext\n.txt · .text\npublic.plain-text\nOpen It\n/Applications/Open It.app\n将设置\n\n设置将影响这些类型的所有同类文件。\n\n按此顺序逐项设置。系统可能逐项确认；明确失败会记录并继续，结果未定时等待。\n\n返回识别清单\n暂不设置\n开始设置 2 项"
+    }
+  ],
+  "flags": {
+    "enableFileDrop": true
+  },
+  "overflow": 0,
+  "text": "Default Apps\n默认应用管理\n应用\n文件类型\nURL 协议\n软件更新\n补充文件类型…\n补充应用…\n重新扫描应用\n拖入文件，设置同类文件的默认应用\n支持多个普通文件\n已安装应用\n27 / 93\n非系统\n系统\n全部\n搜索应用\n⌘ F\n\n匹配应用信息时显示全部关联；仅关联命中时显示匹配项。\n\nCC Switch\n版本 4.0.28 · 1 个关联\nClash Verge\n版本 2.5.10 · 2 个关联\nClaude Code URL Handler\n版本 1.0 · 1 个关联\nClean Up\n版本 0.1.6 · 0 个关联\nDBX\n版本 0.6.51 · 6 个关联\nDefault Apps\n版本 0.1.3 · 0 个关联\nEnvToggle\n版本 0.0.2 · 0 个关联\nfanyifanyi\n版本 0.1.47 · 0 个关联\nGhostty\n版本 1.4.0 · 7 个关联\nGoogle Chrome\n版本 157.0.8103.39 · 21 个关联\niNodeClient\n版本 1.0 · 0 个关联\nOpen It\n版本 0.1.4 · 3 个关联\nOrbStack\n版本 2.2.5 · 1 个关联\nOrca\n版本 1.4.256 · 5 个关联\nPixPin\n版本 3.6.6.0 · 1 个关联\nrcmm\n版本 0.0.17 · 0 个关联\nSkills Box\n版本 0.1.5 · 0 个关联\nTabby\n版本 1.0.236 · 1 个关联\nTencent Lemon\n版本 5.3.8 · 0 个关联\nTencentMeeting\n版本 3.41.10 · 7 个关联\nUURemote\n版本 4.44.0 · 1 个关联\nWeChat\n版本 4.1.15 · 3 个关联\nwechatwebdevtools\n版本 36.6.0 · 1 个关联\nWorkBuddy\n版本 5.9.3 · 57 个关联\nwpsoffice\n版本 12.1.26046 · 69 个关联\nXcode\n版本 27.0 · 154 个关联\n企业微信\n版本 5.0.13 · 9 个关联\n\n⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联\n\nCC Switch\n\n版本 4.0.28 · com.ccswitch.desktop\n\n/Applications/CC Switch.app\n\n应用关联\n\n1 个关联 · 已是默认优先\n\n同一扩展名可能对应多个类型；当前默认按具体类型查询。\n\n来源\n仅手动添加\n筛选关联\n名称\n扩展名\n类型 ID\n当前默认应用\n操作\nccswitch\n直接声明协议\n—\nccswitch\nCC Switch\n详情…\n已是默认\n默认应用由系统独立查询\n扫描问题 · 2\n⌘ 1\n2\n3\n切换入口\n预览批量设置\n\n将 2 个文件类型设为 Preview\n\n共同目标：Preview\n/System/Applications/Preview.app\n更换应用\n文件类型\t当前默认\t本次操作\nPDF document\n.pdf\ncom.adobe.pdf\nGoogle Chrome\n/Applications/Google Chrome.app\n将设置\ntext\n.txt · .text\npublic.plain-text\nOpen It\n/Applications/Open It.app\n将设置\n\n设置将影响这些类型的所有同类文件。\n\n按此顺序逐项设置。系统可能逐项确认；明确失败会记录并继续，结果未定时等待。\n\n返回识别清单\n暂不设置\n开始设置 2 项",
+  "viewport": [
+    1001,
+    709
+  ]
+}

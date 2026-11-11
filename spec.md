@@ -6,6 +6,8 @@
 
 2026-11-10 增补：[批量设置规格](docs/batch-file-associations.md)扩展多个文件类型统一使用一个默认应用、逐项执行与最近批次恢复。下文“不提供批量设置”是首版历史边界；新增能力及验证范围见[批量设置验收记录](docs/batch-file-associations-validation.md)。
 
+2026-11-11 增补：[拖入文件规格](docs/file-drop-associations.md)支持将多个普通文件拖入已打开窗口，按类型识别、去重、统一选择应用并预览后设置。文件仍仅用于识别整类关联；新增入口及验证范围见[拖入文件验收记录](docs/file-drop-associations-validation.md)。
+
 本文件是开发入口；具体规则以链接的已确认决议为准。用户已确认常用项集合、分层验收与实机限制，规格没有剩余产品决策。2026-11-05 定案时产品还是 Wails 脚手架；现已实现，成品证据与限制见[最终验收报告](.scratch/default-apps-v1-implementation/assets/11/README.md)。下文的规范性要求保持不变。
 
 ## 用户目标与范围

@@ -28,6 +28,14 @@ export function IdentifyFile(): $CancellablePromise<$models.Resolution> {
     return $Call.ByID(788036396);
 }
 
+/**
+ * IdentifyFiles accepts native drop paths without opening a picker. A bad input
+ * does not hide usable files from the same drop; no file contents are read.
+ */
+export function IdentifyFiles(paths: string[] | null): $CancellablePromise<$models.IdentifiedFile[] | null> {
+    return $Call.ByID(1344943757, paths);
+}
+
 export function PickApplication(): $CancellablePromise<$models.Result> {
     return $Call.ByID(2092491607);
 }

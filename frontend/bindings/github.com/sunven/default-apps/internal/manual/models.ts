@@ -8,6 +8,16 @@ import * as association$0 from "../association/models.js";
 // @ts-ignore: Unused imports
 import * as catalog$0 from "../catalog/models.js";
 
+/**
+ * IdentifiedFile is transient: paths are never added to configuration by identification.
+ */
+export interface IdentifiedFile {
+    "path": string;
+    "name": string;
+    "entries": catalog$0.Entry[] | null;
+    "error": string;
+}
+
 export interface Resolution {
     "entries": catalog$0.Entry[] | null;
     "cancelled": boolean;
