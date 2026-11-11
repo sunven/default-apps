@@ -6,6 +6,7 @@ import {PrepareBatch,Query,ReconcileBatchStart,StartBatch,StopBatch} from '../bi
 import {PickApplication} from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import type {Changes} from './Changes'
 import {Dialog} from './Dialog'
+import {ApplicationIcon} from './ApplicationIcon'
 import {message} from './errors'
 import './batch.css'
 
@@ -100,7 +101,7 @@ export function BatchCheckbox({checked,partial=false,disabled,label,onChange}:{c
  return <input ref={ref} className="batch-checkbox" type="checkbox" aria-label={label} checked={checked} disabled={disabled} onChange={onChange} onKeyDown={event=>event.stopPropagation()}/>
 }
 
-export function BatchBars({controller:c}:{controller:BatchController}){
+export function BatchBars({controller:c,showSelection}:{controller:BatchController;showSelection:boolean}){
  const b=c.changes.state?.batch,items=b?.items??[]
  const current=items.find(item=>item.status==='waiting')
  const done=items.filter(item=>!['queued','waiting','unknown'].includes(item.status)).length
@@ -109,7 +110,7 @@ export function BatchBars({controller:c}:{controller:BatchController}){
    <div className="batch-progress-copy"><strong>{stateLabel(b.state)}</strong><span>已处理 {done} / {items.length} 项 · {b.target.name||b.target.path}</span>{current?<span className="batch-current">当前：{current.selection.name||current.selection.association.key}</span>:null}</div>
    <div className="batch-actions"><button className="btn" onClick={()=>{c.setError('');c.setModal('results')}}>查看批次</button>{['running','waiting','paused'].includes(b.state)?<button className="btn" disabled={c.working} onClick={()=>void c.stop()}>停止后续设置</button>:null}</div>
   </section>:null}
-  {c.selected.size?<section className="batch-selection-bar" aria-label="已选文件类型"><strong>已选 {c.selected.size} 个类型</strong><span>选择一个应用，统一设置默认</span><div className="batch-actions"><button className="btn" onClick={()=>c.setModal('selected')}>查看已选</button><button className="btn" disabled={c.selectionBlocked} onClick={()=>c.setSelected(new Map())}>清空</button><button className="btn btn--primary" disabled={c.selectionBlocked} onClick={c.choose}>选择应用…</button></div></section>:null}
+  {showSelection&&c.selected.size>0?<section className="batch-selection-bar" aria-label="已选文件类型"><strong>已选 {c.selected.size} 个类型</strong><span>选择一个应用，统一设置默认</span><div className="batch-actions"><button className="btn" onClick={()=>c.setModal('selected')}>查看已选</button><button className="btn" disabled={c.selectionBlocked} onClick={()=>c.setSelected(new Map())}>清空</button><button className="btn btn--primary" disabled={c.selectionBlocked} onClick={c.choose}>选择应用…</button></div></section>:null}
   {c.error&&!c.modal?<p className="batch-inline-error" role="alert">{c.error}</p>:null}
   {c.pending?<div className="batch-reconcile" role="status">正在核对原批量设置，核对完成前暂停新修改。<button className="btn" disabled={c.working} onClick={()=>void c.reconcile()}>核对批量设置</button></div>:null}
  </>
@@ -143,7 +144,7 @@ function BatchAppPicker({items,apps,disabled,onSelect,onError}:{items:BatchSelec
   <label className="batch-search">搜索应用<input type="search" value={query} onChange={event=>setQuery(event.target.value)} placeholder="名称、版本或路径" autoComplete="off"/></label>
   {!results?<p className="batch-muted" role="status">正在查询系统候选…</p>:unknown?<p className="batch-muted">{unknown} 项候选尚未查明，覆盖数量仅包含查询成功的项目。</p>:null}
   <div className="batch-app-list" aria-label="批量目标应用">{visible.map(({app,coverage})=><button className="batch-app-option" key={app.path} disabled={disabled||picking} onClick={()=>onSelect(app)} aria-label={`选择 ${app.name} ${app.path}`}>
-   <span className="batch-app-avatar" aria-hidden="true">{app.name.slice(0,1)||'A'}</span><span className="batch-app-copy"><strong>{app.name||app.path}</strong><span>版本 {app.version||'未知'} · {app.path}</span></span><span className="batch-coverage">{results?`${coverage} / ${items.length} 项系统候选${unknown?' · 部分未知':''}`:'覆盖查询中'}</span>
+   <ApplicationIcon app={app} className="application-icon--row"/><span className="batch-app-copy"><strong>{app.name||app.path}</strong><span>版本 {app.version||'未知'} · {app.path}</span></span><span className="batch-coverage">{results?`${coverage} / ${items.length} 项系统候选${unknown?' · 部分未知':''}`:'覆盖查询中'}</span>
   </button>)}</div>
   {!visible.length?<p>没有匹配的应用，可调整搜索或选择其他应用。</p>:null}
   <div className="batch-dialog-actions"><button className="btn" disabled={disabled||picking} onClick={()=>void pick()}>{picking?'正在选择…':'选择其他应用…'}</button><span className="batch-muted">属于系统候选不保证本次设置一定成功。</span></div>

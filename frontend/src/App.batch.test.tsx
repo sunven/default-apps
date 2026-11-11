@@ -43,14 +43,37 @@ beforeEach(()=>{
 async function openFiles(){render(<App/>);await userEvent.click(screen.getByRole('button',{name:'文件类型'}));await waitFor(()=>expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toBeEnabled())}
 async function chooseEditor(){await userEvent.click(screen.getByRole('button',{name:'选择应用…'}));await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}));return await screen.findByRole('dialog',{name:'预览批量设置'})}
 
+test('batch picker shows icons for installed copies and candidates outside the catalog',async()=>{
+ const candidate={...app,path:'/Volumes/External/Editor.app',iconData:'external-editor-icon'}
+ const icons={...catalog,apps:catalog.apps.map(item=>({...item,app:{...item.app,iconData:`${item.app.name}-icon`}}))}
+ vi.mocked(GetSnapshot).mockResolvedValue(icons)
+ vi.mocked(StartScan).mockResolvedValue(icons)
+ vi.mocked(Query).mockImplementation(association=>resolved({association,version:1,default:{known:true,app:other,observedAt:'now',stale:false,error:null},candidates:{known:true,apps:[icons.apps[0].app,candidate],observedAt:'now',stale:false,error:null}}))
+ await openFiles();await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ await userEvent.click(screen.getByRole('button',{name:'选择应用…'}))
+ const dialog=await screen.findByRole('dialog',{name:'为所选类型选择应用'})
+ await waitFor(()=>expect(within(dialog).queryByRole('status')).not.toBeInTheDocument())
+ for(const copy of [...icons.apps.map(item=>item.app),candidate]){
+  const option=within(dialog).getByRole('button',{name:`选择 ${copy.name} ${copy.path}`})
+  expect(option.querySelector('img')).toHaveAttribute('src',`data:image/png;base64,${copy.iconData}`)
+ }
+ expect(PrepareBatch).not.toHaveBeenCalled()
+})
+
 test('keeps selections across searches and views, and selects only current filtered results',async()=>{
  await openFiles()
  const search=screen.getByRole('searchbox',{name:'搜索文件类型'})
  await userEvent.type(search,'Markdown');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
  await userEvent.clear(search);await userEvent.type(search,'JSON');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
  expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 2 个类型')
- await userEvent.click(screen.getByRole('button',{name:'URL 协议'}));expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 2 个类型')
+ for(const view of ['应用','URL 协议']){
+  await userEvent.click(screen.getByRole('button',{name:view}))
+  expect(screen.queryByRole('region',{name:'已选文件类型'})).not.toBeInTheDocument()
+  expect(screen.queryByRole('button',{name:'选择应用…'})).not.toBeInTheDocument()
+ }
  await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 2 个类型')
+ expect(screen.getByRole('checkbox',{name:'勾选 JSON json'})).toBeChecked()
  await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
  expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 1 个类型')
  await userEvent.click(screen.getByRole('button',{name:'查看已选'}))

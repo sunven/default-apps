@@ -1,4 +1,4 @@
-.batch-file-columns .column-labels,.batch-file-columns .association-row{grid-template-columns:24px minmax(0,1fr) minmax(0,.7fr) minmax(0,1.3fr) minmax(0,1fr) 76px}
+.batch-file-columns{--association-selection-column:24px;--association-action-width:76px}
 .batch-checkbox{width:16px;height:16px;margin:0;accent-color:var(--action);cursor:pointer}
 .batch-checkbox:disabled{cursor:default}
 .batch-selection-bar,.batch-progress{display:flex;align-items:center;gap:14px;padding:10px 20px;border-bottom:1px solid var(--line);flex:none;min-width:0}
@@ -19,7 +19,6 @@
 .batch-app-option:last-child{border-bottom:0}
 .batch-app-option:hover:not(:disabled){background:#f1f6fc}
 .batch-app-option:disabled{opacity:.55;cursor:wait}
-.batch-app-avatar{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:9px;background:#e9eef5;color:#476181;font-weight:600}
 .batch-app-copy{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
 .batch-app-copy>span{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
 .batch-coverage{font-size:11px;color:var(--muted);max-width:130px;flex:none}

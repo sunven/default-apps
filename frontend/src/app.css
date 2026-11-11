@@ -128,7 +128,7 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
 .manual-only-filter {display:flex;align-items:center;gap:6px;min-height:32px;white-space:nowrap;font-size:12px;color:var(--ink);cursor:pointer}
 .manual-only-filter input {margin:0}
 .column-labels,.association-row {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) 160px;gap:10px;align-items:center}
-.file-columns .column-labels,.file-columns .association-row {grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr) 160px}
+.file-columns .column-labels,.file-columns .association-row {grid-template-columns:var(--association-selection-column,) minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr) var(--association-action-width,160px)}
 .column-labels {padding:6px var(--gutter);color:var(--muted);font-size:12px;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);flex:none}
 .column-labels>:last-child {text-align:right}
 .association-list {overflow:auto;overscroll-behavior:contain;min-height:0;flex:1;padding:0 var(--gutter);scrollbar-width:thin}
@@ -229,7 +229,7 @@ kbd {font:inherit;font-size:11px;line-height:18px;color:var(--muted);border:1px 
  .association-filters {width:100%;flex-wrap:wrap;gap:6px 12px}
  .association-toolbar .search-field {width:auto;flex:1;min-width:160px}
  .column-labels,.association-row {grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:6px 10px}
- .file-columns .column-labels,.file-columns .association-row {grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr)}
+ .file-columns .column-labels,.file-columns .association-row {grid-template-columns:var(--association-selection-column,) minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr)}
  .column-labels>:last-child {display:none}
  .row-actions {grid-column:1 / -1}
  .keyboard-hint {display:none}

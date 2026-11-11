@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { ApplicationIcon } from './ApplicationIcon'
 import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
 import { Icon } from './Icon'
@@ -12,15 +13,6 @@ import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
 import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry, Source } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
-
-function ApplicationIcon({ app, className='' }: { app: AppCopy; className?: string }) {
- const [failedData,setFailedData] = useState<string>()
- const fallback = (app.name || app.path.split('/').pop() || '?').trim().slice(0, 1).toLocaleUpperCase()
- const source = app.iconData && app.iconData!==failedData ? app.iconData : undefined
- return <span className={`application-icon ${className}`} data-fallback={!source} aria-hidden="true">
-  {source ? <img src={`data:image/png;base64,${source}`} alt="" onError={()=>setFailedData(source)}/> : <span>{fallback}</span>}
- </span>
-}
 
 function SystemAppBadge({ app }: { app: AppCopy }) {
  return app.system ? <span className="system-app-badge" aria-label="系统应用" title="受 macOS 系统保护的应用">系统</span> : null
@@ -106,7 +98,7 @@ export default function App() {
   </header>
   <LifecycleStatus changes={changes}/>{recovery.dialog}
   <ChangeStatus changes={changes} onReturn={actions.returnToRequest}/>
-  <BatchBars controller={batch}/>
+  <BatchBars controller={batch} showSelection={kind==='file'}/>
 
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">
