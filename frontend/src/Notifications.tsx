@@ -1,7 +1,7 @@
+import { Spinner } from '@astryxdesign/core/Spinner'
 import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Toaster, toast, type ExternalToast } from 'sonner'
-import './notifications.css'
 
 export type NotificationTone = 'pending' | 'success' | 'warning' | 'error' | 'info'
 type NotificationID = string | number
@@ -24,7 +24,7 @@ export function notify(tone: NotificationTone, title: string, options: ExternalT
  // keeps progress dismissible without implying that closing cancels the work.
  toast[tone === 'pending' ? 'info' : tone](title, {
   description: undefined, action: undefined, cancel: undefined,
-  icon: tone === 'pending' ? <span className="notification-spinner" aria-hidden="true"/> : undefined,
+  icon: tone === 'pending' ? <Spinner size="sm" shade="inherit" aria-label="正在处理"/> : undefined,
   duration: tone === 'success' ? 4000 : Infinity,
   closeButton: true, dismissible: true,
   ...options,

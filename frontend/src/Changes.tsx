@@ -1,3 +1,6 @@
+import { Button } from '@astryxdesign/core/Button'
+import { HStack } from '@astryxdesign/core/HStack'
+import { Text } from '@astryxdesign/core/Text'
 import {useCallback,useEffect,useRef,useState} from 'react'
 import {Events} from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
@@ -6,7 +9,6 @@ import type {Snapshot,Request,Submission} from '../bindings/github.com/sunven/de
 import type {AppCopy,Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import {observationFor} from './useAssociationQueries'
 import {notify,dismissNotification,isNotificationVisible} from './Notifications'
-import './changes.css'
 
 const pendingKey='defaultapps.submission.v1'
 function savedSubmission():Submission|null {
@@ -72,7 +74,7 @@ export function ChangeStatus({changes,onReturn,observations}:{changes:Changes;on
    const visible=isNotificationVisible(id)
    if(previous?.stage===stage&&(previous.description===description||!visible))return
    presented.current.set(id,{stage,description})
-   notify(tone,title,{id,description:<>{description.split('\n').filter(Boolean).map((line,index)=><p key={index}>{line.startsWith('目标：')?<>目标：<span>{line.slice(3)}</span></>:line}</p>)}{actions?<div className="notification-actions">{actions}</div>:null}</>})
+   notify(tone,title,{id,description:<>{description.split('\n').filter(Boolean).map((line,index)=><p key={index}>{line.startsWith('目标：')?<>目标：<Text>{line.slice(3)}</Text></>:line}</p>)}{actions?<HStack gap={2} align="center" className="notification-actions">{actions}</HStack>:null}</>})
   }
   for(const request of changes.state?.requests??[]){
    if(request.batchID||changes.state?.batch?.items?.some(item=>item.requestID===request.requestID))continue
@@ -87,14 +89,14 @@ export function ChangeStatus({changes,onReturn,observations}:{changes:Changes;on
    const stage=JSON.stringify([requestLabel(request),error,request.readback.state,request.readback.observation?.error])
    publish(`change:${request.requestID}`,stage,requestLabel(request),description,
     request.confirmed?'success':error||request.readback.state==='failed'?'error':request.readback.state==='valid'?'warning':'pending',
-    <><button onClick={()=>latest.current.onReturn(request.association)}>返回请求项</button>{request.readback.state==='failed'?<button onClick={()=>void latest.current.changes.retry(request.association)}>重新回读</button>:null}</>)
+    <><Button label="返回请求项" onClick={()=>latest.current.onReturn(request.association)}/>{request.readback.state==='failed'?<Button label="重新回读" onClick={()=>void latest.current.changes.retry(request.association)}/>:null}</>)
   }
   if(changes.pending){
    const pending=changes.pending
    pendingToast.current=`change:${pending.requestID}`
    publish(`change:${pending.requestID}`,`pending:${changes.message}`,'正在核对原修改请求',
     `${pending.association.key}\n目标：${pending.targetPath}${changes.message?`\n${changes.message}`:''}`,changes.message?'warning':'pending',
-    <button onClick={()=>void latest.current.changes.recoverReply()}>查看原请求状态</button>)
+    <Button label="查看原请求状态" onClick={()=>void latest.current.changes.recoverReply()}/>)
   }else if(pendingToast.current){
    if(!changes.state?.requests?.some(request=>`change:${request.requestID}`===pendingToast.current))dismissNotification(pendingToast.current)
    pendingToast.current=null

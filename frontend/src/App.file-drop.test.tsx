@@ -43,7 +43,7 @@ beforeEach(()=>{
  })
  vi.mocked(StartBatch).mockImplementation(()=>resolved({outcome:'accepted',message:'',snapshot:{...initial,version:2,busy:true,batchBlocked:true,batch:{id:'drop-batch',revision:1,state:'waiting',target:app,items:preview.items,error:'',createdAt:'now',commands:[preview.id],runItems:[]}}}))
 })
-async function mount(){const result=render(<App/>);await waitFor(()=>expect(listeners.has('defaultapps:files-dropped')).toBe(true));await waitFor(()=>expect(screen.getByRole('button',{name:'文件类型'})).toBeEnabled());return result}
+async function mount(){const result=render(<App/>);await waitFor(()=>expect(listeners.has('defaultapps:files-dropped')).toBe(true));await waitFor(()=>expect(screen.getByRole('button',{name:'文件类型'})).not.toHaveAttribute('aria-disabled','true'));return result}
 async function drop(paths:string[]){await act(async()=>{await listeners.get('defaultapps:files-dropped')?.({data:paths})})}
 async function choose(){await userEvent.click(screen.getByRole('button',{name:/为 \d+ 个类型选择应用/}));await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}));return screen.findByRole('dialog',{name:'预览批量设置'})}
 
@@ -80,7 +80,7 @@ test('appends files, preserves exclusions and returns from preview without chang
  await userEvent.click(screen.getByRole('button',{name:'返回识别清单'}))
  expect(screen.getByRole('dialog',{name:'拖入文件识别清单'})).toHaveTextContent('1 个类型 · 3 个文件')
  await userEvent.click(screen.getByRole('button',{name:'恢复 PDF'}))
- expect(screen.getByRole('button',{name:'为 2 个类型选择应用…'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'为 2 个类型选择应用…'})).not.toHaveAttribute('aria-disabled','true')
  expect(StartBatch).not.toHaveBeenCalled()
 })
 
@@ -89,10 +89,11 @@ test('mixed inputs keep usable types and require an explicit choice for ambiguou
  vi.mocked(IdentifyFiles).mockResolvedValue([file('/one.pdf'),{path:'/folder',name:'folder',entries:[],error:'不支持文件夹'}, {...file('/ambiguous.pdf'),entries:[text,manual]}])
  await drop(['/one.pdf','/folder','/ambiguous.pdf'])
  expect(screen.getByText('不支持文件夹')).toBeVisible()
- expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).not.toHaveAttribute('aria-disabled','true')
  await userEvent.click(screen.getByRole('radio',{name:'文本 · public.text'}))
- expect(screen.getByRole('button',{name:'为 2 个类型选择应用…'})).toBeEnabled()
- await userEvent.selectOptions(screen.getByRole('combobox',{name:'文件类型 ambiguous.pdf'}),manual.id)
+ expect(screen.getByRole('button',{name:'为 2 个类型选择应用…'})).not.toHaveAttribute('aria-disabled','true')
+ await userEvent.click(screen.getByRole('combobox',{name:'文件类型 ambiguous.pdf'}))
+ await userEvent.click(screen.getByRole('option',{name:`${manual.name} · ${manual.association.key}`}))
  await choose()
  expect(vi.mocked(PrepareBatch).mock.calls[0][0]).toHaveLength(2)
  expect(vi.mocked(PrepareBatch).mock.calls[0][0]).toContainEqual(expect.objectContaining({association:manual.association}))
@@ -104,7 +105,7 @@ test('refuses new drops while identifying and discards late responses after canc
  vi.mocked(IdentifyFiles).mockImplementation(()=>new Promise(resolve=>{finish=resolve}) as CancellablePromise<IdentifiedFile[]>)
  let pending:void|Promise<void>
  act(()=>{pending=listeners.get('defaultapps:files-dropped')?.({data:['/late.pdf']})})
- expect(await screen.findByRole('status')).toHaveTextContent('正在识别')
+ expect(await screen.findByRole('status',{name:'文件识别状态'})).toHaveTextContent('正在识别')
  await drop(['/refused.pdf'])
  expect(IdentifyFiles).toHaveBeenCalledTimes(1)
  await userEvent.click(screen.getByRole('button',{name:'取消'}))
@@ -136,7 +137,7 @@ test('optional manual saving reports failure, keeps setting available and surviv
  vi.mocked(AddIdentifiedType).mockRejectedValueOnce(new Error('disk full'))
  await userEvent.click(screen.getByRole('button',{name:'保存为手动关联'}))
  expect(await screen.findByText(/保存失败：disk full/)).toBeVisible()
- expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).not.toHaveAttribute('aria-disabled','true')
  await userEvent.click(screen.getByRole('button',{name:'保存为手动关联'}))
  expect(await screen.findByText('已保存手动关联')).toBeVisible()
  await userEvent.click(screen.getByRole('button',{name:'取消'}))
@@ -150,9 +151,9 @@ test('retries previously inaccessible inputs and cleans the native drop target o
  expect(document.body).toHaveAttribute('data-file-drop-target')
  vi.mocked(IdentifyFiles).mockResolvedValueOnce([{path:'/fixed.pdf',name:'fixed.pdf',entries:[],error:'无法访问'}])
  await drop(['/fixed.pdf'])
- expect(screen.getByRole('button',{name:'为 0 个类型选择应用…'})).toBeDisabled()
+ expect(screen.getByRole('button',{name:'为 0 个类型选择应用…'})).toHaveAttribute('aria-disabled','true')
  await drop(['/fixed.pdf'])
- expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'为 1 个类型选择应用…'})).not.toHaveAttribute('aria-disabled','true')
  mounted.unmount()
  expect(document.body).not.toHaveAttribute('data-file-drop-target')
  expect(listeners.has('defaultapps:files-dropped')).toBe(false)

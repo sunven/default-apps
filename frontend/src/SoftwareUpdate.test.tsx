@@ -31,7 +31,7 @@ test('available update only downloads on click and restart needs separate confir
  await userEvent.click(within(dialog).getByRole('button',{name:'下载更新'}))
  expect(Download).toHaveBeenCalledTimes(1)
  await act(async()=>emit({...available,version:4,phase:'downloading',written:50,total:100}))
- expect(screen.getByRole('progressbar',{name:'更新下载进度'})).toHaveAttribute('value','50')
+ expect(screen.getByRole('progressbar',{name:'更新下载进度'})).toHaveAttribute('aria-valuenow','50')
  await act(async()=>emit({...available,version:5,phase:'ready'}))
  expect(Restart).not.toHaveBeenCalled()
  await userEvent.click(screen.getByRole('button',{name:'重启安装'}))
@@ -44,13 +44,13 @@ test('available update only downloads on click and restart needs separate confir
 test('unknown download size is indeterminate and closing does not cancel work',async()=>{
  vi.mocked(GetSnapshot).mockResolvedValue({...available,phase:'downloading',total:0,written:1024*1024})
  await open()
- expect(await screen.findByRole('progressbar')).not.toHaveAttribute('value')
+ expect(await screen.findByRole('progressbar')).not.toHaveAttribute('aria-valuenow')
  expect(screen.getByText('已下载 1.0 MB')).toBeVisible()
  await userEvent.keyboard('{Escape}')
  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
  await act(async()=>emit({...available,version:5,phase:'ready'}))
  await userEvent.click(screen.getByRole('button',{name:'软件更新'}))
- expect(screen.getByRole('button',{name:'重启安装'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'重启安装'})).not.toHaveAttribute('aria-disabled','true')
  expect(Restart).not.toHaveBeenCalled()
 })
 
@@ -66,7 +66,7 @@ test('late snapshot cannot replace a newer event and manual check survives dismi
  await userEvent.click(screen.getByRole('button',{name:'检查更新'}))
  expect(Check).toHaveBeenCalledTimes(1)
  await act(async()=>emit({...available,version:4}))
- expect(screen.getByRole('button',{name:'下载更新'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'下载更新'})).not.toHaveAttribute('aria-disabled','true')
 })
 
 test('download errors offer retry and development mode has no update actions',async()=>{

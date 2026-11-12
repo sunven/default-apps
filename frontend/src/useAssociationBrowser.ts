@@ -417,7 +417,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
       if (event.key === 'ArrowDown') { event.preventDefault(); dispatch({ type: 'searchDown', apps }) }
       if (event.key === 'Escape') { event.preventDefault(); dispatch({ type: 'clearSearch', apps }) }
     },
-    listKey: (event: KeyboardEvent<HTMLDivElement>, apps = false) => {
+    listKey: (event: KeyboardEvent<HTMLElement>, apps = false) => {
       if (!plainKey(event) || !(event.target instanceof HTMLButtonElement) || (!apps && !event.target.dataset.associationId)) return
       if (['Home', 'End', 'ArrowDown', 'ArrowUp'].includes(event.key)) { event.preventDefault(); dispatch({ type: 'move', apps, key: event.key }) }
       if (event.key === 'Enter' && apps) { event.preventDefault(); dispatch({ type: 'enterAssociations' }) }

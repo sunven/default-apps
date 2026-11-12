@@ -85,15 +85,15 @@ test('shows loading without inventing an empty default, then retains data during
  await renderFile()
  expect(await screen.findByText('正在读取系统默认…')).toBeVisible()
  expect(screen.getByText('正在读取系统候选…')).toBeVisible()
- expect(screen.getByRole('button',{name:'正在查询…'})).toBeDisabled()
+ expect(screen.getByRole('button',{name:'正在查询…'})).toHaveAttribute('aria-disabled','true')
  await act(async () => complete(observation))
  const refreshing = new Promise<QueryResult>(resolve => { complete=resolve })
  vi.mocked(Query).mockReturnValueOnce(refreshing as ReturnType<typeof Query>)
  await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
  expect(current().getByText('Reader')).toBeVisible()
- expect(screen.getByRole('button',{name:'正在查询…'})).toBeDisabled()
+ expect(screen.getByRole('button',{name:'正在查询…'})).toHaveAttribute('aria-disabled','true')
  await act(async () => complete({...observation,version:2}))
- expect(screen.getByRole('button',{name:'重新查询'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'重新查询'})).not.toHaveAttribute('aria-disabled','true')
 })
 
 test('keyboard users can focus the scrollable results after the refresh control', async () => {
@@ -136,7 +136,7 @@ test('unresolved inputs explain the file identification path without querying a 
  expect(screen.getByText(/选择文件识别类型/)).toBeVisible()
  expect(screen.queryByText('系统未返回默认应用')).not.toBeInTheDocument()
  expect(Query).not.toHaveBeenCalled()
- expect(screen.getByRole('button',{name:'重新解析'})).toBeEnabled()
+ expect(screen.getByRole('button',{name:'重新解析'})).not.toHaveAttribute('aria-disabled','true')
 })
 
 test('catalog failure has a retry and an empty protocol view hides previous details', async () => {

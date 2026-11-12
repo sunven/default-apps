@@ -1,6 +1,10 @@
+import { Heading } from '@astryxdesign/core/Heading'
 import { useId, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { isComposing } from './keyboard'
+import { Dialog as AstryxDialog } from '@astryxdesign/core/Dialog'
+import { HStack } from '@astryxdesign/core/HStack'
+import { VStack } from '@astryxdesign/core/VStack'
+import { IconButton } from '@astryxdesign/core/IconButton'
 import { Icon } from './Icon'
 import { registerNotificationDialog } from './Notifications'
 
@@ -11,27 +15,15 @@ export function Dialog({ title, subtitle, onClose, children, fileDrop=false }: {
  useLayoutEffect(()=>{
   const trigger=document.activeElement instanceof HTMLElement ? document.activeElement : null
   const dialog=ref.current!
-  dialog.showModal()
   const unregisterNotifications=registerNotificationDialog(dialog)
-  dialog.querySelector<HTMLButtonElement>('[data-dialog-close]')?.focus()
   return ()=>{
    unregisterNotifications()
-   dialog.close()
-   if(trigger?.isConnected) trigger.focus({preventScroll:true})
-   else document.querySelector<HTMLInputElement>('input[type="search"]')?.focus({preventScroll:true})
+   // Astryx restores connected openers. A rescan can remove the original row.
+   if(!trigger?.isConnected) document.querySelector<HTMLInputElement>('input[type="search"]')?.focus({preventScroll:true})
   }
  },[])
- return createPortal(<dialog ref={ref} className="detail-dialog" data-file-identification={fileDrop||undefined} aria-labelledby={id} onCancel={event=>{event.preventDefault();onClose()}} onKeyDown={event=>{
-  if(isComposing(event))return
-  if(event.key==='Escape'){event.preventDefault();event.stopPropagation();onClose()}
-  if(event.key==='Tab'){
-   const controls=Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href],[tabindex="0"]')).filter(el=>!el.closest('[hidden]'))
-   const first=controls[0],last=controls[controls.length-1]
-   if(event.shiftKey && document.activeElement===first){event.preventDefault();last?.focus()}
-   else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first?.focus()}
-  }
- }}>
-  <div className="dialog-heading"><div><h2 id={id}>{title}</h2>{subtitle ? <p>{subtitle}</p> : null}</div><button className="btn dialog-close" data-dialog-close onClick={onClose} aria-label={`关闭${title}`} title="关闭 · Esc"><Icon name="close"/></button></div>
-  <div className="dialog-body">{children}</div>
- </dialog>,document.body)
+ return createPortal(<AstryxDialog ref={ref} isOpen onOpenChange={open=>{if(!open)onClose()}} purpose="form" padding={0} width="43.75rem" className="detail-dialog" data-file-identification={fileDrop?'true':undefined} aria-labelledby={id}>
+  <HStack className="dialog-heading" gap={3} justify="between" align="start"><VStack gap={1}><Heading level={2} id={id}>{title}</Heading>{subtitle ? <p>{subtitle}</p> : null}</VStack><IconButton className="dialog-close" data-autofocus="true" label={`关闭${title}`} tooltip="关闭 · Esc" variant="ghost" onClick={onClose} icon={<Icon name="close"/>}/></HStack>
+  <VStack gap={0} className="dialog-body">{children}</VStack>
+ </AstryxDialog>,document.body)
 }

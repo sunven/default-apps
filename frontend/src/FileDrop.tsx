@@ -1,5 +1,11 @@
+import { Heading } from '@astryxdesign/core/Heading'
+import { Selector } from '@astryxdesign/core/Selector'
+import { RadioList, RadioListItem } from '@astryxdesign/core/RadioList'
+import { Button } from '@astryxdesign/core/Button'
+import { HStack } from '@astryxdesign/core/HStack'
+import { Text } from '@astryxdesign/core/Text'
+import { VStack } from '@astryxdesign/core/VStack'
 import {useEffect,useMemo,useRef,useState} from 'react'
-import {HStack} from '@astryxdesign/core/HStack'
 import {Events} from '@wailsio/runtime'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import type {IdentifiedFile} from '../bindings/github.com/sunven/default-apps/internal/manual/models'
@@ -10,7 +16,6 @@ import {Dialog} from './Dialog'
 import {notify} from './Notifications'
 import {message} from './errors'
 import {isTrustworthy} from './useAssociationQueries'
-import './file-drop.css'
 
 type FileChoice=IdentifiedFile&{choice:string}
 type Group={entry:Entry;files:FileChoice[]}
@@ -120,23 +125,23 @@ export function FileDrop({controller:c}:{controller:BatchController}){
  const close=()=>{++generation.current;activity.current='';setBusy('');c.close()}
  return <>
   <HStack as="footer" className="file-drop-hint" gap={3} justify="center"><p>拖入文件，设置同类文件的默认应用</p><small>支持多个普通文件</small></HStack>
-  <div className="file-drop-overlay" aria-hidden="true"><strong>松开以识别文件类型</strong><span>先查看清单，再选择默认应用</span></div>
+  <VStack gap={0} className="file-drop-overlay" aria-hidden="true"><strong>松开以识别文件类型</strong><Text>先查看清单，再选择默认应用</Text></VStack>
   {c.modal==='files'?<Dialog title="拖入文件识别清单" subtitle="设置将影响这些类型的所有同类文件。可继续拖入文件追加。" onClose={close} fileDrop>
-   <div className="file-drop-summary"><strong>{included.length} 个类型 · {files.length} 个文件</strong><button className="btn" disabled={!!busy||!entries.length} onClick={()=>setQueryVersion(value=>value+1)}>重新查询默认</button></div>
-   {busy?<p role="status" className="batch-muted">{busy}…</p>:null}
+   <HStack gap={2} align="center" className="file-drop-summary"><strong>{included.length} 个类型 · {files.length} 个文件</strong><Button label="重新查询默认" variant="secondary" isDisabled={!!busy||!entries.length} onClick={()=>setQueryVersion(value=>value+1)}/></HStack>
+   {busy?<p role="status" aria-label="文件识别状态" className="batch-muted">{busy}…</p>:null}
    {error?<p role="alert" className="batch-error">{error}</p>:null}
    <ul className="file-drop-types" aria-label="识别出的文件类型">{groups.map(({entry,files})=><li key={entry.id} data-excluded={excluded.has(entry.id)}>
-    <div className="file-drop-type-heading"><div><strong>{entry.name||entry.association.key}</strong><small>{entry.association.key}{entry.extensions?.length?` · ${entry.extensions.map(ext=>`.${ext}`).join(' · ')}`:''}</small></div><button className="btn" disabled={!!busy} aria-label={`${excluded.has(entry.id)?'恢复':'移除'} ${entry.name||entry.association.key}`} onClick={()=>setExcluded(previous=>{const next=new Set(previous);if(next.has(entry.id))next.delete(entry.id);else next.add(entry.id);return next})}>{excluded.has(entry.id)?'恢复':'移除'}</button></div>
+    <HStack gap={2} align="center" className="file-drop-type-heading"><VStack gap={0}><strong>{entry.name||entry.association.key}</strong><small>{entry.association.key}{entry.extensions?.length?` · ${entry.extensions.map(ext=>`.${ext}`).join(' · ')}`:''}</small></VStack><Button label={`${excluded.has(entry.id)?'恢复':'移除'} ${entry.name||entry.association.key}`} variant="secondary" isDisabled={!!busy}  onClick={()=>setExcluded(previous=>{const next=new Set(previous);if(next.has(entry.id))next.delete(entry.id);else next.add(entry.id);return next})}>{excluded.has(entry.id)?'恢复':'移除'}</Button></HStack>
     <p className="file-drop-default">{excluded.has(entry.id)?'本次不设置':'当前默认：'+(defaults[entry.id]??'正在查询…')}</p>
-    <ul className="file-drop-paths">{files.map(file=><li key={file.path}><span>{file.name}</span><small>{file.path}</small>{(file.entries??[]).filter(entry=>entry.resolved).length>1?<label className="file-drop-choice">实际类型<select aria-label={`文件类型 ${file.name}`} value={file.choice} disabled={!!busy} onChange={event=>{const choice=event.target.value;setFiles(previous=>previous.map(item=>item.path===file.path?{...item,choice}:item))}}>{(file.entries??[]).filter(entry=>entry.resolved).map(entry=><option key={entry.id} value={entry.id}>{entry.name||entry.association.key} · {entry.association.key}</option>)}</select></label>:null}</li>)}</ul>
-    <div className="file-drop-save"><button className="btn" disabled={!!busy||saved[entry.id]==='已保存手动关联'} onClick={()=>void save(entry)}>保存为手动关联</button>{saved[entry.id]?<span role="status">{saved[entry.id]}</span>:null}</div>
+    <ul className="file-drop-paths">{files.map(file=><li key={file.path}><Text>{file.name}</Text><small>{file.path}</small>{(file.entries??[]).filter(entry=>entry.resolved).length>1?<Selector containerClassName="file-drop-choice" label="实际类型" aria-label={`文件类型 ${file.name}`} value={file.choice} isDisabled={!!busy} onChange={choice=>setFiles(previous=>previous.map(item=>item.path===file.path?{...item,choice}:item))} options={(file.entries??[]).filter(entry=>entry.resolved).map(entry=>({value:entry.id,label:`${entry.name||entry.association.key} · ${entry.association.key}`}))} presentation="popover"/>:null}</li>)}</ul>
+    <HStack gap={2} align="center" className="file-drop-save"><Button label="保存为手动关联" variant="secondary" isDisabled={!!busy||saved[entry.id]==='已保存手动关联'} onClick={()=>void save(entry)}/>{saved[entry.id]?<Text role="status">{saved[entry.id]}</Text>:null}</HStack>
    </li>)}</ul>
-   {files.some(file=>!file.choice)?<section className="file-drop-problems" aria-label="未确定的文件"><h3>未参与设置的文件</h3>{files.filter(file=>!file.choice).map(file=>{
+   {files.some(file=>!file.choice)?<section className="file-drop-problems" aria-label="未确定的文件"><Heading level={3}>未参与设置的文件</Heading>{files.filter(file=>!file.choice).map(file=>{
     const matches=(file.entries??[]).filter(entry=>entry.resolved)
-    return <div key={file.path}><strong>{file.name}</strong><small>{file.path}</small>{matches.length>1?<fieldset disabled={!!busy}><legend>请选择该文件的实际类型</legend>{matches.map(entry=><label key={entry.id}><input type="radio" name={file.path} onChange={()=>setFiles(previous=>previous.map(item=>item.path===file.path?{...item,choice:entry.id}:item))}/>{entry.name||entry.association.key} · {entry.association.key}</label>)}</fieldset>:<p>{file.error||'无法确定文件类型，请检查文件后重新拖入。'}</p>}</div>
+    return <VStack gap={0} key={file.path}><strong>{file.name}</strong><small>{file.path}</small>{matches.length>1?<RadioList label="请选择该文件的实际类型" htmlName={file.path} value={file.choice} isDisabled={!!busy} onChange={choice=>setFiles(previous=>previous.map(item=>item.path===file.path?{...item,choice}:item))}>{matches.map(entry=><RadioListItem key={entry.id} value={entry.id} label={`${entry.name||entry.association.key} · ${entry.association.key}`}/>)}</RadioList>:<p>{file.error||'无法确定文件类型，请检查文件后重新拖入。'}</p>}</VStack>
    })}</section>:null}
    <p className="batch-muted">识别结果仅用于本次设置，不自动保存文件路径或手动关联。主动保存的手动关联会保留。</p>
-   <div className="batch-dialog-actions"><button className="btn" onClick={close}>取消</button><button className="btn btn--primary" disabled={!!busy||!included.length||c.reviewBlocked||!c.changes.state?.writableKinds?.includes('file')} onClick={()=>c.chooseFiles(included)}>为 {included.length} 个类型选择应用…</button></div>
+   <HStack gap={2} align="center" className="batch-dialog-actions"><Button label="取消" variant="secondary" onClick={close}/><Button label={`为 ${included.length} 个类型选择应用…`} variant="primary" isDisabled={!!busy||!included.length||c.reviewBlocked||!c.changes.state?.writableKinds?.includes('file')} onClick={()=>c.chooseFiles(included)}>为 {included.length} 个类型选择应用…</Button></HStack>
   </Dialog>:null}
  </>
 }

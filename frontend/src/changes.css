@@ -1,34 +1,30 @@
-.change-status,.recovery-status {flex:none;margin:0 8px 8px;padding:8px 12px;border:1px solid var(--color-border-blue);border-radius:var(--r-md);background:var(--selected);font-size:12px;max-height:170px;overflow:auto;user-select:text}
+.change-status,.recovery-status {flex:none;margin:0 var(--spacing-2) var(--spacing-2);padding:var(--spacing-2) var(--spacing-3);border:0.0625rem solid var(--color-border-blue);border-radius:var(--r-md);background:var(--selected);font-size:var(--spacing-3);max-height:10.625rem;overflow:auto;user-select:text}
 .change-status[data-tone=success] {background:var(--color-success-muted);border-color:var(--color-border-green)}
 .change-status[data-tone=success] .change-summary strong {color:var(--positive)}
 .change-status[data-tone=warning],.recovery-status {background:var(--warning-bg);border-color:var(--color-border-yellow)}
-.change-summary {display:flex;align-items:center;gap:8px;min-width:0;margin-bottom:4px}
-.change-summary strong {font-weight:600;font-size:13px}
+.change-summary {display:flex;align-items:center;gap:var(--spacing-2);min-width:0;margin-bottom:var(--spacing-1)}
+.change-summary strong {font-weight:600;font-size:0.8125rem}
 .change-summary>span {min-width:0;overflow-wrap:anywhere;color:var(--muted)}
-.change-summary button {margin-left:auto;flex:none;padding:3px 8px;min-height:28px;font-size:12px}
+.change-summary button {margin-left:auto;flex:none;padding:0.1875rem var(--spacing-2);min-height:1.75rem;font-size:var(--spacing-3)}
 .change-summary button+button {margin-left:0}
-.change-target {margin-top:4px;overflow-wrap:anywhere}
+.change-target {margin-top:var(--spacing-1);overflow-wrap:anywhere}
 .change-status p,.recovery-status p,.lifecycle-explanation p {overflow-wrap:anywhere}
 .change-error {color:var(--warning)}
-.change-copy-action {margin-top:8px;margin-right:6px;font-size:12px}
+.change-copy-action {margin-top:var(--spacing-2);margin-right:var(--spacing-1-5);font-size:var(--spacing-3)}
 .row-actions {display:flex;gap:var(--spacing-1);align-items:center;justify-content:flex-end;flex-wrap:wrap}
 .row-actions button {padding:var(--spacing-1) var(--spacing-2);min-height:var(--size-element-md);font-size:var(--app-text-small);white-space:nowrap}
-.row-detail {border-color:transparent;background:transparent;color:var(--muted)}
-.row-detail:hover:not(:disabled) {border-color:transparent;background:var(--surface);color:var(--ink)}
-.row-submit:not(:disabled) {color:var(--action);border-color:transparent;background:var(--selected)}
-.row-submit[data-current=true] {color:var(--positive);background:transparent;border-color:transparent}
-.change-row-state {width:100%;text-align:right;text-wrap:balance;font-size:11px;line-height:1.5;color:var(--warning)}
+.change-row-state {width:100%;text-align:right;text-wrap:balance;font-size:0.6875rem;line-height:1.5;color:var(--warning)}
 .change-row-state[data-confirmed=true] {color:var(--positive)}
-.lifecycle-explanation {font-size:14px;line-height:1.75}
-.lifecycle-explanation p+p {margin-top:10px}
-.lifecycle-actions {display:flex;justify-content:flex-end;gap:6px;margin-top:16px}
-@media (max-width:900px) {
+.lifecycle-explanation {font-size:0.875rem;line-height:1.75}
+.lifecycle-explanation p+p {margin-top:0.625rem}
+.lifecycle-actions {display:flex;justify-content:flex-end;gap:var(--spacing-1-5);margin-top:var(--spacing-4)}
+@media (max-width:56.25rem) {
  .association-row .row-actions {justify-content:flex-start}
  .change-row-state {text-align:left}}
-@media (max-width:600px) {
- .change-status,.recovery-status {max-height:220px;padding:8px 12px}
- .change-summary {flex-wrap:wrap;gap:6px}
+@media (max-width:37.5rem) {
+ .change-status,.recovery-status {max-height:13.75rem;padding:var(--spacing-2) var(--spacing-3)}
+ .change-summary {flex-wrap:wrap;gap:var(--spacing-1-5)}
  .change-summary>span {width:100%}
  .change-summary button {margin-left:0}
  .lifecycle-actions {flex-direction:column-reverse}
- .lifecycle-actions button {width:100%;min-height:40px}}
+ .lifecycle-actions button {width:100%;min-height:var(--spacing-10)}}

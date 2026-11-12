@@ -69,9 +69,9 @@ test('selecting an undeclared application keeps its default action available aft
  await userEvent.click(await screen.findByRole('button',{name:'选择其他应用…'}))
  const copy=await screen.findByRole('dialog',{name:'所选应用副本'})
  expect(within(copy).getByText('Open It')).toBeVisible()
- expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).toBeEnabled()
+ expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).not.toHaveAttribute('aria-disabled','true')
  await act(async()=>listeners.get('defaultapps:catalog')?.({data:{...initial,version:4,apps:[...snapshot.apps!,{app:openIt,associationIDs:[],declarations:[],definitions:[],issues:[]}]}}))
- expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).toBeEnabled()
+ expect(within(copy).getByRole('button',{name:'设为默认应用 /Applications/Open It.app'})).not.toHaveAttribute('aria-disabled','true')
 })
 
 test.each(['snapshot','observation event'])('%s default updates reorder rows without changing the open detail or restarting queries',async(source)=>{

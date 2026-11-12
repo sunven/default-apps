@@ -1,10 +1,15 @@
+import { Heading } from '@astryxdesign/core/Heading'
+import { ProgressBar } from '@astryxdesign/core/ProgressBar'
+import { Button } from '@astryxdesign/core/Button'
+import { HStack } from '@astryxdesign/core/HStack'
+import { Text } from '@astryxdesign/core/Text'
+import { VStack } from '@astryxdesign/core/VStack'
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {Browser, Events} from '@wailsio/runtime'
 import {Check, Download, GetSnapshot, Restart} from '../bindings/github.com/sunven/default-apps/internal/appupdate/service'
 import type {Snapshot} from '../bindings/github.com/sunven/default-apps/internal/appupdate/models'
 import {Dialog} from './Dialog'
 import {dismissNotification, notify} from './Notifications'
-import './updates.css'
 
 const busyPhases = new Set(['checking', 'downloading', 'verifying', 'staging', 'restarting'])
 const phaseLabels: Record<string,string> = {
@@ -66,38 +71,36 @@ export function SoftwareUpdate() {
  const hasTotal = !!state&&state.total>0
  const percent = state&&hasTotal?Math.min(100,Math.max(0,Math.floor(state.written/state.total*100))):undefined
  return <>
-  <button className="btn software-update-entry" aria-label="软件更新" title={state?.release?'软件更新 · 有可用更新':'软件更新'} onClick={show} data-available={!!state?.release}>
-   软件更新{state?.release?<span className="update-dot" aria-hidden="true"/>:null}
-  </button>
+  <Button label="软件更新" variant="ghost" className="software-update-entry" tooltip={state?.release?'软件更新 · 有可用更新':'软件更新'} onClick={show} data-available={String(!!state?.release)} endContent={state?.release?<VStack as="span" gap={0} className="update-dot" aria-hidden="true"/>:undefined}/>
   {open?<Dialog title="软件更新" subtitle={`Default Apps${state?` · 当前版本 ${state.currentVersion}`:''}`} onClose={close}>
    <section className="software-update" aria-label="本工具更新">
     {state?.disabledReason?<p>{state.disabledReason}</p>:<>
-     <div className="update-summary" role="status" aria-live="polite">
+     <HStack gap={2} align="center" className="update-summary" role="status" aria-live="polite">
       <strong>{state?phaseLabels[state.phase]??'检查未完成':'正在读取更新状态…'}</strong>
-      {state?.release?<span>版本 {state.release.version}</span>:null}
-     </div>
-     {downloading?<div className="update-progress">
-      <progress aria-label="更新下载进度" max={100} value={percent}/>
-      <span>{hasTotal?`${percent}%`:`已下载 ${((state?.written??0)/1024/1024).toFixed(1)} MB`}</span>
-     </div>:null}
+      {state?.release?<Text>版本 {state.release.version}</Text>:null}
+     </HStack>
+     {downloading?<HStack gap={2} align="center" className="update-progress">
+      <ProgressBar label="更新下载进度" isLabelHidden max={100} value={percent} isIndeterminate={!hasTotal}/>
+      <Text>{hasTotal?`${percent}%`:`已下载 ${((state?.written??0)/1024/1024).toFixed(1)} MB`}</Text>
+     </HStack>:null}
      {state?.phase==='ready'?<p>下载内容已校验。可以继续使用应用，或重启安装新版。</p>:null}
-     {state?.release?.notes?<section className="update-notes" aria-label="更新说明"><h3>更新说明</h3><p>{state.release.notes}</p></section>:null}
+     {state?.release?.notes?<section className="update-notes" aria-label="更新说明"><Heading level={3}>更新说明</Heading><p>{state.release.notes}</p></section>:null}
      {state?.installPath?<p className="update-location">安装位置：{state.installPath}</p>:null}
-     {confirm?<div className="update-confirm" role="group" aria-label="确认重启安装">
+     {confirm?<VStack gap={0} className="update-confirm" role="group" aria-label="确认重启安装">
       <p>将退出 Default Apps，更新当前应用副本并重新打开。</p>
-      <div className="lifecycle-actions"><button className="btn" onClick={()=>setConfirm(false)} disabled={busy}>稍后</button><button className="btn btn--primary" onClick={()=>void run(Restart,true)} disabled={busy}>确认重启安装</button></div>
-     </div>:null}
+      <HStack gap={2} align="center" className="lifecycle-actions"><Button label="稍后" variant="secondary" onClick={()=>setConfirm(false)} isDisabled={busy}/><Button label="确认重启安装" variant="primary" onClick={()=>void run(Restart,true)} isDisabled={busy}/></HStack>
+     </VStack>:null}
     </>}
     {error||state?.error?<p className="change-error" role="alert">{error||state?.error}</p>:null}
-    <div className="update-actions">
-     <button className="btn" onClick={()=>{setError('');void Browser.OpenURL(state?.releaseURL??'https://github.com/sunven/default-apps/releases/latest').catch(value=>setError(String(value)))}}>打开发布页</button>
+    <HStack gap={2} align="center" className="update-actions">
+     <Button label="打开发布页" variant="secondary" onClick={()=>{setError('');void Browser.OpenURL(state?.releaseURL??'https://github.com/sunven/default-apps/releases/latest').catch(value=>setError(String(value)))}}/>
      {state&&!state.disabledReason?<>
-      {state.phase==='ready'?<button className="btn btn--primary" disabled={busy||confirm} onClick={()=>setConfirm(true)}>重启安装</button>:<>
-       <button className="btn" disabled={busy} onClick={()=>void run(Check)}>检查更新</button>
-       {state.release?<button className="btn btn--primary" disabled={busy} onClick={()=>void run(Download)}>{state.error?'重试下载':'下载更新'}</button>:null}
+      {state.phase==='ready'?<Button label="重启安装" variant="primary" isDisabled={busy||confirm} onClick={()=>setConfirm(true)}/>:<>
+       <Button label="检查更新" variant="secondary" isDisabled={busy} onClick={()=>void run(Check)}/>
+       {state.release?<Button label={state.error?'重试下载':'下载更新'} variant="primary" isDisabled={busy} onClick={()=>void run(Download)}/>:null}
       </>}
      </>:null}
-    </div>
+    </HStack>
    </section>
   </Dialog>:null}
  </>

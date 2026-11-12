@@ -40,7 +40,7 @@ beforeEach(()=>{
  vi.mocked(StartBatch).mockImplementation(()=>resolved({outcome:'accepted',message:'',snapshot:running(preview)}))
  vi.mocked(StopBatch).mockImplementation(()=>resolved({outcome:'stopped',message:'',snapshot:{...running(preview),version:11,batchBlocked:false,batch:{...running(preview).batch!,state:'stopped'}}}))
 })
-async function openFiles(){render(<App/>);await userEvent.click(screen.getByRole('button',{name:'文件类型'}));await waitFor(()=>expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toBeEnabled())}
+async function openFiles(){render(<App/>);await userEvent.click(screen.getByRole('button',{name:'文件类型'}));await waitFor(()=>expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).not.toHaveAttribute('aria-disabled','true'))}
 async function chooseEditor(){await userEvent.click(screen.getByRole('button',{name:'选择应用…'}));await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}));return await screen.findByRole('dialog',{name:'预览批量设置'})}
 
 test('batch picker shows icons for installed copies and candidates outside the catalog',async()=>{
@@ -52,7 +52,7 @@ test('batch picker shows icons for installed copies and candidates outside the c
  await openFiles();await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}))
  await userEvent.click(screen.getByRole('button',{name:'选择应用…'}))
  const dialog=await screen.findByRole('dialog',{name:'为所选类型选择应用'})
- await waitFor(()=>expect(within(dialog).queryByRole('status')).not.toBeInTheDocument())
+ await waitFor(()=>expect(within(dialog).queryByText('正在查询系统候选…')).not.toBeInTheDocument())
  for(const copy of [...icons.apps.map(item=>item.app),candidate]){
   const option=within(dialog).getByRole('button',{name:`选择 ${copy.name} ${copy.path}`})
   expect(option.querySelector('img')).toHaveAttribute('src',`data:image/png;base64,${copy.iconData}`)
@@ -64,7 +64,9 @@ test('keeps selections across searches and views, and selects only current filte
  await openFiles()
  const search=screen.getByRole('searchbox',{name:'搜索文件类型'})
  await userEvent.type(search,'Markdown');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
- await userEvent.clear(search);await userEvent.type(search,'JSON');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
+ await userEvent.clear(search)
+ expect(screen.getByRole('checkbox',{name:'全选当前筛选结果'})).toBePartiallyChecked()
+ await userEvent.type(search,'JSON');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
  expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 2 个类型')
  for(const view of ['应用','URL 协议']){
   await userEvent.click(screen.getByRole('button',{name:view}))
@@ -90,11 +92,11 @@ test('previews selected types before one start, locks modifications and stops on
  await userEvent.click(within(dialog).getByRole('button',{name:'开始设置 2 项'}))
  const results=await screen.findByRole('dialog',{name:'最近一次批量设置'})
  expect(StartBatch).toHaveBeenCalledExactlyOnceWith('preview-1','','')
- expect(screen.getByRole('checkbox',{name:'勾选 JSON json'})).toBeDisabled()
+ expect(screen.getByRole('checkbox',{name:'勾选 JSON json'})).toHaveAttribute('aria-disabled','true')
  await userEvent.click(within(results).getByRole('button',{name:'停止后续设置'}))
  expect(StopBatch).toHaveBeenCalledExactlyOnceWith('batch-1')
  expect(await within(results).findByText('后续设置已停止')).toBeVisible()
- expect(within(results).getByRole('button',{name:'继续未执行的 1 项…'})).toBeDisabled()
+ expect(within(results).getByRole('button',{name:'继续未执行的 1 项…'})).toHaveAttribute('aria-disabled','true')
  expect(within(results).getByText('结果未定')).toBeVisible()
 })
 
