@@ -1,5 +1,4 @@
 import { Tooltip } from '@astryxdesign/core/Tooltip'
-import { Kbd } from '@astryxdesign/core/Kbd'
 import { Heading } from '@astryxdesign/core/Heading'
 import { Item } from '@astryxdesign/core/Item'
 import { TextInput } from '@astryxdesign/core/TextInput'
@@ -91,7 +90,7 @@ export default function App() {
  const {kind,appFilter,appQuery,filter,manualOnly,sourceFilter,applicationMatches,selectedMatch,selectedApp,visibleEntries,browsedSelected,selected,
   snapshot,entries,catalogLoading,catalogError,missingAppPath,detailOpen,inspectedCopy,requestEntryMissing,missingCopyPaths,emptyHeadline:browserEmptyHeadline}=view
  const {scan,retryCatalog,reparse,selectApp,openEntry,switchView,changeAppFilter,inspectCopy,closeCopy,closeDetails,dismissDetails,clearSearch,searchKey,listKey}=actions
- const {appSearch,associationSearch,appList,associationList,navigation}=refs
+ const {appSearch,associationSearch,appList,associationList}=refs
  const batchApps=useMemo(()=>(snapshot?.apps??[]).filter(item=>!item.unavailable).map(item=>item.app),[snapshot?.apps])
  const selectableEntries=kind==='file'?visibleEntries.filter(entry=>entry.resolved):[]
  const selectedVisible=selectableEntries.filter(entry=>batch.selected.has(entry.id)).length
@@ -149,7 +148,7 @@ export default function App() {
  return <><NotificationHost/><VStack gap={0} className="app-shell">
   <header className="global-header">
    <HStack gap={2} align="center" className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"/></svg><Text>Default Apps<small>默认应用管理</small></Text></HStack>
-   <nav ref={navigation} className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><Button label={viewNames[view]} icon={<Icon name={view}/>} variant="ghost" key={view} data-view={String(view)} aria-pressed={kind===view} onClick={()=>switchView(view)}/>)}</nav>
+   <nav className="view-navigation" aria-label="浏览入口">{(['app','file','scheme'] as View[]).map(view=><Button label={viewNames[view]} icon={<Icon name={view}/>} variant="ghost" key={view} aria-pressed={kind===view} onClick={()=>switchView(view)}/>)}</nav>
    <HStack gap={2} align="center" className="header-actions"><SoftwareUpdate/><ManualActions/><ManualActions kind="application" showStorageWarning={false}/><Button label={snapshot?.scanning ? '正在扫描…' : '重新扫描应用'} icon={<Icon name="refresh"/>} variant="ghost" isDisabled={snapshot?.scanning} onClick={()=>void scan(()=>setIssuesOpen(true))}/></HStack>
   </header>
   <LifecycleStatus changes={changes} observations={observations}/>{recovery.dialog}
@@ -161,23 +160,18 @@ export default function App() {
     <HStack gap={2} align="center" className="catalog-heading"><Heading level={2}>已安装应用</Heading><Text>{applicationMatches.length} / {snapshot?.apps?.length ?? 0}</Text></HStack>
     <HStack gap={2} align="center" className="application-filter" role="group" aria-label="应用类型筛选">{(['user','system','all'] as ApplicationFilter[]).map(value=><Button label={`${appFilterNames[value]}应用`} variant="ghost" key={value}  aria-pressed={appFilter===value} onClick={()=>changeAppFilter(value)}>{appFilterNames[value]}</Button>)}</HStack>
     <TextInput containerClassName="search-field" label="搜索应用" aria-label="搜索应用名称、版本、路径或声明" ref={appSearch} type="search" autoComplete="off" hasAutoCorrect={false} autoCapitalize="none" hasSpellCheck={false} startIcon={<Icon name="search"/>} placeholder="名称、版本、路径或声明" value={appQuery} onChange={actions.setAppQuery} onKeyDown={event=>searchKey(event,true)}/>
-    <p className="search-hint">匹配应用信息时显示全部关联；仅关联命中时显示匹配项。</p>
     <VStack gap={0} ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item,associationCount})=><Item as="button" role="button" key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} isSelected={item.app.path===selectedApp?.app.path} onClick={()=>selectApp(item.app.path)} startContent={<ApplicationIcon app={item.app} className="application-icon--row"/>} label={<HStack as="span" gap={2} align="center" wrap="wrap"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></HStack>} description={`版本 ${item.app.version || '未知'} · ${associationCount} 个关联`} endContent={<Icon name="chevron"/>}/>)}</VStack>
-    <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
    </aside> : null}
    <main className="workspace">
-    {kind!=='file' ? <header className="app-heading">
-     <HStack gap={2} align="center" className="page-identity"><VStack as="span" gap={0} className="page-icon" data-application={String(kind==='app' && !!selectedApp)}>{kind==='app' && selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name={kind}/>}</VStack><VStack gap={0}><Heading level={1}>{kind==='app' ? selectedApp?.app.name || '已安装应用' : viewNames[kind]}</Heading>
-      {kind==='app' && selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>{kind==='scheme' ? '查看 URL 协议，选择接收链接的默认应用。' : '这台 Mac 的实际默认与系统候选'}</p>}
+    {kind==='app' ? <header className="app-heading">
+     <HStack gap={2} align="center" className="page-identity"><VStack as="span" gap={0} className="page-icon" data-application={String(!!selectedApp)}>{selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name="app"/>}</VStack><VStack gap={0}><Heading level={1}>{selectedApp?.app.name || '已安装应用'}</Heading>
+      {selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>这台 Mac 的实际默认与系统候选</p>}
      </VStack></HStack>
     </header> : null}
     {catalogLoading || snapshot?.scanning ? <p className="scan-status" role="status">{snapshot?.scanning ? `正在扫描应用…已发现 ${snapshot.apps?.length ?? 0} 份` : '正在解析常用关联…'}</p> : null}
     {catalogError ? <VStack gap={0} className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><Button label="重试加载目录" variant="secondary" onClick={()=>void retryCatalog()}/></VStack> : null}
     {kind==='app' && missingAppPath ? <VStack gap={0} role="status" aria-label="原应用副本已不在目录中" className="missing-copy"><strong>原应用副本已不在目录中</strong><p>{missingAppPath}</p><p>可选择其他应用副本继续浏览。</p></VStack> : null}
     <section className="association-toolbar" aria-label="关联筛选">
-     <HStack className="association-summary" gap={3} align="center" wrap="wrap">
-      <Heading level={2}>{kind==='app' ? '应用关联' : '关联目录'}</Heading><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配关联 · 已是默认优先' : kind==='app' ? '已是默认优先' : '常用关联优先'}</p>
-     </HStack>
      <HStack className="association-filters" gap={3} align="end">
       <TextInput containerClassName="search-field" label={kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} ref={associationSearch} type="search" autoComplete="off" hasAutoCorrect={false} autoCapitalize="none" hasSpellCheck={false} startIcon={<Icon name="search"/>} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={actions.setFilter} onKeyDown={event=>searchKey(event)}/>
       {kind==='app' ? <Selector containerClassName="association-source-filter" label="来源" aria-label="筛选关联来源" value={sourceFilter} onChange={value=>actions.setSourceFilter(value as AssociationSourceFilter)} options={[...associationSourceOptions]} presentation="popover"/> : null}
@@ -186,7 +180,7 @@ export default function App() {
      </HStack>
     </section>
     <Table className="association-table" aria-label={kind==='app'?'应用关联':'关联目录'} data={tableRows} columns={tableColumns} idKey="id" density="compact" dividers="rows" hasHover verticalAlign="middle" textOverflow="wrap" plugins={{browser:tablePlugin}} emptyState={<VStack gap={0} className="empty-workspace"><VStack as="span" gap={0} className="empty-icon"><Icon name="search"/></VStack><Heading level={2}>{emptyHeadline}</Heading><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><HStack gap={2} align="center" className="empty-actions"><Button label={manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'} variant="secondary" onClick={clearSearch}/>{kind==='app' && !selectedApp && appFilter!=='all' ? <Button label="显示全部应用" variant="secondary" onClick={()=>changeAppFilter('all')}/> : null}{kind!=='file' ? <Button label="浏览文件类型" variant="secondary" onClick={()=>switchView('file')}/> : null}{kind!=='scheme' ? <Button label="浏览 URL 协议" variant="secondary" onClick={()=>switchView('scheme')}/> : null}</HStack></VStack>}/>
-    <footer className="browser-footer"><HStack as="span" gap={2} align="center" className="footer-source"><VStack as="span" gap={0} className="status-dot"/>{kind==='app' ? '同一扩展名可能对应多个类型；当前默认按具体类型查询。' : '默认应用由系统独立查询'}</HStack>{snapshot?.issues?.length ? <Button label={`扫描问题 · ${snapshot.issues.length}`} variant="secondary" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</Button> : null}<HStack as="span" gap={2} align="center" className="keyboard-hint"><Kbd keys="meta+1"/><Kbd keys="2"/><Kbd keys="3"/> 切换入口</HStack></footer>
+    <footer className="browser-footer"><HStack as="span" gap={2} align="center" className="footer-source"><VStack as="span" gap={0} className="status-dot"/>{kind==='app' ? '同一扩展名可能对应多个类型；当前默认按具体类型查询。' : '默认应用由系统独立查询'}</HStack>{snapshot?.issues?.length ? <Button label={`扫描问题 · ${snapshot.issues.length}`} variant="secondary" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</Button> : null}</footer>
    </main>
   </Grid>
   <FileDrop controller={batch}/>

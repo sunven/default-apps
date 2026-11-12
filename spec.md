@@ -8,6 +8,8 @@
 
 2026-11-11 增补：[拖入文件规格](docs/file-drop-associations.md)支持将多个普通文件拖入已打开窗口，按类型识别、去重、统一选择应用并预览后设置。文件仍仅用于识别整类关联；新增入口及验证范围见[拖入文件验收记录](docs/file-drop-associations-validation.md)。
 
+2026-11-12 调整：取消应用自定义快捷键，包括 ⌘F 聚焦搜索和 ⌘1／⌘2／⌘3 切换入口，同时移除侧栏与页脚的键盘提示。保留列表方向键、Tab、Enter、Escape 等基础控件操作及 macOS 原生菜单行为；早期决议与原型中的自定义快捷键要求以本次调整为准。
+
 本文件是开发入口；具体规则以链接的已确认决议为准。用户已确认常用项集合、分层验收与实机限制，规格没有剩余产品决策。2026-11-05 定案时产品还是 Wails 脚手架；现已实现，成品证据与限制见[最终验收报告](.scratch/default-apps-v1-implementation/assets/11/README.md)。下文的规范性要求保持不变。
 
 ## 用户目标与范围
@@ -27,7 +29,7 @@
 | 主入口 | A 应用优先，保留文件类型、URL 协议入口 | [主流程决议](.scratch/default-apps-v1/issues/04-main-workflow-prototype.md) |
 | 修改方式 | 逐项立即提交；持续等待；系统结果与回读分开，成功且精确路径一致才确认 | [修改语义决议](.scratch/default-apps-v1/issues/05-change-semantics-prototype.md) |
 | 架构与存储 | Go 服务＋薄 cgo／Objective-C 适配器；Go 持有请求；保存手动项和单条未定记录 | [架构决议](.scratch/default-apps-v1/issues/06-architecture-boundary.md)、[已确认架构方案](.scratch/default-apps-v1/assets/architecture-proposal.md) |
-| 桌面交互 | 双列表独立滚动，最小内容区域 1000×700，已确认搜索、空态与完整键盘规则 | [桌面交互决议](.scratch/default-apps-v1/issues/09-desktop-workflow-details.md) |
+| 桌面交互 | 双列表独立滚动，最小内容区域 1000×700，支持搜索、空态与基础键盘操作；自定义快捷键已取消 | [桌面交互决议](.scratch/default-apps-v1/issues/09-desktop-workflow-details.md) |
 | 平台实证 | 规划阶段的独立探针记录；正式产品后续实证与限制见最终验收报告 | [原生探针结论](.scratch/default-apps-v1/issues/08-native-behavior-probe.md) |
 | 完成标准 | 未来产品的场景、测试分层、成品实机范围与证据记录 | [验收工单](.scratch/default-apps-v1/issues/07-spec-acceptance.md)、[已确认验收清单](.scratch/default-apps-v1/assets/acceptance-criteria.md) |
 
@@ -65,7 +67,7 @@
 - [规格地图](.scratch/default-apps-v1/map.md)：决策索引与范围。
 - [已选应用优先主界面原型](frontend/src/prototypes/default-apps/README.md)：其历史暂存语义已由修改决议替换。
 - [修改交互原型](frontend/src/prototypes/default-apps/change-semantics-README.md)：含未选中的历史比较情景，不能将它们纳入产品。
-- [桌面工作流原型](frontend/src/prototypes/default-apps/desktop-workflow-README.md)：已选 A 滚动、1000×700 与完整键盘规则；B/C 与演练控制栏仅供回看。
+- [桌面工作流原型](frontend/src/prototypes/default-apps/desktop-workflow-README.md)：已选 A 滚动与 1000×700；自定义快捷键已取消，B/C 与演练控制栏仅供回看。
 - [应用声明抽样](.scratch/default-apps-v1/assets/catalog-sample/README.md)：真实目录规模与压力样本区分。
 
 决策冲突时以相应工单的最终 Answer 和已确认架构为准；原型示例、历史提案和独立探针仅提供证据。全部决策工单已解决；本文件是规范入口；产品实现与成品验收另由实施工单和最终验收报告记录。

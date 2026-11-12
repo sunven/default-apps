@@ -57,7 +57,6 @@ function environment(initial = snapshot) {
     setScroll: vi.fn<BrowserDOMAdapter['setScroll']>(positions => { scroll = { ...scroll, ...positions } }),
     focus: vi.fn<BrowserDOMAdapter['focus']>(),
     visibleAssociationIDs: vi.fn(() => new Set([jpeg.id])),
-    hasOpenDialog: vi.fn(() => false),
   }
   return { catalog, dom, listeners, publish: (value: Snapshot) => { for (const accept of listeners) accept(value) },
     scrollTo: (apps: number, associations: number) => { scroll = { apps, associations } } }
@@ -241,8 +240,7 @@ test('each entrance restores browsing independently of temporary request details
   act(() => browser.result.current.actions.setAppQuery('Reader'))
   act(() => browser.result.current.actions.selectEntry(jpeg.id))
   browser.scrollTo(180, 96)
-  act(() => browser.result.current.actions.switchView('file', true))
-  expect(browser.dom.focus).toHaveBeenLastCalledWith({ kind: 'view', view: 'file' })
+  act(() => browser.result.current.actions.switchView('file'))
   act(() => browser.result.current.actions.setFilter('.jpg'))
   act(() => browser.result.current.actions.moveSelection(false, 'End'))
   browser.scrollTo(180, 83)

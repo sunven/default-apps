@@ -6,7 +6,7 @@ import { GetSnapshot, Reparse, StartScan } from '../bindings/github.com/sunven/d
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import type { AppCopy, Association } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
-import { isComposing, plainKey } from './keyboard'
+import { plainKey } from './keyboard'
 import { notify, dismissNotification } from './Notifications'
 import { matchesAssociationSource, type AssociationSourceFilter } from './associationSources'
 
@@ -15,7 +15,6 @@ export type ApplicationFilter = 'user' | 'system' | 'all'
 type ScrollPositions = { apps?: number; associations?: number }
 type FocusTarget =
   | { kind: 'appSearch' | 'associationSearch' }
-  | { kind: 'view'; view: BrowserView }
   | { kind: 'application'; path: string }
   | { kind: 'association'; id: string }
 
@@ -31,14 +30,12 @@ export type BrowserDOMAdapter = {
   setScroll(positions: ScrollPositions): void
   focus(target: FocusTarget): void
   visibleAssociationIDs(): Set<string>
-  hasOpenDialog(): boolean
 }
 type BrowserRefs = {
   appSearch: RefObject<HTMLInputElement | null>
   associationSearch: RefObject<HTMLInputElement | null>
   appList: RefObject<HTMLDivElement | null>
   associationList: RefObject<HTMLDivElement | null>
-  navigation: RefObject<HTMLElement | null>
 }
 
 const wailsCatalog: CatalogAdapter = {
@@ -57,7 +54,6 @@ function browserDOM(refs: BrowserRefs): BrowserDOMAdapter {
       let element: HTMLElement | null | undefined
       if (target.kind === 'appSearch') element = refs.appSearch.current
       if (target.kind === 'associationSearch') element = refs.associationSearch.current
-      if (target.kind === 'view') element = Array.from(refs.navigation.current?.querySelectorAll<HTMLButtonElement>('[data-view]') ?? []).find(row => row.dataset.view === target.view)
       if (target.kind === 'application') element = Array.from(refs.appList.current?.querySelectorAll<HTMLButtonElement>('[data-app-path]') ?? []).find(row => row.dataset.appPath === target.path)
       if (target.kind === 'association') element = Array.from(refs.associationList.current?.querySelectorAll<HTMLButtonElement>('[data-association-id]') ?? []).find(row => row.dataset.associationId === target.id)
       element?.focus({ preventScroll: true })
@@ -72,7 +68,6 @@ function browserDOM(refs: BrowserRefs): BrowserDOMAdapter {
       }
       return ids
     },
-    hasOpenDialog: () => !!document.querySelector('dialog[open]'),
   }
 }
 
@@ -163,7 +158,7 @@ type Action =
   | { type: 'rememberAppSelection'; path: string }
   | { type: 'selectApp'; path: string; focus?: boolean }
   | { type: 'selectEntry'; id: string; focus?: boolean; open?: boolean }
-  | { type: 'switchView'; view: BrowserView; scroll: ScrollPositions; focus?: boolean }
+  | { type: 'switchView'; view: BrowserView; scroll: ScrollPositions }
   | { type: 'move'; apps: boolean; key: string }
   | { type: 'searchDown'; apps: boolean }
   | { type: 'enterAssociations' }
@@ -232,8 +227,7 @@ function transition(state: State, action: Action): State {
       const appScroll = changed && state.kind === 'app' ? action.scroll.apps ?? 0 : state.appScroll
       return { ...state, kind: action.view, sessions, appScroll, filter: changed ? session.query : state.filter, manualOnly: changed ? session.manualOnly : state.manualOnly, selectedID: changed ? session.selectedID : state.selectedID,
         reparseAnchor: null, detailOpen: false, requestEntry: null, inspectedCopy: null,
-        layout: { scroll: changed ? { associations: session.scroll, apps: action.view === 'app' ? appScroll : undefined } : undefined,
-          focus: action.focus ? { kind: 'view', view: action.view } : undefined } }
+        layout: { scroll: changed ? { associations: session.scroll, apps: action.view === 'app' ? appScroll : undefined } : undefined } }
     }
     case 'move': {
       const current = browse(state)
@@ -282,8 +276,8 @@ function emptyHeadline(state: State, current: ReturnType<typeof browse>) {
 export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; dom?: BrowserDOMAdapter }) {
   const [state, dispatch] = useReducer(reduce, undefined, initialState)
   const appSearch = useRef<HTMLInputElement>(null), associationSearch = useRef<HTMLInputElement>(null)
-  const appList = useRef<HTMLDivElement>(null), associationList = useRef<HTMLDivElement>(null), navigation = useRef<HTMLElement>(null)
-  const refs = useMemo(() => ({ appSearch, associationSearch, appList, associationList, navigation }), [])
+  const appList = useRef<HTMLDivElement>(null), associationList = useRef<HTMLDivElement>(null)
+  const refs = useMemo(() => ({ appSearch, associationSearch, appList, associationList }), [])
   const catalog = environment?.catalog ?? wailsCatalog
   const dom = useMemo(() => environment?.dom ?? browserDOM(refs), [environment?.dom, refs])
   const lifecycle = useRef(0), catalogSequence = useRef(0)
@@ -320,9 +314,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
   },[])
   const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.defaultPaths, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.sourceFilter, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
   const selected = useRef(current.selected)
-  const activeView = useRef(state.kind)
   useLayoutEffect(() => { selected.current = current.selected }, [current.selected])
-  useLayoutEffect(() => { activeView.current = state.kind }, [state.kind])
   // Remember the rendered copy; batched startup snapshots may replace unseen copies.
   useLayoutEffect(() => {
     if (state.kind === 'app' && current.selectedApp && state.selectedAppPath !== current.selectedApp.app.path) {
@@ -403,7 +395,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     selectApp: (path: string, focus = false) => dispatch({ type: 'selectApp', path, focus }),
     selectEntry: (id: string, focus = false) => dispatch({ type: 'selectEntry', id, focus }),
     openEntry: (id: string) => dispatch({ type: 'selectEntry', id, open: true }),
-    switchView: (view: BrowserView, focus = false) => dispatch({ type: 'switchView', view, focus, scroll: dom.readScroll() }),
+    switchView: (view: BrowserView) => dispatch({ type: 'switchView', view, scroll: dom.readScroll() }),
     moveSelection: (apps: boolean, key: string) => dispatch({ type: 'move', apps, key }),
     enterAssociations: () => dispatch({ type: 'enterAssociations' }),
     returnToRequest: (association: Association) => dispatch({ type: 'returnToRequest', association }),
@@ -423,15 +415,6 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
       if (event.key === 'Enter' && apps) { event.preventDefault(); dispatch({ type: 'enterAssociations' }) }
     },
   }), [scan, retryCatalog, reparse, dom])
-  useEffect(() => {
-    const keydown = (event: globalThis.KeyboardEvent) => {
-      if (isComposing(event) || dom.hasOpenDialog() || !event.metaKey || event.altKey || event.ctrlKey) return
-      if (event.key.toLowerCase() === 'f') { event.preventDefault(); dom.focus({ kind: activeView.current === 'app' ? 'appSearch' : 'associationSearch' }) }
-      if (['1', '2', '3'].includes(event.key)) { event.preventDefault(); actions.switchView((['app', 'file', 'scheme'] as BrowserView[])[Number(event.key) - 1], true) }
-    }
-    document.addEventListener('keydown', keydown)
-    return () => document.removeEventListener('keydown', keydown)
-  }, [actions, dom])
   // Metadata, dialogs and sorting must not restart association query rounds.
   // Reverse default associations can only be discovered by querying the catalog,
   // including entries the selected application has never declared.
