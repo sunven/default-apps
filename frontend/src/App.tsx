@@ -7,6 +7,7 @@ import { Selector } from '@astryxdesign/core/Selector'
 import { CheckboxInput } from '@astryxdesign/core/CheckboxInput'
 import { Button } from '@astryxdesign/core/Button'
 import { Grid } from '@astryxdesign/core/Grid'
+import { Table, pixel, proportional, type TableColumn, type TablePlugin } from '@astryxdesign/core/Table'
 import { HStack } from '@astryxdesign/core/HStack'
 import { Text } from '@astryxdesign/core/Text'
 import { VStack } from '@astryxdesign/core/VStack'
@@ -103,6 +104,46 @@ export default function App() {
  const transportError=selected ? rowErrors[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.pending&&!batch.working&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
+ const tableRows=useMemo(()=>visibleEntries.map(entry=>({
+  id:entry.id,entry,
+  isDefault:!!selectedApp&&isTrustworthy(observations[entry.id]?.default)&&!rowErrors[entry.id]&&observations[entry.id]?.default.app?.path===selectedApp.app.path,
+  isManual:entry.sources?.some(source=>source.kind==='manual'),
+  protocol:entry.association.key || entry.sources?.[0]?.rawInput,
+ })),[visibleEntries,selectedApp,observations,rowErrors])
+ type AssociationRow=(typeof tableRows)[number]
+ const tableColumns:TableColumn<AssociationRow>[]=[
+  ...(kind==='file' ? [{
+   key:'selection',width:pixel(48),
+   header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={()=>batch.toggleVisible(visibleEntries)}/>,
+   renderCell:({entry}:AssociationRow)=><BatchCheckbox checked={batch.selected.has(entry.id)} disabled={batch.selectionBlocked||!entry.resolved} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>batch.toggle(entry)}/>,
+  }] : []),
+  {key:'name',header:kind==='scheme'?'关联项':'名称',width:proportional(1.2,{minWidth:144}),renderCell:({entry,isDefault,isManual,protocol})=><Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id}  aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&selectedApp ? <DeclarationOrigin entry={entry} appPath={selectedApp.app.path} isDefault={isDefault}/> : null}</VStack></HStack></Button>},
+  ...(kind!=='scheme' ? [
+   {key:'extensions',header:'扩展名',width:proportional(.75,{minWidth:80}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-extensions">{entry.extensions?.map(value=>`.${value}`).join(' · ') || '—'}</Text>},
+   {key:'identifier',header:'类型 ID',width:proportional(1.35,{minWidth:160}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</Text>},
+  ] : []),
+  {key:'default',header:'当前默认应用',width:proportional(1,{minWidth:120}),renderCell:({entry})=><VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></VStack>},
+  {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isDefault})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail"  tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&selectedApp?<Button label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)}  tooltip={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} isDisabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
+      {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><Text key={r.requestID} className="change-row-state" data-confirmed={String(r.confirmed)}>{requestLabel(r)}</Text>)}</HStack>},
+ ]
+ // Keep browser navigation and batch selection independent. The name button owns
+ // keyboard focus; clicks on non-interactive cells open the same details.
+ const tablePlugin=useMemo<TablePlugin<AssociationRow>>(()=>({
+  transformScrollWrapper:props=>({...props,htmlProps:{...props.htmlProps,
+   ref:associationList,className:[props.htmlProps.className,'association-list'].filter(Boolean).join(' '),
+   role:'region','aria-label':kind==='app'?'应用关联列表':'关联列表',onKeyDown:event=>listKey(event),
+  }}),
+  transformBodyRow:(props,{entry})=>({...props,htmlProps:{...props.htmlProps,
+   className:[props.htmlProps.className,'association-row'].filter(Boolean).join(' '),
+   'data-selected':String(browsedSelected?.id===entry.id),
+   'aria-current':browsedSelected?.id===entry.id?true:undefined,
+   onClick:event=>{
+    if(event.target instanceof Element&&event.target.closest('button, input, label, a, select, textarea, [role="checkbox"]'))return
+    event.currentTarget.querySelector<HTMLButtonElement>('[data-association-id]')?.focus({preventScroll:true})
+    openEntry(entry.id)
+   },
+  }}),
+ }),[associationList,kind,listKey,browsedSelected?.id,openEntry])
  return <><NotificationHost/><VStack gap={0} className="app-shell">
   <header className="global-header">
    <HStack gap={2} align="center" className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"/></svg><Text>Default Apps<small>默认应用管理</small></Text></HStack>
@@ -122,7 +163,7 @@ export default function App() {
     <VStack gap={0} ref={appList} className="application-list" role="region" aria-label="已安装应用列表" onKeyDown={event=>listKey(event,true)}>{applicationMatches.map(({item,associationCount})=><Item as="button" role="button" key={item.app.path} data-app-path={item.app.path} className="application-row" tabIndex={item.app.path===selectedApp?.app.path || (!selectedApp && item===applicationMatches[0]?.item) ? 0 : -1} aria-pressed={item.app.path===selectedApp?.app.path} aria-label={`${item.app.name} ${item.app.version} ${item.app.path}${item.app.system ? ' 系统应用' : ''}`} isSelected={item.app.path===selectedApp?.app.path} onClick={()=>selectApp(item.app.path)} startContent={<ApplicationIcon app={item.app} className="application-icon--row"/>} label={<HStack as="span" gap={2} align="center" wrap="wrap"><strong>{item.app.name}</strong><SystemAppBadge app={item.app}/></HStack>} description={`版本 ${item.app.version || '未知'} · ${associationCount} 个关联`} endContent={<Icon name="chevron"/>}/>)}</VStack>
     <p className="sidebar-note">⌘F 搜索 · ↑ ↓ 选中 · Enter 进入关联</p>
    </aside> : null}
-   <main className={`workspace${kind!=='scheme' ? ' file-columns' : ''}${kind==='file'?' batch-file-columns':''}`}>
+   <main className="workspace">
     {kind!=='file' ? <header className="app-heading">
      <HStack gap={2} align="center" className="page-identity"><VStack as="span" gap={0} className="page-icon" data-application={String(kind==='app' && !!selectedApp)}>{kind==='app' && selectedApp ? <ApplicationIcon app={selectedApp.app} className="application-icon--page"/> : <Icon name={kind}/>}</VStack><VStack gap={0}><Heading level={1}>{kind==='app' ? selectedApp?.app.name || '已安装应用' : viewNames[kind]}</Heading>
       {kind==='app' && selectedApp ? <><p>版本 {selectedApp.app.version || '未知'} · {selectedApp.app.bundleID || 'Bundle ID 未提供'}</p><p className="heading-path" title={selectedApp.app.path}>{selectedApp.app.displayPath || selectedApp.app.path}</p>{selectedApp.unavailable ? <p className="query-error" role="status">手动应用位置暂不可用 · {selectedApp.app.metadataError || '原副本未找到'}<br/>{selectedApp.app.path}</p> : selectedApp.app.metadataError ? <p className="query-error">应用信息暂不可用：{selectedApp.app.metadataError}</p> : null}</> : <p>{kind==='scheme' ? '查看 URL 协议，选择接收链接的默认应用。' : '这台 Mac 的实际默认与系统候选'}</p>}
@@ -142,21 +183,7 @@ export default function App() {
 
      </HStack>
     </section>
-    <Grid className="column-labels">{kind==='file'?<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={()=>batch.toggleVisible(visibleEntries)}/>:null}<Text>{kind!=='scheme' ? '名称' : '关联项'}</Text>{kind!=='scheme' ? <><Text>扩展名</Text><Text>类型 ID</Text></> : null}<Text>当前默认应用</Text><Text>操作</Text></Grid>
-    <VStack gap={0} ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '应用关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
-     {visibleEntries.map(entry=>{
-      const isDefault=!!selectedApp&&isTrustworthy(observations[entry.id]?.default)&&!rowErrors[entry.id]&&observations[entry.id]?.default.app?.path===selectedApp.app.path
-      const isManual=entry.sources?.some(source=>source.kind==='manual')
-      const protocol=entry.association.key || entry.sources?.[0]?.rawInput
-      return <Grid className="association-row" data-selected={String(browsedSelected?.id===entry.id)} key={entry.id}>
-      {kind==='file'?<BatchCheckbox checked={batch.selected.has(entry.id)} disabled={batch.selectionBlocked||!entry.resolved} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>batch.toggle(entry)}/>:null}
-      <Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id}  aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&selectedApp ? <DeclarationOrigin entry={entry} appPath={selectedApp.app.path} isDefault={isDefault}/> : null}</VStack></HStack>{kind!=='scheme' ? <><Text className="association-extensions">{entry.extensions?.map(value=>`.${value}`).join(' · ') || '—'}</Text><Text className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</Text></> : null}</Button>
-      <VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></VStack>
-      <HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail"  tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}>详情…</Button>{kind==='app'&&selectedApp?<Button label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} variant="secondary" size="sm" className="row-submit" data-current={String(isDefault)}  tooltip={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} isDisabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?<Icon name="check"/>:null}{isDefault?'已是默认':'设为默认'}</Button>:null}
-      {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><Text key={r.requestID} className="change-row-state" data-confirmed={String(r.confirmed)}>{requestLabel(r)}</Text>)}</HStack>
-     </Grid>})}
-     {!visibleEntries.length ? <VStack gap={0} className="empty-workspace"><VStack as="span" gap={0} className="empty-icon"><Icon name="search"/></VStack><Heading level={2}>{emptyHeadline}</Heading><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><HStack gap={2} align="center" className="empty-actions"><Button label={manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'} variant="secondary" onClick={clearSearch}/>{kind==='app' && !selectedApp && appFilter!=='all' ? <Button label="显示全部应用" variant="secondary" onClick={()=>changeAppFilter('all')}/> : null}{kind!=='file' ? <Button label="浏览文件类型" variant="secondary" onClick={()=>switchView('file')}/> : null}{kind!=='scheme' ? <Button label="浏览 URL 协议" variant="secondary" onClick={()=>switchView('scheme')}/> : null}</HStack></VStack> : null}
-    </VStack>
+    <Table className="association-table" aria-label={kind==='app'?'应用关联':'关联目录'} data={tableRows} columns={tableColumns} idKey="id" density="compact" dividers="rows" hasHover verticalAlign="middle" textOverflow="wrap" plugins={{browser:tablePlugin}} emptyState={<VStack gap={0} className="empty-workspace"><VStack as="span" gap={0} className="empty-icon"><Icon name="search"/></VStack><Heading level={2}>{emptyHeadline}</Heading><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><HStack gap={2} align="center" className="empty-actions"><Button label={manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'} variant="secondary" onClick={clearSearch}/>{kind==='app' && !selectedApp && appFilter!=='all' ? <Button label="显示全部应用" variant="secondary" onClick={()=>changeAppFilter('all')}/> : null}{kind!=='file' ? <Button label="浏览文件类型" variant="secondary" onClick={()=>switchView('file')}/> : null}{kind!=='scheme' ? <Button label="浏览 URL 协议" variant="secondary" onClick={()=>switchView('scheme')}/> : null}</HStack></VStack>}/>
     <footer className="browser-footer"><HStack as="span" gap={2} align="center" className="footer-source"><VStack as="span" gap={0} className="status-dot"/>{kind==='app' ? '同一扩展名可能对应多个类型；当前默认按具体类型查询。' : '默认应用由系统独立查询'}</HStack>{snapshot?.issues?.length ? <Button label={`扫描问题 · ${snapshot.issues.length}`} variant="secondary" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</Button> : null}<HStack as="span" gap={2} align="center" className="keyboard-hint"><Kbd keys="meta+1"/><Kbd keys="2"/><Kbd keys="3"/> 切换入口</HStack></footer>
    </main>
   </Grid>

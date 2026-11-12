@@ -1,4 +1,3 @@
-.batch-file-columns{--association-selection-column:var(--spacing-6);--association-action-width:4.75rem}
 .batch-selection-bar,.batch-progress{display:flex;align-items:center;gap:0.875rem;padding:0.625rem var(--spacing-5);border-bottom:0.0625rem solid var(--line);flex:none;min-width:0}
 .batch-selection-bar{background:var(--selected)}
 .batch-selection-bar>span,.batch-progress-copy>span{font-size:var(--spacing-3);color:var(--muted)}

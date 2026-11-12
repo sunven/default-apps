@@ -6,7 +6,6 @@
  --app-sidebar-width:17.5rem;
  --app-row-height:3.75rem;
  --app-identity-size:4rem;
- --app-action-width:10rem;
  --bg:var(--color-background-surface);
  --ground:var(--color-background-body);
  --surface:var(--color-background-muted);
@@ -97,17 +96,19 @@ kbd {font:inherit;font-size:0.6875rem;line-height:1.125rem;color:var(--muted);bo
 .association-filters {min-width:0}
 .association-source-filter {display:flex;flex-direction:column;gap:var(--spacing-1);flex:none;font-size:var(--spacing-3);color:var(--muted)}
 .manual-only-filter {display:flex;align-items:center;gap:var(--spacing-2);min-height:var(--spacing-10);white-space:nowrap;font-size:var(--app-text-small);color:var(--muted);cursor:pointer}
-.column-labels,.association-row {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) var(--app-action-width);gap:var(--spacing-3);align-items:center}
-.file-columns .column-labels,.file-columns .association-row {grid-template-columns:var(--association-selection-column,) minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr) var(--association-action-width,var(--app-action-width))}
-.column-labels {padding:var(--spacing-2) var(--gutter);color:var(--muted);font-size:var(--app-text-small);background:var(--surface);border:0;flex:none}
-.column-labels>:last-child {text-align:right}
-.association-list {overflow:auto;overscroll-behavior:contain;min-height:0;flex:1;padding:0 var(--gutter);scrollbar-width:thin}
-.association-row {position:relative;min-height:var(--app-row-height);padding:var(--spacing-2) 0;border-bottom:0.0625rem solid var(--line)}
-.association-row:last-child {border-bottom:0}
-.association-row[data-selected=true] {--muted:var(--color-text-primary);background:var(--selected);box-shadow:calc(-1 * var(--spacing-3)) 0 var(--selected),var(--spacing-3) 0 var(--selected);border-color:transparent;border-radius:var(--r-sm)}
-.association-name {border:0.0625rem solid transparent;border-radius:var(--spacing-1-5);background:transparent;display:flex;justify-content:flex-start;text-align:left;gap:var(--spacing-2);width:100%;min-width:0;padding:var(--spacing-0-5) 0}
-.file-columns .association-name {display:grid;grid-column:span 3;grid-template-columns:subgrid;gap:inherit;align-items:center}
+/* WebKit's composited scroll layer can leak row pixels above a sticky header at
+   fractional viewport edges. Clip the scroll surface at the same boundary. */
+.association-list {overflow:auto;clip-path:inset(0);overscroll-behavior:contain;min-height:0;flex:1;scrollbar-width:thin;margin:0;border-radius:0}
+.association-table {--table-sticky-background:var(--color-background-surface);width:100%}
+.association-table thead {position:sticky;top:0;z-index:1;background:var(--color-background-surface)}
+.association-table th {color:var(--color-text-secondary);background:var(--color-background-muted)}
+.association-table :is(th,td):first-child {padding-inline-start:var(--gutter)}
+.association-table :is(th,td):last-child {padding-inline-end:var(--gutter)}
+.association-table .association-row {height:var(--app-row-height);cursor:pointer}
+.association-table .association-row[data-selected=true] {--muted:var(--color-text-primary);--table-row-overlay:var(--color-accent-muted);background:var(--color-accent-muted)}
+.association-name {border:0;border-radius:var(--radius-element);background:transparent;justify-content:flex-start;text-align:left;width:100%;min-width:0;padding:var(--spacing-0-5) 0;height:auto;white-space:normal}
 .association-name:hover:not(:disabled) {background:transparent;border-color:transparent}
+.association-table .row-actions button {flex:none}
 .association-title {display:flex;align-items:center;gap:var(--spacing-2);min-width:0}
 .association-extensions,.association-identifier {font-size:var(--app-text-small);font-weight:400;color:var(--muted);min-width:0;overflow-wrap:anywhere}
 .association-label {display:flex;flex-direction:column;gap:0;min-width:0}
@@ -178,7 +179,6 @@ kbd {font:inherit;font-size:0.6875rem;line-height:1.125rem;color:var(--muted);bo
  .view-navigation button {padding:0.1875rem var(--spacing-2)}
  .page-icon {width:3rem;height:3rem}
  .page-identity {gap:var(--spacing-2)}
- .column-labels,.association-row {gap:var(--spacing-2);grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) var(--app-action-width)}
  .association-icon {display:none}
  .association-toolbar .search-field {width:auto}
  .keyboard-hint {display:none}}
@@ -195,10 +195,6 @@ kbd {font:inherit;font-size:0.6875rem;line-height:1.125rem;color:var(--muted);bo
  .association-toolbar {flex-wrap:wrap;gap:var(--spacing-2)}
  .association-filters {width:100%;flex-wrap:wrap;gap:var(--spacing-1-5) var(--spacing-3)}
  .association-toolbar .search-field {width:auto;flex:1;min-width:10rem}
- .column-labels,.association-row {grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--spacing-1-5) 0.625rem}
- .file-columns .column-labels,.file-columns .association-row {grid-template-columns:var(--association-selection-column,) minmax(0,1fr) minmax(0,.8fr) minmax(0,1.3fr) minmax(0,.85fr)}
- .column-labels>:last-child {display:none}
- .row-actions {grid-column:1 / -1}
  .keyboard-hint {display:none}
  h1 {font-size:var(--spacing-6)}}
 @media (max-width:37.5rem) {
@@ -221,8 +217,7 @@ kbd {font:inherit;font-size:0.6875rem;line-height:1.125rem;color:var(--muted);bo
  .sidebar-note {display:none}
  .workspace {min-height:31.25rem;border-radius:var(--r-md)}
  .app-heading {padding-top:var(--spacing-3);padding-bottom:var(--spacing-3)}
- .association-list {overflow:visible;flex:auto}
- .association-row {padding:var(--spacing-2) 0;min-height:6rem}
+ .association-list {flex:auto;max-height:70dvh}
  .declared-default {align-self:start;padding-top:0.1875rem}
  .association-label>span {font-size:var(--spacing-3)}
  .browser-footer {flex-wrap:wrap}
@@ -238,10 +233,6 @@ kbd {font:inherit;font-size:0.6875rem;line-height:1.125rem;color:var(--muted);bo
  .section-heading {align-items:flex-start;gap:var(--spacing-1-5)}
  .section-heading>span {white-space:nowrap}}
 
-/* Dense association rows share the table columns through Button's content slots. */
-.association-name {height:auto;white-space:normal}
-.association-name > span:first-child,
-.association-name > span:first-child > span {display:contents}
 .application-row,.batch-app-option {flex:none}
 .application-row .astryx-text,.batch-app-option .astryx-text {overflow-wrap:anywhere;white-space:normal}
 .association-source-filter {min-width:9rem}

@@ -515,3 +515,20 @@ test('manual-only filtering combines with search, remembers each view and clears
  expect(screen.getByRole('searchbox',{name:'搜索文件类型'})).toHaveValue('')
  expect(screen.getByRole('button',{name:'JPEG 导出 test.independent.jpg'})).toBeVisible()
 })
+
+
+test('association table keeps type identity in its own cell and opens details from that cell',async()=>{
+ render(<App/>)
+ const table=await screen.findByRole('table',{name:'应用关联'})
+ const name=await within(table).findByRole('button',{name:'JPEG 图像 public.jpeg'})
+ const row=name.closest('tr')!
+ expect(within(table).getAllByRole('columnheader').map(cell=>cell.textContent)).toEqual(['名称','扩展名','类型 ID','当前默认应用','操作'])
+ const identifier=within(row).getByRole('cell',{name:'public.jpeg'})
+ expect(within(row).getByRole('cell',{name:'.jpg · .jpeg'})).toBeVisible()
+ await userEvent.click(identifier)
+ expect(screen.getByRole('dialog',{name:'JPEG 图像'})).toBeVisible()
+ await userEvent.keyboard('{Escape}')
+ expect(name).toHaveFocus()
+ await userEvent.keyboard('{ArrowDown}{Enter}')
+ expect(screen.getByRole('dialog',{name:'JPEG 导出'})).toBeVisible()
+})

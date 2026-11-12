@@ -133,3 +133,25 @@ test('partial results remain distinct and retry previews only problem items',asy
  expect(last[0]!.map(item=>item.association.key)).toEqual(['json','text'])
  expect(last[2]).toBe('batch-1');expect(StartBatch).toHaveBeenCalledTimes(1)
 })
+
+
+test('table cell activation and checkbox selection stay independent',async()=>{
+ await openFiles()
+ const table=screen.getByRole('table',{name:'关联目录'})
+ const name=within(table).getByRole('button',{name:'Markdown markdown'})
+ const row=name.closest('tr')!
+ const checkbox=within(row).getByRole('checkbox',{name:'勾选 Markdown markdown'})
+ await userEvent.click(checkbox)
+ expect(checkbox).toBeChecked()
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+ await userEvent.click(within(row).getByRole('cell',{name:'markdown'}))
+ expect(screen.getByRole('dialog',{name:'Markdown'})).toBeVisible()
+ expect(checkbox).toBeChecked()
+ await userEvent.keyboard('{Escape}')
+ checkbox.focus()
+ await userEvent.keyboard(' ')
+ expect(checkbox).not.toBeChecked()
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+ expect(name).toHaveAttribute('aria-pressed','true')
+ expect(StartBatch).not.toHaveBeenCalled()
+})
