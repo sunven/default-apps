@@ -10,7 +10,7 @@
 .change-target {margin-top:var(--spacing-1);overflow-wrap:anywhere}
 .change-status p,.recovery-status p,.lifecycle-explanation p {overflow-wrap:anywhere}
 .change-error {color:var(--warning)}
-.change-copy-action {margin-top:var(--spacing-2);margin-right:var(--spacing-1-5);font-size:var(--spacing-3)}
+.change-copy-action {flex:none;align-self:flex-start;font-size:var(--spacing-3)}
 .row-actions {display:flex;gap:var(--spacing-1);align-items:center;justify-content:flex-end;flex-wrap:wrap}
 .row-actions button {padding:var(--spacing-1) var(--spacing-2);min-height:var(--size-element-md);font-size:var(--app-text-small);white-space:nowrap}
 .change-row-state {width:100%;text-align:right;text-wrap:balance;font-size:0.6875rem;line-height:1.5;color:var(--warning)}

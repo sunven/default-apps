@@ -23,7 +23,7 @@ export function Dialog({ title, subtitle, onClose, children, fileDrop=false }: {
   }
  },[])
  return createPortal(<AstryxDialog ref={ref} isOpen onOpenChange={open=>{if(!open)onClose()}} purpose="form" padding={0} width="43.75rem" className="detail-dialog" data-file-identification={fileDrop?'true':undefined} aria-labelledby={id}>
-  <HStack className="dialog-heading" gap={3} justify="between" align="start"><VStack gap={1}><Heading level={2} id={id}>{title}</Heading>{subtitle ? <p>{subtitle}</p> : null}</VStack><IconButton className="dialog-close" data-autofocus="true" label={`关闭${title}`} tooltip="关闭 · Esc" variant="ghost" onClick={onClose} icon={<Icon name="close"/>}/></HStack>
+  <HStack className="dialog-heading" gap={3} justify="between" align="start"><VStack gap={1}><Heading level={2} id={id} tabIndex={-1} data-autofocus="dialog-title">{title}</Heading>{subtitle ? <p>{subtitle}</p> : null}</VStack><IconButton className="dialog-close" label={`关闭${title}`} tooltip="关闭 · Esc" variant="ghost" onClick={onClose} icon={<Icon name="close"/>}/></HStack>
   <VStack gap={0} className="dialog-body">{children}</VStack>
  </AstryxDialog>,document.body)
 }

@@ -34,13 +34,15 @@ function SystemAppBadge({ app }: { app: AppCopy }) {
 
 function ApplicationCopy({ app, missing=false, onSubmit, disabled=false }: { app: AppCopy; missing?:boolean; onSubmit?:(app:AppCopy)=>void; disabled?:boolean }) {
  return <VStack gap={0} className="application-copy">
-  <HStack gap={2} align="center" className="copy-heading"><HStack gap={2} align="center" className="copy-identity"><ApplicationIcon app={app} className="application-icon--copy"/><strong>{app.name || app.path.split('/').pop()}</strong><SystemAppBadge app={app}/></HStack><Text className="version-tag">版本 {app.version || '未知'}</Text></HStack>
+  <HStack gap={3} align="center" justify="between" className="copy-heading">
+   <HStack gap={2} align="center" wrap="wrap" className="copy-identity"><ApplicationIcon app={app} className="application-icon--copy"/><strong>{app.name || app.path.split('/').pop()}</strong><SystemAppBadge app={app}/><Text className="version-tag">版本 {app.version || '未知'}</Text></HStack>
+   {onSubmit ? <Button label={`设为默认应用 ${app.path}`} variant="primary" size="sm" className="change-copy-action" isDisabled={disabled} onClick={()=>onSubmit(app)}>设为默认应用</Button> : null}
+  </HStack>
   <p className="copy-path"><Icon name="folder"/>{app.displayPath || app.path}</p>
   {app.displayPath && app.displayPath !== app.path ? <p className="copy-path">实际位置：{app.path}</p> : null}
   <p className="copy-bundle">{app.bundleID || 'Bundle ID 未提供'}</p>
   {missing ? <p className="query-error">目录中已找不到此副本；以上仍是系统实际查询结果。</p> : null}
   {app.metadataError ? <p className="query-error">应用信息暂不可用：{app.metadataError}</p> : null}
-  {onSubmit ? <Button label={`设为默认应用 ${app.path}`} variant="primary" className="change-copy-action"  isDisabled={disabled} onClick={()=>onSubmit(app)}>设为默认应用</Button> : null}
  </VStack>
 }
 

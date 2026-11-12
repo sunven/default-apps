@@ -23,7 +23,7 @@ test('recovered current observation stays separate and Escape never submits a re
  const dialog=screen.getByRole('dialog',{name:'上次修改仍可能完成'})
  expect(within(dialog).getByText(/旧目标：/)).toHaveTextContent(copy.path)
  expect(within(dialog).getByText(/新目标：/)).toHaveTextContent(nextCopy.path)
- expect(within(dialog).getByRole('button',{name:'关闭上次修改仍可能完成'})).toHaveFocus()
+ expect(within(dialog).getByRole('heading',{name:'上次修改仍可能完成'})).toHaveFocus()
  await userEvent.keyboard('{Escape}')
  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();expect(Submit).not.toHaveBeenCalled();expect(screen.getByRole('button',{name:'修改'})).toHaveFocus()
 })
