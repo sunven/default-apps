@@ -1,7 +1,7 @@
-.change-status,.recovery-status {flex:none;margin:0 8px 8px;padding:8px 12px;border:1px solid #cfdfef;border-radius:var(--r-md);background:var(--selected);font-size:12px;max-height:170px;overflow:auto;user-select:text}
-.change-status[data-tone=success] {background:#edf7f1;border-color:#cbe3d5}
+.change-status,.recovery-status {flex:none;margin:0 8px 8px;padding:8px 12px;border:1px solid var(--color-border-blue);border-radius:var(--r-md);background:var(--selected);font-size:12px;max-height:170px;overflow:auto;user-select:text}
+.change-status[data-tone=success] {background:var(--color-success-muted);border-color:var(--color-border-green)}
 .change-status[data-tone=success] .change-summary strong {color:var(--positive)}
-.change-status[data-tone=warning],.recovery-status {background:var(--warning-bg);border-color:#eddbba}
+.change-status[data-tone=warning],.recovery-status {background:var(--warning-bg);border-color:var(--color-border-yellow)}
 .change-summary {display:flex;align-items:center;gap:8px;min-width:0;margin-bottom:4px}
 .change-summary strong {font-weight:600;font-size:13px}
 .change-summary>span {min-width:0;overflow-wrap:anywhere;color:var(--muted)}
@@ -11,9 +11,11 @@
 .change-status p,.recovery-status p,.lifecycle-explanation p {overflow-wrap:anywhere}
 .change-error {color:var(--warning)}
 .change-copy-action {margin-top:8px;margin-right:6px;font-size:12px}
-.row-actions {display:flex;gap:4px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
-.row-actions button {padding:3px 7px;min-height:28px;font-size:12px;white-space:nowrap}
-.row-submit:not(:disabled) {color:var(--action);border-color:#b8cfe9;background:#fff}
+.row-actions {display:flex;gap:var(--spacing-1);align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.row-actions button {padding:var(--spacing-1) var(--spacing-2);min-height:var(--size-element-md);font-size:var(--app-text-small);white-space:nowrap}
+.row-detail {border-color:transparent;background:transparent;color:var(--muted)}
+.row-detail:hover:not(:disabled) {border-color:transparent;background:var(--surface);color:var(--ink)}
+.row-submit:not(:disabled) {color:var(--action);border-color:transparent;background:var(--selected)}
 .row-submit[data-current=true] {color:var(--positive);background:transparent;border-color:transparent}
 .change-row-state {width:100%;text-align:right;text-wrap:balance;font-size:11px;line-height:1.5;color:var(--warning)}
 .change-row-state[data-confirmed=true] {color:var(--positive)}

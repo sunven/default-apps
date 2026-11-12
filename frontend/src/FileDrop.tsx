@@ -1,4 +1,5 @@
 import {useEffect,useMemo,useRef,useState} from 'react'
+import {HStack} from '@astryxdesign/core/HStack'
 import {Events} from '@wailsio/runtime'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import type {IdentifiedFile} from '../bindings/github.com/sunven/default-apps/internal/manual/models'
@@ -118,7 +119,7 @@ export function FileDrop({controller:c}:{controller:BatchController}){
  }
  const close=()=>{++generation.current;activity.current='';setBusy('');c.close()}
  return <>
-  <div className="file-drop-hint"><span>拖入文件，设置同类文件的默认应用</span><small>支持多个普通文件</small></div>
+  <HStack as="footer" className="file-drop-hint" gap={3} justify="center"><p>拖入文件，设置同类文件的默认应用</p><small>支持多个普通文件</small></HStack>
   <div className="file-drop-overlay" aria-hidden="true"><strong>松开以识别文件类型</strong><span>先查看清单，再选择默认应用</span></div>
   {c.modal==='files'?<Dialog title="拖入文件识别清单" subtitle="设置将影响这些类型的所有同类文件。可继续拖入文件追加。" onClose={close} fileDrop>
    <div className="file-drop-summary"><strong>{included.length} 个类型 · {files.length} 个文件</strong><button className="btn" disabled={!!busy||!entries.length} onClick={()=>setQueryVersion(value=>value+1)}>重新查询默认</button></div>

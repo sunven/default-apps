@@ -1,6 +1,7 @@
-.file-drop-hint{display:flex;align-items:center;gap:12px;padding:7px 20px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);flex:none;background:var(--surface)}
-.file-drop-hint small{margin-left:auto;font-size:11px}
-.file-drop-overlay{display:none;position:fixed;inset:12px;z-index:10000;pointer-events:none;border:2px dashed var(--action);border-radius:12px;background:rgba(240,246,253,.95);color:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.file-drop-hint{display:flex;align-items:center;justify-content:center;gap:var(--spacing-3);padding:var(--spacing-3) var(--spacing-6);font-size:var(--app-text-small);color:var(--muted);flex:none}
+.file-drop-hint small{font-size:var(--app-text-small)}
+.file-drop-hint p{font:inherit;color:inherit}
+.file-drop-overlay{display:none;position:fixed;inset:12px;z-index:10000;pointer-events:none;border:2px dashed var(--action);border-radius:12px;background:color-mix(in srgb,var(--selected) 95%,transparent);color:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:10px}
 .file-drop-target-active .file-drop-overlay{display:flex}
 .file-drop-target-active dialog[data-file-identification]{outline:2px dashed var(--action);outline-offset:4px}
 .file-drop-overlay strong{font-size:22px}.file-drop-overlay span{font-size:13px;color:var(--muted)}
@@ -16,4 +17,4 @@
 .file-drop-choice{display:flex;gap:8px;align-items:center;margin-top:8px}.file-drop-choice select{font:inherit;max-width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;padding:5px;background:var(--surface);color:var(--ink)}
 .file-drop-save{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
 .file-drop-problems{margin-top:20px;font-size:12px}.file-drop-problems h3{font-size:13px}.file-drop-problems>div{padding:12px 0;border-bottom:1px solid var(--line)}
-.file-drop-problems p{color:#92531c;overflow-wrap:anywhere}.file-drop-problems fieldset{margin:12px 0;border:1px solid var(--line);border-radius:6px}.file-drop-problems label{display:flex;gap:8px;align-items:center;margin:10px 0;overflow-wrap:anywhere}
+.file-drop-problems p{color:var(--warning);overflow-wrap:anywhere}.file-drop-problems fieldset{margin:12px 0;border:1px solid var(--line);border-radius:6px}.file-drop-problems label{display:flex;gap:8px;align-items:center;margin:10px 0;overflow-wrap:anywhere}

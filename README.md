@@ -18,7 +18,7 @@ macOS 自用默认应用工具。从已安装应用出发浏览文件类型和 U
 open "bin/Default Apps.app"
 ```
 
-本机构建固定 Go **1.27.3**、Wails CLI／模块／前端 runtime **3.1.0**，保留现有 npm 锁文件和 React **18.3.1**：
+本机构建固定 Go **1.27.3**、Wails CLI／模块／前端 runtime **3.1.0**，前端依赖使用 npm 锁文件；Astryx 要求 React **19+**，当前锁定 **19.3.1**：
 
 ```sh
 wails3 task darwin:package

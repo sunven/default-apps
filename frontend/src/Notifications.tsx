@@ -67,7 +67,7 @@ export function NotificationHost() {
   placeContainer()
   return () => { if (container === element) container = null; element.remove() }
  }, [element])
- return createPortal(<Toaster position="top-right" theme="light" richColors closeButton expand
+ return createPortal(<Toaster position="top-right" theme="system" richColors closeButton expand
   offset={20} mobileOffset={16} visibleToasts={3} containerAriaLabel="操作通知"
   toastOptions={{ closeButtonAriaLabel: '关闭通知' }}/>, element)
 }

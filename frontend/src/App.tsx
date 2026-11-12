@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { HStack } from '@astryxdesign/core/HStack'
 import { ApplicationIcon } from './ApplicationIcon'
 import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
@@ -100,7 +101,6 @@ export default function App() {
   <LifecycleStatus changes={changes} observations={observations}/>{recovery.dialog}
   <ChangeStatus changes={changes} observations={observations} onReturn={actions.returnToRequest}/>
   <BatchBars controller={batch} showSelection={kind==='file'}/>
-  <FileDrop controller={batch}/>
 
   <div className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">
@@ -120,7 +120,16 @@ export default function App() {
     {catalogLoading || snapshot?.scanning ? <p className="scan-status" role="status">{snapshot?.scanning ? `正在扫描应用…已发现 ${snapshot.apps?.length ?? 0} 份` : '正在解析常用关联…'}</p> : null}
     {catalogError ? <div className="query-error" role="alert"><p>目录加载失败{entries.length ? '，保留已解析目录。' : '。'}{catalogError}</p><button className="btn" onClick={()=>void retryCatalog()}>重试加载目录</button></div> : null}
     {kind==='app' && missingAppPath ? <div role="status" className="missing-copy"><strong>原应用副本已不在目录中</strong><p>{missingAppPath}</p><p>可选择其他应用副本继续浏览。</p></div> : null}
-    <div className="association-toolbar"><div><h2>{kind==='app' ? '应用关联' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配关联 · 已是默认优先' : kind==='app' ? '已是默认优先' : '常用关联优先'}</p>{kind==='app' ? <p>同一扩展名可能对应多个类型；当前默认按具体类型查询。</p> : null}</div><div className="association-filters">{kind==='app' ? <label className="association-source-filter">来源<select aria-label="筛选关联来源" value={sourceFilter} onChange={event=>actions.setSourceFilter(event.target.value as AssociationSourceFilter)}>{associationSourceOptions.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select></label> : null}<label className="manual-only-filter"><input type="checkbox" checked={manualOnly} onChange={event=>actions.setManualOnly(event.target.checked)}/>仅手动添加</label><label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label></div></div>
+    <section className="association-toolbar" aria-label="关联筛选">
+     <HStack className="association-summary" gap={3} align="center" wrap="wrap">
+      <h2>{kind==='app' ? '应用关联' : '关联目录'}</h2><p>{visibleEntries.length} 个关联 · {kind==='app' && selectedMatch && !selectedMatch.metadataMatch ? '仅显示匹配关联 · 已是默认优先' : kind==='app' ? '已是默认优先' : '常用关联优先'}</p>
+     </HStack>
+     <HStack className="association-filters" gap={3} align="end">
+      <label className="search-field">{kind==='app' ? '筛选关联' : `搜索${viewNames[kind]}`}<span className="search-input"><Icon name="search"/><input ref={associationSearch} type="search" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} aria-label={kind==='app' ? '筛选当前关联' : `搜索${viewNames[kind]}`} value={filter} placeholder={kind==='scheme' ? '名称或协议，如 https' : '名称、扩展名或类型身份'} onChange={event=>actions.setFilter(event.target.value)} onKeyDown={event=>searchKey(event)}/></span></label>
+      {kind==='app' ? <label className="association-source-filter">来源<select aria-label="筛选关联来源" value={sourceFilter} onChange={event=>actions.setSourceFilter(event.target.value as AssociationSourceFilter)}>{associationSourceOptions.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select></label> : null}
+      <label className="manual-only-filter"><input type="checkbox" checked={manualOnly} onChange={event=>actions.setManualOnly(event.target.checked)}/>仅手动添加</label>
+     </HStack>
+    </section>
     <div className="column-labels">{kind==='file'?<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={()=>batch.toggleVisible(visibleEntries)}/>:null}<span>{kind!=='scheme' ? '名称' : '关联项'}</span>{kind!=='scheme' ? <><span>扩展名</span><span>类型 ID</span></> : null}<span>当前默认应用</span><span>操作</span></div>
     <div ref={associationList} className="association-list" role="region" aria-label={kind==='app' ? '应用关联列表' : '关联列表'} onKeyDown={event=>listKey(event)}>
      {visibleEntries.map(entry=>{
@@ -136,9 +145,10 @@ export default function App() {
      </div>})}
      {!visibleEntries.length ? <div className="empty-workspace"><span className="empty-icon"><Icon name="search"/></span><h2>{emptyHeadline}</h2><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><div className="empty-actions"><button className="btn" onClick={clearSearch}>{manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'}</button>{kind==='app' && !selectedApp && appFilter!=='all' ? <button className="btn" onClick={()=>changeAppFilter('all')}>显示全部应用</button> : null}{kind!=='file' ? <button className="btn" onClick={()=>switchView('file')}>浏览文件类型</button> : null}{kind!=='scheme' ? <button className="btn" onClick={()=>switchView('scheme')}>浏览 URL 协议</button> : null}</div></div> : null}
     </div>
-    <footer className="browser-footer"><span className="footer-source"><span className="status-dot"/>默认应用由系统独立查询</span>{snapshot?.issues?.length ? <button className="btn" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span className="keyboard-hint"><kbd>⌘ 1</kbd><kbd>2</kbd><kbd>3</kbd> 切换入口</span></footer>
+    <footer className="browser-footer"><span className="footer-source"><span className="status-dot"/>{kind==='app' ? '同一扩展名可能对应多个类型；当前默认按具体类型查询。' : '默认应用由系统独立查询'}</span>{snapshot?.issues?.length ? <button className="btn" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</button> : null}<span className="keyboard-hint"><kbd>⌘ 1</kbd><kbd>2</kbd><kbd>3</kbd> 切换入口</span></footer>
    </main>
   </div>
+  <FileDrop controller={batch}/>
   <BatchDialogs controller={batch} apps={batchApps}/>
   {issuesOpen ? <Dialog title="扫描问题" onClose={()=>setIssuesOpen(false)}><ul className="scan-issues">{snapshot?.issues?.map((issue,index)=><li key={index}><p>{issue.path}</p><p>{issue.origin} · {issue.message}</p></li>)}</ul></Dialog> : null}
   {inspectedCopy ? <Dialog title="所选应用副本" onClose={closeCopy}><section aria-label="所选应用副本"><ApplicationCopy app={inspectedCopy} onSubmit={detailOpen&&selected?app=>submitCopy(selected,app):undefined} disabled={!canChange(selected,inspectedCopy)}/></section></Dialog> : null}

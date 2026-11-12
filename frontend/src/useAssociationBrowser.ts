@@ -34,11 +34,11 @@ export type BrowserDOMAdapter = {
   hasOpenDialog(): boolean
 }
 type BrowserRefs = {
-  appSearch: RefObject<HTMLInputElement>
-  associationSearch: RefObject<HTMLInputElement>
-  appList: RefObject<HTMLDivElement>
-  associationList: RefObject<HTMLDivElement>
-  navigation: RefObject<HTMLElement>
+  appSearch: RefObject<HTMLInputElement | null>
+  associationSearch: RefObject<HTMLInputElement | null>
+  appList: RefObject<HTMLDivElement | null>
+  associationList: RefObject<HTMLDivElement | null>
+  navigation: RefObject<HTMLElement | null>
 }
 
 const wailsCatalog: CatalogAdapter = {

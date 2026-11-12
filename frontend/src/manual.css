@@ -8,7 +8,7 @@
 .manual-matches {display:grid;max-height:235px;overflow:auto;margin:8px 0}
 .manual-matches:empty {display:none}
 .manual-match {display:flex;gap:8px;padding:8px;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;margin-bottom:4px}
-.manual-match:has(input:checked) {background:var(--selected);border-color:#b8d0ed}
+.manual-match:has(input:checked) {background:var(--selected);border-color:var(--color-border-blue)}
 .manual-match>span {display:grid;gap:3px;min-width:0}
 .manual-match strong {font-size:14px;font-weight:600}
 .manual-match code,.manual-match small,.manual-picked code {font-size:12px;overflow-wrap:anywhere;color:var(--muted)}

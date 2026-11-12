@@ -9,5 +9,5 @@ import fs from 'node:fs';
 const pkg=JSON.parse(fs.readFileSync('frontend/package.json','utf8'));
 const lock=JSON.parse(fs.readFileSync('frontend/package-lock.json','utf8'));
 if (pkg.dependencies['@wailsio/runtime'] !== '3.1.0' || lock.packages['node_modules/@wailsio/runtime'].version !== '3.1.0') throw Error('Build requires Wails runtime 3.1.0 in manifest and lockfile.');
-if (!lock.packages['node_modules/react'].version.startsWith('18.') || !lock.packages['node_modules/react-dom'].version.startsWith('18.')) throw Error('Build requires React 18.');
+if (!lock.packages['node_modules/react'].version.startsWith('19.') || !lock.packages['node_modules/react-dom'].version.startsWith('19.')) throw Error('Build requires React 19 for Astryx.');
 JS

@@ -48,7 +48,7 @@ function usePrototypeModel() {
   const [modal, setModal] = useState<'picker' | 'app' | 'add' | 'identify' | null>(null)
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState('')
-  const timer = useRef<ReturnType<typeof setTimeout>>()
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const selected = items.find(item => item.id === selectedId) || items[0]
   const selectedApp = appById[selectedAppId]
   const appMatches = (app: DemoApp, value: string) => !value.trim() || `${app.name} ${app.path} ${app.version}`.toLowerCase().includes(value.toLowerCase()) || items.some(item => item.declared.includes(app.id) && matches(item, value))
