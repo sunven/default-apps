@@ -10,7 +10,7 @@ import { Table, pixel, proportional, type TableColumn, type TablePlugin } from '
 import { HStack } from '@astryxdesign/core/HStack'
 import { Text } from '@astryxdesign/core/Text'
 import { VStack } from '@astryxdesign/core/VStack'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ApplicationIcon } from './ApplicationIcon'
 import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
@@ -26,6 +26,7 @@ import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
 import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry, Source } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
+import type { Request } from '../bindings/github.com/sunven/default-apps/internal/change/models'
 
 function SystemAppBadge({ app }: { app: AppCopy }) {
  return app.system ? <Tooltip content="受 macOS 系统保护的应用" hasHoverIndication={false}><Text type="supporting" className="system-app-badge" aria-label="系统应用">系统</Text></Tooltip> : null
@@ -105,28 +106,46 @@ export default function App() {
  const transportError=selected ? rowErrors[selected.id] : undefined
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.pending&&!batch.working&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
+ // Stable table callbacks read the actions from the latest committed render.
+ const tableActions=useRef({submitCopy,toggle:batch.toggle,toggleVisible:()=>batch.toggleVisible(visibleEntries)})
+ useLayoutEffect(()=>{tableActions.current={submitCopy,toggle:batch.toggle,toggleVisible:()=>batch.toggleVisible(visibleEntries)}})
+ const submitRow=useCallback((entry:Entry,app:AppCopy)=>tableActions.current.submitCopy(entry,app),[])
+ const toggleRow=useCallback((entry:Entry)=>tableActions.current.toggle(entry),[])
+ const toggleVisible=useCallback(()=>tableActions.current.toggleVisible(),[])
+ const latestRequests=useMemo(()=>{
+  const requests=new Map<string,Request>()
+  for(const request of changes.state?.requests??[])requests.set(`${request.association.kind}:${request.association.key}`,request)
+  return requests
+ },[changes.state?.requests])
+ const submitBlocked=changes.blocked||!!batch.pending||batch.working
  const tableRows=useMemo(()=>visibleEntries.map(entry=>({
   id:entry.id,entry,
+  isSelected:browsedSelected?.id===entry.id,
   isDefault:!!selectedApp&&isTrustworthy(observations[entry.id]?.default)&&!rowErrors[entry.id]&&observations[entry.id]?.default.app?.path===selectedApp.app.path,
   isManual:entry.sources?.some(source=>source.kind==='manual'),
   protocol:entry.association.key || entry.sources?.[0]?.rawInput,
- })),[visibleEntries,selectedApp,observations,rowErrors])
+  observation:observations[entry.id],rowError:rowErrors[entry.id],
+  checked:batch.selected.has(entry.id),selectionDisabled:batch.selectionBlocked||!entry.resolved,
+  targetApp:selectedApp?.app,
+  canSubmit:!!entry.resolved&&!!selectedApp&&!selectedApp.app.metadataError&&!selectedApp.unavailable&&!submitBlocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default),
+  request:latestRequests.get(`${entry.association.kind}:${entry.association.key}`),
+ })),[visibleEntries,selectedApp,browsedSelected?.id,observations,rowErrors,batch.selected,batch.selectionBlocked,submitBlocked,changes.state?.writableKinds,latestRequests])
  type AssociationRow=(typeof tableRows)[number]
- const tableColumns:TableColumn<AssociationRow>[]=[
+ const tableColumns=useMemo<TableColumn<AssociationRow>[]>(()=>[
   ...(kind==='file' ? [{
    key:'selection',width:pixel(48),
-   header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={()=>batch.toggleVisible(visibleEntries)}/>,
-   renderCell:({entry}:AssociationRow)=><BatchCheckbox checked={batch.selected.has(entry.id)} disabled={batch.selectionBlocked||!entry.resolved} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>batch.toggle(entry)}/>,
+   header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={toggleVisible}/>,
+   renderCell:({entry,checked,selectionDisabled}:AssociationRow)=><BatchCheckbox checked={checked} disabled={selectionDisabled} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>toggleRow(entry)}/>,
   }] : []),
-  {key:'name',header:kind==='scheme'?'关联项':'名称',width:proportional(1.2,{minWidth:144}),renderCell:({entry,isDefault,isManual,protocol})=><Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={browsedSelected?.id===entry.id ? 0 : -1} aria-pressed={browsedSelected?.id===entry.id}  aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&selectedApp ? <DeclarationOrigin entry={entry} appPath={selectedApp.app.path} isDefault={isDefault}/> : null}</VStack></HStack></Button>},
+  {key:'name',header:kind==='scheme'?'关联项':'名称',width:proportional(1.2,{minWidth:144}),renderCell:({entry,isSelected,isDefault,isManual,protocol,targetApp})=><Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={isSelected ? 0 : -1} aria-pressed={isSelected} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&targetApp ? <DeclarationOrigin entry={entry} appPath={targetApp.path} isDefault={isDefault}/> : null}</VStack></HStack></Button>},
   ...(kind!=='scheme' ? [
    {key:'extensions',header:'扩展名',width:proportional(.75,{minWidth:80}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-extensions">{entry.extensions?.map(value=>`.${value}`).join(' · ') || '—'}</Text>},
    {key:'identifier',header:'类型 ID',width:proportional(1.35,{minWidth:160}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</Text>},
   ] : []),
-  {key:'default',header:'当前默认应用',width:proportional(1,{minWidth:120}),renderCell:({entry})=><VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowErrors[entry.id]} observation={observations[entry.id]}/></VStack>},
-  {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isDefault})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail"  tabIndex={browsedSelected?.id===entry.id ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&selectedApp?<Button label={`将 ${entryName(entry)} 设为 ${selectedApp.app.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)}  tooltip={selectedApp.app.path} tabIndex={browsedSelected?.id===entry.id?0:-1} isDisabled={!canChange(entry,selectedApp.app)||selectedApp.unavailable||isDefault} onClick={()=>submitCopy(entry,selectedApp.app)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
-      {changes.state?.requests?.filter(r=>r.association.kind===entry.association.kind&&r.association.key===entry.association.key).slice(-1).map(r=><Text key={r.requestID} className="change-row-state" data-confirmed={String(r.confirmed)}>{requestLabel(r)}</Text>)}</HStack>},
- ]
+  {key:'default',header:'当前默认应用',width:proportional(1,{minWidth:120}),renderCell:({entry,rowError,observation})=><VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowError} observation={observation}/></VStack>},
+  {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isSelected,isDefault,targetApp,canSubmit,request})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail" tabIndex={isSelected ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&targetApp?<Button label={`将 ${entryName(entry)} 设为 ${targetApp.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)} tooltip={targetApp.path} tabIndex={isSelected?0:-1} isDisabled={!canSubmit||isDefault} onClick={()=>submitRow(entry,targetApp)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
+      {request?<Text key={request.requestID} className="change-row-state" data-confirmed={String(request.confirmed)}>{requestLabel(request)}</Text>:null}</HStack>},
+ ],[kind,selectableEntries.length,selectedVisible,batch.selectionBlocked,openEntry,submitRow,toggleRow,toggleVisible])
  // Keep browser navigation and batch selection independent. The name button owns
  // keyboard focus; clicks on non-interactive cells open the same details.
  const tablePlugin=useMemo<TablePlugin<AssociationRow>>(()=>({
@@ -134,17 +153,17 @@ export default function App() {
    ref:associationList,className:[props.htmlProps.className,'association-list'].filter(Boolean).join(' '),
    role:'region','aria-label':kind==='app'?'应用关联列表':'关联列表',onKeyDown:event=>listKey(event),
   }}),
-  transformBodyRow:(props,{entry})=>({...props,htmlProps:{...props.htmlProps,
+  transformBodyRow:(props,{entry,isSelected})=>({...props,htmlProps:{...props.htmlProps,
    className:[props.htmlProps.className,'association-row'].filter(Boolean).join(' '),
-   'data-selected':String(browsedSelected?.id===entry.id),
-   'aria-current':browsedSelected?.id===entry.id?true:undefined,
+   'data-selected':String(isSelected),
+   'aria-current':isSelected?true:undefined,
    onClick:event=>{
     if(event.target instanceof Element&&event.target.closest('button, input, label, a, select, textarea, [role="checkbox"]'))return
     event.currentTarget.querySelector<HTMLButtonElement>('[data-association-id]')?.focus({preventScroll:true})
     openEntry(entry.id)
    },
   }}),
- }),[associationList,kind,listKey,browsedSelected?.id,openEntry])
+ }),[associationList,kind,listKey,openEntry])
  return <><NotificationHost/><VStack gap={0} className="app-shell">
   <header className="global-header">
    <HStack gap={2} align="center" className="product"><svg aria-hidden="true" viewBox="0 0 28 28"><path d="M15 3H6v22h16V10L15 3Zm0 0v7h7M9 17h10m-3-3 3 3-3 3"/></svg><Text>Default Apps<small>默认应用管理</small></Text></HStack>

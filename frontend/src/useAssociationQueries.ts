@@ -57,21 +57,34 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
  const [loading,setLoading]=useState(false)
  const [prefetching,setPrefetching]=useState(false)
  const sequence=useRef(0),requestVersion=useRef(0)
+ const inFlight=useRef(new Map<string,{token:number;promise:Promise<QueryResult>}>())
  useEffect(()=>Events.On('defaultapps:observation',event=>dispatch({type:'result',value:event.data})),[])
  useEffect(()=>{for(const value of snapshotObservations??[])dispatch({type:'result',value})},[snapshotObservations])
- const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true)=>{
-  const token=++sequence.current,id=`${association.kind}:${association.key}`
-  dispatch({type:'started',id,token})
-  try{const value=await Query(association);if(isCurrent()){dispatch({type:'result',value,token});return value}}
+ const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true,force=false)=>{
+  const id=`${association.kind}:${association.key}`
+  let request=force?undefined:inFlight.current.get(id)
+  if(!request){
+   const token=++sequence.current
+   dispatch({type:'started',id,token})
+   // Each consumer keeps its own relevance check; only the native call is shared.
+   const promise=(async()=>await Query(association))()
+   request={token,promise}
+   inFlight.current.set(id,request)
+   const current=request
+   const clear=()=>{if(inFlight.current.get(id)===current)inFlight.current.delete(id)}
+   void promise.then(clear,clear)
+  }
+  const {token,promise}=request
+  try{const value=await promise;if(isCurrent()){dispatch({type:'result',value,token});return value}}
   catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:message(error)})}
  },[])
- const refresh=useCallback(async(notifyUser=false)=>{
+ const refresh=useCallback(async(notifyUser=false,force=true)=>{
   const version=++requestVersion.current
   if(!selected?.resolved){setLoading(false);return}
   setLoading(true)
   const id=notifyUser?notify('pending','正在重新查询关联…',{description:selected.association.key}):undefined
   try{
-   const result=await query(selected.association,()=>version===requestVersion.current)
+   const result=await query(selected.association,()=>version===requestVersion.current,force)
    if(id!==undefined){
     if(version===requestVersion.current&&result&&!result.superseded&&result.default.known&&!result.default.error&&result.candidates.known&&!result.candidates.error)notify('success','关联查询已更新',{id,description:selected.association.key})
     else dismissNotification(id)
@@ -79,7 +92,7 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
   }
   finally{if(version===requestVersion.current)setLoading(false)}
  },[selected,query])
- useEffect(()=>{void refresh();return()=>{++requestVersion.current}},[refresh])
+ useEffect(()=>{void refresh(false,false);return()=>{++requestVersion.current}},[refresh])
  // A list change starts a new prefetch round; accepted observations do not.
  useEffect(()=>{
   let active=true,cursor=0
@@ -93,7 +106,7 @@ export function useAssociationQueries({selected,entries,snapshotObservations,get
  visibleRefresh.current=()=>{
   const ids=getVisibleAssociationIDs()
   void refresh()
-  for(const entry of entries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id)void query(entry.association)
+  for(const entry of entries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id)void query(entry.association,undefined,true)
  }
  useEffect(()=>{
   let timer:ReturnType<typeof setTimeout>|undefined

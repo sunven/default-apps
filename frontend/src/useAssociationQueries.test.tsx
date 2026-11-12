@@ -41,6 +41,44 @@ test('selection owns loading and ignores an obsolete selection response',async()
  expect(result.current.observations[jpeg.id]).toEqual(observation(jpeg.association))
 })
 
+test('selection and restarted prefetch rounds share pending association queries',async()=>{
+ const rows=[pdf,jpeg,...Array.from({length:4},(_,index)=>entry(`test.shared.${index}`))]
+ const calls=new Map<string,ReturnType<typeof deferred>>()
+ vi.mocked(Query).mockImplementation(association=>{
+  const call=deferred();calls.set(association.key,call);return call.promise
+ })
+ const options={selected:pdf,entries:rows,getVisibleAssociationIDs:()=>new Set<string>()}
+ const {result,rerender}=renderHook(useAssociationQueries,{initialProps:options})
+ expect(Query).toHaveBeenCalledTimes(5)
+ rerender({...options,selected:jpeg})
+ rerender({...options,selected:jpeg,entries:rows.slice(0,3)})
+ expect(Query).toHaveBeenCalledTimes(5)
+ expect(result.current.loading).toBe(true)
+ await act(async()=>{
+  for(const row of rows.slice(0,5))calls.get(row.association.key)!.resolve(observation(row.association))
+ })
+ expect(result.current.loading).toBe(false)
+ expect(result.current.prefetching).toBe(false)
+ expect(result.current.observations[jpeg.id]).toEqual(observation(jpeg.association))
+ expect(result.current.observations[pdf.id]).toEqual(observation(pdf.association))
+ expect(Query).toHaveBeenCalledTimes(5)
+})
+
+test('explicit refresh replaces a pending shared request and fences its late rejection',async()=>{
+ const old=deferred(),fresh=deferred()
+ vi.mocked(Query).mockReturnValueOnce(old.promise).mockReturnValueOnce(fresh.promise)
+ const options={selected:pdf,entries:[pdf],getVisibleAssociationIDs:()=>new Set<string>()}
+ const {result}=renderHook(useAssociationQueries,{initialProps:options})
+ let refresh!:Promise<void>
+ act(()=>{refresh=result.current.refresh()})
+ expect(Query).toHaveBeenCalledTimes(2)
+ await act(async()=>{fresh.resolve(observation(pdf.association,2));await refresh})
+ await act(async()=>old.reject(new Error('obsolete request failed')))
+ expect(result.current.loading).toBe(false)
+ expect(result.current.rowErrors[pdf.id]).toBeUndefined()
+ expect(result.current.observations[pdf.id].version).toBe(2)
+})
+
 test.each(['snapshot','observation event'])('fresh %s clears transport errors while cached and superseded observations cannot',async(source)=>{
  const options={selected:pdf,entries:[],snapshotObservations:[] as QueryResult[],getVisibleAssociationIDs:()=>new Set<string>()}
  const {result,rerender}=renderHook(useAssociationQueries,{initialProps:options})

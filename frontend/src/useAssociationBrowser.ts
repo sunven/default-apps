@@ -105,7 +105,7 @@ function mergeScanningEntries(previous:Entry[], incoming:Entry[]) {
   }
   return [...entries.values()]
 }
-function browse(state: State) {
+function matchApplications(state: State) {
   const term = state.appQuery.trim().toLocaleLowerCase()
   const index = new Map(state.entries.map(entry => [entry.id, entry]))
   const defaultsByPath = new Map<string,Entry[]>()
@@ -116,7 +116,7 @@ function browse(state: State) {
     if(entries)entries.push(entry)
     else defaultsByPath.set(path,[entry])
   }
-  const applicationMatches = (state.snapshot?.apps ?? [])
+  return (state.snapshot?.apps ?? [])
     .filter(item => !item.unavailable && (state.appFilter === 'all' || !!item.app.system === (state.appFilter === 'system')))
     .map(item => {
       const metadataMatch = !term || [item.app.name, item.app.version, item.app.path, item.app.displayPath, item.app.bundleID].join(' ').toLocaleLowerCase().includes(term)
@@ -124,20 +124,33 @@ function browse(state: State) {
       const associations=[...new Map([...declarations,...(defaultsByPath.get(item.app.path)??[])].map(entry=>[entry.id,entry])).values()]
       return { item, metadataMatch, associationCount:associations.length, entries: metadataMatch ? associations : associations.filter(entry => entryText(entry).includes(term)) }
     }).filter(match => match.metadataMatch || match.entries.length)
+}
+
+function selectApplication(state: State, applicationMatches: ReturnType<typeof matchApplications>, availablePaths: Set<string>) {
   const settled = !!state.snapshot && !state.snapshot.scanning
-  const availablePaths = new Set((state.snapshot?.apps ?? []).filter(item => !item.unavailable).map(item => item.app.path))
   const missingAppPath = state.selectedAppPath && settled && !availablePaths.has(state.selectedAppPath) ? state.selectedAppPath : null
   const selectedMatch = missingAppPath ? undefined : state.selectedAppPath ? applicationMatches.find(match => match.item.app.path === state.selectedAppPath) : applicationMatches[0]
-  const visibleEntries = (state.kind === 'app' ? selectedMatch?.entries ?? [] : state.entries.filter(entry => entry.association.kind === state.kind))
-    .filter(entry => (!state.manualOnly || entry.sources?.some(source => source.kind === 'manual')) && entryText(entry).includes(state.filter.trim().toLocaleLowerCase()))
+  return { selectedMatch, selectedApp: selectedMatch?.item, missingAppPath }
+}
+
+function filterEntries(state: State, selectedMatch: ReturnType<typeof selectApplication>['selectedMatch']) {
+  const term = state.filter.trim().toLocaleLowerCase()
+  return (state.kind === 'app' ? selectedMatch?.entries ?? [] : state.entries.filter(entry => entry.association.kind === state.kind))
+    .filter(entry => (!state.manualOnly || entry.sources?.some(source => source.kind === 'manual')) && entryText(entry).includes(term))
     .filter(entry => state.kind!=='app'||matchesAssociationSource(entry,selectedMatch?.item.app.path??'',state.defaultPaths[entry.id]===selectedMatch?.item.app.path,state.sourceFilter))
     .sort((a, b) => (state.kind === 'app' ? Number(state.defaultPaths[b.id] === selectedMatch?.item.app.path) - Number(state.defaultPaths[a.id] === selectedMatch?.item.app.path) : 0)
       || Number(b.sources?.some(source => source.kind === 'common')) - Number(a.sources?.some(source => source.kind === 'common')))
+}
+
+function browse(state: State) {
+  const applicationMatches = matchApplications(state)
+  const availablePaths = new Set((state.snapshot?.apps ?? []).filter(item => !item.unavailable).map(item => item.app.path))
+  const application = selectApplication(state, applicationMatches, availablePaths)
+  const visibleEntries = filterEntries(state, application.selectedMatch)
   const browsedSelected = visibleEntries.find(entry => entry.id === state.selectedID) ?? visibleEntries[0]
   return {
-    applicationMatches, selectedMatch, selectedApp: selectedMatch?.item, visibleEntries, browsedSelected,
-    selected: state.requestEntry ?? browsedSelected, missingAppPath,
-    missingCopyPaths: new Set(settled ? [...state.discoveredPaths].filter(path => !availablePaths.has(path)) : []),
+    applicationMatches, ...application, visibleEntries, browsedSelected,
+    selected: state.requestEntry ?? browsedSelected,
   }
 }
 
@@ -258,6 +271,10 @@ function transition(state: State, action: Action): State {
 function reduce(state: State, action: Action): State {
   let next = transition(state, action)
   if (next === state) return state
+  // Dialogs, row focus and loading flags cannot remove the browsable entries.
+  if (next.entries === state.entries && next.snapshot === state.snapshot && next.defaultPaths === state.defaultPaths &&
+    next.kind === state.kind && next.appFilter === state.appFilter && next.appQuery === state.appQuery &&
+    next.filter === state.filter && next.manualOnly === state.manualOnly && next.sourceFilter === state.sourceFilter && next.selectedAppPath === state.selectedAppPath) return next
   const current = browse(next)
   if (!current.selected && browse(state).selected) next = { ...next, detailOpen: false, requestEntry: null, inspectedCopy: null }
   return next
@@ -312,7 +329,14 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
     }
     dispatch({type:'snapshot',value})
   },[])
-  const current = useMemo(() => browse(state), [state.entries, state.snapshot, state.defaultPaths, state.kind, state.appFilter, state.appQuery, state.filter, state.manualOnly, state.sourceFilter, state.selectedAppPath, state.selectedID, state.requestEntry, state.discoveredPaths])
+  const applicationMatches = useMemo(() => matchApplications(state), [state.entries, state.snapshot?.apps, state.defaultPaths, state.appFilter, state.appQuery])
+  const availablePaths = useMemo(() => new Set((state.snapshot?.apps ?? []).filter(item => !item.unavailable).map(item => item.app.path)), [state.snapshot?.apps])
+  const application = useMemo(() => selectApplication(state, applicationMatches, availablePaths), [applicationMatches, availablePaths, !!state.snapshot, state.snapshot?.scanning, state.selectedAppPath])
+  const visibleEntries = useMemo(() => filterEntries(state, application.selectedMatch), [state.entries, state.kind, application.selectedMatch, state.filter, state.manualOnly, state.sourceFilter, state.defaultPaths])
+  const browsedSelected = visibleEntries.find(entry => entry.id === state.selectedID) ?? visibleEntries[0]
+  const settled = !!state.snapshot && !state.snapshot.scanning
+  const missingCopyPaths = useMemo(() => new Set(settled ? [...state.discoveredPaths].filter(path => !availablePaths.has(path)) : []), [settled, state.discoveredPaths, availablePaths])
+  const current = { applicationMatches, ...application, visibleEntries, browsedSelected, selected: state.requestEntry ?? browsedSelected, missingCopyPaths }
   const selected = useRef(current.selected)
   useLayoutEffect(() => { selected.current = current.selected }, [current.selected])
   // Remember the rendered copy; batched startup snapshots may replace unseen copies.
@@ -419,7 +443,7 @@ export function useAssociationBrowser(environment?: { catalog?: CatalogAdapter; 
   // Reverse default associations can only be discovered by querying the catalog,
   // including entries the selected application has never declared.
   const queryCatalog = state.kind==='app'&&state.snapshot?.apps?.some(item=>!item.unavailable) ? state.entries : current.visibleEntries
-  const queryEntryKey = JSON.stringify([...queryCatalog].sort((a, b) => a.id.localeCompare(b.id)).map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved]))
+  const queryEntryKey = useMemo(() => JSON.stringify([...queryCatalog].sort((a, b) => a.id.localeCompare(b.id)).map(entry => [entry.id, entry.association.kind, entry.association.key, entry.resolved])), [queryCatalog])
   const queryEntries = useMemo(() => queryCatalog.map(({ id, association, resolved }) => ({ id, association, resolved })), [queryEntryKey])
   const querySelected = useMemo(() => current.selected ? { id: current.selected.id, association: current.selected.association, resolved: current.selected.resolved } : undefined,
     [current.selected?.id, current.selected?.association.kind, current.selected?.association.key, current.selected?.resolved])

@@ -81,6 +81,33 @@ beforeEach(() => {
   }) as unknown as ReturnType<typeof Query>)
 })
 
+test('copy inspection and row selection reuse the filtered catalog without scanning its metadata',async()=>{
+ const reads=vi.fn(()=>jpeg.name)
+ const measured={...jpeg,get name(){return reads()}}
+ const browser=await openBrowser({...snapshot,entries:[measured,pdf,otherJPEG,https]})
+ const visible=browser.result.current.view.visibleEntries
+ reads.mockClear()
+ act(()=>browser.result.current.actions.inspectCopy(app))
+ act(()=>browser.result.current.actions.closeCopy())
+ act(()=>browser.result.current.actions.selectEntry(otherJPEG.id))
+ expect(reads).not.toHaveBeenCalled()
+ expect(browser.result.current.view.visibleEntries).toBe(visible)
+ expect(browser.result.current.view.browsedSelected?.id).toBe(otherJPEG.id)
+})
+
+test('default observation updates reuse the query catalog without sorting its identities again',async()=>{
+ const comparisons=vi.spyOn(String.prototype,'localeCompare')
+ try{
+  const browser=await openBrowser()
+  const queryEntries=browser.result.current.queryInputs.entries
+  comparisons.mockClear()
+  act(()=>browser.result.current.actions.setDefaultPaths({[otherJPEG.id]:app.path}))
+  expect(comparisons).not.toHaveBeenCalled()
+  expect(browser.result.current.queryInputs.entries).toBe(queryEntries)
+  expect(browser.result.current.view.visibleEntries[0].id).toBe(otherJPEG.id)
+ }finally{comparisons.mockRestore()}
+})
+
 test('startup scanning is silent and an explicit scan finishes only on its final snapshot',async()=>{
  const browser=await openBrowser()
  expect(activeToasts()).toHaveLength(0)
