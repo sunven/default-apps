@@ -192,3 +192,19 @@ test('file identification retains old defaults on refresh failure and shares new
  expect(screen.getByRole('dialog',{name:'拖入文件识别清单'})).toHaveTextContent('当前默认：Other（上次查询结果 · 正在刷新')
  expect(StartBatch).not.toHaveBeenCalled()
 })
+
+test('returning during preview preparation allows appending files and prevents the abandoned preview from reopening',async()=>{
+ await mount();await drop(['/one.pdf'])
+ let finish!:(value:BatchPreview)=>void
+ vi.mocked(PrepareBatch).mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve}) as ReturnType<typeof PrepareBatch>)
+ await userEvent.click(screen.getByRole('button',{name:'为 1 个类型选择应用…'}))
+ await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}))
+ const back=screen.getByRole('button',{name:'返回识别清单'})
+ expect(back).not.toHaveAttribute('aria-disabled','true');await userEvent.click(back)
+ vi.mocked(IdentifyFiles).mockResolvedValueOnce([file('/next',text)])
+ await drop(['/next']);expect(screen.getByRole('dialog')).toHaveTextContent('2 个类型 · 2 个文件')
+ const current=await choose()
+ await act(async()=>finish({...preview,id:'abandoned',items:[]}))
+ expect(within(current).getByRole('button',{name:'开始设置 2 项'})).toBeVisible()
+ expect(PrepareBatch).toHaveBeenCalledTimes(2);expect(StartBatch).not.toHaveBeenCalled()
+})

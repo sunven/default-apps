@@ -13,9 +13,10 @@ import { VStack } from '@astryxdesign/core/VStack'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { AssociationQueriesProvider } from './QueryObservations'
 import { ApplicationIcon } from './ApplicationIcon'
-import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
+import { BatchBars, BatchCheckbox, BatchDialogs } from './Batch'
 import { Dialog } from './Dialog'
 import { FileDrop } from './FileDrop'
+import { useBatchSettings } from './useBatchSettings'
 import { Icon } from './Icon'
 import { LifecycleStatus, useRecoveryAction } from './Lifecycle'
 import { ChangeStatus, useChanges, requestLabel } from './Changes'
@@ -110,7 +111,7 @@ function BrowserApp() {
  },[observations,rowErrors,actions.setDefaultPaths])
  const visibleResult=selected ? observations[selected.id] : undefined
  const transportError=selected ? rowErrors[selected.id] : undefined
- const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.pending&&!batch.working&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
+ const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.submissionBlocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
  // Stable table callbacks read the actions from the latest committed render.
  const tableActions=useRef({submitCopy,toggle:batch.toggle,toggleVisible:()=>batch.toggleVisible(visibleEntries)})
@@ -123,7 +124,7 @@ function BrowserApp() {
   for(const request of changes.state?.requests??[])requests.set(`${request.association.kind}:${request.association.key}`,request)
   return requests
  },[changes.state?.requests])
- const submitBlocked=changes.blocked||!!batch.pending||batch.working
+ const submitBlocked=changes.blocked||batch.submissionBlocked
  const tableRows=useMemo(()=>visibleEntries.map(entry=>({
   id:entry.id,entry,
   isSelected:browsedSelected?.id===entry.id,
@@ -131,16 +132,16 @@ function BrowserApp() {
   isManual:entry.sources?.some(source=>source.kind==='manual'),
   protocol:entry.association.key || entry.sources?.[0]?.rawInput,
   observation:observations[entry.id],rowError:rowErrors[entry.id],
-  checked:batch.selected.has(entry.id),selectionDisabled:batch.selectionBlocked||!entry.resolved,
+  checked:batch.selected.has(entry.id),selectionDisabled:!batch.can.select||!entry.resolved,
   targetApp:selectedApp?.app,
   canSubmit:!!entry.resolved&&!!selectedApp&&!selectedApp.app.metadataError&&!selectedApp.unavailable&&!submitBlocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default),
   request:latestRequests.get(`${entry.association.kind}:${entry.association.key}`),
- })),[visibleEntries,selectedApp,browsedSelected?.id,observations,rowErrors,batch.selected,batch.selectionBlocked,submitBlocked,changes.state?.writableKinds,latestRequests])
+ })),[visibleEntries,selectedApp,browsedSelected?.id,observations,rowErrors,batch.selected,batch.can.select,submitBlocked,changes.state?.writableKinds,latestRequests])
  type AssociationRow=(typeof tableRows)[number]
  const tableColumns=useMemo<TableColumn<AssociationRow>[]>(()=>[
   ...(kind==='file' ? [{
    key:'selection',width:pixel(48),
-   header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={batch.selectionBlocked||!selectableEntries.length} label="全选当前筛选结果" onChange={toggleVisible}/>,
+   header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={!batch.can.select||!selectableEntries.length} label="全选当前筛选结果" onChange={toggleVisible}/>,
    renderCell:({entry,checked,selectionDisabled}:AssociationRow)=><BatchCheckbox checked={checked} disabled={selectionDisabled} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>toggleRow(entry)}/>,
   }] : []),
   {key:'name',header:kind==='scheme'?'关联项':'名称',width:proportional(1.2,{minWidth:144}),renderCell:({entry,isSelected,isDefault,isManual,protocol,targetApp})=><Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={isSelected ? 0 : -1} aria-pressed={isSelected} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&targetApp ? <DeclarationOrigin entry={entry} appPath={targetApp.path} isDefault={isDefault}/> : null}</VStack></HStack></Button>},
@@ -151,7 +152,7 @@ function BrowserApp() {
   {key:'default',header:'当前默认应用',width:proportional(1,{minWidth:120}),renderCell:({entry,rowError,observation})=><VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowError} observation={observation}/></VStack>},
   {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isSelected,isDefault,targetApp,canSubmit,request})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail" tabIndex={isSelected ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&targetApp?<Button label={`将 ${entryName(entry)} 设为 ${targetApp.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)} tooltip={targetApp.path} tabIndex={isSelected?0:-1} isDisabled={!canSubmit||isDefault} onClick={()=>submitRow(entry,targetApp)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
       {request?<Text key={request.requestID} className="change-row-state" data-confirmed={String(request.confirmed)}>{requestLabel(request)}</Text>:null}</HStack>},
- ],[kind,selectableEntries.length,selectedVisible,batch.selectionBlocked,openEntry,submitRow,toggleRow,toggleVisible])
+ ],[kind,selectableEntries.length,selectedVisible,batch.can.select,openEntry,submitRow,toggleRow,toggleVisible])
  const tableWindow=useAssociationTableWindow(tableRows,associationList,browsedSelected?.id,tableColumns.length)
  // Keep browser navigation and batch selection independent. The name button owns
  // keyboard focus; clicks on non-interactive cells open the same details.

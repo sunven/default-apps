@@ -1,11 +1,13 @@
 import {act,render,screen,waitFor,within} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach,expect,test,vi} from 'vitest'
+import {StrictMode} from 'react'
 import {Events} from '@wailsio/runtime'
 import type {CancellablePromise} from '@wailsio/runtime'
 import {GetSnapshot as GetChanges,PrepareBatch,Query,ReconcileBatchStart,StartBatch,StopBatch} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import {List} from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
 import {GetSnapshot,StartScan} from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
+import {PickApplication} from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import type {Snapshot,BatchPreview} from '../bindings/github.com/sunven/default-apps/internal/change/models'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import App from './App'
@@ -202,4 +204,57 @@ test('first uncached candidate round waits for coverage before its one initial s
  await resolve(1)
  expect(first()).toHaveAccessibleName(`选择 Other ${other.path}`)
  expect(first()).toHaveTextContent('2 / 2 项系统候选')
+})
+
+test('closing during preview preparation keeps selections and ignores the old preview after reopening',async()=>{
+ await openFiles();await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ let finish!:(value:BatchPreview)=>void
+ vi.mocked(PrepareBatch).mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve}) as ReturnType<typeof PrepareBatch>)
+ await userEvent.click(screen.getByRole('button',{name:'选择应用…'}))
+ await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}))
+ expect(screen.getByText('正在检查当前默认并准备预览…')).toBeVisible()
+ await userEvent.click(screen.getByRole('button',{name:'关闭为所选类型选择应用'}))
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toBeChecked()
+ const current=await chooseEditor()
+ await act(async()=>finish({...preview,id:'abandoned',target:other}))
+ expect(current).toHaveTextContent('共同目标：Editor');expect(current).not.toHaveTextContent('共同目标：Other')
+ expect(StartBatch).not.toHaveBeenCalled()
+})
+
+test('a native picker finishing after its panel closes cannot open a preview',async()=>{
+ await openFiles();await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ let finish!:(value:Awaited<ReturnType<typeof PickApplication>>)=>void
+ vi.mocked(PickApplication).mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve}) as ReturnType<typeof PickApplication>)
+ await userEvent.click(screen.getByRole('button',{name:'选择应用…'}))
+ await userEvent.click(screen.getByRole('button',{name:'选择其他应用…'}))
+ await userEvent.click(screen.getByRole('button',{name:'关闭为所选类型选择应用'}))
+ await act(async()=>finish({saved:true,cancelled:false,entry:null,app}))
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument();expect(PrepareBatch).not.toHaveBeenCalled()
+})
+
+test('an admission event unlocks batch controls while the start reply is still missing',async()=>{
+ await openFiles();await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}));await chooseEditor()
+ let reject!:(error:Error)=>void
+ vi.mocked(StartBatch).mockImplementationOnce(()=>new Promise((_,no)=>{reject=no}) as ReturnType<typeof StartBatch>)
+ await userEvent.click(screen.getByRole('button',{name:'开始设置 1 项'}))
+ await act(async()=>listeners.get('defaultapps:change')?.({data:running(preview)}))
+ const dialog=await screen.findByRole('dialog',{name:'最近一次批量设置'})
+ expect(within(dialog).getByRole('button',{name:'停止后续设置'})).not.toHaveAttribute('aria-disabled','true')
+ expect(sessionStorage.getItem('defaultapps.batch-start.v1')).toBeNull()
+ await act(async()=>reject(new Error('late transport failure')))
+ expect(screen.getByRole('dialog')).toBe(dialog);expect(dialog).not.toHaveTextContent('late transport failure')
+ expect(StartBatch).toHaveBeenCalledTimes(1);expect(ReconcileBatchStart).not.toHaveBeenCalled()
+})
+
+test('StrictMode reconnects the batch workflow and restores a pending identity without starting again',async()=>{
+ const p:BatchPreview={id:'strict-pending',target:app,items:[],baseBatchID:'',baseRevision:0,resumeBatchID:'',replaceBatchID:''}
+ sessionStorage.setItem('defaultapps.batch-start.v1',p.id)
+ vi.mocked(ReconcileBatchStart).mockResolvedValue({outcome:'existing',message:'',snapshot:running(p)})
+ const mounted=render(<StrictMode><App/></StrictMode>)
+ await screen.findByRole('dialog',{name:'最近一次批量设置'})
+ expect(ReconcileBatchStart).toHaveBeenCalled();expect(vi.mocked(ReconcileBatchStart).mock.calls.every(([id])=>id===p.id)).toBe(true)
+ expect(StartBatch).not.toHaveBeenCalled();expect(PrepareBatch).not.toHaveBeenCalled()
+ expect(sessionStorage.getItem('defaultapps.batch-start.v1')).toBeNull()
+ mounted.unmount();expect(listeners.size).toBe(0);expect(document.body).not.toHaveAttribute('data-file-drop-target')
 })
