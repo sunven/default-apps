@@ -24,23 +24,37 @@ export function SoftwareUpdate() {
  const [open,setOpen] = useState(false)
  const [confirm,setConfirm] = useState(false)
  const [error,setError] = useState('')
+ const [snapshotError,setSnapshotError] = useState('')
+ const [loadingSnapshot,setLoadingSnapshot] = useState(false)
  const [sending,setSending] = useState(false)
  const mounted = useRef(true), version = useRef(-1), inFlight = useRef(false)
  const announced = useRef(new Set<string>())
+ const snapshotRequest = useRef<symbol|null>(null)
  const accept = useCallback((value:Snapshot) => {
   if (!mounted.current || value.version <= version.current) return
   version.current = value.version
   setState(value)
+  setSnapshotError('')
  },[])
+ const retrySnapshot = useCallback(async () => {
+  if(!mounted.current || snapshotRequest.current || version.current >= 0) return
+  const request=Symbol();snapshotRequest.current=request;setLoadingSnapshot(true)
+  try {
+   const value=await GetSnapshot()
+   if(mounted.current && snapshotRequest.current===request) accept(value)
+  } catch(value) {
+   if(mounted.current && snapshotRequest.current===request && version.current<0) setSnapshotError(`无法读取更新状态：${String(value)}`)
+  } finally {
+   if(snapshotRequest.current===request){snapshotRequest.current=null;if(mounted.current)setLoadingSnapshot(false)}
+  }
+ },[accept])
  useEffect(() => {
   mounted.current = true
   const off = Events.On('defaultapps:update', event => accept(event.data))
-  void Promise.resolve().then(() => GetSnapshot()).then(accept).catch(value => {
-   if(mounted.current) setError(`无法读取更新状态：${String(value)}`)
-  })
-  return () => { mounted.current = false; off() }
- },[accept])
- const show = useCallback(() => { setOpen(true);setConfirm(false);dismissNotification('app:update') },[])
+  void retrySnapshot()
+  return () => { mounted.current = false;snapshotRequest.current=null;off() }
+ },[accept,retrySnapshot])
+ const show = useCallback(() => { setOpen(true);setConfirm(false);dismissNotification('app:update');void retrySnapshot() },[retrySnapshot])
  useEffect(() => {
   if(!state?.error || open) return
   const key=`error:${state.error}`
@@ -76,7 +90,7 @@ export function SoftwareUpdate() {
    <section className="software-update" aria-label="本工具更新">
     {state?.disabledReason?<p>{state.disabledReason}</p>:<>
      <HStack gap={2} align="center" className="update-summary" role="status" aria-live="polite">
-      <strong>{state?phaseLabels[state.phase]??'检查未完成':'正在读取更新状态…'}</strong>
+      <strong>{state?phaseLabels[state.phase]??'检查未完成':snapshotError&&!loadingSnapshot?'更新状态读取失败':'正在读取更新状态…'}</strong>
       {state?.release?<Text>版本 {state.release.version}</Text>:null}
      </HStack>
      {downloading?<HStack gap={2} align="center" className="update-progress">
@@ -91,9 +105,11 @@ export function SoftwareUpdate() {
       <HStack gap={2} align="center" className="lifecycle-actions"><Button label="稍后" variant="secondary" onClick={()=>setConfirm(false)} isDisabled={busy}/><Button label="确认重启安装" variant="primary" onClick={()=>void run(Restart,true)} isDisabled={busy}/></HStack>
      </VStack>:null}
     </>}
+    {snapshotError?<p className="change-error" role="alert">{snapshotError}</p>:null}
     {error||state?.error?<p className="change-error" role="alert">{error||state?.error}</p>:null}
     <HStack gap={2} align="center" className="update-actions">
      <Button label="打开发布页" variant="secondary" onClick={()=>{setError('');void Browser.OpenURL(state?.releaseURL??'https://github.com/sunven/default-apps/releases/latest').catch(value=>setError(String(value)))}}/>
+     {snapshotError?<Button label="重试读取更新状态" variant="secondary" isLoading={loadingSnapshot} onClick={()=>void retrySnapshot()}/>:null}
      {state&&!state.disabledReason?<>
       {state.phase==='ready'?<Button label="重启安装" variant="primary" isDisabled={busy||confirm} onClick={()=>setConfirm(true)}/>:<>
        <Button label="检查更新" variant="secondary" isDisabled={busy} onClick={()=>void run(Check)}/>

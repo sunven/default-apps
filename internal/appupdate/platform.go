@@ -25,6 +25,19 @@ func installLocation(executable string) (string, error) {
 	if !strings.HasSuffix(app, ".app") {
 		return "", errors.New("当前程序不是应用包。")
 	}
+	// Wails selects the outermost .app in the unresolved executable path.
+	// Every bundle component in either path must identify this same copy.
+	for _, path := range []string{real, executable} {
+		for parent := filepath.Dir(path); parent != filepath.Dir(parent); parent = filepath.Dir(parent) {
+			if !strings.HasSuffix(parent, ".app") {
+				continue
+			}
+			target, err := filepath.EvalSymlinks(parent)
+			if err != nil || target != app {
+				return "", errors.New("当前启动路径包含其他应用包，无法安全安装更新。请将 Default Apps.app 移到独立目录后重新打开。")
+			}
+		}
+	}
 	if strings.Contains(app, "/AppTranslocation/") {
 		return "", errors.New("请先将应用移到可写的应用目录，再重新打开以安装更新。")
 	}

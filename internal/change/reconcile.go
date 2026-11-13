@@ -29,6 +29,9 @@ func (s *Service) decideLocked(in Submission, result SubmitResult) {
 	if s.decisions == nil {
 		s.decisions = make(map[string]admissionResult)
 	}
+	// Replays attach the current snapshot in decidedLocked. Retaining this one
+	// would duplicate the entire observation and icon cache for every decision.
+	result.Snapshot = Snapshot{}
 	s.decisions[in.RequestID] = admissionResult{input: in, result: clone(result)}
 }
 func (s *Service) ReconcileSubmission(in Submission) Reconciliation {

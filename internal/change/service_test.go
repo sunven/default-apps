@@ -184,6 +184,50 @@ func TestPreflightChangedAndAlreadyTargetCallNoSetter(t *testing.T) {
 		t.Fatalf("already: %+v starts=%d", got, sys.starts)
 	}
 }
+
+func TestRejectedSubmissionKeepsItsDecisionAndReturnsTheLatestSnapshot(t *testing.T) {
+	svc, sys, _ := fixture(t)
+	in := input("already-current")
+	in.TargetPath = old.Path
+	original := svc.Submit(ctx, in)
+	if original.Outcome != "no_change" || original.Observation == nil {
+		t.Fatal("expected a no-change decision with its original observation")
+	}
+	original.Observation.App.Path = "/tampered"
+	sys.current = &target
+	if _, err := svc.Query(ctx, pdf); err != nil {
+		t.Fatal(err)
+	}
+	latest := svc.GetSnapshot()
+	if latest.Version <= original.Snapshot.Version {
+		t.Fatal("query did not advance the snapshot")
+	}
+	check := func(result change.SubmitResult) {
+		t.Helper()
+		if result.Outcome != "no_change" || result.Observation == nil || result.Observation.App.Path != old.Path {
+			t.Fatal("replay lost or changed the original decision")
+		}
+		if result.Snapshot.Version != latest.Version || len(result.Snapshot.Observations) != 1 || result.Snapshot.Observations[0].Default.App.Path != target.Path {
+			t.Fatal("replay returned an old or incomplete snapshot")
+		}
+	}
+	check(svc.Submit(ctx, in))
+	reconciled := svc.ReconcileSubmission(in)
+	if reconciled.State != "decided" || reconciled.Result == nil || reconciled.Snapshot.Version != latest.Version {
+		t.Fatal("reconciliation lost the original decision or current snapshot")
+	}
+	check(*reconciled.Result)
+	conflicting := in
+	conflicting.TargetPath = target.Path
+	if got := svc.Submit(ctx, conflicting); got.Outcome != "conflict" {
+		t.Fatal("reusing the request ID with another target must still conflict")
+	}
+	sys.mu.Lock()
+	defer sys.mu.Unlock()
+	if sys.starts != 0 {
+		t.Fatal("replaying a rejected submission dispatched a system change")
+	}
+}
 func TestCompletionErrorAndReadbackRequireExactTarget(t *testing.T) {
 	svc, sys, _ := fixture(t)
 	r := svc.Submit(ctx, input("finish"))

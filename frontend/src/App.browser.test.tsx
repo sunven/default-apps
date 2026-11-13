@@ -2,14 +2,14 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import userEvent from '@testing-library/user-event'
 import { beforeEach, expect, test, vi } from 'vitest'
 import { Events } from '@wailsio/runtime'
-import { Query } from '../bindings/github.com/sunven/default-apps/internal/change/service'
+import { GetSnapshot as GetChanges, Query, Submit } from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import { List } from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
 import { GetSnapshot, StartScan } from '../bindings/github.com/sunven/default-apps/internal/discovery/service'
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import App from './App'
 
-vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({Query:vi.fn(),GetSnapshot:()=>Promise.resolve({version:0,busy:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null})}))
+vi.mock('../bindings/github.com/sunven/default-apps/internal/change/service', () => ({Query:vi.fn(),Submit:vi.fn(),GetSnapshot:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/catalog/service', () => ({List:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/discovery/service', () => ({GetSnapshot:vi.fn(),StartScan:vi.fn(),Reparse:vi.fn()}))
 vi.mock('../bindings/github.com/sunven/default-apps/internal/manual/service',()=>({GetStatus:()=>Promise.resolve({error:'',associations:0,applications:0})}))
@@ -24,14 +24,32 @@ const archive={...app,path:'/Volumes/Archive/Reader.app',displayPath:'/Volumes/A
 const snapshot:Snapshot={version:2,scanning:false,apps:[{app,associationIDs:[jpeg.id,pdf.id,otherJPEG.id],declarations:[],definitions:[],issues:[]},{app:archive,associationIDs:[],declarations:[],definitions:[],issues:[]}],entries:[jpeg,pdf,otherJPEG,https],issues:[],roots:[],startedAt:'',completedAt:'',durationMS:0}
 const systemApp={...app,name:'Safari',bundleID:'com.apple.Safari',path:'/System/Applications/Safari.app',displayPath:'/Applications/Safari.app',system:true}
 const mixedSnapshot:Snapshot={...snapshot,apps:[{...snapshot.apps![0],app:systemApp},...snapshot.apps!]}
+const changeSnapshot={version:0,busy:false,batchBlocked:false,activeRequestID:'',requests:[],observations:[],writableKinds:[],storageError:null,recovery:null,quit:{prompt:false,promptID:0,exiting:false}}
 let publish:(event:{data:Snapshot})=>void
 beforeEach(()=>{
  vi.resetAllMocks()
+ vi.mocked(GetChanges).mockResolvedValue(changeSnapshot)
  vi.mocked(List).mockResolvedValue(snapshot.entries!)
  vi.mocked(GetSnapshot).mockResolvedValue(snapshot)
  vi.mocked(StartScan).mockResolvedValue(snapshot)
  vi.mocked(Events.On).mockImplementation((name,listener)=>{if(name==='defaultapps:catalog')publish=listener as typeof publish;return ()=>{}})
  vi.mocked(Query).mockImplementation(association=>Promise.resolve({association,version:1,default:{known:true,app:archive,observedAt:'2026-11-05T10:00:00Z',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'2026-11-05T10:00:00Z',stale:false,error:null}}) as unknown as ReturnType<typeof Query>)
+})
+
+test('retrying change state restores the actual default-app controls without submitting a change',async()=>{
+ vi.mocked(GetChanges).mockRejectedValueOnce(new Error('transport disconnected'))
+  .mockResolvedValue({...changeSnapshot,writableKinds:['file']})
+ render(<App/>)
+ await userEvent.click(await screen.findByRole('button',{name:'PDF 文稿 com.adobe.pdf'}))
+ expect(await screen.findByRole('button',{name:`设为默认应用 ${app.path}`})).toHaveAttribute('aria-disabled','true')
+ await userEvent.click(screen.getByRole('button',{name:'重新查询'}))
+ expect(screen.getByRole('button',{name:`设为默认应用 ${app.path}`})).toHaveAttribute('aria-disabled','true')
+ await userEvent.keyboard('{Escape}')
+ await userEvent.click(await screen.findByRole('button',{name:'重试读取修改状态'}))
+ await userEvent.click(screen.getByRole('button',{name:'PDF 文稿 com.adobe.pdf'}))
+ expect(screen.getByRole('button',{name:`设为默认应用 ${app.path}`})).not.toHaveAttribute('aria-disabled','true')
+ expect(GetChanges).toHaveBeenCalledTimes(2)
+ expect(Submit).not.toHaveBeenCalled()
 })
 
 test('a default assigned to an application without declarations appears in its associations',async()=>{

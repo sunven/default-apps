@@ -17,17 +17,31 @@ function savedSubmission():Submission|null {
 export function useChanges(){
  const [state,setState]=useState<Snapshot|null>(null)
  const [message,setMessage]=useState('')
+ const [snapshotError,setSnapshotError]=useState('')
+ const [loadingSnapshot,setLoadingSnapshot]=useState(false)
  const [sending,setSending]=useState(false)
  const [pending,setPending]=useState<Submission|null>(savedSubmission)
  const historicalRequests=useRef(new Set<string>())
  const pendingRef=useRef(pending)
+ const snapshotRequest=useRef<symbol|null>(null)
  const version=useRef(-1),inFlight=useRef(false),reconciling=useRef(false),reconcileAgain=useRef(false),mounted=useRef(true)
  const forget=useCallback(()=>{sessionStorage.removeItem(pendingKey);pendingRef.current=null;if(mounted.current)setPending(null)},[])
- const accept=useCallback((value:Snapshot)=>{if(!mounted.current||value.version<=version.current)return;version.current=value.version;setState(value);const original=pendingRef.current;if(original&&value.requests?.some(r=>r.requestID===original.requestID&&r.association.kind===original.association.kind&&r.association.key===original.association.key&&r.target.path===original.targetPath)){forget();setMessage('')}},[forget])
- useEffect(()=>{mounted.current=true;const off=Events.On('defaultapps:change',event=>accept(event.data));void GetSnapshot().then(value=>{
-  if(version.current<0)for(const request of value.requests??[])if(request.phase==='resolved')historicalRequests.current.add(request.requestID)
-  accept(value)
- }).catch(error=>{if(mounted.current)setMessage(`无法读取修改状态：${String(error)}`)});return()=>{mounted.current=false;off()}},[accept])
+ const accept=useCallback((value:Snapshot)=>{if(!mounted.current||value.version<=version.current)return;version.current=value.version;setState(value);setSnapshotError('');const original=pendingRef.current;if(original&&value.requests?.some(r=>r.requestID===original.requestID&&r.association.kind===original.association.kind&&r.association.key===original.association.key&&r.target.path===original.targetPath)){forget();setMessage('')}},[forget])
+ const retrySnapshot=useCallback(async()=>{
+  if(!mounted.current||snapshotRequest.current||version.current>=0)return
+  const request=Symbol();snapshotRequest.current=request;setLoadingSnapshot(true)
+  try {
+   const value=await GetSnapshot()
+   if(!mounted.current||snapshotRequest.current!==request)return
+   if(version.current<0)for(const item of value.requests??[])if(item.phase==='resolved')historicalRequests.current.add(item.requestID)
+   accept(value)
+  }catch(error){
+   if(mounted.current&&snapshotRequest.current===request&&version.current<0)setSnapshotError(`无法读取修改状态：${String(error)}`)
+  }finally{
+   if(snapshotRequest.current===request){snapshotRequest.current=null;if(mounted.current)setLoadingSnapshot(false)}
+  }
+ },[accept])
+ useEffect(()=>{mounted.current=true;const off=Events.On('defaultapps:change',event=>accept(event.data));void retrySnapshot();return()=>{mounted.current=false;snapshotRequest.current=null;off()}},[accept,retrySnapshot])
  const recoverReply=useCallback(async function reconcile(){
   if(!pending)return
   if(reconciling.current){reconcileAgain.current=true;return}
@@ -46,7 +60,7 @@ export function useChanges(){
  // endpoint can close a never-arrived request; it never invokes the setter.
  useEffect(()=>{if(!sending&&pending)void recoverReply()},[state?.version,sending,pending,recoverReply])
  const submit=async(association:Association,target:AppCopy,observed:DefaultObservation,recoveryRequestID='')=>{
-  if(inFlight.current||state?.busy||state?.batchBlocked||state?.quit?.exiting||state?.quit?.restarting||(state?.quit?.prompt&&state.quit.intent==='update')||pending)return
+  if(!state||inFlight.current||state.busy||state.batchBlocked||state.quit?.exiting||state.quit?.restarting||(state.quit?.prompt&&state.quit.intent==='update')||pending)return
   const input={requestID:crypto.randomUUID(),recoveryRequestID,association,targetPath:target.path,expected:{known:observed.known&&!observed.stale&&!observed.error,path:observed.app?.path??''}}
   try{sessionStorage.setItem(pendingKey,JSON.stringify({version:1,input}))}catch{setMessage('无法保存原请求标识，请恢复会话存储后再修改。');return}
   inFlight.current=true;pendingRef.current=input;setPending(input);setSending(true);setMessage('')
@@ -55,7 +69,7 @@ export function useChanges(){
   finally{inFlight.current=false;if(mounted.current)setSending(false)}
  }
  const retry=async(association:Association)=>{try{accept(await Requery(association));setMessage('')}catch(error){setMessage(`重新查询失败：${String(error)}`)}}
- return {state,message,sending,pending,historicalRequests,accept,blocked:!state||state.busy||!!state.batchBlocked||!!state.quit?.exiting||!!state.quit?.restarting||!!(state.quit?.prompt&&state.quit.intent==='update')||sending||!!pending,submit,retry,recoverReply}
+ return {state,message,snapshotError,loadingSnapshot,retrySnapshot,sending,pending,historicalRequests,accept,blocked:!state||state.busy||!!state.batchBlocked||!!state.quit?.exiting||!!state.quit?.restarting||!!(state.quit?.prompt&&state.quit.intent==='update')||sending||!!pending,submit,retry,recoverReply}
 }
 export type Changes=ReturnType<typeof useChanges>
 export function requestLabel(request:Request){
@@ -106,8 +120,9 @@ export function ChangeStatus({changes,onReturn,observations}:{changes:Changes;on
   else if(presented.current.has(messageID)){dismissNotification(messageID);presented.current.delete(messageID)}
  },[changes.state,changes.pending,changes.message,changes.historicalRequests,observations])
  const storageRequests=changes.state?.requests?.filter(request=>request.storageError)??[]
- if(!changes.state?.storageError&&!storageRequests.length)return null
- return <section className="recovery-status" aria-label="修改配置故障" role="alert">
+ if(!changes.snapshotError&&!changes.state?.storageError&&!storageRequests.length)return null
+ return <section className="recovery-status" aria-label={changes.snapshotError?'修改状态读取失败':'修改配置故障'} role="alert">
+  {changes.snapshotError?<><p className="change-error">{changes.snapshotError}</p><Button label="重试读取修改状态" variant="secondary" isLoading={changes.loadingSnapshot} onClick={()=>void changes.retrySnapshot()}/></>:null}
   {storageRequests.map(request=><p key={request.requestID} className="change-error">{request.association.key} · 系统结果与回读已知；未定记录清除失败：{request.storageError!.message}</p>)}
   {changes.state?.storageError?<p className="change-error">配置读取失败：{changes.state.storageError.message}</p>:null}
  </section>

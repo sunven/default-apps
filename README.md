@@ -25,6 +25,8 @@ wails3 task darwin:package
 open "bin/Default Apps.app"
 ```
 
+仓库只保留 macOS 本机构建及共享任务，不提供 Windows、Linux、移动端、服务器或 Docker 构建入口。
+
 任务执行版本检查、`npm ci`、生成绑定和前端构建，并以本机 ad-hoc 签名打包 `bin/Default Apps.app`。产品名称为 Default Apps，bundle ID 为 `io.github.sunven.default-apps`，版本以 `internal/buildinfo/version.txt` 为准。开发产品使用同一身份与正式入口：
 
 ```sh

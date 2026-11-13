@@ -1,4 +1,4 @@
-import {act,render,screen,waitFor,within} from '@testing-library/react'
+import {act,render,renderHook,screen,waitFor,within} from '@testing-library/react'
 import {StrictMode} from 'react'
 import userEvent from '@testing-library/user-event'
 import {beforeEach,expect,test,vi} from 'vitest'
@@ -17,6 +17,67 @@ const request:Request={requestID:'one',association,target:copy,preflight:observa
 let notify:(event:{data:Snapshot})=>void
 beforeEach(()=>{vi.resetAllMocks();sessionStorage.clear();vi.mocked(GetSnapshot).mockResolvedValue(empty);vi.mocked(Events.On).mockImplementation((_name,fn)=>{notify=fn as typeof notify;return ()=>{}})})
 function Screen(){const changes=useChanges();return <><NotificationHost/><button disabled={changes.blocked} onClick={()=>void changes.submit(association,copy,observation)}>修改</button><ChangeStatus changes={changes} onReturn={()=>{}}/></>}
+test('failed initial state can be retried without writes or replaying completed history',async()=>{
+ let finish!:(value:Snapshot)=>void
+ vi.mocked(GetSnapshot).mockRejectedValueOnce(new Error('transport disconnected'))
+  .mockReturnValueOnce(new Promise<Snapshot>(resolve=>{finish=resolve}) as ReturnType<typeof GetSnapshot>)
+ render(<Screen/>)
+ const retry=await screen.findByRole('button',{name:'重试读取修改状态'})
+ expect(screen.getByRole('button',{name:'修改'})).toBeDisabled()
+ await userEvent.dblClick(retry)
+ expect(GetSnapshot).toHaveBeenCalledTimes(2)
+ expect(retry).toHaveAttribute('aria-disabled','true')
+ expect(screen.getByRole('button',{name:'修改'})).toBeDisabled()
+ await act(async()=>finish({...empty,requests:[{...request,phase:'resolved',confirmed:true}]}))
+ expect(screen.getByRole('button',{name:'修改'})).toBeEnabled()
+ expect(screen.queryByText(/无法读取修改状态/)).not.toBeInTheDocument()
+ expect(screen.queryByText('已确认本次修改')).not.toBeInTheDocument()
+ expect(Submit).not.toHaveBeenCalled()
+ expect(Requery).not.toHaveBeenCalled()
+ expect(ReconcileSubmission).not.toHaveBeenCalled()
+})
+
+test('an initial state failure arriving after an event does not show a stale read error',async()=>{
+ let fail!:(error:Error)=>void
+ vi.mocked(GetSnapshot).mockReturnValue(new Promise<Snapshot>((_resolve,reject)=>{fail=reject}) as ReturnType<typeof GetSnapshot>)
+ const {result}=renderHook(()=>useChanges())
+ await act(async()=>notify({data:{...empty,version:9}}))
+ await act(async()=>fail(new Error('late failure')))
+ expect(result.current.blocked).toBe(false)
+ expect(result.current.message).toBe('')
+ expect(result.current.snapshotError).toBe('')
+})
+
+test.each(['snapshot','failure'])('a newer change event survives a late retry %s',async outcome=>{
+ let finish!:(value:Snapshot)=>void,fail!:(error:Error)=>void
+ vi.mocked(GetSnapshot).mockRejectedValueOnce(new Error('disconnected'))
+  .mockReturnValueOnce(new Promise<Snapshot>((resolve,reject)=>{finish=resolve;fail=reject}) as ReturnType<typeof GetSnapshot>)
+ const {result}=renderHook(()=>useChanges())
+ await waitFor(()=>expect(result.current.snapshotError).toContain('disconnected'))
+ act(()=>{void result.current.retrySnapshot()})
+ await act(async()=>notify({data:{...empty,version:9,busy:true}}))
+ await act(async()=>{if(outcome==='snapshot')finish(empty);else fail(new Error('late failure'))})
+ expect(result.current.state?.version).toBe(9)
+ expect(result.current.blocked).toBe(true)
+ expect(result.current.snapshotError).toBe('')
+ expect(Submit).not.toHaveBeenCalled()
+})
+
+test('an abandoned mount cannot supply change state after StrictMode restarts the effect',async()=>{
+ let finish!:(value:Snapshot)=>void
+ vi.mocked(GetSnapshot).mockReturnValueOnce(new Promise<Snapshot>(resolve=>{finish=resolve}) as ReturnType<typeof GetSnapshot>)
+  .mockRejectedValueOnce(new Error('disconnected'))
+ const {result}=renderHook(()=>useChanges(),{wrapper:StrictMode})
+ await waitFor(()=>expect(result.current.snapshotError).toContain('disconnected'))
+ await act(async()=>finish({...empty,version:9}))
+ expect(result.current.blocked).toBe(true)
+ expect(result.current.state).toBeNull()
+ vi.mocked(GetSnapshot).mockResolvedValue(empty)
+ await act(async()=>result.current.retrySnapshot())
+ expect(result.current.state?.version).toBe(1)
+ expect(result.current.blocked).toBe(false)
+})
+
 test('completed items from an earlier batch do not become single-change notifications',async()=>{
  render(<Screen/>);await waitFor(()=>expect(screen.getByRole('button',{name:'修改'})).toBeEnabled())
  const completed={...request,batchID:'previous-batch',phase:'resolved',confirmed:true,completion:{known:true,error:null,completedAt:'now'},readback:{state:'valid',observation:{...observation,app:copy}}}
