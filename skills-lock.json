@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "skills": {
+    "bmad": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "skillPath": "skills/core-tools/bmad/SKILL.md",
+      "computedHash": "da40eaaccf08b2f25a04a5510269e44cb8136474b53b74fa2069136d935acb61"
+    },
+    "bmad-cis-agent-brainstorming-coach": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-brainstorming-coach/SKILL.md",
+      "computedHash": "e7a9156c60f9c03d297dc98c9102e8ec9b050b19767b02940d5f6ce1ff427cb5"
+    },
+    "bmad-cis-agent-creative-problem-solver": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-creative-problem-solver/SKILL.md",
+      "computedHash": "b71656cfd0d358e7aa626b16cb205e1d79d1a0ef9581ab06ada6de491900118a"
+    },
+    "bmad-cis-agent-design-thinking-coach": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-design-thinking-coach/SKILL.md",
+      "computedHash": "ca4a40375a24a402d5ad722fbc865b69ac85aed539c5ff07920adcc9138dcf0d"
+    },
+    "bmad-cis-agent-innovation-strategist": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-innovation-strategist/SKILL.md",
+      "computedHash": "4fda5cda90f23a5336d513874c3e83b2cd7e3b48d5cff132c1674e3695b28fcb"
+    },
+    "bmad-cis-agent-presentation-master": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-presentation-master/SKILL.md",
+      "computedHash": "a503fe41b1272d12c99a69768dbd2975894bbbb6949049a17102b356999d346c"
+    },
+    "bmad-cis-agent-storyteller": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-agent-storyteller/SKILL.md",
+      "computedHash": "f6e895c9e5e03d0a8bef0273f794e42d5458b28ad1aa87d75b52766ba409f138"
+    },
+    "bmad-cis-design-thinking": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-design-thinking/SKILL.md",
+      "computedHash": "71d625e5e7bda9939790cf1d98db169d9578c8d03b860259b9b2314cb9c119a8"
+    },
+    "bmad-cis-innovation-strategy": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-innovation-strategy/SKILL.md",
+      "computedHash": "183dab9b1858f28a1dd6eaf49c2950ee883d2f0e86f0df46c7f4ffb65d994046"
+    },
+    "bmad-cis-problem-solving": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-problem-solving/SKILL.md",
+      "computedHash": "fd652b8c2dfdfbd213812c48166cc426380c6bd5f38749ec1224e599cff7f6b1"
+    },
+    "bmad-cis-storytelling": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmad-cis-storytelling/SKILL.md",
+      "computedHash": "2c618f961eca6bdb6349d1b8501bf94d6d81a8d91ade2960822f7acee8027bea"
+    },
+    "bmod-cis": {
+      "source": "bmad-code-org/bmad-module-creative-intelligence-suite",
+      "sourceType": "github",
+      "skillPath": "skills/bmod-cis/SKILL.md",
+      "computedHash": "a150ce53dfdda7c544561e27cfbbe87a3aa9e58bb3e74c3862839aee8f7736d6"
+    },
+    "bmod-core-tools": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "skillPath": "skills/core-tools/bmod-core-tools/SKILL.md",
+      "computedHash": "1e1312242cd78a893e788796084dfc4c8783048a952b347dff5a8eff5b0a0cbf"
+    }
+  }
+}
