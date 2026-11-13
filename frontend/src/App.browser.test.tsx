@@ -295,7 +295,7 @@ test('an empty application category offers an explicit way to show all applicati
  vi.mocked(StartScan).mockResolvedValue(onlySystem)
  render(<App/>)
  expect(await screen.findByText('未发现非系统应用')).toBeVisible()
- expect(screen.getByText('0 / 1')).toBeVisible()
+ expect(await screen.findByText('0 / 1')).toBeVisible()
  expect(screen.queryByRole('button',{name:'应用详情…'})).not.toBeInTheDocument()
  await userEvent.click(screen.getByRole('button',{name:'显示全部应用'}))
  expect(screen.getByRole('button',{name:'全部应用'})).toHaveAttribute('aria-pressed','true')

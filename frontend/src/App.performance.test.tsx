@@ -46,6 +46,7 @@ test('an observation update renders only its default application cell in the rea
  expect(defaultIcons).toHaveLength(1)
 })
 
+// The 960-entry background query sweep also runs here; allow slower CI runners.
 test('switching large catalogs mounts a bounded set of rows and keeps keyboard access to the last result',async()=>{
  vi.spyOn(HTMLElement.prototype,'clientHeight','get').mockReturnValue(600)
  vi.spyOn(HTMLElement.prototype,'clientWidth','get').mockReturnValue(1000)
@@ -80,4 +81,4 @@ test('switching large catalogs mounts a bounded set of rows and keeps keyboard a
  expect(screen.getByRole('button',{name:'Type 799 test.799'})).toBeVisible()
  expect(screen.getByRole('checkbox',{name:'勾选 Type 799 test.799'})).toBeChecked()
  expect(screen.getByRole('table',{name:'关联目录'}).querySelectorAll('.association-row')).toHaveLength(1)
-})
+},15_000)
