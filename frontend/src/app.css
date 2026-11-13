@@ -100,6 +100,8 @@ h2,h3 {font-size:var(--text-heading-2-size);font-weight:600;letter-spacing:-.01e
 .association-table :is(th,td):first-child {padding-inline-start:var(--gutter)}
 .association-table :is(th,td):last-child {padding-inline-end:var(--gutter)}
 .association-table .association-row {height:var(--app-row-height);cursor:pointer}
+.association-table .association-spacer>td {padding:0;border:0;line-height:0}
+.association-list {overflow-anchor:none}
 .association-table .association-row[data-selected=true] {--muted:var(--color-text-primary);--table-row-overlay:var(--color-accent-muted);background:var(--color-accent-muted)}
 .association-name {border:0;border-radius:var(--radius-element);background:transparent;justify-content:flex-start;text-align:left;width:100%;min-width:0;padding:var(--spacing-0-5) 0;height:auto;white-space:normal}
 .association-name:hover:not(:disabled) {background:transparent;border-color:transparent}

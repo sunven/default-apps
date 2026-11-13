@@ -1,5 +1,5 @@
-import {act,render,screen,within} from '@testing-library/react'
-import {beforeEach,expect,test,vi} from 'vitest'
+import {act,fireEvent,render,screen,within} from '@testing-library/react'
+import {afterEach,beforeEach,expect,test,vi} from 'vitest'
 import {Events} from '@wailsio/runtime'
 import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import {List} from '../bindings/github.com/sunven/default-apps/internal/catalog/service'
@@ -30,6 +30,7 @@ beforeEach(()=>{
  vi.mocked(Query).mockImplementation(association=>Promise.resolve(observation(association)) as ReturnType<typeof Query>)
  vi.mocked(Events.On).mockImplementation((name,listener)=>{listeners.set(name,listener as never);return()=>{listeners.delete(name)}})
 })
+afterEach(()=>vi.restoreAllMocks())
 
 test('an observation update renders only its default application cell in the real table',async()=>{
  render(<App/>)
@@ -43,4 +44,40 @@ test('an observation update renders only its default application cell in the rea
  expect(within(row).getByText('Updated Reader')).toBeVisible()
  const defaultIcons=renderIcon.mock.calls.filter(([props])=>props.className==='application-icon--compact')
  expect(defaultIcons).toHaveLength(1)
+})
+
+test('switching large catalogs mounts a bounded set of rows and keeps keyboard access to the last result',async()=>{
+ vi.spyOn(HTMLElement.prototype,'clientHeight','get').mockReturnValue(600)
+ vi.spyOn(HTMLElement.prototype,'clientWidth','get').mockReturnValue(1000)
+ vi.spyOn(HTMLElement.prototype,'offsetHeight','get').mockReturnValue(60)
+ const files=Array.from({length:800},(_,index)=>({...entries[0],id:`file:test.${index}`,association:{kind:'file',key:`test.${index}`},name:`Type ${index}`}))
+ const schemes=Array.from({length:160},(_,index)=>({...entries[0],id:`scheme:protocol${index}`,association:{kind:'scheme',key:`protocol${index}`},name:`Protocol ${index}`}))
+ const catalog=[...files,...schemes]
+ const data={...snapshot,entries:catalog,apps:[{...snapshot.apps[0],associationIDs:[files[0].id]}]}
+ vi.mocked(List).mockResolvedValue(catalog)
+ vi.mocked(GetSnapshot).mockResolvedValue(data)
+ vi.mocked(StartScan).mockResolvedValue(data)
+ render(<App/>)
+ await screen.findByRole('button',{name:'Type 0 test.0'})
+ for(const name of ['文件类型','URL 协议','文件类型']){
+  fireEvent.click(screen.getByRole('button',{name}))
+  const table=screen.getByRole('table',{name:'关联目录'})
+  expect(table.querySelectorAll('.association-row').length).toBeLessThan(40)
+  expect(table).toHaveAttribute('aria-rowcount',name==='文件类型'?'801':'161')
+ }
+ const first=screen.getByRole('button',{name:'Type 0 test.0'})
+ first.focus()
+ fireEvent.keyDown(first,{key:'End'})
+ const last=screen.getByRole('button',{name:'Type 799 test.799'})
+ expect(last).toHaveFocus()
+ expect(last.closest('tr')).toHaveAttribute('aria-rowindex','801')
+ fireEvent.click(last)
+ expect(screen.getByRole('dialog',{name:'Type 799'})).toBeVisible()
+ fireEvent.click(screen.getByRole('button',{name:'关闭Type 799'}))
+ fireEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
+ expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 800 个类型')
+ fireEvent.change(screen.getByRole('searchbox',{name:'搜索文件类型'}),{target:{value:'test.799'}})
+ expect(screen.getByRole('button',{name:'Type 799 test.799'})).toBeVisible()
+ expect(screen.getByRole('checkbox',{name:'勾选 Type 799 test.799'})).toBeChecked()
+ expect(screen.getByRole('table',{name:'关联目录'}).querySelectorAll('.association-row')).toHaveLength(1)
 })

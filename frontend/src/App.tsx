@@ -24,6 +24,7 @@ import { SoftwareUpdate } from './SoftwareUpdate'
 import { applicationDeclarationSources, associationSourceOptions, type AssociationSourceFilter } from './associationSources'
 import { useAssociationQueries, isTrustworthy } from './useAssociationQueries'
 import { useAssociationBrowser, type BrowserView as View, type ApplicationFilter } from './useAssociationBrowser'
+import { useAssociationTableWindow } from './useAssociationTableWindow'
 import type { AppCopy, QueryResult } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry, Source } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import type { Request } from '../bindings/github.com/sunven/default-apps/internal/change/models'
@@ -146,6 +147,7 @@ export default function App() {
   {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isSelected,isDefault,targetApp,canSubmit,request})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail" tabIndex={isSelected ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&targetApp?<Button label={`将 ${entryName(entry)} 设为 ${targetApp.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)} tooltip={targetApp.path} tabIndex={isSelected?0:-1} isDisabled={!canSubmit||isDefault} onClick={()=>submitRow(entry,targetApp)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
       {request?<Text key={request.requestID} className="change-row-state" data-confirmed={String(request.confirmed)}>{requestLabel(request)}</Text>:null}</HStack>},
  ],[kind,selectableEntries.length,selectedVisible,batch.selectionBlocked,openEntry,submitRow,toggleRow,toggleVisible])
+ const tableWindow=useAssociationTableWindow(tableRows,associationList,browsedSelected?.id,tableColumns.length)
  // Keep browser navigation and batch selection independent. The name button owns
  // keyboard focus; clicks on non-interactive cells open the same details.
  const tablePlugin=useMemo<TablePlugin<AssociationRow>>(()=>({
@@ -198,7 +200,7 @@ export default function App() {
 
      </HStack>
     </section>
-    <Table className="association-table" aria-label={kind==='app'?'应用关联':'关联目录'} data={tableRows} columns={tableColumns} idKey="id" density="compact" dividers="rows" hasHover verticalAlign="middle" textOverflow="wrap" plugins={{browser:tablePlugin}} emptyState={<VStack gap={0} className="empty-workspace"><VStack as="span" gap={0} className="empty-icon"><Icon name="search"/></VStack><Heading level={2}>{emptyHeadline}</Heading><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><HStack gap={2} align="center" className="empty-actions"><Button label={manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'} variant="secondary" onClick={clearSearch}/>{kind==='app' && !selectedApp && appFilter!=='all' ? <Button label="显示全部应用" variant="secondary" onClick={()=>changeAppFilter('all')}/> : null}{kind!=='file' ? <Button label="浏览文件类型" variant="secondary" onClick={()=>switchView('file')}/> : null}{kind!=='scheme' ? <Button label="浏览 URL 协议" variant="secondary" onClick={()=>switchView('scheme')}/> : null}</HStack></VStack>}/>
+    <Table className="association-table" aria-label={kind==='app'?'应用关联':'关联目录'} data={tableWindow.data} columns={tableColumns} idKey="id" density="compact" dividers="rows" hasHover verticalAlign="middle" textOverflow="wrap" plugins={{browser:tablePlugin,window:tableWindow.plugin}} emptyState={<VStack gap={0} className="empty-workspace"><VStack as="span" gap={0} className="empty-icon"><Icon name="search"/></VStack><Heading level={2}>{emptyHeadline}</Heading><p>可清除搜索或筛选{kind==='app' && !selectedApp && appFilter!=='all' ? '、切换应用类型' : ''}，或切换浏览入口继续查看这台 Mac 的默认应用。</p><HStack gap={2} align="center" className="empty-actions"><Button label={manualOnly || (kind==='app' && sourceFilter!=='all') ? '清除搜索和筛选' : '清除搜索'} variant="secondary" onClick={clearSearch}/>{kind==='app' && !selectedApp && appFilter!=='all' ? <Button label="显示全部应用" variant="secondary" onClick={()=>changeAppFilter('all')}/> : null}{kind!=='file' ? <Button label="浏览文件类型" variant="secondary" onClick={()=>switchView('file')}/> : null}{kind!=='scheme' ? <Button label="浏览 URL 协议" variant="secondary" onClick={()=>switchView('scheme')}/> : null}</HStack></VStack>}/>
     <footer className="browser-footer"><HStack as="span" gap={2} align="center" className="footer-source"><VStack as="span" gap={0} className="status-dot"/>{kind==='app' ? '同一扩展名可能对应多个类型；当前默认按具体类型查询。' : '默认应用由系统独立查询'}</HStack>{snapshot?.issues?.length ? <Button label={`扫描问题 · ${snapshot.issues.length}`} variant="secondary" onClick={()=>setIssuesOpen(true)}>扫描问题 · {snapshot.issues.length}</Button> : null}</footer>
    </main>
   </Grid>
@@ -217,12 +219,13 @@ export default function App() {
        {visibleResult?.default.app ? <ApplicationCopy app={visibleResult.default.app} missing={missingCopyPaths.has(visibleResult.default.app.path)} /> : <p>{visibleResult?.default.known ? '系统未返回默认应用' : loading ? '正在读取系统默认…' : '尚无有效默认观察'}</p>}
        {visibleResult?.default.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.default.observedAt).toLocaleString()}</p> : null}
       </section>
-      <section aria-labelledby="candidates-heading"><HStack gap={2} align="center" className="section-heading"><Heading level={2} id="candidates-heading">系统候选应用</Heading>{visibleResult?.candidates.known ? <Text>{visibleResult.candidates.apps?.length ?? 0} 个应用副本</Text> : null}</HStack>
+      <section aria-labelledby="candidates-heading">
+       <ManualApplicationAction association={selected.association} onSelected={inspectCopy} heading={<HStack gap={2} align="center" wrap="wrap"><Heading level={2} id="candidates-heading">系统候选应用</Heading>{visibleResult?.candidates.known ? <Text type="supporting" color="secondary">{visibleResult.candidates.apps?.length ?? 0} 个应用副本</Text> : null}</HStack>}>
        {visibleResult?.candidates.error ? <VStack gap={0} className="query-error" role="status"><p>{visibleResult.candidates.known ? '候选应用待更新 · 保留最后有效观察' : '候选应用查询失败'}</p><p>{visibleResult.candidates.error.message}</p></VStack> : null}
        {!visibleResult?.candidates.known ? <p>{loading ? '正在读取系统候选…' : '尚无有效候选观察'}</p> : null}
        {visibleResult?.candidates.known && !visibleResult.candidates.apps?.length ? <p>系统未返回候选应用</p> : null}
        {visibleResult?.candidates.known ? <p className="freshness">最后有效查询：{new Date(visibleResult.candidates.observedAt).toLocaleString()}</p> : null}
-       <ManualApplicationAction association={selected.association} onSelected={inspectCopy}/>
+       </ManualApplicationAction>
        <ul className="candidate-list">{visibleResult?.candidates.apps?.map(app => <li key={app.path}><ApplicationCopy app={app} onSubmit={app=>submitCopy(selected,app)} disabled={!canChange(selected,app)}/></li>)}</ul>
       </section>
      </>}

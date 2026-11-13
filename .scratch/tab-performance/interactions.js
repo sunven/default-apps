@@ -1,0 +1,44 @@
+(async () => {
+ const errors=[];
+ const onError=event=>errors.push(event.message);
+ window.addEventListener('error',onError);
+ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ const nav=name=>Array.from(document.querySelectorAll('nav[aria-label="浏览入口"] button')).find(b=>b.textContent===name).click();
+ const assert=(ok,message)=>{if(!ok)throw Error(message)};
+ const list=()=>document.querySelector('.association-list');
+ const selected=()=>document.activeElement?.dataset.associationId;
+ for(let i=0;i<100&&!document.querySelector('[data-association-id]');i++)await pause(50);
+ await document.fonts.ready;
+ nav('文件类型');await pause(200);
+ document.querySelector('[data-association-id]').focus();
+ document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'End',bubbles:true}));await pause(200);
+ assert(selected()==='file:test.file.799','End must focus last file');
+ assert(list().scrollTop>40000,'End must scroll to last file');
+ document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'Home',bubbles:true}));await pause(150);
+ assert(selected()==='file:com.adobe.pdf','Home must focus first file');
+ list().scrollTop=12000;await pause(250);
+ const fileScroll=list().scrollTop;
+ const checkViewport=()=>{
+  const bounds=list().getBoundingClientRect();
+  const rects=Array.from(list().querySelectorAll('.association-row')).map(r=>r.getBoundingClientRect()).filter(r=>r.bottom>bounds.top+50&&r.top<bounds.bottom);
+  assert(rects.length>3,'Viewport must contain real rows');
+  for(let i=1;i<rects.length;i++)assert(Math.abs(rects[i].top-rects[i-1].bottom)<2,'No gaps or overlapping visible rows');
+  return rects.length;
+ };
+ checkViewport();
+ nav('URL 协议');await pause(200);
+ assert(list().scrollTop===0,'First protocol visit starts at top');
+ list().scrollTop=3000;await pause(200);const schemeScroll=list().scrollTop;
+ checkViewport();
+ nav('文件类型');await pause(250);
+ assert(Math.abs(list().scrollTop-fileScroll)<2,'File scroll must be restored');checkViewport();
+ nav('URL 协议');await pause(250);
+ assert(Math.abs(list().scrollTop-schemeScroll)<2,'Protocol scroll must be restored');checkViewport();
+ nav('文件类型');await pause(150);
+ const all=document.querySelector('thead input[type="checkbox"]');
+ assert(all,'Select all control must exist');all.click();await pause(150);
+ assert(document.querySelector('.batch-selection-bar').textContent.includes('811'),'Select all includes unmounted rows');
+ window.removeEventListener('error',onError);
+ if(errors.length)throw Error(errors.join('; '));
+ return {pass:true,fileScroll,schemeScroll,mountedRows:list().querySelectorAll('.association-row').length};
+})()

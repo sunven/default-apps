@@ -7,7 +7,7 @@ import { Button } from '@astryxdesign/core/Button'
 import { HStack } from '@astryxdesign/core/HStack'
 import { Text } from '@astryxdesign/core/Text'
 import { VStack } from '@astryxdesign/core/VStack'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { AppCopy, Association } from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import { AddIdentifiedType, AddInput, GetStatus, IdentifyFile, PickApplication, ResolveInput } from '../bindings/github.com/sunven/default-apps/internal/manual/service'
@@ -74,7 +74,7 @@ function ManualApplicationDialog({onClose,onCatalogChanged,storageError}:{onClos
   {storageError ? <p role="alert" className="manual-error">{storageError}</p> : null}
  </Dialog>
 }
-export function ManualApplicationAction({association,onSelected,disabled=false}:{association?:Association;onSelected?:(app:AppCopy)=>void;disabled?:boolean}) {
+export function ManualApplicationAction({association,onSelected,disabled=false,heading,children}:{association?:Association;onSelected?:(app:AppCopy)=>void;disabled?:boolean;heading?:ReactNode;children?:ReactNode}) {
  const [busy,setBusy]=useState(false)
  const [error,setError]=useState('')
  const [selected,setSelected]=useState<AppCopy|null>(null)
@@ -84,5 +84,6 @@ export function ManualApplicationAction({association,onSelected,disabled=false}:
   const id=notify('pending','正在选择应用…')
   try{const result=await PickApplication();if(!result.cancelled&&result.saved&&result.app){setSelected(result.app);notify('success','已保存应用位置',{id,description:result.app.path});onSelected?.(result.app)}else dismissNotification(id)}catch(error){dismissNotification(id);setError(message(error))}finally{setBusy(false)}
  }
- return <VStack gap={0} className="manual-application"><Button label={busy?'正在选择…':association?'选择其他应用…':'添加应用位置…'} icon={<Icon name="plus"/>} variant="secondary" isDisabled={busy||disabled} onClick={()=>void choose()}/><p className="manual-help">{association ? '保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。' : '选择 .app 应用包，将它加入应用列表。'}</p>{selected ? <VStack gap={0} className="manual-picked"><strong>所选应用 · {selected.name}</strong><Text>版本 {selected.version||'未知'} · {selected.bundleID||'无 bundle ID'}</Text><code>{selected.path}</code><Text>尚未提出修改默认应用的请求。</Text></VStack>:null}{error ? <p role="alert" className="manual-error">{error}</p>:null}</VStack>
+ const button=<Button label={busy?'正在选择…':association?'选择其他应用…':'添加应用位置…'} icon={<Icon name="plus"/>} variant="secondary" isDisabled={busy||disabled} onClick={()=>void choose()}/>
+ return <VStack gap={0} className="manual-application">{heading ? <HStack gap={2} align="center" justify="between" wrap="wrap">{heading}{button}</HStack> : button}{children}<p className="manual-help">{association ? '保存所选副本的位置。是否声明支持不代表系统能否接受它为默认应用。' : '选择 .app 应用包，将它加入应用列表。'}</p>{selected ? <VStack gap={0} className="manual-picked"><strong>所选应用 · {selected.name}</strong><Text>版本 {selected.version||'未知'} · {selected.bundleID||'无 bundle ID'}</Text><code>{selected.path}</code><Text>尚未提出修改默认应用的请求。</Text></VStack>:null}{error ? <p role="alert" className="manual-error">{error}</p>:null}</VStack>
 }
