@@ -3,13 +3,11 @@ package change
 import (
 	"context"
 	"crypto/rand"
-	"encoding/json"
 	"fmt"
 	"slices"
 
 	"github.com/sunven/default-apps/internal/association"
 	"github.com/sunven/default-apps/internal/catalog"
-	"github.com/sunven/default-apps/internal/config"
 )
 
 type BatchSelection struct {
@@ -87,54 +85,12 @@ func batchItem(b *Batch, a association.Association) *BatchItem {
 	return nil
 }
 
-func (s *Service) loadBatch(doc config.Document) error {
-	if len(doc.Batch) == 0 {
-		return nil
-	}
-	var b Batch
-	if err := json.Unmarshal(doc.Batch, &b); err != nil {
-		return fmt.Errorf("批次记录损坏，已保留原文件：%w", err)
-	}
-	if b.ID == "" || b.Target.Path == "" || len(b.Items) == 0 || len(b.Commands) == 0 || !slices.Contains([]string{"running", "waiting", "paused", "stopped", "completed", "recovered"}, b.State) {
-		return fmt.Errorf("批次记录缺少身份或状态，已保留原文件。")
-	}
-	seen := map[association.Association]bool{}
-	var pending PendingRecord
-	if len(doc.Pending) != 0 {
-		if err := json.Unmarshal(doc.Pending, &pending); err != nil {
-			return err
-		}
-	}
-	for i := range b.Items {
-		item := &b.Items[i]
-		a := item.Selection.Association
-		if a.Kind != "file" || a.Key == "" || seen[a] || !slices.Contains([]string{"queued", "waiting", "unknown", "confirmed", "unchanged", "failed", "changed", "unavailable"}, item.Status) {
-			return fmt.Errorf("批次项目身份或结果无效，已保留原文件。")
-		}
-		seen[a] = true
-		if item.Status == "waiting" {
-			if item.RequestID == "" || pending.RequestID != item.RequestID || pending.Association != a || pending.Target.Path != b.Target.Path {
-				return fmt.Errorf("批次与未定请求记录不一致，已保留原文件。")
-			}
-			item.Status, item.Message = "unknown", "上次修改结果未知；当前默认不证明旧请求已结束。"
-		}
-	}
-	if b.State != "completed" {
-		b.State = "recovered"
-	}
-	s.mu.Lock()
-	s.state.Batch = &b
-	s.state.Version++
-	s.mu.Unlock()
-	return nil
-}
-
 // PrepareBatch only reads. Item order is the order shown in the resulting preview.
 func (s *Service) PrepareBatch(ctx context.Context, selections []BatchSelection, targetPath, resumeBatchID string) (BatchPreview, error) {
 	if err := s.ensureLoaded(); err != nil {
 		return BatchPreview{}, err
 	}
-	if err := s.refreshBatchRecovery(); err != nil {
+	if err := s.refreshRecovery(); err != nil {
 		return BatchPreview{}, err
 	}
 	s.mu.Lock()
@@ -222,45 +178,6 @@ func (s *Service) batchResult(outcome, message string) BatchResult {
 	return BatchResult{Outcome: outcome, Message: message, Snapshot: s.GetSnapshot()}
 }
 
-// A failed fsync can leave an accepted record on disk even though no setter was
-// dispatched. Bring that evidence into the ordinary recovery flow before retry.
-func (s *Service) refreshBatchRecovery() error {
-	s.batchMu.Lock()
-	defer s.batchMu.Unlock()
-	s.mu.Lock()
-	needed := s.state.Batch != nil && s.state.Batch.Error != "" && !s.state.Busy && s.state.ActiveRequestID == "" && s.state.Recovery == nil
-	s.mu.Unlock()
-	if !needed {
-		return nil
-	}
-	doc, err := s.store.Load(context.Background())
-	if err != nil {
-		return err
-	}
-	if len(doc.Pending) == 0 {
-		return nil
-	}
-	var pending PendingRecord
-	if err := json.Unmarshal(doc.Pending, &pending); err != nil {
-		return err
-	}
-	s.mu.Lock()
-	if r := s.findRequestLocked(pending.RequestID); r != nil && r.Phase == "resolved" {
-		s.mu.Unlock()
-		return nil
-	}
-	pending.Phase = "recovered"
-	if s.findRequestLocked(pending.RequestID) == nil {
-		s.state.Requests = append(s.state.Requests, Request{PendingRecord: pending, Readback: Readback{State: "unknown"}})
-	}
-	s.state.Recovery = &Recovery{Record: pending}
-	s.state.Busy = true
-	v := s.changedLocked()
-	s.mu.Unlock()
-	s.publish(v)
-	return nil
-}
-
 func (s *Service) StartBatch(previewID, replaceBatchID, recoveryRequestID string) BatchResult {
 	if err := s.ensureLoaded(); err != nil {
 		return s.batchResult("storage_error", err.Error())
@@ -318,29 +235,7 @@ func (s *Service) StartBatch(previewID, replaceBatchID, recoveryRequestID string
 			b.RunItems = append(b.RunItems, item.Selection.Association.Key)
 		}
 	}
-	err := s.store.Update(context.Background(), func(doc *config.Document) error {
-		// A known completion whose previous save failed can be committed here
-		// with the resumed batch. An unknown pending request is preserved.
-		if len(doc.Pending) != 0 {
-			var pending PendingRecord
-			if err := json.Unmarshal(doc.Pending, &pending); err != nil {
-				return err
-			}
-			s.mu.Lock()
-			r := s.findRequestLocked(pending.RequestID)
-			resolved := r != nil && r.Phase == "resolved"
-			acknowledged := s.state.Recovery != nil && s.state.Recovery.Record.RequestID == pending.RequestID && s.state.Recovery.Ready && recoveryRequestID == pending.RequestID
-			s.mu.Unlock()
-			if resolved {
-				doc.Pending = nil
-			} else if !acknowledged {
-				return fmt.Errorf("仍有需要恢复确认的未定记录，请重新打开后查询旧请求。")
-			}
-		}
-		var err error
-		doc.Batch, err = json.Marshal(b)
-		return err
-	})
+	err := s.records.startBatch(b, s.recordEvidence(recoveryRequestID))
 	s.mu.Lock()
 	s.state.Busy = false
 	if err != nil {
@@ -392,7 +287,7 @@ func (s *Service) StopBatch(batchID string) BatchResult {
 	// Stop takes effect in memory even if writing its durable record fails.
 	s.state.Batch = b
 	s.mu.Unlock()
-	err := s.saveBatch(b)
+	err := s.records.saveProgress(b, s.resolvedRequestIDs())
 	s.mu.Lock()
 	if err != nil {
 		s.state.Batch.State = "paused"
@@ -405,29 +300,6 @@ func (s *Service) StopBatch(batchID string) BatchResult {
 		return BatchResult{Outcome: "storage_error", Message: v.Batch.Error, Snapshot: v}
 	}
 	return BatchResult{Outcome: "stopped", Snapshot: v}
-}
-
-func (s *Service) saveBatch(b *Batch) error {
-	return s.store.Update(context.Background(), func(doc *config.Document) error {
-		if len(doc.Pending) != 0 {
-			var p PendingRecord
-			if err := json.Unmarshal(doc.Pending, &p); err != nil {
-				return err
-			}
-			if item := batchItem(b, p.Association); item != nil && item.RequestID == p.RequestID && (item.Status == "confirmed" || item.Status == "failed") {
-				s.mu.Lock()
-				r := s.findRequestLocked(p.RequestID)
-				resolved := r != nil && r.Phase == "resolved"
-				s.mu.Unlock()
-				if resolved {
-					doc.Pending = nil
-				}
-			}
-		}
-		var err error
-		doc.Batch, err = json.Marshal(b)
-		return err
-	})
 }
 
 func (s *Service) kickBatch() { go s.advanceBatch() }
@@ -515,7 +387,7 @@ func (s *Service) advanceBatch() {
 
 // Called with batchMu held. No next item is admitted until this write succeeds.
 func (s *Service) commitBatchProgress(b *Batch) bool {
-	err := s.saveBatch(b)
+	err := s.records.saveProgress(b, s.resolvedRequestIDs())
 	s.mu.Lock()
 	if err != nil {
 		b.State, b.Error = "paused", "保存进度失败："+err.Error()
@@ -525,32 +397,4 @@ func (s *Service) commitBatchProgress(b *Batch) bool {
 	s.mu.Unlock()
 	s.publish(v)
 	return err == nil
-}
-
-// Called with both locks held before clearing the matching pending record.
-func (s *Service) settledBatchLocked(requestID string) *Batch {
-	r := s.findRequestLocked(requestID)
-	if r == nil || r.Phase != "resolved" || s.state.Batch == nil {
-		return nil
-	}
-	b := clone(s.state.Batch)
-	for i := range b.Items {
-		item := &b.Items[i]
-		if item.RequestID != requestID {
-			continue
-		}
-		item.Status, item.Message = "failed", "系统已返回，但实际默认与目标副本不同。"
-		if r.Confirmed {
-			item.Status, item.Message = "confirmed", "系统完成且回读匹配目标副本。"
-		} else if r.Completion.Error != nil {
-			item.Message = r.Completion.Error.Description
-		}
-		item.Observed = clone(r.Readback.Observation.App)
-		if b.State == "waiting" {
-			b.State = "running"
-		}
-		b.Revision++
-		return b
-	}
-	return nil
 }

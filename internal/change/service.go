@@ -4,7 +4,6 @@ package change
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"sync"
 	"time"
 
@@ -116,7 +115,7 @@ type Service struct {
 	catalog         *catalog.Service
 	queries         *association.Service
 	reader          ApplicationReader
-	store           config.Repository
+	records         changeRecords
 	dispatcher      Dispatcher
 	options         Options
 	state           Snapshot
@@ -131,7 +130,7 @@ type Service struct {
 }
 
 func NewService(c *catalog.Service, q *association.Service, r ApplicationReader, store config.Repository, d Dispatcher, options Options) *Service {
-	return &Service{catalog: c, queries: q, reader: r, store: store, dispatcher: d, options: options, state: Snapshot{Requests: []Request{}, Observations: []association.QueryResult{}, WritableKinds: append([]string{}, options.WritableKinds...)}, submissions: map[string]Submission{}}
+	return &Service{catalog: c, queries: q, reader: r, records: changeRecords{store: store}, dispatcher: d, options: options, state: Snapshot{Requests: []Request{}, Observations: []association.QueryResult{}, WritableKinds: append([]string{}, options.WritableKinds...)}, submissions: map[string]Submission{}}
 }
 func now() string { return time.Now().UTC().Format(time.RFC3339Nano) }
 func clone[T any](v T) T {
@@ -182,42 +181,23 @@ func (s *Service) GetSnapshot() Snapshot {
 // Load old disk facts once without restoring a callback or replaying a setter.
 func (s *Service) ensureLoaded() error {
 	s.loadOnce.Do(func() {
-		doc, err := s.store.Load(context.Background())
+		recovered, err := s.records.load()
 		if err != nil {
 			s.loadError = err
 			return
 		}
-		if err := s.loadBatch(doc); err != nil {
-			s.loadError = err
-			return
-		}
-		if len(doc.Pending) == 0 {
-			return
-		}
-		var pending PendingRecord
-		if err := json.Unmarshal(doc.Pending, &pending); err != nil {
-			s.loadError = fmt.Errorf("待定修改记录损坏：%w", err)
-			return
-		}
-		if pending.RequestID == "" || pending.Target.Path == "" || pending.Association.Key == "" {
-			s.loadError = fmt.Errorf("待定修改记录缺少身份，已保留原文件。")
-			return
-		}
-		pending.Phase = "recovered"
 		s.mu.Lock()
 		defer s.mu.Unlock()
-		batchID := ""
-		if s.state.Batch != nil {
-			for _, item := range s.state.Batch.Items {
-				if item.RequestID == pending.RequestID {
-					batchID = s.state.Batch.ID
-				}
-			}
+		if recovered.batch != nil {
+			s.state.Batch = recovered.batch
+			s.state.Version++
 		}
-		s.state.Requests = []Request{{PendingRecord: pending, BatchID: batchID, Readback: Readback{State: "unknown"}}}
-		s.state.Recovery = &Recovery{Record: pending}
-		s.state.Busy = true
-		s.state.Version++
+		if recovered.request != nil {
+			s.state.Requests = append(s.state.Requests, *recovered.request)
+			s.state.Recovery = &Recovery{Record: recovered.request.PendingRecord}
+			s.state.Busy = true
+			s.state.Version++
+		}
 	})
 	return s.loadError
 }
@@ -269,52 +249,65 @@ func (s *Service) submit(ctx context.Context, in Submission, batchID string) Sub
 	if !s.writable(in.Association.Kind) {
 		return SubmitResult{Outcome: "unavailable", Message: "此版本尚未接入系统写入适配器。"}
 	}
-	s.mu.Lock()
-	if batchID == "" && s.batchBlocksLocked() {
-		return s.rejectLocked("busy", "批量设置尚未结束，请先停止后续设置。")
-	}
-	if batchID != "" && (s.state.Batch == nil || s.state.Batch.ID != batchID || s.state.Batch.State != "running") {
-		return s.rejectLocked("batch_stopped", "批次已停止，不再提交下一项。")
-	}
-	if s.state.Quit.Exiting {
-		return s.rejectLocked("exiting", "应用正在退出，不再受理新修改。")
-	}
-	if s.state.Quit.Restarting || (s.state.Quit.Prompt && s.state.Quit.Intent == "update") {
-		return s.rejectLocked("busy", "正在确认重启安装，暂不受理新修改。")
-	}
-	if decided := s.decidedLocked(in); decided != nil {
-		s.mu.Unlock()
-		return *decided
-	}
-	if previous, ok := s.submissions[in.RequestID]; ok {
-		if sameSubmission(previous, in) {
-			return s.existingLocked(s.findRequestLocked(in.RequestID))
+	refreshed := batchID != ""
+	for {
+		s.mu.Lock()
+		if batchID == "" && s.batchBlocksLocked() {
+			return s.rejectLocked("busy", "批量设置尚未结束，请先停止后续设置。")
 		}
-		return s.rejectLocked("conflict", "请求标识已用于另一项修改。")
-	}
-	// Recovered IDs remain queryable but can never become a new native request,
-	// including after a later explicit request replaces their durable record.
-	if recovered := s.findRequestLocked(in.RequestID); recovered != nil {
-		if !in.matchesRecord(recovered.PendingRecord) {
-			return s.rejectLocked("conflict", "请求标识已用于上次修改。")
+		if batchID != "" && (s.state.Batch == nil || s.state.Batch.ID != batchID || s.state.Batch.State != "running") {
+			return s.rejectLocked("batch_stopped", "批次已停止，不再提交下一项。")
 		}
-		return s.existingLocked(recovered)
-	}
-	if pending := s.admitting; pending != nil && pending.input.RequestID == in.RequestID {
-		if !sameSubmission(pending.input, in) {
+		if s.state.Quit.Exiting {
+			return s.rejectLocked("exiting", "应用正在退出，不再受理新修改。")
+		}
+		if s.state.Quit.Restarting || (s.state.Quit.Prompt && s.state.Quit.Intent == "update") {
+			return s.rejectLocked("busy", "正在确认重启安装，暂不受理新修改。")
+		}
+		if decided := s.decidedLocked(in); decided != nil {
+			s.mu.Unlock()
+			return *decided
+		}
+		if previous, ok := s.submissions[in.RequestID]; ok {
+			if sameSubmission(previous, in) {
+				return s.existingLocked(s.findRequestLocked(in.RequestID))
+			}
 			return s.rejectLocked("conflict", "请求标识已用于另一项修改。")
 		}
-		s.mu.Unlock()
-		select {
-		case <-pending.done:
-			result := clone(pending.result)
-			if result.Outcome == "accepted" {
-				result.Outcome = "existing"
+		// Recovered IDs remain queryable but can never become a new native request,
+		// including after a later explicit request replaces their durable record.
+		if recovered := s.findRequestLocked(in.RequestID); recovered != nil {
+			if !in.matchesRecord(recovered.PendingRecord) {
+				return s.rejectLocked("conflict", "请求标识已用于上次修改。")
 			}
-			return result
-		case <-ctx.Done():
-			return SubmitResult{Outcome: "interrupted", Message: "等待受理应答已中断，请用同一请求标识查看状态。", Snapshot: s.GetSnapshot()}
+			return s.existingLocked(recovered)
 		}
+		if pending := s.admitting; pending != nil && pending.input.RequestID == in.RequestID {
+			if !sameSubmission(pending.input, in) {
+				return s.rejectLocked("conflict", "请求标识已用于另一项修改。")
+			}
+			s.mu.Unlock()
+			select {
+			case <-pending.done:
+				result := clone(pending.result)
+				if result.Outcome == "accepted" {
+					result.Outcome = "existing"
+				}
+				return result
+			case <-ctx.Done():
+				return SubmitResult{Outcome: "interrupted", Message: "等待受理应答已中断，请用同一请求标识查看状态。", Snapshot: s.GetSnapshot()}
+			}
+		}
+		// Known identities are reconciled without touching storage. Only a
+		// prospective new single admission needs to import durable recovery.
+		if refreshed {
+			break // Keep mu held for the admission checks below.
+		}
+		s.mu.Unlock()
+		if err := s.refreshRecovery(); err != nil {
+			return SubmitResult{Outcome: "storage_error", Message: err.Error(), Snapshot: s.GetSnapshot()}
+		}
+		refreshed = true
 	}
 	if recovery := s.state.Recovery; recovery != nil {
 		outcome, message := "", ""
@@ -412,33 +405,13 @@ func (s *Service) submit(ctx context.Context, in Submission, batchID string) Sub
 	if !recoveryReady {
 		return fail("recovery_query_required", "上次修改关联的当前查询已失败，请重新查询后再明确提交。", nil)
 	}
-	var admittedBatch *Batch
+	var batch *Batch
 	if batchID != "" {
 		s.mu.Lock()
-		admittedBatch = clone(s.state.Batch)
+		batch = clone(s.state.Batch)
 		s.mu.Unlock()
-		for i := range admittedBatch.Items {
-			if admittedBatch.Items[i].RequestID == in.RequestID {
-				admittedBatch.Items[i].Status = "waiting"
-			}
-		}
-		admittedBatch.State = "waiting"
-		admittedBatch.Revision++
 	}
-	err = s.store.Update(context.Background(), func(doc *config.Document) error {
-		data, e := json.Marshal(req.PendingRecord)
-		if e != nil {
-			return e
-		}
-		doc.Pending = data
-		if admittedBatch != nil {
-			doc.Batch, e = json.Marshal(admittedBatch)
-			if e != nil {
-				return e
-			}
-		}
-		return nil
-	})
+	admittedBatch, err := s.records.admit(req, batch, s.recordEvidence(in.RecoveryRequestID))
 	if err != nil {
 		return fail("storage_error", "未提交：保存未定记录失败。"+err.Error(), nil)
 	}
@@ -527,28 +500,9 @@ func (s *Service) clearPending(id string) error {
 	s.batchMu.Lock()
 	defer s.batchMu.Unlock()
 	s.mu.Lock()
-	batch := s.settledBatchLocked(id)
+	req, currentBatch := clone(s.findRequestLocked(id)), clone(s.state.Batch)
 	s.mu.Unlock()
-	err := s.store.Update(context.Background(), func(doc *config.Document) error {
-		if len(doc.Pending) == 0 {
-			return nil
-		}
-		var p PendingRecord
-		if err := json.Unmarshal(doc.Pending, &p); err != nil {
-			return err
-		}
-		if p.RequestID == id {
-			doc.Pending = nil
-		}
-		if batch != nil {
-			var err error
-			doc.Batch, err = json.Marshal(batch)
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	})
+	batch, err := s.records.settle(req, currentBatch)
 	if batch != nil {
 		s.mu.Lock()
 		if err != nil {
