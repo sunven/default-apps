@@ -10,12 +10,11 @@ import {Events} from '@wailsio/runtime'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import type {IdentifiedFile} from '../bindings/github.com/sunven/default-apps/internal/manual/models'
 import {IdentifyFiles,AddIdentifiedType} from '../bindings/github.com/sunven/default-apps/internal/manual/service'
-import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {BatchController} from './Batch'
 import {Dialog} from './Dialog'
 import {notify} from './Notifications'
 import {message} from './errors'
-import {isTrustworthy} from './useAssociationQueries'
+import {useQueryObservations} from './QueryObservations'
 
 type FileChoice=IdentifiedFile&{choice:string}
 type Group={entry:Entry;files:FileChoice[]}
@@ -23,11 +22,9 @@ type Group={entry:Entry;files:FileChoice[]}
 export function FileDrop({controller:c}:{controller:BatchController}){
  const [files,setFiles]=useState<FileChoice[]>([])
  const [excluded,setExcluded]=useState<Set<string>>(()=>new Set())
- const [defaults,setDefaults]=useState<Record<string,string>>({})
  const [saved,setSaved]=useState<Record<string,string>>({})
  const [busy,setBusy]=useState('')
  const [error,setError]=useState('')
- const [queryVersion,setQueryVersion]=useState(0)
  const current=useRef(c);current.current=c
  const generation=useRef(0),activity=useRef(''),mounted=useRef(true)
  const groups=useMemo(()=>{
@@ -47,22 +44,15 @@ export function FileDrop({controller:c}:{controller:BatchController}){
   if(draftOpen)return
   ++generation.current;activity.current='';setBusy('');setFiles([]);setExcluded(new Set());setSaved({});setError('')
  },[draftOpen])
- useEffect(()=>{
-  if(c.modal!=='files')return
-  let active=true,cursor=0
-  setDefaults({})
-  const worker=async()=>{
-   while(active&&cursor<entries.length){
-    const entry=entries[cursor++]
-    let text:string
-    try{const result=await Query(entry.association);text=!result.superseded&&isTrustworthy(result.default)?result.default.app?.name||result.default.app?.path||'无默认应用':'查询失败，预览前需重新检查'}
-    catch{ text='查询失败，预览前需重新检查' }
-    if(active)setDefaults(previous=>({...previous,[entry.id]:text}))
-   }
-  }
-  void Promise.all(Array.from({length:Math.min(4,entries.length)},worker))
-  return()=>{active=false}
- },[entries,c.modal,queryVersion])
+ const defaults=useQueryObservations(entries.map(entry=>entry.association),'panel',c.modal==='files')
+ const defaultLabel=(entry:Entry)=>{
+  const result=defaults.observations[entry.id]?.default
+  const failed=!!defaults.rowErrors[entry.id]||!!result?.error||!!result?.stale
+  if(!result?.known)return failed?'查询失败，预览前需重新检查':'正在查询…'
+  const name=result.app?.name||result.app?.path||'无默认应用'
+  if(failed)return `${name}（上次查询结果 · 刷新失败，预览前需重新检查）`
+  return defaults.pending[entry.id]?`${name}（上次查询结果 · 正在刷新…）`:name
+ }
  useEffect(()=>{
   mounted.current=true
   // Native macOS drops hit-test this attribute, including portal dialogs.
@@ -127,12 +117,12 @@ export function FileDrop({controller:c}:{controller:BatchController}){
   <HStack as="footer" className="file-drop-hint" gap={3} justify="center"><p>拖入文件，设置同类文件的默认应用</p><small>支持多个普通文件</small></HStack>
   <VStack gap={0} className="file-drop-overlay" aria-hidden="true"><strong>松开以识别文件类型</strong><Text>先查看清单，再选择默认应用</Text></VStack>
   {c.modal==='files'?<Dialog title="拖入文件识别清单" subtitle="设置将影响这些类型的所有同类文件。可继续拖入文件追加。" onClose={close} fileDrop>
-   <HStack gap={2} align="center" className="file-drop-summary"><strong>{included.length} 个类型 · {files.length} 个文件</strong><Button label="重新查询默认" variant="secondary" isDisabled={!!busy||!entries.length} onClick={()=>setQueryVersion(value=>value+1)}/></HStack>
+   <HStack gap={2} align="center" className="file-drop-summary"><strong>{included.length} 个类型 · {files.length} 个文件</strong><Button label="重新查询默认" variant="secondary" isDisabled={!!busy||!entries.length} onClick={()=>void defaults.refresh()}/></HStack>
    {busy?<p role="status" aria-label="文件识别状态" className="batch-muted">{busy}…</p>:null}
    {error?<p role="alert" className="batch-error">{error}</p>:null}
    <ul className="file-drop-types" aria-label="识别出的文件类型">{groups.map(({entry,files})=><li key={entry.id} data-excluded={excluded.has(entry.id)}>
     <HStack gap={2} align="center" className="file-drop-type-heading"><VStack gap={0}><strong>{entry.name||entry.association.key}</strong><small>{entry.association.key}{entry.extensions?.length?` · ${entry.extensions.map(ext=>`.${ext}`).join(' · ')}`:''}</small></VStack><Button label={`${excluded.has(entry.id)?'恢复':'移除'} ${entry.name||entry.association.key}`} variant="secondary" isDisabled={!!busy}  onClick={()=>setExcluded(previous=>{const next=new Set(previous);if(next.has(entry.id))next.delete(entry.id);else next.add(entry.id);return next})}>{excluded.has(entry.id)?'恢复':'移除'}</Button></HStack>
-    <p className="file-drop-default">{excluded.has(entry.id)?'本次不设置':'当前默认：'+(defaults[entry.id]??'正在查询…')}</p>
+    <p className="file-drop-default">{excluded.has(entry.id)?'本次不设置':'当前默认：'+defaultLabel(entry)}</p>
     <ul className="file-drop-paths">{files.map(file=><li key={file.path}><Text>{file.name}</Text><small>{file.path}</small>{(file.entries??[]).filter(entry=>entry.resolved).length>1?<Selector containerClassName="file-drop-choice" label="实际类型" aria-label={`文件类型 ${file.name}`} value={file.choice} isDisabled={!!busy} onChange={choice=>setFiles(previous=>previous.map(item=>item.path===file.path?{...item,choice}:item))} options={(file.entries??[]).filter(entry=>entry.resolved).map(entry=>({value:entry.id,label:`${entry.name||entry.association.key} · ${entry.association.key}`}))} presentation="popover"/>:null}</li>)}</ul>
     <HStack gap={2} align="center" className="file-drop-save"><Button label="保存为手动关联" variant="secondary" isDisabled={!!busy||saved[entry.id]==='已保存手动关联'} onClick={()=>void save(entry)}/>{saved[entry.id]?<Text role="status">{saved[entry.id]}</Text>:null}</HStack>
    </li>)}</ul>

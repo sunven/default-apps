@@ -169,3 +169,26 @@ test('a lost reply reconciles the original batch without clearing unrelated sele
  expect(StartBatch).toHaveBeenCalledTimes(1)
  expect(screen.getByRole('checkbox',{name:'勾选 JSON public.json'})).toBeChecked()
 })
+
+test('file identification retains old defaults on refresh failure and shares newer observations with browsing',async()=>{
+ await mount();await act(async()=>{})
+ let reject!:(error:Error)=>void
+ vi.mocked(Query).mockImplementation(()=>new Promise((_,no)=>{reject=no}) as ReturnType<typeof Query>)
+ await drop(['/one.pdf'])
+ const list=screen.getByRole('dialog',{name:'拖入文件识别清单'})
+ expect(within(list).getByText(/当前默认：Other（上次查询结果 · 正在刷新/)).toBeVisible()
+ await act(async()=>reject(new Error('offline')))
+ expect(within(list).getByText(/Other（上次查询结果 · 刷新失败/)).toBeVisible()
+ const changed={association:pdf.association,version:2,default:{known:true,app,observedAt:'now',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'now',stale:false,error:null}}
+ await act(async()=>listeners.get('defaultapps:observation')?.({data:changed}))
+ expect(within(list).getByText('当前默认：Editor')).toBeVisible()
+ await userEvent.click(within(list).getByRole('button',{name:'重新查询默认'}))
+ expect(within(list).getByText(/当前默认：Editor（上次查询结果 · 正在刷新/)).toBeVisible()
+ await userEvent.click(within(list).getByRole('button',{name:'取消'}))
+ await act(async()=>listeners.get('defaultapps:observation')?.({data:{...changed,version:3,default:{...changed.default,app:other}}}))
+ await act(async()=>reject(new Error('late failure')))
+ expect(screen.queryByRole('dialog',{name:'拖入文件识别清单'})).not.toBeInTheDocument()
+ await drop(['/again.pdf'])
+ expect(screen.getByRole('dialog',{name:'拖入文件识别清单'})).toHaveTextContent('当前默认：Other（上次查询结果 · 正在刷新')
+ expect(StartBatch).not.toHaveBeenCalled()
+})

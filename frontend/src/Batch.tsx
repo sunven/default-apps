@@ -7,15 +7,16 @@ import { HStack } from '@astryxdesign/core/HStack'
 import { Text } from '@astryxdesign/core/Text'
 import { VStack } from '@astryxdesign/core/VStack'
 import {useCallback,useEffect,useMemo,useRef,useState} from 'react'
-import type {AppCopy,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
+import type {AppCopy} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
 import type {BatchItem,BatchPreview,BatchResult,BatchSelection} from '../bindings/github.com/sunven/default-apps/internal/change/models'
-import {PrepareBatch,Query,ReconcileBatchStart,StartBatch,StopBatch} from '../bindings/github.com/sunven/default-apps/internal/change/service'
+import {PrepareBatch,ReconcileBatchStart,StartBatch,StopBatch} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import {PickApplication} from '../bindings/github.com/sunven/default-apps/internal/manual/service'
 import type {Changes} from './Changes'
 import {Dialog} from './Dialog'
 import {ApplicationIcon} from './ApplicationIcon'
 import {message} from './errors'
+import {useQueryObservations} from './QueryObservations'
 
 const pendingKey='defaultapps.batch-start.v1'
 const keyOf=(item:BatchSelection)=>`${item.association.kind}:${item.association.key}`
@@ -128,33 +129,45 @@ export function BatchBars({controller:c,showSelection}:{controller:BatchControll
 }
 
 function BatchAppPicker({items,apps,disabled,onSelect,onError}:{items:BatchSelection[];apps:AppCopy[];disabled:boolean;onSelect:(app:AppCopy)=>void;onError:(error:string)=>void}){
- const [query,setQuery]=useState(''),[results,setResults]=useState<(QueryResult|null)[]|null>(null),[picking,setPicking]=useState(false)
- useEffect(()=>{
-  let active=true,cursor=0
-  const collected:(QueryResult|null)[]=new Array(items.length).fill(null)
-  const worker=async()=>{while(active&&cursor<items.length){const index=cursor++;try{collected[index]=await Query(items[index].association)}catch{collected[index]=null}}}
-  void Promise.all(Array.from({length:Math.min(4,items.length)},worker)).then(()=>{if(active)setResults(collected)})
-  return()=>{active=false}
- },[items])
- const {candidates,unknown}=useMemo(()=>{
+ const [query,setQuery]=useState(''),[picking,setPicking]=useState(false)
+ const observations=useQueryObservations(items.map(item=>item.association))
+ const {candidates,unknown,previous}=useMemo(()=>{
   const copies=new Map(apps.filter(app=>!!app.path&&!app.metadataError).map(app=>[app.path,{app,coverage:0}]))
-  let unknown=0
-  for(const result of results??new Array(items.length).fill(null)){
-   if(!result||result.superseded||!result.candidates.known||result.candidates.error||result.candidates.stale){unknown++;continue}
+  let unknown=0,previous=0
+  for(const item of items){
+   const id=keyOf(item),result=observations.observations[id]
+   if(!result?.candidates.known){unknown++;continue}
+   if(observations.rowErrors[id]||result.candidates.error||result.candidates.stale)previous++
    const seen=new Set<string>()
-   for(const app of result.candidates.apps??[]){if(seen.has(app.path)||app.metadataError)continue;seen.add(app.path);const previous=copies.get(app.path);copies.set(app.path,{app,coverage:(previous?.coverage??0)+1})}
+   for(const app of result.candidates.apps??[]){if(seen.has(app.path)||app.metadataError)continue;seen.add(app.path);const existing=copies.get(app.path);copies.set(app.path,{app,coverage:(existing?.coverage??0)+1})}
   }
   const candidates=Array.from(copies.values()).sort((a,b)=>b.coverage-a.coverage||a.app.name.localeCompare(b.app.name)||a.app.path.localeCompare(b.app.path))
-  return {candidates,unknown}
- },[apps,results,items.length])
+  return {candidates,unknown,previous}
+ },[apps,items,observations.observations,observations.rowErrors])
+ // Freeze the initial coverage ranking for this opening. Later observations may
+ // change counts or add copies, but must not move a button beneath the pointer.
+ const [order,setOrder]=useState<AppCopy[]|null>(null)
+ const hasPrevious=items.length>0&&items.every(item=>observations.observations[keyOf(item)]?.candidates.known)
+ useEffect(()=>{
+  if(order===null){if(hasPrevious||observations.settled)setOrder(candidates.map(({app})=>app));return}
+  const paths=new Set(order.map(app=>app.path))
+  const added=candidates.filter(({app})=>!paths.has(app.path)).map(({app})=>app)
+  if(added.length)setOrder([...order,...added])
+ },[candidates,order,hasPrevious,observations.settled])
+ const byPath=new Map(candidates.map(value=>[value.app.path,value]))
+ const ranked=order===null
+  ? (hasPrevious||observations.settled?candidates:[...candidates].sort((a,b)=>a.app.name.localeCompare(b.app.name)||a.app.path.localeCompare(b.app.path)))
+  : [...order.map(app=>byPath.get(app.path)??{app,coverage:0}),...candidates.filter(({app})=>!order.some(copy=>copy.path===app.path))]
  const needle=query.trim().toLocaleLowerCase()
- const visible=candidates.filter(({app})=>[app.name,app.path,app.version,app.bundleID].some(value=>value?.toLocaleLowerCase().includes(needle)))
+ const visible=ranked.filter(({app})=>[app.name,app.path,app.version,app.bundleID].some(value=>value?.toLocaleLowerCase().includes(needle)))
  const pick=async()=>{setPicking(true);try{const result=await PickApplication();if(!result.cancelled&&result.app)onSelect(result.app)}catch(error){onError(message(error))}finally{setPicking(false)}}
  return <>
   <p>为 {items.length} 个文件类型选择同一个默认应用。系统候选覆盖全部类型的应用优先显示。</p>
   <TextInput containerClassName="batch-search" label="搜索应用" type="search" value={query} onChange={setQuery} placeholder="名称、版本或路径" autoComplete="off"/>
-  {!results?<p className="batch-muted" role="status">正在查询系统候选…</p>:unknown?<p className="batch-muted">{unknown} 项候选尚未查明，覆盖数量仅包含查询成功的项目。</p>:null}
-  <VStack gap={0} className="batch-app-list" aria-label="批量目标应用">{visible.map(({app,coverage})=><Item as="button" role="button" className="batch-app-option" key={app.path} isDisabled={disabled||picking} onClick={()=>onSelect(app)} aria-label={`选择 ${app.name} ${app.path}`} startContent={<ApplicationIcon app={app} className="application-icon--row"/>} label={app.name||app.path} description={`版本 ${app.version||'未知'} · ${app.path}`} endContent={<Text type="supporting" className="batch-coverage">{results?`${coverage} / ${items.length} 项系统候选${unknown?' · 部分未知':''}`:'覆盖查询中'}</Text>}/>)}</VStack>
+  {observations.refreshing?<Text as="p" type="supporting" role="status">{hasPrevious?'正在刷新系统候选，暂显示上次查询结果…':'正在查询系统候选…'}</Text>:null}
+  {previous?<Text as="p" type="supporting" role="status">{previous} 项刷新失败，保留上次查询结果；预览前将重新检查。</Text>:null}
+  {unknown?<Text as="p" type="supporting">{unknown} 项候选尚未查明，覆盖数量仅包含已知项目。</Text>:null}
+  <VStack gap={0} className="batch-app-list" aria-label="批量目标应用">{visible.map(({app,coverage})=><Item as="button" role="button" className="batch-app-option" key={app.path} isDisabled={disabled||picking} onClick={()=>onSelect(app)} aria-label={`选择 ${app.name} ${app.path}`} startContent={<ApplicationIcon app={app} className="application-icon--row"/>} label={app.name||app.path} description={`版本 ${app.version||'未知'} · ${app.path}`} endContent={<Text type="supporting" className="batch-coverage">{`${previous?'上次查询覆盖 · ':''}${coverage} / ${items.length} 项系统候选${unknown?' · 部分未知':''}`}</Text>}/>)}</VStack>
   {!visible.length?<p>没有匹配的应用，可调整搜索或选择其他应用。</p>:null}
   <HStack gap={2} align="center" className="batch-dialog-actions"><Button label={picking?'正在选择…':'选择其他应用…'} variant="secondary" isDisabled={disabled||picking} onClick={()=>void pick()}/><Text className="batch-muted">属于系统候选不保证本次设置一定成功。</Text></HStack>
  </>

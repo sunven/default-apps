@@ -1,10 +1,10 @@
-import {useCallback,useEffect,useReducer,useRef,useState} from 'react'
+import {useCallback,useEffect,useRef} from 'react'
 import {Events} from '@wailsio/runtime'
 import type {} from '../bindings/github.com/wailsapp/wails/v3/internal/eventdata'
-import {Query} from '../bindings/github.com/sunven/default-apps/internal/change/service'
 import type {Association,DefaultObservation,QueryResult} from '../bindings/github.com/sunven/default-apps/internal/association/models'
 import type {Entry} from '../bindings/github.com/sunven/default-apps/internal/catalog/models'
-import {message} from './errors'
+import {useQueryModule,useQueryObservations} from './QueryObservations'
+import type {QueryWatch} from './associationQueries'
 import {notify,dismissNotification} from './Notifications'
 
 // Trustworthy mirrors association.DefaultObservation.Trustworthy in Go.
@@ -16,33 +16,6 @@ export function observationFor(state:{observations?:QueryResult[]|null}|null|und
  return (current&&(!snapshot||current.version>=snapshot.version)?current:snapshot)?.default
 }
 
-type State={
- observations:Record<string,QueryResult>
- rowErrors:Record<string,string>
- issued:Record<string,{token:number;observedVersion:number}>
-}
-type Action=
- | {type:'started';id:string;token:number}
- | {type:'result';value:QueryResult;token?:number}
- | {type:'failed';id:string;token:number;message:string}
-
-function reduce(state:State,action:Action):State {
- if(action.type==='started')return {...state,issued:{...state.issued,[action.id]:{token:action.token,observedVersion:state.observations[action.id]?.version??-1}}}
- if(action.type==='failed'){
-  const issued=state.issued[action.id]
-  // A late rejection has no server version. Its issuance and the last accepted
-  // observation fence it against both newer calls and authoritative snapshots.
-  if(issued?.token!==action.token || issued.observedVersion!==(state.observations[action.id]?.version??-1))return state
-  return {...state,rowErrors:{...state.rowErrors,[action.id]:action.message}}
- }
- const {value,token}=action
- if(value.superseded)return state
- const id=`${value.association.kind}:${value.association.key}`,current=state.observations[id]
- if(current && (value.version<current.version || (value.version===current.version && (token===undefined || token!==state.issued[id]?.token))))return state
- const errors={...state.rowErrors};delete errors[id]
- return {...state,observations:{...state.observations,[id]:value},rowErrors:errors}
-}
-
 type QueryEntry=Pick<Entry,'id'|'association'|'resolved'>
 type Options={
  selected?:QueryEntry
@@ -51,67 +24,39 @@ type Options={
  getVisibleAssociationIDs:()=>Set<string>
 }
 
-// The caller owns browsing and viewport measurement; this hook owns query timing.
+// Browsing owns its refresh triggers; shared observations and query lifetimes
+// belong to the window's query module, also used by the two batch panels.
 export function useAssociationQueries({selected,entries,snapshotObservations,getVisibleAssociationIDs}:Options){
- const [state,dispatch]=useReducer(reduce,{observations:{},rowErrors:{},issued:{}})
- const [loading,setLoading]=useState(false)
- const [prefetching,setPrefetching]=useState(false)
- const sequence=useRef(0),requestVersion=useRef(0)
- const inFlight=useRef(new Map<string,{token:number;promise:Promise<QueryResult>}>())
- useEffect(()=>Events.On('defaultapps:observation',event=>dispatch({type:'result',value:event.data})),[])
- useEffect(()=>{for(const value of snapshotObservations??[])dispatch({type:'result',value})},[snapshotObservations])
- const query=useCallback(async(association:Association,isCurrent:()=>boolean=()=>true,force=false)=>{
-  const id=`${association.kind}:${association.key}`
-  let request=force?undefined:inFlight.current.get(id)
-  if(!request){
-   const token=++sequence.current
-   dispatch({type:'started',id,token})
-   // Each consumer keeps its own relevance check; only the native call is shared.
-   const promise=(async()=>await Query(association))()
-   request={token,promise}
-   inFlight.current.set(id,request)
-   const current=request
-   const clear=()=>{if(inFlight.current.get(id)===current)inFlight.current.delete(id)}
-   void promise.then(clear,clear)
-  }
-  const {token,promise}=request
-  try{const value=await promise;if(isCurrent()){dispatch({type:'result',value,token});return value}}
-  catch(error){if(isCurrent())dispatch({type:'failed',id,token,message:message(error)})}
- },[])
- const refresh=useCallback(async(notifyUser=false,force=true)=>{
+ const queries=useQueryModule()
+ const current=useQueryObservations(selected?.resolved?[selected.association]:[],'selected')
+ const background=useQueryObservations(entries.filter(entry=>entry.resolved).map(entry=>entry.association),'background')
+ const requestVersion=useRef(0)
+ useEffect(()=>{for(const value of snapshotObservations??[])queries.accept(value)},[queries,snapshotObservations])
+ useEffect(()=>()=>{++requestVersion.current},[selected?.id])
+ const refresh=useCallback(async(notifyUser=false)=>{
   const version=++requestVersion.current
-  if(!selected?.resolved){setLoading(false);return}
-  setLoading(true)
+  if(!selected?.resolved)return
   const id=notifyUser?notify('pending','正在重新查询关联…',{description:selected.association.key}):undefined
-  try{
-   const result=await query(selected.association,()=>version===requestVersion.current,force)
-   if(id!==undefined){
-    if(version===requestVersion.current&&result&&!result.superseded&&result.default.known&&!result.default.error&&result.candidates.known&&!result.candidates.error)notify('success','关联查询已更新',{id,description:selected.association.key})
-    else dismissNotification(id)
-   }
+  await current.refresh()
+  if(id!==undefined){
+   const result=queries.getSnapshot().observations[selected.id]
+   if(version===requestVersion.current&&result&&!queries.getSnapshot().rowErrors[selected.id]&&isTrustworthy(result.default)&&result.candidates.known&&!result.candidates.error&&!result.candidates.stale)notify('success','关联查询已更新',{id,description:selected.association.key})
+   else dismissNotification(id)
   }
-  finally{if(version===requestVersion.current)setLoading(false)}
- },[selected,query])
- useEffect(()=>{void refresh(false,false);return()=>{++requestVersion.current}},[refresh])
- // A list change starts a new prefetch round; accepted observations do not.
- useEffect(()=>{
-  let active=true,cursor=0
-  const pending=entries.filter(entry=>entry.resolved && entry.id!==selected?.id && !state.observations[entry.id])
-  setPrefetching(pending.length>0)
-  const worker=async()=>{while(active && cursor<pending.length){const entry=pending[cursor++];await query(entry.association,()=>active)}}
-  void Promise.all(Array.from({length:Math.min(4,pending.length)},worker)).then(()=>{if(active)setPrefetching(false)})
-  return()=>{active=false}
- },[entries,query])
+ },[selected,current.refresh,queries])
  const visibleRefresh=useRef(()=>{})
+ const foreground=useRef(new Set<QueryWatch>())
  visibleRefresh.current=()=>{
   const ids=getVisibleAssociationIDs()
   void refresh()
-  for(const entry of entries)if(entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id)void query(entry.association,undefined,true)
+  const watch=queries.watch(entries.filter(entry=>entry.resolved&&ids.has(entry.id)&&entry.id!==selected?.id).map(entry=>entry.association),'refresh')
+  foreground.current.add(watch)
+  void watch.ready.then(()=>{watch.close();foreground.current.delete(watch)})
  }
  useEffect(()=>{
   let timer:ReturnType<typeof setTimeout>|undefined
   const off=Events.On('defaultapps:activated',()=>{if(timer!==undefined)return;timer=setTimeout(()=>{timer=undefined;visibleRefresh.current()},100)})
-  return()=>{off();if(timer!==undefined)clearTimeout(timer)}
+  return()=>{off();if(timer!==undefined)clearTimeout(timer);for(const watch of foreground.current)watch.close();foreground.current.clear()}
  },[])
- return {observations:state.observations,rowErrors:state.rowErrors,loading,prefetching,refresh}
+ return {observations:current.observations,rowErrors:current.rowErrors,loading:!!selected?.resolved&&current.refreshing,prefetching:background.refreshing,refresh}
 }

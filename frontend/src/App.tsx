@@ -11,6 +11,7 @@ import { HStack } from '@astryxdesign/core/HStack'
 import { Text } from '@astryxdesign/core/Text'
 import { VStack } from '@astryxdesign/core/VStack'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { AssociationQueriesProvider } from './QueryObservations'
 import { ApplicationIcon } from './ApplicationIcon'
 import { BatchBars, BatchCheckbox, BatchDialogs, useBatchSettings } from './Batch'
 import { Dialog } from './Dialog'
@@ -85,6 +86,10 @@ const viewNames:Record<View,string> = {app:'应用',file:'文件类型',scheme:'
 const appFilterNames:Record<ApplicationFilter,string> = {user:'非系统',system:'系统',all:'全部'}
 const entryName = (entry:Entry) => entry.name || entry.sources?.[0]?.rawInput || '关联'
 export default function App() {
+ return <AssociationQueriesProvider><BrowserApp/></AssociationQueriesProvider>
+}
+
+function BrowserApp() {
  const changes=useChanges()
  const batch=useBatchSettings(changes)
  const recovery=useRecoveryAction(changes)

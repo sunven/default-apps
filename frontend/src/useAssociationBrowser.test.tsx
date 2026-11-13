@@ -6,6 +6,7 @@ import type { Entry } from '../bindings/github.com/sunven/default-apps/internal/
 import type { Snapshot } from '../bindings/github.com/sunven/default-apps/internal/discovery/models'
 import { useAssociationBrowser, type CatalogAdapter, type BrowserDOMAdapter } from './useAssociationBrowser'
 import { useAssociationQueries } from './useAssociationQueries'
+import { AssociationQueriesProvider } from './QueryObservations'
 import {toast,type ToastT} from 'sonner'
 const activeToasts=()=>toast.getToasts().filter((item):item is ToastT=>'title' in item)
 
@@ -401,7 +402,7 @@ test('copy inspection and refreshed metadata do not restart queries, while a new
     const browser = useAssociationBrowser(env)
     useAssociationQueries(browser.queryInputs)
     return browser
-  })
+  },{wrapper:AssociationQueriesProvider})
   await act(async () => {})
   vi.mocked(Query).mockClear()
   act(() => result.current.actions.inspectCopy(app))
