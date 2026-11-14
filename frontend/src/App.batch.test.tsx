@@ -45,6 +45,103 @@ beforeEach(()=>{
 async function openFiles(){render(<App/>);await userEvent.click(screen.getByRole('button',{name:'文件类型'}));await waitFor(()=>expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).not.toHaveAttribute('aria-disabled','true'))}
 async function chooseEditor(){await userEvent.click(screen.getByRole('button',{name:'选择应用…'}));await userEvent.click(await screen.findByRole('button',{name:`选择 Editor ${app.path}`}));return await screen.findByRole('dialog',{name:'预览批量设置'})}
 
+test('application selections survive filtering and navigation independently for each copy and the file page',async()=>{
+ const copy={...app,path:'/Volumes/External/Editor.app',displayPath:'/Volumes/External/Editor.app'}
+ const data={...catalog,apps:[catalog.apps[0],{...catalog.apps[0],app:copy}]}
+ vi.mocked(GetSnapshot).mockResolvedValue(data);vi.mocked(StartScan).mockResolvedValue(data)
+ render(<App/>)
+ const first=await screen.findByRole('checkbox',{name:'勾选 Markdown markdown'})
+ await userEvent.click(first)
+ const search=screen.getByRole('searchbox',{name:'筛选当前关联'})
+ await userEvent.type(search,'JSON');await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
+ expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 2 个类型')
+ await userEvent.clear(search)
+ await userEvent.click(screen.getByRole('button',{name:`Editor 2 ${copy.path}`}))
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).not.toBeChecked()
+ await userEvent.click(screen.getByRole('checkbox',{name:'勾选 纯文本 text'}))
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).not.toBeChecked()
+ await userEvent.click(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ await userEvent.click(screen.getByRole('button',{name:'应用'}))
+ expect(screen.getByRole('checkbox',{name:'勾选 纯文本 text'})).toBeChecked()
+ await userEvent.click(screen.getByRole('button',{name:`Editor 2 ${app.path}`}))
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toBeChecked()
+ expect(screen.getByRole('checkbox',{name:'勾选 JSON json'})).toBeChecked()
+ await userEvent.click(screen.getByRole('button',{name:'查看已选'}))
+ const dialog=screen.getByRole('dialog',{name:'已选文件类型'})
+ expect(within(dialog).getByText(`目标：Editor · ${app.path}`)).toBeVisible()
+ await userEvent.click(within(dialog).getByRole('button',{name:'移除 Markdown'}))
+ await userEvent.keyboard('{Escape}')
+ await userEvent.click(screen.getByRole('button',{name:'清空'}))
+ expect(screen.queryByRole('region',{name:'已选文件类型'})).toBeNull()
+ await userEvent.click(screen.getByRole('button',{name:'文件类型'}))
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toBeChecked()
+ await userEvent.click(screen.getByRole('button',{name:'应用'}))
+ await userEvent.click(screen.getByRole('button',{name:`Editor 2 ${copy.path}`}))
+ expect(screen.getByRole('checkbox',{name:'勾选 纯文本 text'})).toBeChecked()
+ expect(PrepareBatch).not.toHaveBeenCalled();expect(StartBatch).not.toHaveBeenCalled()
+})
+
+test('application batch excludes protocols and unresolved types, previews its fixed copy and starts once',async()=>{
+ const scheme={...entry('https','HTTPS'),id:'scheme:https',association:{kind:'scheme',key:'https'}}
+ const unresolved={...entry('unknown','未知类型'),resolved:false}
+ const all=[...entries,scheme,unresolved]
+ const data={...catalog,entries:all,apps:[{...catalog.apps[0],associationIDs:all.map(e=>e.id)},catalog.apps[1]]}
+ vi.mocked(List).mockResolvedValue(all);vi.mocked(GetSnapshot).mockResolvedValue(data);vi.mocked(StartScan).mockResolvedValue(data)
+ render(<App/>)
+ await screen.findByRole('checkbox',{name:'勾选 Markdown markdown'})
+ expect(screen.queryByRole('checkbox',{name:'勾选 HTTPS https'})).toBeNull()
+ expect(screen.getByRole('checkbox',{name:'勾选 未知类型 unknown'})).toHaveAttribute('aria-disabled','true')
+ await userEvent.click(screen.getByRole('checkbox',{name:'全选当前筛选结果'}))
+ expect(screen.queryByRole('dialog')).toBeNull()
+ await userEvent.click(screen.getByRole('button',{name:'设为 Editor…'}))
+ const dialog=await screen.findByRole('dialog',{name:'预览批量设置'})
+ expect(PrepareBatch).toHaveBeenCalledExactlyOnceWith(entries.map(e=>({association:e.association,name:e.name,extensions:e.extensions})),app.path,'')
+ expect(within(dialog).getByText(app.path)).toBeVisible()
+ expect(within(dialog).queryByRole('button',{name:'更换应用'})).toBeNull()
+ expect(within(dialog).getByText('设置将影响这些类型的所有同类文件。')).toBeVisible()
+ expect(StartBatch).not.toHaveBeenCalled();expect(PickApplication).not.toHaveBeenCalled()
+ await userEvent.click(within(dialog).getByRole('button',{name:'返回调整'}))
+ expect(screen.getByRole('region',{name:'已选文件类型'})).toHaveTextContent('已选 3 个类型')
+ await userEvent.click(screen.getByRole('button',{name:'设为 Editor…'}))
+ await userEvent.click(await screen.findByRole('button',{name:'开始设置 3 项'}))
+ await screen.findByRole('dialog',{name:'最近一次批量设置'})
+ expect(StartBatch).toHaveBeenCalledExactlyOnceWith('preview-1','','')
+ expect(screen.queryByRole('region',{name:'已选文件类型'})).toBeNull()
+ expect(screen.getByRole('checkbox',{name:'勾选 Markdown markdown'})).toHaveAttribute('aria-disabled','true')
+})
+
+test('fixed application preparation can return, ignore late results and retry an unavailable target',async()=>{
+ render(<App/>);await userEvent.click(await screen.findByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ let finish!:(value:BatchPreview)=>void
+ vi.mocked(PrepareBatch).mockReturnValueOnce(new Promise<BatchPreview>(resolve=>{finish=resolve}) as CancellablePromise<BatchPreview>)
+ await userEvent.click(screen.getByRole('button',{name:'设为 Editor…'}))
+ const preparing=screen.getByRole('dialog',{name:'准备批量设置'})
+ expect(within(preparing).getByText('正在检查当前默认并准备预览…')).toBeVisible()
+ await userEvent.click(within(preparing).getByRole('button',{name:'返回调整'}))
+ await act(async()=>finish({id:'abandoned',target:app,items:[],baseBatchID:'',baseRevision:0,resumeBatchID:'',replaceBatchID:''}))
+ expect(screen.queryByRole('dialog')).toBeNull()
+ vi.mocked(PrepareBatch).mockRejectedValueOnce(new Error('目标应用副本不可用'))
+ await userEvent.click(screen.getByRole('button',{name:'设为 Editor…'}))
+ expect(await screen.findByRole('alert')).toHaveTextContent('目标应用副本不可用')
+ await userEvent.click(screen.getByRole('button',{name:'重新准备预览'}))
+ await screen.findByRole('dialog',{name:'预览批量设置'})
+ expect(vi.mocked(PrepareBatch).mock.calls.every(call=>call[1]===app.path)).toBe(true)
+ expect(StartBatch).not.toHaveBeenCalled()
+})
+
+test('already default types remain selectable but an all-skipped application preview cannot start',async()=>{
+ vi.mocked(PrepareBatch).mockImplementation(items=>resolved({id:'unchanged',target:app,baseBatchID:'',baseRevision:0,resumeBatchID:'',replaceBatchID:'',items:(items??[]).map(selection=>({selection,expected:{known:true,path:app.path},observed:app,status:'unchanged',message:'已是目标应用，无需修改。',requestID:'',attempts:0}))}))
+ vi.mocked(Query).mockImplementation(association=>resolved({association,version:1,default:{known:true,app,observedAt:'now',stale:false,error:null},candidates:{known:true,apps:[app],observedAt:'now',stale:false,error:null}}))
+ render(<App/>);await userEvent.click(await screen.findByRole('checkbox',{name:'勾选 Markdown markdown'}))
+ await userEvent.click(screen.getByRole('button',{name:'查看已选'}))
+ await userEvent.click(within(screen.getByRole('dialog',{name:'已选文件类型'})).getByRole('button',{name:'设为 Editor…'}))
+ const dialog=await screen.findByRole('dialog',{name:'预览批量设置'})
+ expect(within(dialog).getByText('已是目标')).toBeVisible()
+ expect(within(dialog).getByRole('button',{name:'开始设置 0 项'})).toHaveAttribute('aria-disabled','true')
+ expect(StartBatch).not.toHaveBeenCalled()
+})
+
 test('batch picker shows icons for installed copies and candidates outside the catalog',async()=>{
  const candidate={...app,path:'/Volumes/External/Editor.app',iconData:'external-editor-icon'}
  const icons={...catalog,apps:catalog.apps.map(item=>({...item,app:{...item.app,iconData:`${item.app.name}-icon`}}))}

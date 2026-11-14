@@ -25,17 +25,20 @@ type FileDraft={
  readonly excluded:ReadonlySet<string>
  readonly saved:Readonly<Record<string,string>>
 }
-type Flow={readonly items:readonly BatchSelection[]}&(
+type ApplicationFlow={readonly source:'application';readonly resumeID:'';readonly items:readonly BatchSelection[];readonly app:AppCopy}
+type ChoiceFlow={readonly items:readonly BatchSelection[]}&(
  |{readonly source:'selection';readonly resumeID:''}
  |{readonly source:'files';readonly resumeID:'';readonly draft:FileDraft}
  |{readonly source:'resume';readonly resumeID:string}
 )
+type Flow=ChoiceFlow|ApplicationFlow
 export type BatchPanel=
  |{readonly kind:'closed'}
- |{readonly kind:'selected'}
+ |{readonly kind:'selected';readonly app?:AppCopy}
  |{readonly kind:'results'}
  |{readonly kind:'files';readonly draft:FileDraft}
- |{readonly kind:'choose';readonly flow:Flow}
+ |{readonly kind:'choose';readonly flow:ChoiceFlow}
+ |{readonly kind:'application';readonly flow:ApplicationFlow}
  |{readonly kind:'preview';readonly flow:Flow;readonly preview:BatchPreview}
 type Activity='identifying'|'saving'|'picking'|'preparing'|'starting'|'reconciling'|'stopping'
 type Operation={kind:Activity}
@@ -44,6 +47,7 @@ const activityLabels:Record<Activity,string>={identifying:'正在识别',saving:
 const selectionOf=(entry:Entry):BatchSelection=>({association:{...entry.association},name:entry.name||entry.association.key,extensions:[...(entry.extensions??[])]})
 const eligible=(entry:Entry)=>entry.resolved&&entry.association.kind==='file'
 const problem=(status:string)=>['failed','changed','unavailable','unknown'].includes(status)
+const emptySelection:ReadonlyMap<string,BatchSelection>=new Map()
 function fileDraft(files:readonly FileChoice[]=[],excluded:ReadonlySet<string>=new Set(),saved:Readonly<Record<string,string>>={}):FileDraft{
  const groups=new Map<string,{entry:Entry;files:FileChoice[]}>()
  for(const file of files){
@@ -61,6 +65,7 @@ export class BatchWorkflow {
  private context:BatchContext={state:null,sending:false,pending:false}
  private panel:BatchPanel={kind:'closed'}
  private selected:ReadonlyMap<string,BatchSelection>=new Map()
+ private applicationSelections:ReadonlyMap<string,ReadonlyMap<string,BatchSelection>>=new Map()
  private operation:Operation|null=null
  private attempt:Attempt|null=null
  private error=''
@@ -86,16 +91,17 @@ export class BatchWorkflow {
   const filePanel=this.panel.kind==='files'?this.panel:null
   const flow=this.panel.kind==='choose'||this.panel.kind==='preview'?this.panel.flow:null
   return {
-   panel:this.panel,selected:this.selected,error:this.error,activity,activityLabel:activity?activityLabels[activity]:'',
+   panel:this.panel,selected:this.selected,applicationSelections:this.applicationSelections,error:this.error,activity,activityLabel:activity?activityLabels[activity]:'',
    pending:this.attempt?.id??'',batch:state?.batch??null,recovery:state?.recovery??null,
    submissionBlocked:blocked,
    can:{
     select:this.active&&!busy&&!state?.batchBlocked&&!blocked&&!state?.quit?.exiting&&!state?.quit?.restarting&&!(state?.quit?.prompt&&state.quit.intent==='update')&&!!state?.writableKinds?.includes('file')&&['closed','selected'].includes(this.panel.kind),
-    review,close,showResults:close&&!!state?.batch,showSelected:close&&this.selected.size>0,
+    review,close,showResults:close&&!!state?.batch,
     chooseFiles:review&&!!state?.writableKinds?.includes('file')&&!!filePanel?.draft.groups.some(group=>!filePanel.draft.excluded.has(group.entry.id)),
     editFiles:this.active&&!!filePanel&&!blocked,
     chooseApp:review&&this.panel.kind==='choose',
-    returnToFiles:close&&flow?.source==='files',changeApp:close&&this.panel.kind==='preview',
+    prepareApplication:review&&this.panel.kind==='application'&&!!state?.writableKinds?.includes('file'),
+    returnToFiles:close&&flow?.source==='files',changeApp:close&&this.panel.kind==='preview'&&flow?.source!=='application',
     start:review&&this.panel.kind==='preview'&&!!this.panel.preview.items?.some(item=>item.status==='queued'),
     stop:this.active&&!blocked&&['running','waiting','paused'].includes(state?.batch?.state??''),
     reconcile:this.active&&!!this.attempt&&!activity,
@@ -129,24 +135,40 @@ export class BatchWorkflow {
  private finish(operation:Operation){if(this.current(operation)){this.operation=null;this.publish()}}
  private navigate(panel:BatchPanel){this.operation=null;this.panel=panel;this.error='';this.publish()}
  close=()=>{if(this.view.can.close)this.navigate({kind:'closed'})}
- showSelected=()=>{if(this.view.can.showSelected)this.navigate({kind:'selected'})}
+ showSelected=(app?:AppCopy)=>{if(this.view.can.close&&this.selection(app?.path).size)this.navigate({kind:'selected',app})}
  showResults=()=>{if(this.view.can.showResults)this.navigate({kind:'results'})}
- toggle=(entry:Entry)=>{
+ private selection(path=''){return path?this.applicationSelections.get(path)??emptySelection:this.selected}
+ private setSelection(path:string,selected:ReadonlyMap<string,BatchSelection>){
+  if(!path){this.selected=selected;return}
+  const applications=new Map(this.applicationSelections)
+  if(selected.size)applications.set(path,selected);else applications.delete(path)
+  this.applicationSelections=applications
+ }
+ toggle=(entry:Entry,path='')=>{
   if(!this.view.can.select||!eligible(entry))return
-  const selected=new Map(this.selected)
+  const selected=new Map(this.selection(path))
   if(selected.has(entry.id))selected.delete(entry.id);else selected.set(entry.id,selectionOf(entry))
-  this.selected=selected;this.publish()
+  this.setSelection(path,selected);this.publish()
  }
- toggleVisible=(entries:Entry[])=>{
+ toggleVisible=(entries:Entry[],path='')=>{
   if(!this.view.can.select)return
-  const items=entries.filter(eligible),selected=new Map(this.selected),all=items.every(entry=>selected.has(entry.id))
+  const items=entries.filter(eligible),selected=new Map(this.selection(path)),all=items.every(entry=>selected.has(entry.id))
   for(const entry of items){if(all)selected.delete(entry.id);else selected.set(entry.id,selectionOf(entry))}
-  this.selected=selected;this.publish()
+  this.setSelection(path,selected);this.publish()
  }
- removeSelected=(id:string)=>{if(this.view.can.select){const selected=new Map(this.selected);selected.delete(id);this.selected=selected;this.publish()}}
- clearSelection=()=>{if(this.view.can.select){this.selected=new Map();this.publish()}}
+ removeSelected=(id:string,path='')=>{if(this.view.can.select){const selected=new Map(this.selection(path));selected.delete(id);this.setSelection(path,selected);this.publish()}}
+ clearSelection=(path='')=>{if(this.view.can.select){this.setSelection(path,emptySelection);this.publish()}}
  choose=()=>{
   if(this.view.can.select&&this.selected.size)this.navigate({kind:'choose',flow:{source:'selection',resumeID:'',items:Array.from(this.selected.values())}})
+ }
+ chooseApplication=async(app:AppCopy)=>{
+  if(!this.view.can.select||!app.path||app.metadataError||!this.selection(app.path).size)return
+  this.navigate({kind:'application',flow:{source:'application',resumeID:'',app:{...app},items:Array.from(this.selection(app.path).values())}})
+  await this.retryApplication()
+ }
+ retryApplication=async()=>{
+  if(!this.view.can.prepareApplication||this.panel.kind!=='application')return
+  await this.prepareFlow(this.panel.flow,this.panel.flow.app)
  }
  chooseFiles=()=>{
   if(!this.view.can.chooseFiles||this.panel.kind!=='files')return
@@ -157,7 +179,7 @@ export class BatchWorkflow {
   if(!this.view.can.returnToFiles||(this.panel.kind!=='choose'&&this.panel.kind!=='preview')||this.panel.flow.source!=='files')return
   this.navigate({kind:'files',draft:this.panel.flow.draft})
  }
- changeApp=()=>{if(this.view.can.changeApp&&this.panel.kind==='preview')this.navigate({kind:'choose',flow:this.panel.flow})}
+ changeApp=()=>{if(this.view.can.changeApp&&this.panel.kind==='preview'&&this.panel.flow.source!=='application')this.navigate({kind:'choose',flow:this.panel.flow})}
  private dropReason(otherDialog:boolean){
   const {state,sending,pending}=this.context
   if(!this.active||!state)return '正在读取设置状态，请稍后再拖入。'
@@ -226,7 +248,10 @@ export class BatchWorkflow {
  }
  prepare=async(app:AppCopy)=>{
   if(!this.view.can.chooseApp||this.panel.kind!=='choose')return
-  const flow=this.panel.flow,operation=this.begin('preparing')
+  await this.prepareFlow(this.panel.flow,app)
+ }
+ private async prepareFlow(flow:Flow,app:AppCopy){
+  const operation=this.begin('preparing')
   try{
    const preview=await this.adapter.prepare(flow.items,app.path,flow.resumeID)
    if(this.current(operation))this.panel={kind:'preview',flow,preview}
@@ -247,10 +272,11 @@ export class BatchWorkflow {
  }
  private finishAccepted(attempt:Attempt){
   if(!this.forget())return
-  if(attempt.flow?.source==='selection'){
-   const selected=new Map(this.selected)
+  if(attempt.flow?.source==='selection'||attempt.flow?.source==='application'){
+   const path=attempt.flow.source==='application'?attempt.flow.app.path:''
+   const selected=new Map(this.selection(path))
    for(const item of attempt.flow.items)selected.delete(`${item.association.kind}:${item.association.key}`)
-   this.selected=selected
+   this.setSelection(path,selected)
   }
   this.navigate({kind:'results'})
  }
@@ -261,7 +287,7 @@ export class BatchWorkflow {
   if(this.attempt!==attempt||this.context.state?.batch?.commands?.includes(attempt.id))return
   if(result.outcome==='accepted'||result.outcome==='existing'){this.finishAccepted(attempt);return}
   if(!this.forget())return
-  this.navigate(this.context.state?.batch?{kind:'results'}:attempt.flow?{kind:'choose',flow:attempt.flow}:{kind:'closed'})
+  this.navigate(this.context.state?.batch?{kind:'results'}:attempt.flow?.source==='application'?{kind:'application',flow:attempt.flow}:attempt.flow?{kind:'choose',flow:attempt.flow}:{kind:'closed'})
   this.error=result.message;this.publish()
  }
  start=async(replace:boolean,recoveryRequestID:string)=>{
@@ -306,5 +332,5 @@ export class BatchWorkflow {
  }
  // Stable user actions are the public interface; lifecycle and adapter wiring
  // remain in the React binding, not in individual displays.
- readonly actions={close:this.close,showSelected:this.showSelected,showResults:this.showResults,toggle:this.toggle,toggleVisible:this.toggleVisible,removeSelected:this.removeSelected,clearSelection:this.clearSelection,choose:this.choose,chooseFiles:this.chooseFiles,returnToFiles:this.returnToFiles,changeApp:this.changeApp,receiveFiles:this.receiveFiles,chooseFileType:this.chooseFileType,toggleFileType:this.toggleFileType,saveFileType:this.saveFileType,pickApplication:this.pickApplication,prepare:this.prepare,resume:this.resume,start:this.start,reconcile:this.reconcile,stop:this.stop,retryCurrent:this.retryCurrent} as const
+ readonly actions={chooseApplication:this.chooseApplication,retryApplication:this.retryApplication,close:this.close,showSelected:this.showSelected,showResults:this.showResults,toggle:this.toggle,toggleVisible:this.toggleVisible,removeSelected:this.removeSelected,clearSelection:this.clearSelection,choose:this.choose,chooseFiles:this.chooseFiles,returnToFiles:this.returnToFiles,changeApp:this.changeApp,receiveFiles:this.receiveFiles,chooseFileType:this.chooseFileType,toggleFileType:this.toggleFileType,saveFileType:this.saveFileType,pickApplication:this.pickApplication,prepare:this.prepare,resume:this.resume,start:this.start,reconcile:this.reconcile,stop:this.stop,retryCurrent:this.retryCurrent} as const
 }

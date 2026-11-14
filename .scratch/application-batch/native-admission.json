@@ -1,0 +1,111 @@
+{
+  "source": ".scratch/application-batch/native-43a0584e",
+  "pending": {
+    "requestID": "AZLKHRHVGB7BBTAJEBEQ4JB7SF",
+    "association": {
+      "kind": "file",
+      "key": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.one"
+    },
+    "target": {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA A 0bbd66.app",
+      "displayPath": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA A 0bbd66.app",
+      "name": "Application Batch QA A 0bbd66",
+      "version": "1.0",
+      "bundleID": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.A"
+    },
+    "preflight": {
+      "known": true,
+      "app": {
+        "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+        "displayPath": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+        "name": "Application Batch QA B 0bbd66",
+        "version": "1.0",
+        "bundleID": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.B"
+      },
+      "observedAt": "2026-11-14T09:09:45.242682Z",
+      "error": null,
+      "stale": false
+    },
+    "phase": "accepted",
+    "acceptedAt": "2026-11-14T09:09:45.243953Z",
+    "submittedAt": ""
+  },
+  "batch": {
+    "id": "6ZRQMC5DENCK5DS2RP5XRX2JCK",
+    "revision": 2,
+    "target": {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA A 0bbd66.app",
+      "displayPath": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA A 0bbd66.app",
+      "name": "Application Batch QA A 0bbd66",
+      "version": "1.0",
+      "bundleID": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.A"
+    },
+    "items": [
+      {
+        "selection": {
+          "association": {
+            "kind": "file",
+            "key": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.one"
+          },
+          "name": "Application Batch QA 1",
+          "extensions": [
+            "abqa0bbd66e097e04cdfacb0ddfbbab9e8540"
+          ]
+        },
+        "expected": {
+          "known": true,
+          "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app"
+        },
+        "observed": {
+          "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+          "displayPath": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+          "name": "Application Batch QA B 0bbd66",
+          "version": "1.0",
+          "bundleID": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.B"
+        },
+        "status": "waiting",
+        "message": "",
+        "requestID": "AZLKHRHVGB7BBTAJEBEQ4JB7SF",
+        "attempts": 1
+      },
+      {
+        "selection": {
+          "association": {
+            "kind": "file",
+            "key": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.two"
+          },
+          "name": "Application Batch QA 2",
+          "extensions": [
+            "abqa0bbd66e097e04cdfacb0ddfbbab9e8541"
+          ]
+        },
+        "expected": {
+          "known": true,
+          "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app"
+        },
+        "observed": {
+          "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+          "displayPath": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+          "name": "Application Batch QA B 0bbd66",
+          "version": "1.0",
+          "bundleID": "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.B"
+        },
+        "status": "queued",
+        "message": "",
+        "requestID": "",
+        "attempts": 0
+      }
+    ],
+    "state": "waiting",
+    "error": "",
+    "createdAt": "2026-11-14T09:09:45.107131Z",
+    "commands": [
+      "2ZFPCXQ7ZEDTMXGHOMBTE7O3EY"
+    ],
+    "runItems": [
+      "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.one",
+      "org.defaultapps.applicationbatch.0bbd66e097e04cdfacb0ddfbbab9e854.two"
+    ]
+  },
+  "runtimeLogBytes": 0
+}

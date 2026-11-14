@@ -32,6 +32,93 @@ function files(workflow:BatchWorkflow){const panel=workflow.getSnapshot().panel;
 function preview(workflow:BatchWorkflow){const panel=workflow.getSnapshot().panel;if(panel.kind!=='preview')throw new Error(`Expected preview, got ${panel.kind}`);return panel.preview}
 async function select(workflow:BatchWorkflow){workflow.toggle(pdf);workflow.choose();await workflow.prepare(app);return preview(workflow)}
 
+test('application selections belong to exact copies and remain independent of catalog selection',async()=>{
+ const {workflow:w,adapter,connect}=setup();connect()
+ const copy={...app,path:'/Volumes/Other/Editor.app'}
+ w.toggle(pdf);w.toggle(pdf,app.path);w.toggle(json,copy.path)
+ w.toggleVisible([json,{...text,resolved:false},{...text,association:{kind:'scheme',key:'http'}}],app.path)
+ expect([...w.getSnapshot().applicationSelections.get(app.path)!.keys()]).toEqual([pdf.id,json.id])
+ w.toggleVisible([json],app.path);w.showSelected(copy)
+ expect(w.getSnapshot().panel).toMatchObject({kind:'selected',app:copy})
+ w.removeSelected(json.id,copy.path)
+ expect(w.getSnapshot().applicationSelections.has(copy.path)).toBe(false)
+ w.close();await w.chooseApplication(app)
+ expect(adapter.prepare).toHaveBeenCalledExactlyOnceWith([expect.objectContaining({association:pdf.association})],app.path,'')
+ const p=preview(w)
+ expect(w.getSnapshot().can.changeApp).toBe(false)
+ w.changeApp();await w.prepare(copy)
+ expect(preview(w)).toBe(p);expect(adapter.pickApplication).not.toHaveBeenCalled()
+ w.close();w.clearSelection(app.path)
+ expect(w.getSnapshot().selected.has(pdf.id)).toBe(true)
+ expect(w.getSnapshot().applicationSelections.size).toBe(0)
+ expect(adapter.start).not.toHaveBeenCalled()
+})
+
+test.each(['success','failure'])('abandoned application preview cannot overwrite another copy: %s',async outcome=>{
+ const {workflow:w,adapter,connect}=setup();connect();w.toggle(pdf,app.path);w.toggle(json,other.path)
+ const old=deferred<BatchPreview>(),fresh=deferred<BatchPreview>()
+ adapter.prepare.mockReturnValueOnce(old.promise).mockReturnValueOnce(fresh.promise)
+ const abandoned=w.chooseApplication(app);w.close()
+ const current=w.chooseApplication(other)
+ if(outcome==='success')old.resolve(makePreview('old',[],app.path));else old.reject(new Error('old failure'))
+ await abandoned
+ expect(w.getSnapshot().panel).toMatchObject({kind:'application',flow:{app:other}})
+ expect(w.getSnapshot().activity).toBe('preparing');expect(w.getSnapshot().error).toBe('')
+ fresh.resolve(makePreview('fresh',[],other.path));await current
+ expect(preview(w).id).toBe('fresh')
+ expect(w.getSnapshot().applicationSelections.get(app.path)?.has(pdf.id)).toBe(true)
+ expect(w.getSnapshot().applicationSelections.get(other.path)?.has(json.id)).toBe(true)
+})
+
+test('application preparation failure and rejected admission retain the fixed target and selections',async()=>{
+ const {workflow:w,adapter,connect}=setup();connect();w.toggle(pdf,app.path)
+ adapter.prepare.mockRejectedValueOnce(new Error('目标应用副本不可用'))
+ await w.chooseApplication(app)
+ expect(w.getSnapshot().error).toContain('目标应用副本不可用')
+ expect(w.getSnapshot().can.prepareApplication).toBe(true)
+ await w.retryApplication()
+ adapter.start.mockResolvedValue({outcome:'stale',message:'请重新预览',snapshot:initial})
+ await w.start(false,'')
+ expect(w.getSnapshot().panel).toMatchObject({kind:'application',flow:{app}})
+ expect(w.getSnapshot().applicationSelections.get(app.path)?.has(pdf.id)).toBe(true)
+ await w.retryApplication()
+ expect(adapter.prepare.mock.calls.map(call=>call[1])).toEqual([app.path,app.path,app.path])
+})
+
+test('application admission evidence cleans only its captured selection once, before a late reply',async()=>{
+ const {workflow:w,adapter,connect,observe}=setup();connect()
+ w.toggle(pdf);w.toggle(pdf,app.path);w.toggle(json,other.path)
+ await w.chooseApplication(app);const p=preview(w)
+ const reply=deferred<BatchResult>();adapter.start.mockReturnValue(reply.promise)
+ const starting=w.start(false,'')
+ observe(accepted(p))
+ expect(w.getSnapshot().applicationSelections.has(app.path)).toBe(false)
+ expect(w.getSnapshot().applicationSelections.get(other.path)?.has(json.id)).toBe(true)
+ expect(w.getSnapshot().selected.has(pdf.id)).toBe(true)
+ w.close();w.toggle(pdf,app.path)
+ reply.resolve({outcome:'accepted',message:'',snapshot:accepted(p)});await starting
+ expect(w.getSnapshot().panel.kind).toBe('closed')
+ expect(w.getSnapshot().applicationSelections.get(app.path)?.has(pdf.id)).toBe(true)
+ expect(adapter.start).toHaveBeenCalledTimes(1)
+})
+
+test('application lost replies reconcile once and file drops do not clear application selections',async()=>{
+ const {workflow:w,adapter,connect}=setup();connect();w.toggle(pdf,app.path);w.toggle(json,other.path);w.toggle(text)
+ await w.receiveFiles(['/file.pdf']);w.chooseFiles();await w.prepare(app)
+ adapter.start.mockResolvedValueOnce({outcome:'accepted',message:'',snapshot:accepted(preview(w))})
+ await w.start(false,'');w.close()
+ expect(w.getSnapshot().applicationSelections.get(app.path)?.has(pdf.id)).toBe(true)
+ await w.chooseApplication(app);const p=preview(w)
+ adapter.start.mockRejectedValueOnce(new Error('lost reply'))
+ adapter.reconcile.mockResolvedValue({outcome:'existing',message:'',snapshot:accepted(p,3)})
+ await w.start(false,'')
+ expect(adapter.reconcile).toHaveBeenCalledExactlyOnceWith(p.id)
+ expect(adapter.start).toHaveBeenCalledTimes(2)
+ expect(w.getSnapshot().applicationSelections.has(app.path)).toBe(false)
+ expect(w.getSnapshot().applicationSelections.get(other.path)?.has(json.id)).toBe(true)
+ expect(w.getSnapshot().selected.has(text.id)).toBe(true)
+})
+
 test('selection actions retain hidden items and reject unresolved or non-file inputs',()=>{
  const {workflow:w,connect}=setup();connect()
  w.toggle(pdf);w.toggleVisible([json,{...text,resolved:false},{...text,association:{kind:'scheme',key:'http'}}])

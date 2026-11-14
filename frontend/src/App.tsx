@@ -100,8 +100,10 @@ function BrowserApp() {
  const {scan,retryCatalog,reparse,selectApp,openEntry,switchView,changeAppFilter,inspectCopy,closeCopy,closeDetails,dismissDetails,clearSearch,searchKey,listKey}=actions
  const {appSearch,associationSearch,appList,associationList}=refs
  const batchApps=useMemo(()=>(snapshot?.apps??[]).filter(item=>!item.unavailable).map(item=>item.app),[snapshot?.apps])
- const selectableEntries=kind==='file'?visibleEntries.filter(entry=>entry.resolved):[]
- const selectedVisible=selectableEntries.filter(entry=>batch.selected.has(entry.id)).length
+ const selectionPath=kind==='app'?selectedApp?.app.path:undefined
+ const activeSelection=kind==='app'?batch.applicationSelections.get(selectionPath??''):batch.selected
+ const selectableEntries=kind!=='scheme'?visibleEntries.filter(entry=>entry.resolved&&entry.association.kind==='file'):[]
+ const selectedVisible=selectableEntries.filter(entry=>activeSelection?.has(entry.id)).length
  const [issuesOpen,setIssuesOpen]=useState(false)
  const {observations,rowErrors,loading,prefetching,refresh}=useAssociationQueries({...queryInputs,snapshotObservations:changes.state?.observations})
  const emptyHeadline=kind==='app'&&selectedApp&&!selectedMatch?.associationCount&&(prefetching||loading)?'正在查询应用关联…':browserEmptyHeadline
@@ -114,8 +116,8 @@ function BrowserApp() {
  const canChange=(entry:Entry|undefined,app:AppCopy|undefined)=>!!entry?.resolved&&!!app&&!app.metadataError&&!changes.blocked&&!batch.submissionBlocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default)
  const submitCopy=(entry:Entry,app:AppCopy)=>{const observed=observations[entry.id]?.default;if(!observed||!canChange(entry,app))return;recovery.submit(entry.association,app,observed);dismissDetails()}
  // Stable table callbacks read the actions from the latest committed render.
- const tableActions=useRef({submitCopy,toggle:batch.toggle,toggleVisible:()=>batch.toggleVisible(visibleEntries)})
- useLayoutEffect(()=>{tableActions.current={submitCopy,toggle:batch.toggle,toggleVisible:()=>batch.toggleVisible(visibleEntries)}})
+ const tableActions=useRef({submitCopy,toggle:(entry:Entry)=>batch.toggle(entry,selectionPath),toggleVisible:()=>batch.toggleVisible(visibleEntries,selectionPath)})
+ useLayoutEffect(()=>{tableActions.current={submitCopy,toggle:(entry:Entry)=>batch.toggle(entry,selectionPath),toggleVisible:()=>batch.toggleVisible(visibleEntries,selectionPath)}})
  const submitRow=useCallback((entry:Entry,app:AppCopy)=>tableActions.current.submitCopy(entry,app),[])
  const toggleRow=useCallback((entry:Entry)=>tableActions.current.toggle(entry),[])
  const toggleVisible=useCallback(()=>tableActions.current.toggleVisible(),[])
@@ -132,25 +134,25 @@ function BrowserApp() {
   isManual:entry.sources?.some(source=>source.kind==='manual'),
   protocol:entry.association.key || entry.sources?.[0]?.rawInput,
   observation:observations[entry.id],rowError:rowErrors[entry.id],
-  checked:batch.selected.has(entry.id),selectionDisabled:!batch.can.select||!entry.resolved,
+  checked:!!activeSelection?.has(entry.id),selectionDisabled:!batch.can.select||!entry.resolved||entry.association.kind!=='file',
   targetApp:selectedApp?.app,
   canSubmit:!!entry.resolved&&!!selectedApp&&!selectedApp.app.metadataError&&!selectedApp.unavailable&&!submitBlocked&&!!changes.state?.writableKinds?.includes(entry.association.kind)&&isTrustworthy(observations[entry.id]?.default),
   request:latestRequests.get(`${entry.association.kind}:${entry.association.key}`),
- })),[visibleEntries,selectedApp,browsedSelected?.id,observations,rowErrors,batch.selected,batch.can.select,submitBlocked,changes.state?.writableKinds,latestRequests])
+ })),[visibleEntries,selectedApp,browsedSelected?.id,observations,rowErrors,activeSelection,batch.can.select,submitBlocked,changes.state?.writableKinds,latestRequests])
  type AssociationRow=(typeof tableRows)[number]
  const tableColumns=useMemo<TableColumn<AssociationRow>[]>(()=>[
-  ...(kind==='file' ? [{
+  ...(kind!=='scheme' ? [{
    key:'selection',width:pixel(48),
    header:<BatchCheckbox checked={!!selectableEntries.length&&selectedVisible===selectableEntries.length} partial={selectedVisible>0&&selectedVisible<selectableEntries.length} disabled={!batch.can.select||!selectableEntries.length} label="全选当前筛选结果" onChange={toggleVisible}/>,
-   renderCell:({entry,checked,selectionDisabled}:AssociationRow)=><BatchCheckbox checked={checked} disabled={selectionDisabled} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>toggleRow(entry)}/>,
+   renderCell:({entry,checked,selectionDisabled}:AssociationRow)=>entry.association.kind==='file'?<BatchCheckbox checked={checked} disabled={selectionDisabled} label={`勾选 ${entryName(entry)} ${entry.association.key}`} onChange={()=>toggleRow(entry)}/>:null,
   }] : []),
   {key:'name',header:kind==='scheme'?'关联项':'名称',width:proportional(1.2,{minWidth:144}),renderCell:({entry,isSelected,isDefault,isManual,protocol,targetApp})=><Button label={`${entryName(entry)} ${entry.association.key || '未解析'}`} variant="ghost" className="association-name" data-association-id={String(entry.id)} tabIndex={isSelected ? 0 : -1} aria-pressed={isSelected} aria-description={isManual ? '手动添加' : undefined} onClick={()=>openEntry(entry.id)}><HStack as="span" gap={2} align="center" className="association-title"><VStack as="span" gap={0} className="association-icon"><Icon name={entry.association.kind==='scheme'?'scheme':'file'}/></VStack><VStack as="span" gap={0} className="association-label"><HStack as="span" gap={2} align="center" className="association-heading"><strong>{entryName(entry)}</strong>{isManual ? <Text className="manual-association-badge">手动添加</Text> : null}</HStack>{kind==='scheme' && protocol && protocol!==entryName(entry) ? <Text>{protocol}</Text> : null}{kind==='app'&&targetApp ? <DeclarationOrigin entry={entry} appPath={targetApp.path} isDefault={isDefault}/> : null}</VStack></HStack></Button>},
   ...(kind!=='scheme' ? [
    {key:'extensions',header:'扩展名',width:proportional(.75,{minWidth:80}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-extensions">{entry.extensions?.map(value=>`.${value}`).join(' · ') || '—'}</Text>},
-   {key:'identifier',header:'类型 ID',width:proportional(1.35,{minWidth:160}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</Text>},
+   {key:'identifier',header:'类型 ID',width:proportional(kind==='app'?1.25:1.35,{minWidth:kind==='app'?144:160}),renderCell:({entry}:AssociationRow)=><Text type="supporting" className="association-identifier">{entry.association.key || entry.sources?.[0]?.rawInput}</Text>},
   ] : []),
   {key:'default',header:'当前默认应用',width:proportional(1,{minWidth:120}),renderCell:({entry,rowError,observation})=><VStack gap={0} className="declared-default"><DefaultCell entry={entry} rowError={rowError} observation={observation}/></VStack>},
-  {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?184:88),renderCell:({entry,isSelected,isDefault,targetApp,canSubmit,request})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail" tabIndex={isSelected ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&targetApp?<Button label={`将 ${entryName(entry)} 设为 ${targetApp.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)} tooltip={targetApp.path} tabIndex={isSelected?0:-1} isDisabled={!canSubmit||isDefault} onClick={()=>submitRow(entry,targetApp)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
+  {key:'actions',header:'操作',align:'end',width:pixel(kind==='app'?168:88),renderCell:({entry,isSelected,isDefault,targetApp,canSubmit,request})=><HStack gap={2} align="center" className="row-actions"><Button label={`查看 ${entryName(entry)} 详情`} variant="ghost" size="sm" className="row-detail" tabIndex={isSelected ? 0 : -1} onClick={()=>openEntry(entry.id)}><Text type="supporting" color="primary">详情…</Text></Button>{kind==='app'&&targetApp?<Button label={`将 ${entryName(entry)} 设为 ${targetApp.path}`} variant="secondary" size="sm" icon={isDefault?<Icon name="check"/>:undefined} className="row-submit" data-current={String(isDefault)} tooltip={targetApp.path} tabIndex={isSelected?0:-1} isDisabled={!canSubmit||isDefault} onClick={()=>submitRow(entry,targetApp)}>{isDefault?'已是默认':'设为默认'}</Button>:null}
       {request?<Text key={request.requestID} className="change-row-state" data-confirmed={String(request.confirmed)}>{requestLabel(request)}</Text>:null}</HStack>},
  ],[kind,selectableEntries.length,selectedVisible,batch.can.select,openEntry,submitRow,toggleRow,toggleVisible])
  const tableWindow=useAssociationTableWindow(tableRows,associationList,browsedSelected?.id,tableColumns.length)
@@ -180,7 +182,7 @@ function BrowserApp() {
   </header>
   <LifecycleStatus changes={changes} observations={observations}/>{recovery.dialog}
   <ChangeStatus changes={changes} observations={observations} onReturn={actions.returnToRequest}/>
-  <BatchBars controller={batch} showSelection={kind==='file'}/>
+  <BatchBars controller={batch} showSelection={kind==='file'||(kind==='app'&&!!selectedApp)} application={kind==='app'?selectedApp?.app:undefined}/>
 
   <Grid className={`browser-workspace ${kind==='app' ? '' : 'catalog-view'}`}>
    {kind==='app' ? <aside className="sidebar">

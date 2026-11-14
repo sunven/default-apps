@@ -1,0 +1,95 @@
+{
+  "apps": [
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-22f20530/Application Batch QA A 2d9a2e.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-22f20530/Application Batch QA B 2d9a2e.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": ".scratch/application-batch/native-22f20530/Default Apps Application Batch QA.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA A 0bbd66.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-43a0584e/Application Batch QA B 0bbd66.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": ".scratch/application-batch/native-43a0584e/Default Apps Application Batch QA.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-44164a0f/Application Batch QA A ff0254.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-44164a0f/Application Batch QA B ff0254.app",
+      "removed": true,
+      "unregisterExitCode": null,
+      "registeredAfter": false
+    },
+    {
+      "path": ".scratch/application-batch/native-44164a0f/Default Apps Application Batch QA.app",
+      "removed": true,
+      "unregisterExitCode": 1,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-7a6aa0be/Application Batch QA A f130c7.app",
+      "removed": true,
+      "unregisterExitCode": 1,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-7a6aa0be/Application Batch QA B f130c7.app",
+      "removed": true,
+      "unregisterExitCode": 1,
+      "registeredAfter": false
+    },
+    {
+      "path": ".scratch/application-batch/native-7a6aa0be/Default Apps Application Batch QA.app",
+      "removed": true,
+      "unregisterExitCode": 0,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-e78e642e/Application Batch QA A 094dc8.app",
+      "removed": true,
+      "unregisterExitCode": 1,
+      "registeredAfter": false
+    },
+    {
+      "path": "/Users/sunven/github/default-apps/.scratch/application-batch/native-e78e642e/Application Batch QA B 094dc8.app",
+      "removed": true,
+      "unregisterExitCode": 1,
+      "registeredAfter": false
+    },
+    {
+      "path": ".scratch/application-batch/native-e78e642e/Default Apps Application Batch QA.app",
+      "removed": true,
+      "unregisterExitCode": 0,
+      "registeredAfter": false
+    }
+  ],
+  "note": "已确认本轮测试应用路径不在 LaunchServices 注册表中；随机专用类型的系统偏好记录可能仍存在。"
+}

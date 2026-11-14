@@ -1,3 +1,4 @@
+import { Tooltip } from '@astryxdesign/core/Tooltip'
 import { Item } from '@astryxdesign/core/Item'
 import { Table } from '@astryxdesign/core/Table'
 import { TextInput } from '@astryxdesign/core/TextInput'
@@ -23,7 +24,9 @@ export function BatchCheckbox({checked,partial=false,disabled,label,onChange}:{c
  return <CheckboxInput className="batch-checkbox" label={label} isLabelHidden value={partial?'indeterminate':checked} isDisabled={disabled} onChange={onChange} onKeyDown={event=>event.stopPropagation()} size="sm"/>
 }
 
-export function BatchBars({controller:c,showSelection}:{controller:BatchController;showSelection:boolean}){
+export function BatchBars({controller:c,showSelection,application}:{controller:BatchController;showSelection:boolean;application?:AppCopy}){
+ const selected=application?c.applicationSelections.get(application.path):c.selected
+ const count=selected?.size??0
  const b=c.batch,items=b?.items??[]
  const current=items.find(item=>item.status==='waiting')
  const done=items.filter(item=>!['queued','waiting','unknown'].includes(item.status)).length
@@ -32,7 +35,7 @@ export function BatchBars({controller:c,showSelection}:{controller:BatchControll
    <HStack gap={2} align="center" className="batch-progress-copy"><strong>{stateLabel(b.state)}</strong><Text>已处理 {done} / {items.length} 项 · {b.target.name||b.target.path}</Text>{current?<Text className="batch-current">当前：{current.selection.name||current.selection.association.key}</Text>:null}</HStack>
    <HStack gap={2} align="center" className="batch-actions"><Button label="查看批次" variant="secondary" isDisabled={!c.can.showResults} onClick={c.showResults}/>{['running','waiting','paused'].includes(b.state)?<Button label="停止后续设置" variant="secondary" isDisabled={!c.can.stop} onClick={()=>void c.stop()}/>:null}</HStack>
   </section>:null}
-  {showSelection&&c.selected.size>0?<section className="batch-selection-bar" aria-label="已选文件类型"><strong>已选 {c.selected.size} 个类型</strong><Text>选择一个应用，统一设置默认</Text><HStack gap={2} align="center" className="batch-actions"><Button label="查看已选" variant="secondary" isDisabled={!c.can.showSelected} onClick={c.showSelected}/><Button label="清空" variant="secondary" isDisabled={!c.can.select} onClick={c.clearSelection}/><Button label="选择应用…" variant="primary" isDisabled={!c.can.select} onClick={c.choose}/></HStack></section>:null}
+  {showSelection&&count>0?<section className="batch-selection-bar" aria-label="已选文件类型"><strong>已选 {count} 个类型</strong>{application?<Tooltip content={application.path} hasHoverIndication={false}><Text>目标：{application.name||application.path}</Text></Tooltip>:<Text>选择一个应用，统一设置默认</Text>}<HStack gap={2} align="center" className="batch-actions"><Button label="查看已选" variant="secondary" isDisabled={!c.can.close} onClick={()=>c.showSelected(application)}/><Button label="清空" variant="secondary" isDisabled={!c.can.select} onClick={()=>c.clearSelection(application?.path)}/><Button label={application?`设为 ${application.name||application.path}…`:'选择应用…'} variant="primary" isDisabled={!c.can.select||!!application?.metadataError} onClick={()=>application?void c.chooseApplication(application):c.choose()}/></HStack></section>:null}
   {c.error&&c.panel.kind==='closed'?<p className="batch-inline-error" role="alert">{c.error}</p>:null}
   {c.pending?<HStack gap={2} align="center" className="batch-reconcile" role="status">正在核对原批量设置，核对完成前暂停新修改。<Button label="核对批量设置" variant="secondary" isDisabled={!c.can.reconcile} onClick={()=>void c.reconcile()}/></HStack>:null}
  </>
@@ -97,14 +100,14 @@ function PreviewDialog({controller:c,panel}:{controller:BatchController;panel:Ex
  const count=(p.items??[]).filter(item=>item.status==='queued').length
  const blocked=!c.can.start||(!!p.replaceBatchID&&!replace)||(!!recovery&&(!recovery.ready||acknowledge!==recovery.record.requestID))
  return <Dialog title="预览批量设置" subtitle={`将 ${count} 个文件类型设为 ${p.target.name||p.target.path}`} onClose={c.close}>
-  <HStack gap={2} align="center" className="batch-target"><strong>共同目标：{p.target.name||'所选应用'}</strong><Text>{p.target.path}</Text><Button label="更换应用" variant="secondary" isDisabled={!c.can.changeApp} onClick={c.changeApp}/></HStack>
+  <HStack gap={2} align="center" className="batch-target"><strong>共同目标：{p.target.name||'所选应用'}</strong><Text>{p.target.path}</Text>{panel.flow.source!=='application'?<Button label="更换应用" variant="secondary" isDisabled={!c.can.changeApp} onClick={c.changeApp}/>:null}</HStack>
   <ItemTable items={p.items??[]} preview/>
-  {panel.flow.source==='files'?<p className="batch-muted">设置将影响这些类型的所有同类文件。</p>:null}
+  {panel.flow.source==='files'||panel.flow.source==='application'?<p className="batch-muted">设置将影响这些类型的所有同类文件。</p>:null}
   <p className="batch-muted">按此顺序逐项设置。系统可能逐项确认；明确失败会记录并继续，结果未定时等待。</p>
   {p.replaceBatchID?<CheckboxInput className="batch-confirm" label="放弃旧批次的后续设置，以这份清单开始新批次并替换最近批次记录。" value={replace} onChange={setReplace} isDisabled={!c.can.start}/>:null}
   {recovery?<VStack gap={0} className="batch-recovery"><p>上次修改仍可能完成。旧目标：{recovery.record.target.path}</p>{!recovery.ready?<Button label="查询旧请求的当前默认" variant="secondary" onClick={()=>void c.retryCurrent()}/>:null}<CheckboxInput className="batch-confirm" label="已了解旧请求仍可能改变当前默认，明确开始新的修改。" value={acknowledge===recovery.record.requestID} onChange={checked=>setAcknowledge(checked?recovery.record.requestID:'')} isDisabled={!recovery.ready||!c.can.start}/></VStack>:null}
   {c.error?<p role="alert" className="batch-error">{c.error}</p>:null}
-  <HStack gap={2} align="center" className="batch-dialog-actions">{panel.flow.source==='files'?<Button label="返回识别清单" variant="secondary" isDisabled={!c.can.returnToFiles} onClick={c.returnToFiles}/>:null}<Button label="暂不设置" variant="secondary" isDisabled={!c.can.close} onClick={c.close}/><Button label={c.activity==='starting'?'正在受理…':`开始设置 ${count} 项`} variant="primary" isDisabled={blocked} onClick={()=>void c.start(replace,acknowledge)}/></HStack>
+  <HStack gap={2} align="center" className="batch-dialog-actions">{panel.flow.source==='files'?<Button label="返回识别清单" variant="secondary" isDisabled={!c.can.returnToFiles} onClick={c.returnToFiles}/>:null}<Button label={panel.flow.source==='application'?'返回调整':'暂不设置'} variant="secondary" isDisabled={!c.can.close} onClick={c.close}/><Button label={c.activity==='starting'?'正在受理…':`开始设置 ${count} 项`} variant="primary" isDisabled={blocked} onClick={()=>void c.start(replace,acknowledge)}/></HStack>
  </Dialog>
 }
 
@@ -112,10 +115,21 @@ export function BatchDialogs({controller:c,apps}:{controller:BatchController;app
  const panel=c.panel
  if(panel.kind==='preview')return <PreviewDialog key={panel.preview.id} controller={c} panel={panel}/>
  if(panel.kind==='choose')return <Dialog title="为所选类型选择应用" onClose={c.close}><BatchAppPicker items={panel.flow.items} apps={apps} disabled={!c.can.chooseApp} picking={c.activity==='picking'} onSelect={app=>void c.prepare(app)} onPick={()=>void c.pickApplication()}/>{c.activity==='preparing'?<p role="status">正在检查当前默认并准备预览…</p>:null}{c.error?<p role="alert" className="batch-error">{c.error}</p>:null}{panel.flow.source==='files'?<HStack gap={2} align="center" className="batch-dialog-actions"><Button label="返回识别清单" variant="secondary" isDisabled={!c.can.returnToFiles} onClick={c.returnToFiles}/></HStack>:null}</Dialog>
- if(panel.kind==='selected')return <Dialog title="已选文件类型" subtitle={`${c.selected.size} 个类型，搜索隐藏的已选项也会保留`} onClose={c.close}>
-  <ul className="batch-selected-list">{Array.from(c.selected.entries()).map(([id,item])=><li key={id}><VStack gap={0}><strong>{item.name}</strong><small>{item.association.key}</small></VStack><Button label={`移除 ${item.name}`} variant="secondary" isDisabled={!c.can.select}  onClick={()=>c.removeSelected(id)}>移除</Button></li>)}</ul>
-  <HStack gap={2} align="center" className="batch-dialog-actions"><Button label="选择应用…" variant="primary" isDisabled={!c.can.select||!c.selected.size} onClick={c.choose}/></HStack>
+ if(panel.kind==='application')return <Dialog title="准备批量设置" subtitle={`将 ${panel.flow.items.length} 个文件类型设为 ${panel.flow.app.name||panel.flow.app.path}`} onClose={c.close}>
+  <Text as="p">目标：{panel.flow.app.path}</Text>
+  {c.activity==='preparing'?<Text as="p" role="status">正在检查当前默认并准备预览…</Text>:null}
+  {c.error?<Text as="p" role="alert" className="batch-error">{c.error}</Text>:null}
+  <HStack gap={2} className="batch-dialog-actions"><Button label="返回调整" variant="secondary" isDisabled={!c.can.close} onClick={c.close}/>{c.activity!=='preparing'?<Button label="重新准备预览" variant="primary" isDisabled={!c.can.prepareApplication} onClick={()=>void c.retryApplication()}/>:null}</HStack>
  </Dialog>
+ if(panel.kind==='selected'){
+  const selected=panel.app?c.applicationSelections.get(panel.app.path):c.selected
+  const count=selected?.size??0
+  return <Dialog title="已选文件类型" subtitle={`${count} 个类型，搜索隐藏的已选项也会保留`} onClose={c.close}>
+   {panel.app?<Text as="p">目标：{panel.app.name} · {panel.app.path}</Text>:null}
+   <ul className="batch-selected-list">{Array.from(selected??[]).map(([id,item])=><li key={id}><VStack gap={0}><strong>{item.name}</strong><small>{item.association.key}</small></VStack><Button label={`移除 ${item.name}`} variant="secondary" isDisabled={!c.can.select} onClick={()=>c.removeSelected(id,panel.app?.path)}>移除</Button></li>)}</ul>
+   <HStack gap={2} align="center" className="batch-dialog-actions"><Button label={panel.app?`设为 ${panel.app.name||panel.app.path}…`:'选择应用…'} variant="primary" isDisabled={!c.can.select||!count||!!panel.app?.metadataError} onClick={()=>panel.app?void c.chooseApplication(panel.app):c.choose()}/></HStack>
+  </Dialog>
+ }
  const b=c.batch
  if(panel.kind==='results'&&b){
   const items=b.items??[],remaining=items.filter(item=>item.status==='queued').length,problems=items.filter(item=>['failed','changed','unavailable','unknown'].includes(item.status)).length

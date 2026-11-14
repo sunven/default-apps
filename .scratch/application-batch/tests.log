@@ -1,0 +1,16 @@
+npm warn Unknown project config "minimum-release-age". This will stop working in the next major version of npm.
+
+> default-apps@0.1.9 test
+> vitest run
+
+
+ RUN  v5.1.0 /Users/sunven/github/default-apps/frontend
+
+
+ Test Files  16 passed (16)
+      Tests  209 passed (209)
+   Start at  20:26:49
+   Duration  6.41s (tests 62%, environment 16%, import 10%, setup 8%, transform 4%)
+
+    Isolate  16 workers spawned · ~465ms startup each (spawn + environment, per file)
+             at least ~362ms faster with isolate: false — reuses workers across files instead of one per file

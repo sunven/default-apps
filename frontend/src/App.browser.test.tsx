@@ -544,7 +544,7 @@ test('association table keeps type identity in its own cell and opens details fr
  const table=await screen.findByRole('table',{name:'应用关联'})
  const name=await within(table).findByRole('button',{name:'JPEG 图像 public.jpeg'})
  const row=name.closest('tr')!
- expect(within(table).getAllByRole('columnheader').map(cell=>cell.textContent)).toEqual(['名称','扩展名','类型 ID','当前默认应用','操作'])
+ expect(within(table).getAllByRole('columnheader').map(cell=>cell.textContent)).toEqual(['全选当前筛选结果','名称','扩展名','类型 ID','当前默认应用','操作'])
  const identifier=within(row).getByRole('cell',{name:'public.jpeg'})
  expect(within(row).getByRole('cell',{name:'.jpg · .jpeg'})).toBeVisible()
  await userEvent.click(identifier)
