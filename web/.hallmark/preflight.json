@@ -1,0 +1,31 @@
+{
+  "scanned": "2026-11-14",
+  "findings": {
+    "product": "README.md:3 macOS default application manager",
+    "framework": "frontend/package.json:1 React + Wails; web is a new standalone static site",
+    "design": "No root design.md or brand-spec",
+    "fonts": "Dose: Schibsted Grotesk + Instrument Sans, local CJK fallbacks",
+    "palette": "Dose white variant; warm paper, pharmacy green, pale plastic",
+    "motion": "Still window light, press feedback; no continuous animation",
+    "imagery": "Current frontend with isolated sample services, captured through capture.mjs; native window not available to OS capture"
+  },
+  "preserve": [
+    "Default Apps name and repository icon",
+    "Documented functionality and installation limitations",
+    "Existing frontend and Go sources"
+  ],
+  "introduce": [
+    "web/index.html",
+    "web/styles.css, tokens.css, base.css",
+    "web/script.js",
+    "Local screenshot and font assets",
+    "web/README.md"
+  ],
+  "assumptions": {
+    "audience": "Mac users who want control of default apps",
+    "action": "GitHub Releases",
+    "language": "Chinese",
+    "tone": "gentle, restrained, precise",
+    "confirmedByUser": true
+  }
+}

@@ -1,0 +1,9 @@
+.hallmark/tools/
+.hallmark/captures/
+.hallmark/render/
+.hallmark/*.log
+.hallmark/vite.capture.mjs
+.hallmark/fixtures.js
+.hallmark/capture-product.mjs
+.hallmark/verify.mjs
+.hallmark/hero-review/

@@ -1,0 +1,35 @@
+[
+ {
+  "date": "2026-11-14",
+  "mode": "build",
+  "shape": "Feature Showcase",
+  "theme": "Dose (by request)",
+  "axes": "light/grotesk-sans/chromatic-green",
+  "hero": "Stage",
+  "nav": "edge-aligned wordmark and links",
+  "footer": "statement",
+  "imagery": "Current product frontend captured with isolated sample services; desktop, mobile crop, three browsing modes, batch preview",
+  "photos": [],
+  "entry": "web/index.html",
+  "fingerprint": "Flush left|Two-column asymmetric|Bleed-colour block|Solid|Tightly cropped to the grid|None",
+  "sections": [
+   "Hero",
+   "Screenshot switcher",
+   "Batch preview",
+   "Modification scope and results",
+   "File drop and installation FAQ",
+   "Download and requirements",
+   "Footer"
+  ],
+  "signature": "The Preview application and its real file association register",
+  "waived": [],
+  "prompt": "为 default-apps 项目做一个中文网站，放在 web 目录，使用 Dose 主题；主要操作前往 GitHub 下载。",
+  "review": {
+   "floor": 0,
+   "reflex": 0,
+   "warn": 0,
+   "finish": "subagent; 3 findings resolved with product recapture and specific copy",
+   "details": "web/.hallmark/validation.md"
+  }
+ }
+]
