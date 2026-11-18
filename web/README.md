@@ -1,6 +1,6 @@
 # Default Apps 网站
 
-独立的中文静态产品页，采用 Hallmark 的 Dose white 主题。面向管理 Mac 文件和链接打开方式的用户，下载入口指向项目的 GitHub Releases。
+独立的中文静态产品页，沿用 Hallmark Dose white 的暖白与绿色基调，经过 unslop 局部打磨。面向管理 Mac 文件和链接打开方式的用户，下载入口指向项目的 GitHub Releases。
 
 ## 本地预览
 
@@ -17,12 +17,12 @@ python3 -m http.server 4327 --bind 127.0.0.1 --directory web
 ## 文件与交互
 
 - `index.html`：首屏、三种浏览入口、批量设置、修改范围、FAQ、下载与兼容性说明。
-- `tokens.css`：Dose 的颜色、字体、尺寸、间距和材质变量。
+- `tokens.css`：暖白、墨色与绿色的颜色变量，以及字体、尺寸、间距、圆角和中性阴影。
 - `base.css`、`styles.css`：基础样式、页面布局、断点与减少动态效果支持。
 - `script.js`：截图标签切换与 `window.hallmarkSlots()` 素材替换入口。
 - `assets/licenses/`：本地 Instrument Sans 和 Schibsted Grotesk 字体的 OFL 许可；中文使用系统字体。
 
-截图标签支持点击、左右方向键、Home 和 End。关闭 JavaScript 时，三个界面按顺序展示，FAQ 仍通过原生 `details` 展开。下载与项目链接直接打开 GitHub。
+截图标签支持点击、左右方向键、Home 和 End。窄屏的完整界面与手机的批量预览保留可读尺寸，支持触摸滚动及聚焦后的方向键滚动。关闭 JavaScript 时，三个界面按顺序展示，FAQ 仍通过原生 `details` 展开。下载与项目链接直接打开 GitHub。
 
 ## 素材与替换
 
@@ -41,7 +41,9 @@ python3 -m http.server 4327 --bind 127.0.0.1 --directory web
 
 ## 验证
 
-验证日期：2026-11-14。结果见 [检查记录](.hallmark/validation.md)。Hallmark 检查可从仓库根目录运行：
+本轮验证日期：2026-11-18。修改方向、逐项调整和浏览器检查见 [unslop 记录](UNSLOP.md)。
+
+2026-11-14 的历史 Hallmark 验证见 [检查记录](.hallmark/validation.md)。Hallmark 检查可从仓库根目录运行：
 
 ```sh
 node .agents/skills/hallmark/scripts/sloplint.mjs web --genre modern-minimal --render
