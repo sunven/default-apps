@@ -12,7 +12,6 @@ import './batch.css'
 import './file-drop.css'
 import './updates.css'
 import './notifications.css'
-import './assets/motion/motion.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

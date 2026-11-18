@@ -1,9 +1,9 @@
 .manual-section+.manual-section {border-top:0.0625rem solid var(--line);margin-top:var(--spacing-4);padding-top:var(--spacing-4)}
-.manual-section h3 {font-size:0.9375rem;margin:0 0 0.625rem}
+.manual-section h3 {font-size:0.9375rem;margin:0 0 var(--spacing-3)}
 .manual-input-row {display:flex;align-items:end;gap:var(--spacing-2)}
 .manual-value {flex:1;min-width:0}
 .manual-help {color:var(--muted);font-size:var(--spacing-3);line-height:1.7;margin:var(--spacing-2) 0}
-.manual-matches {display:grid;max-height:14.6875rem;overflow:auto;margin:var(--spacing-2) 0}
+.manual-matches {display:grid;max-height:calc(var(--spacing-12) * 5);overflow:auto;margin:var(--spacing-2) 0}
 .manual-matches:empty {display:none}
 .manual-buttons {display:flex;justify-content:space-between;gap:var(--spacing-2);margin-top:var(--spacing-3)}
 .manual-file {font-size:var(--spacing-3);line-height:1.7;overflow-wrap:anywhere}

@@ -85,7 +85,7 @@ export function SoftwareUpdate() {
  const hasTotal = !!state&&state.total>0
  const percent = state&&hasTotal?Math.min(100,Math.max(0,Math.floor(state.written/state.total*100))):undefined
  return <>
-  <Button label="软件更新" variant="ghost" className="software-update-entry" tooltip={state?.release?'软件更新 · 有可用更新':'软件更新'} onClick={show} data-available={String(!!state?.release)} endContent={state?.release?<VStack as="span" gap={0} className="update-dot" aria-hidden="true"/>:undefined}/>
+  <Button label="软件更新" variant="ghost" size="sm" className="software-update-entry" tooltip={state?.release?'软件更新 · 有可用更新':'软件更新'} onClick={show} data-available={String(!!state?.release)} endContent={state?.release?<VStack as="span" gap={0} className="update-dot" aria-hidden="true"/>:undefined}/>
   {open?<Dialog title="软件更新" subtitle={`Default Apps${state?` · 当前版本 ${state.currentVersion}`:''}`} onClose={close}>
    <section className="software-update" aria-label="本工具更新">
     {state?.disabledReason?<p>{state.disabledReason}</p>:<>

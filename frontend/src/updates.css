@@ -1,7 +1,7 @@
-.software-update-entry {position:relative;gap:var(--spacing-1-5)}
-.update-dot {width:var(--spacing-1-5);height:var(--spacing-1-5);border-radius:50%;background:var(--action);flex:none}
+.software-update-entry {position:relative;gap:var(--spacing-2)}
+.update-dot {width:var(--spacing-2);height:var(--spacing-2);border-radius:50%;background:var(--action);flex:none}
 .software-update {font-size:0.875rem;line-height:1.7;user-select:text}
-.update-summary {display:flex;align-items:baseline;justify-content:space-between;gap:var(--spacing-4);margin-bottom:0.875rem}
+.update-summary {display:flex;align-items:baseline;justify-content:space-between;gap:var(--spacing-4);margin-bottom:var(--spacing-4)}
 .update-summary strong {font-size:1.0625rem;font-weight:600}
 .update-summary>span,.update-location {color:var(--muted);font-size:var(--spacing-3)}
 .update-progress {display:flex;align-items:center;gap:var(--spacing-3);margin:var(--spacing-4) 0}
@@ -10,7 +10,7 @@
 .update-notes h3 {font-size:0.8125rem;font-weight:600;margin:0 0 var(--spacing-2)}
 .update-notes p {white-space:pre-wrap;overflow-wrap:anywhere;max-height:15rem;overflow:auto;margin:0}
 .update-location {overflow-wrap:anywhere;margin-top:var(--spacing-4)}
-.update-actions {display:flex;justify-content:flex-end;gap:var(--spacing-2);margin-top:1.375rem;flex-wrap:wrap}
+.update-actions {display:flex;justify-content:flex-end;gap:var(--spacing-2);margin-top:var(--spacing-6);flex-wrap:wrap}
 .update-actions>button:first-child {margin-right:auto}
 .update-confirm {border-top:0.0625rem solid var(--line);padding-top:var(--spacing-4);margin-top:var(--spacing-4)}
 
